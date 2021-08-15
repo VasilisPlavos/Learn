@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="./assets/fav-icon.png" type="image/x-icon">
+
+  <!-- Vue JS CDN -->
+  <!-- For prototyping or learning purposes, you can use the latest version with -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- For production, we recommend linking to a specific version number and build to avoid unexpected breakage from newer versions: -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+
+  <title>storage example</title>
+</head>
+
+<body>
+  <h1>This is the head</h1>
+  <p>This is the first paragraph</p>
+
+  <div id="app">
+    My name is <input v-model="name">
+
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        name: ''
+      },
+      mounted() {
+        if (localStorage.name) {
+          this.name = localStorage.name;
+        }
+      },
+      watch: {
+        name(newName) {
+          localStorage.name = newName;
+        }
+      },
+
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+    "short_name": "Forma Gov App",
+    "name": "Forma Gov Greek Application",
+    "description": "Forma Gov: Στείλτε εύκολα και γρήγορα το SMS.",
+    "icons": [{
+        "src": "./img/icons/android-chrome-144x144.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "./img/icons/android-chrome-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }],
+    "start_url": "./index.html",
+    "background_color": "#4a67b0",
+    "display": "minimal-ui",
+    "theme_color": "#4a67b0"
+  }

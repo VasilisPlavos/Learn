@@ -1,0 +1,76 @@
+.energy-class-percent {
+    font-weight: 600;
+    font-size: 11px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.energy-class-aplus {
+    background: #2E7D32;
+    border-color: #2E7D32;
+    min-width: 32px;
+}
+
+.energy-class-a {
+    background: #689F38;
+    border-color: #689F38;
+    min-width: 32px;
+}
+
+.energy-class-bplus {
+    background: #bbce4c;
+    border-color: #bbce4c;
+    min-width: 32px;
+}
+
+.energy-class-b {
+    background: #FFEE58;
+    border-color: #FFEE58;
+    min-width: 32px;
+}
+
+.energy-class-c {
+    background: #FFC107;
+    border-color: #FFC107;
+    min-width: 32px;
+}
+
+.energy-class-d {
+    background: #EF6C00;
+    border-color: #EF6C00;
+    min-width: 32px;
+}
+
+.energy-class-e {
+    background: #D50000;
+    border-color: #D50000;
+    min-width: 32px;
+}
+
+.energy-label {
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
+    height: 20px;
+    display: table;
+    color: white;
+    text-align: left;
+    padding: 3px 5px;
+    margin-bottom: 5px;
+}
+
+.energy-label-right:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    right: -8px;
+    border-left: 8px solid transparent;
+    border-left-color: inherit;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+}

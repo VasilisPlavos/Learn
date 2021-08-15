@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>squares</title>
+</head>
+<body>
+    <p>Τα τετράγωνα των αριθμών από 1 μέχρι
+        <input type="text" size=5 name=range id=range>
+    </p>
+
+    <button onclick="calc()">Υπολογισμός</button>
+    <p id="squares"></p>
+    
+    <script>
+        const theSquares = document.querySelector("#squares");
+
+        function calc(){
+            theSquares.innerHTML = "";
+            let range = document.querySelector("#range").value;
+
+            for (let x = 1; x <= parseInt(range); x++){
+                theSquares.innerHTML += "Το τετράγωνο του " + x + " είναι " + square(x) + "<br>";
+            }
+        }
+
+        function square(y){
+            return y * y;
+        }
+    </script>
+
+    
+</body>
+</html>

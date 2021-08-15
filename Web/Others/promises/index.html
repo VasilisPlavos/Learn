@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Studio Ghibli</title>
+</head>
+
+<body>
+    <p>👉 source: <a href="https://medium.com/@armando_amador/how-to-make-http-requests-using-fetch-api-and-promises-b0ca7370a444">https://medium.com/@armando_amador/how-to-make-http-requests-using-fetch-api-and-promises-b0ca7370a444</a></p>
+    <h1>Studio Ghibli Characters</h1>
+    <div id="main"></div>
+
+
+
+
+    <script>
+        const URL = `https://ghibliapi.herokuapp.com/people`;
+
+        // Target main element
+        const main = document.getElementById("main");
+
+        main.innerHTML = "Loading...";
+
+        fetch(URL)
+            .then(response => { return response.json() })  // same as  .then((response) => response.json())
+            .then(responseData => {
+                const people = responseData;
+                main.innerHTML = listOfNames(people);
+
+                function listOfNames(people) {
+                    const names = people.map(person => person.name);
+                    var listOfNamesHTML = '';
+                    names.forEach(name => {
+                        listOfNamesHTML = listOfNamesHTML + `<li>${name}</li>`
+                    });
+
+                    return `<ul>${listOfNamesHTML}</ul>`
+                }
+            })
+    </script>
+</body>
+
+</html>

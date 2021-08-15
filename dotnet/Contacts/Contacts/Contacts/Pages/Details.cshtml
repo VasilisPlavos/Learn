@@ -1,0 +1,51 @@
+﻿@page
+@model Contacts.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Lastname</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.LastName)
+        </dd>
+        <dt class="col-sm-2">Firstname</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactDto.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.Email)
+        </dd>
+        <dt class="col-sm-2">Phone</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.LocalPhone)
+        </dd>
+        <dt class="col-sm-2">Mobile</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.MobilePhone)
+        </dd>
+        <dt class="col-sm-2">Zip Code</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.ZipCode.Number)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContactDto.ZipCode.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContactDto.ZipCode.Location)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ContactDto.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

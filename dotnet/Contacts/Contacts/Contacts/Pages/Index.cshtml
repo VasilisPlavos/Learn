@@ -1,0 +1,67 @@
+﻿@page
+@model Contacts.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+    <div class="form-actions no-color">
+        <p>
+            <a asp-page="Create">Create New</a> |
+            Search here:
+            <input type="text" id="searchContactInput" onkeyup="searchContact()" placeholder="Search..." />
+
+        </p>
+    </div>
+<table class="table" id="contactTable">
+    <thead>
+        <tr>
+            <th>Lastname</th>
+            <th>Firstname</th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactDto[0].Email)
+            </th>
+            <th>Phone</th>
+            <th>Mobile</th>
+            <th>Zip Code</th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactDto[0].ZipCode.Location)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ContactDto) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocalPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilePhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode.Location)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<script src="~/js/contact_search.js"></script>

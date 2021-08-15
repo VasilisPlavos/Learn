@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- 
+      Responsive Web Design Projects - Build a Survey Form
+      Objective: Build a CodePen.io app that is functionally similar to this: https://codepen.io/freeCodeCamp/full/VPaoNP.
+      https://www.freecodecamp.org/learn/responsive-web-design/responsive-web-design-projects/build-a-survey-form
+     -->
+
+    <title>I'm just a form</title>
+  </head>
+
+  <body>
+
+    <!-- Freecodecamp Script for test monitoring -->
+    <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
+    
+    <h1 id="title">I'm just a form. Do me</h1>
+    <p id="description">May you tell me more about yourself?</p>
+
+    <form id="survey-form" action="#">
+
+      <div id="form-group">
+        <label id="name-label" for="name">What's your name? </label>
+        <input type="text" name="name" id="name" placeholder="eg. Anna Maria" required>
+      </div>
+
+      <div id="form-group">
+        <label id="email-label" for="email">What's your email? </label>
+        <input type="email" name="email" id="email" placeholder="eg. maria@tinder.com" required>
+      </div>
+
+      <div id="form-group">
+        <label id="number-label" for="age">How old are you? </label>
+        <input type="number" name="age" id="number" placeholder="eg. 36" required
+        min="1" max="130">
+      </div>
+
+      <div id="form-group">
+        <label id="dropdown-label" for="gender">What is your born sexuality?</label>
+        <select name="gender" id="dropdown">
+          <option disable selected value> Please select </option>
+          <option value="male">Male</option >
+          <option value="female">Female</option>
+          <option value="other">Other / Don't want to share</option>
+        </select>
+      </div>
+
+      <div id="form-group">
+        <label for="color">What color you like more?</label>
+        <input type="radio" name="color" id="whiteColor" value="whiteColor" checked>
+        <label for="whiteColor">White</label>
+        <input type="radio" name="color" id="blackColor" value="blackColor">
+        <label for="blackColor">Black</label>
+      </div>
+
+      <div id="form-group">
+        <label for="music">Types of music you like?</label>
+        
+        <input type="checkbox" name="music_like" value="rap">
+        <label for="rapMusic">Rap</label>
+
+        <input type="checkbox" name="music_like" value="rock">
+        <label for="rockMusic">Rock</label>
+
+      </div>
+
+      <div id="form-group">
+        <label id="comments-label" for="comments">Additional comments </label>
+        <textarea name="comments" id="comments" cols="30" rows="3"></textarea>
+      </div>
+
+
+      <input id="submit" type="submit">
+    </form>
+  </body>
+
+</html>
+
+

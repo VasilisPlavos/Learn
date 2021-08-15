@@ -1,0 +1,40 @@
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: blue;
+    background-color: yellow;
+    border: grey solid 4px;
+    margin: 10px;
+    padding: 10px 10px;
+
+}
+
+h1::before {
+    content: "Κεφάλαιο: ";
+    color: red;
+}
+
+.tennis-players p:nth-child(odd) {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    margin: 1px;
+    
+}
+
+.tennis-players p:nth-child(even){
+    background-color: beige;
+    color: black;
+    padding: 10px;
+    margin: 1px;
+}
+
+.tennis-players p:hover {
+    background-color: red;
+    color: black;
+}
+
+
+[data-vegetable] {color: green}
+
+[vegetable~="spicy"] {color: red}
+

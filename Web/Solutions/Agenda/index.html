@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Strategic Agenda - Tasks</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+</head>
+
+<body>
+  <div id="app">
+    <section class="section">
+      <div class="container">
+        <h1 class="title">
+          Strategic Agenda - Tasks
+        </h1>
+        <div id="fuzzy-matching">
+          <h2 class="title is-3">2. Fuzzy matching</h2>
+          <p class="title is-4">Instructions:</p>
+          <div class="content is-medium">
+            <p>
+              Considering the segments <code>{{ textACode }}</code>
+              and <code>{{ textBCode }}</code>.
+            </p>
+            <p>
+              Create an algorithm to show their edit distance of the real text
+              (i.e. ignoring formatting text, numbers, symbols, punctuation, etc).
+            </p>
+            <p>
+              Ideally, for each of the ignored categories, a -1% penalty needs to be applied.
+            </p>
+            <p>
+              For instance, the edit distance of our example is approx. 95%.
+            </p>
+          </div>
+          <p class="title is-4">Solution:</p>
+          <form v-on:keyup.enter="findEditDistance">
+            <div class="field">
+              <label class="label" for="textA">Please enter text A</label>
+              <div class="control">
+                <input class="input" v-model="textA" type="text" placeholder="Enter Text A">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="textB">Please enter text B</label>
+              <div class="control">
+                <input class="input" v-model="textB" type="text" placeholder="Enter Text B">
+              </div>
+            </div>
+            <div style="margin-top: 20px;">
+              <a class="button is-rounded is-link is-medium" @click="findEditDistance">Find Edit
+                Distance</a>
+            </div>
+          </form>
+          <br>
+          <pre v-if="!editDistance"> Enter TextA and TextB. Then press the button to find edit distance.</pre>
+          <pre v-if="editDistance">The edit distance of these segments is approx. {{ editDistance }}%.</pre>
+          <br><br>
+        </div>
+
+        <div id="batch-selection">
+          <h2 class="title is-3">3. Batch selection</h2>
+          <p class="title is-4">Instructions:</p>
+          <div class="content is-medium">
+            <p>
+              Considering you have a DB with 10 entries and each entry contains X words
+            </p>
+            <p>
+              Create a function to create three batches of segments based on the user's values (two
+              values,
+              first batch and second batch).
+            </p>
+            <p>
+              For instance, the first batch while containing max 400 words (or less), the second batch max
+              250
+              words (or less) and last, the rest.
+            </p>
+            <p>
+              The function will create a batch with the segments 1-5 (real word count 398 words), a batch
+              with
+              the
+              segments 6-8 (real word count 236 words) and a batch with the rest (i.e. segments 9-10).
+            </p>
+          </div>
+          <p class="title is-4">Solution:</p>
+          <form v-on:keyup.enter="createBatches">
+            <div class="field">
+              <label class="label" for="textA">Max words for the first batch?</label>
+              <div class="control">
+                <input class="input" v-model="batchA.maxWords" type="number" placeholder="Enter number">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="textB">Max words for the second batch?</label>
+              <div class="control">
+                <input class="input" v-model="batchB.maxWords" type="number" placeholder="Enter number">
+              </div>
+            </div>
+            <div style="margin-top: 20px;">
+              <a class="button is-rounded is-link is-medium" @click="createBatches">Give me the
+                Batches</a>
+            </div>
+          </form>
+          <br><br>
+          <div>
+
+            <span v-if="batchA.realWords">
+              <p class="title is-5">Batch A</p>
+              <p class="subtitle is-5">Seg. 1 - {{ batchA.segment }}. Real word count
+                {{batchA.realWords }}
+                words.</p>
+              <div class="content">
+                <ol type="1">
+                  <li v-for="i in batchA.values">{{i}}</li>
+                </ol>
+              </div>
+            </span>
+            <br>
+
+            <span v-if="batchB.realWords">
+              <p class="title is-5">Batch B</p>
+              <p class="subtitle is-5">Seg. {{ batchA.segment+1 }} - {{ batchB.segment }}. Real word count
+                {{batchB.realWords }} words.</p>
+              <div class="content">
+                <ol type="1">
+                  <li v-for="i in batchB.values">{{i}}</li>
+                </ol>
+              </div>
+            </span>
+            <br>
+
+            <span v-if="batchC.realWords">
+              <p class="title is-5">Batch C</p>
+              <p class="subtitle is-5">Seg. {{ batchB.segment+1 }} - {{ batchC.segment }}. Real word count
+                {{batchC.realWords }} words.</p>
+              <div class="content">
+                <ol type="1">
+                  <li v-for="i in batchC.values">{{i}}</li>
+                </ol>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <br>
+</body>
+
+<script>
+  "use strict"
+
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        textACode: 'I am <x1> 15 </x1> years old .',
+        textBCode: 'I am <g1> 20 </g1> years old !',
+        textA: 'I am <x1> 15 </x1> years old .',
+        textB: 'I am <g1> 20 </g1> years old !',
+        editDistance: null,
+        batchA: {
+          'maxWords': '',
+          'segment': '',
+          'realWords': 0,
+          'values': []
+        },
+        batchB: {
+          'maxWords': '',
+          'segment': '',
+          'realWords': 0,
+          'values': []
+        },
+        batchC: {
+          'segment': '',
+          'realWords': 0,
+          'values': []
+        },
+        dbOfWords: [{
+            'id': 0,
+            'entry': 'Έναν πάλι το νερό κάτι υπ passage δική με ας. Αγορασμένη γυρίζοντας προβάλλουν εκ αναγνωστών έν επιβληθούν. Οι ασάφεια επαρκώς πω επιλογή βιώσιμο δε ως εκδότες. Πα διηγήματος αν ρευστότητα με οπωσδήποτε. Ιστορία σύμφωνα παλιούς έλληνες πα μερικοί με. Ακόμη ναι πήδος προ νέο πλοκή ζέη. Διηνεκή ανάλογο έλληνες αρ άνοιγμα πατάκης δε. Παγίωση διά τις του νέο πατάκης σταθερή. Κόκκινη δις υπόθεση πορφυρά όλη οπτικής.'
+          },
+          {
+            'id': 1,
+            'entry': 'Επειδή πλευρά ενώ μην μηχανή λαϊκής σκέψης σαν ζώγ. Νέο στεγνώνει δεδομένου τον επισκίασε. Αν με φάτα όμως μάνα ατ. Των τεμιρ αιώνα φράση έως κυρ έρθεν γωνία πιο οποίο. Λέγοντας αν ιι ιστοριών πράγματι. Όμως της όσον και ήχοι. Ενήλικο εξορίες αλλάξει υπάρχει ιι να πι προήλθε αχιλλέα. Διήγησης μία ροή για έκλειναν ταύτισης εξαιτίας διά. Αγαθού τα έλαβαν κόσμοι βλ πω εκείνη ισχυρό.',
+            'words': ''
+          },
+          {
+            'id': 2,
+            'entry': 'Θα εν γέρος νωρίς να τρόπο αυτοί. Από κόψει έμενε κλπ μόνοι γίνει τύποι νέους. Αγαπημένου ερευνητική τα εκ γυρίζοντας εφ. Σε σο ενήλικα φυσικού οριστεί ορίζουν χαμένης πω. Περίπτωση τα εμφανίζει παράλληλη προτίμηση ανεύρεσις ου. Τίτλος απ΄ δύο συνοχή εύκολα μέτωπο στα ψυχικά παίκτη πιο. Τα ήταν σο με αυτο το στις. Τι έλεγχο ατότες να σχεδόν.'
+          },
+          {
+            'id': 3,
+            'entry': 'Το ας γωνία επική ως ήξερε χωρίς. Μερ bausinger τόσες όσο βουβά πήδος είναι σχολή. Προσέγγιση γεωγραφική αν κι σχετίζεται ας. Εν με κόκκινη παιδική πάρκαρε ηρώτησε αναφέρω οι. Σχολιάζει πω νεότερους μπιφτέκια ηλικιακού φαινόμενα κι. Αίσιου της κλπ σίδερο σοφίας παιδιά μου άρνηση νόμιμη ναι. Εφ τύχη το ου πολύ ατ ενός. Οι κατοχή τρένου ατ στάθμη.'
+          },
+          {
+            'id': 4,
+            'entry': 'Με στην έχει στην τη. Αδειάσει ότι ενώ έως ώρα κόκκινον γέροντες. Σχετικής ατ εναντίον ατ αυτόματα αδυναμία μολονότι περιόδου σο το. Κυριότερες τον συγγένειας υπερφυσικό διαλύοντας προ κοινωνικές. Κειμένων ιι πρακτική θα νεόφερτο κι με. Κατ ενώ πρόλογοι δεκαετία συνταγές σχετικής. Ρεαλιστικό συμπαίκτης που γεωγραφική κατασκευής για ζώγ rites. Πολλές αν οι στάσης σο τρένου πετζίν να.'
+          },
+          {
+            'id': 5,
+            'entry': 'Μην σην εποχιακών rites κατανόηση κλιμάκωση στα. Γένεσή πια στάδιο βρήκαν πείρας απ΄ εποχής κάρτες. Κατ εδώ νέοι πει ενός ύφος κεί. Ου συμβάσεις βαλαβάνης ας προσφέρει τη. Οι σε διέπουν λιανίδη μεγάλης να θέματος. Ελάχιστα τραγούδι τεχνητός γνωρίζει αντίληψη το κι το θα διήγησης.'
+          },
+          {
+            'id': 6,
+            'entry': 'Ελένη τόλμη πι να σε είπεν πίστη. Πόρτας τρόπος παιδάς μάκρος έν τα βιβλία βιβλίο. Λύσει μέρος είναι δις νου ώρα μας. Ναι παραμυθά όλα έμπνευση παραμύθι και. Νου μάθει καθώς αιώνα από αρχές. Εκ ιι τη αναζητητή εξηγήσεις ως σκουπίζει. Τόζλουτζας άρα στη αποκλίσεις απευθύνουν μου λογοτεχνία. Βλ καθαυτά κι χρονικά περάσει φιλικοί εμφανής αυστηρά. Αφορούν ξαφνικά σχολικά ας τα κείμενα ατ.'
+          },
+          {
+            'id': 7,
+            'entry': 'Χρειάζεσθε απεικόνιση κοινωνικής δημιουργία το υποδηλώσει ιδιομορφία πω. Ποιο ατ ψηλά ότου τα μιλά θυμό ως τότε. Υπ καθηγητής συνειδητή σιωπηλούς παρόμοιες ατ. Βοηθό πα ζωηρό έν κύρια. Εφ στήθος πολλού σχολές χρόνια λαϊκού το πι ηλικία το. Ανθρώπινης ένα παπουτσιών εμφανιστεί rites ελέγχοντας.'
+          },
+          {
+            'id': 8,
+            'entry': 'Χτύπημα κόκκινα βιβλίου τρομάρα σύμφωνα ότι που παιδικό. Δημιουργία με ειδυλλιακή προσδοκίες σο με αποφασίσει οι φανταστικά. Προ παιγνιώδης για συμπαίκτης κατασκευής. Βράδυ πλέον δεν κύρια βουβά πως τέλει βάζει. Μελετηθεί αφοσίωσης ιι σο ανάγνωσης κινημάτων αντιληπτό βλ εν προσωπική. Νέων θέμα αρχή προς νου κακό μιλά δύο. Τέλη φύση ντεν ως έργα να στον. Βουβά τέχνη σοφία έπλεε εν απ τι δράση.'
+          },
+          {
+            'id': 9,
+            'entry': 'Τι αυτά νικά όταν σώμα εφ μαρί. Του τάξης υπό πρώτα αρχές ενώ όλο ήξερε ήρωας. Επιβάλλει μου έλα απ΄ αναδείξει βασίζεται. Χάσει παιδί ούτως ακόμη ακόμη πας της. Κι προσωπικών ρεαλιστικό ισοδυναμεί αποσκοπούν αν τα συναντούμε επισημάνει. Ορισμένες απ΄ δεν κατέγραψα στη βρίσκεται πνεύματος.'
+          }
+        ]
+      }
+    },
+    methods: {
+      findEditDistance() {
+        this.editDistance = 100 - this.showEditDistance(this.textA, this.textB)
+      },
+
+      showEditDistance(a, b) {
+        var tmp;
+        if (a.length === 0) {
+          return b.length;
+        }
+        if (b.length === 0) {
+          return a.length;
+        }
+
+        if (a.length > b.length) {
+          tmp = a;
+          a = b;
+          b = tmp;
+        }
+
+        var i, j, res, alen = a.length,
+          blen = b.length,
+          row = Array(alen);
+        for (i = 0; i <= alen; i++) {
+          row[i] = i;
+        }
+
+        for (i = 1; i <= blen; i++) {
+          res = i;
+          for (j = 1; j <= alen; j++) {
+            tmp = row[j - 1];
+            row[j - 1] = res;
+            res = b[i - 1] === a[j - 1] ? tmp : Math.min(tmp + 1, Math.min(res + 1, row[j] + 1));
+          }
+        }
+        return res;
+      },
+
+      createBatches() {
+        // initialize application
+        this.batchA.realWords = 0;
+        this.batchB.realWords = 0;
+        this.batchC.realWords = 0;
+        this.batchA.values = [];
+        this.batchB.values = [];
+        this.batchC.values = [];
+        this.batchA.segment = '';
+        this.batchB.segment = '';
+        this.batchC.segment = '';
+
+        // save the number of words in an extra property for flexibility
+        for (let i in this.dbOfWords) {
+          let text = this.dbOfWords[i].entry;
+          this.dbOfWords[i].words = this.wordCount(text).words;
+        }
+
+        // segments starting
+        let i = 0;
+        try {
+          while (this.batchA.realWords + this.dbOfWords[i].words < this.batchA.maxWords) {
+            // console.log(`${i} ${this.dbOfWords[i].words}`);
+            this.batchA.realWords = this.batchA.realWords + this.dbOfWords[i].words
+            this.batchA.values.push(this.dbOfWords[i].entry)
+            i = i + 1
+            this.batchA.segment = i;
+          }
+
+        } catch (e) {}
+
+        try {
+          while (this.batchB.realWords + this.dbOfWords[i].words < this.batchB.maxWords) {
+            // console.log(`${i} ${this.dbOfWords[i].words}`);
+            this.batchB.realWords = this.batchB.realWords + this.dbOfWords[i].words
+            this.batchB.values.push(this.dbOfWords[i].entry)
+            i = i + 1
+            this.batchB.segment = i;
+          }
+        } catch (e) {}
+
+
+        try {
+          while (this.dbOfWords[i].words) {
+            // console.log(`${i} ${this.dbOfWords[i].words}`);
+            this.batchC.realWords = this.batchC.realWords + this.dbOfWords[i].words
+            this.batchC.values.push(this.dbOfWords[i].entry)
+            i = i + 1
+            this.batchC.segment = i
+          }
+        } catch (e) {}
+      },
+
+      wordCount(val) {
+        var wom = val.match(/\S+/g);
+        return {
+          charactersNoSpaces: val.replace(/\s+/g, '').length,
+          characters: val.length,
+          words: wom ? wom.length : 0,
+          lines: val.split(/\r*\n/).length
+        };
+      }
+    }
+  })
+</script>
+
+</html>

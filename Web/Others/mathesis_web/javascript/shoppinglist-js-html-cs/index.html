@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Shopping list</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" media="screen" href="psonia.css" />
+	<script src="psonia.js" defer></script>
+</head>
+
+<body>
+	<h1>Τα ψώνια μας</h1>
+	<label for="product">Να μην ξεχάσω
+		<input type="text" id="productField" />
+	</label>
+	<button id="addToListButton">Προσθήκη</button>
+
+	<ol id="marketList">
+		<li id="productInList">ψάρια <button>διαγραφή</button></li>
+	</ol>
+</body>
+
+<script>
+	const marketList = document.querySelector("#marketList");
+	marketList.addEventListener("click", removeFromList);
+
+	const addToListButton = document.querySelector("#addToListButton");
+	addToListButton.addEventListener("click", addToList);
+
+	const product = document.querySelector("#productField");
+	product.addEventListener('keyup', addToListWithEnter);
+
+	function addToListWithEnter(e){
+		if (e.key === 'Enter'){
+			addToList();
+		}
+	}
+
+	function removeFromList(e) {
+		if (e.target.nodeName === "BUTTON") {
+			var productToDelete = e.target.parentNode;
+			productToDelete.remove();
+		}
+	}
+
+	function addToList() {
+		if (product.value) {
+			var newProduct = document.createElement("li");
+			newProduct.id = "productInList";
+			newProduct.innerText = product.value;
+
+			var newButton = document.createElement("button");
+			newButton.id = "deleteProduct";
+			newButton.innerText = "διαγραφή";
+			newProduct.appendChild(newButton);
+			marketList.appendChild(newProduct);
+			product.value = "";
+		} else {
+			alert('Γράψτε κάποιο προϊόν πρώτα!')
+		}
+	}
+</script>
+
+</html>

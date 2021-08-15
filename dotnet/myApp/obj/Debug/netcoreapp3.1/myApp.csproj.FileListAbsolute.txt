@@ -1,0 +1,11 @@
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\bin\Debug\netcoreapp3.1\myApp.exe
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\bin\Debug\netcoreapp3.1\myApp.deps.json
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\bin\Debug\netcoreapp3.1\myApp.runtimeconfig.json
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\bin\Debug\netcoreapp3.1\myApp.runtimeconfig.dev.json
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\bin\Debug\netcoreapp3.1\myApp.dll
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\bin\Debug\netcoreapp3.1\myApp.pdb
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\obj\Debug\netcoreapp3.1\myApp.csprojAssemblyReference.cache
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\obj\Debug\netcoreapp3.1\myApp.AssemblyInfoInputs.cache
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\obj\Debug\netcoreapp3.1\myApp.AssemblyInfo.cs
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\obj\Debug\netcoreapp3.1\myApp.dll
+C:\Users\vplav\Downloads\Gits\LearnWEB\dotnet\myApp\obj\Debug\netcoreapp3.1\myApp.pdb

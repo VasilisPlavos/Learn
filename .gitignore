@@ -1,0 +1,4 @@
+*node_modules/
+app5-vue-mySQL/passwords.txt
+*package-lock.json
+*.env

@@ -1,0 +1,39 @@
+:root {
+    --bg_color: #efefef;
+    --light_text: #a39d9e;
+    --dark_text: #363b41;
+    --active_color_dark: #e1da07;
+    font-size: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+    font-size: 5em;
+    padding: 1em;
+    color: var(--active_color_dark);
+    text-shadow: 3px 3px 3px rgba(0,0,0, 0.75);
+    background-color: var(--bg_color);
+}
+
+.poem {
+    white-space: pre-line;
+    margin: 1em;
+    font-size: 1.5em;
+    max-width: 30em;
+    line-height: 1.5em;
+    padding: 1em;
+}
+.verse:hover {
+    margin-left: 3em;
+    background-color: var(--dark_text);
+    color: var(--active_color_dark);
+    box-shadow: 10px 10px 30px rgba(0,0,0, 0.7);
+    padding: 1em;
+    cursor: context-menu;
+}
+.verse::first-letter {
+    font-size: 2em;
+    font-style: italic;
+    font-family: Times;
+    font-weight: 600;
+}

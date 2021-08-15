@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='t5.css'> -->
+</head>
+<body>
+    <div onclick="runAlert('inline event example')">κλικ για alert (με inline event handler)</div>
+    <br>
+    <button id="btnEvent">κλικ για alert (με DOM event)</button>
+    <br><br>
+    <div id="eventListenerExample">Εδώ ο event listener</div>
+
+    
+</body>
+
+<script>
+function runAlert(num){
+    alert(num);
+}
+
+let btn = document.getElementById('btnEvent');
+btn.onclick = function() {runAlert('dom event example')};
+
+window.onload = () => console.log('window loaded');
+
+
+let el = document.getElementById('eventListenerExample');
+el.addEventListener("click", function() {runAlert('event listener example')});
+</script>
+
+
+</html>

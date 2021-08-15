@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Βαθμοί</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>Βαθμολογία</h1>
+    <div>
+      <label for="grade">
+        Βαθμός (0-10)
+        <input type="number" id="this-grade" min="0" max="10" />
+      </label>
+      <input type="button" id="calculateButton" value="Εισαγωγή" />
+      <input type="button" id="resetButton" value="Καθαρισμός" />
+    </div>
+    <br />
+    <div>
+      <label for="average-grade">Μέση τιμή: </label>
+      <input type="text" id="average" readonly />
+      <label for="number-of-grades">Πλήθος βαθμών: </label>
+      <input type="text" id="numOfGrades" readonly />
+    </div>
+  </body>
+  <script src="main.js"></script>
+
+</html>

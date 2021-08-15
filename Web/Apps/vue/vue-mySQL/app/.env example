@@ -1,0 +1,7 @@
+# hostinger database
+MYSQL_DATABASE= 'databasename'
+MYSQL_HOST= 'hosturl'
+MYSQL_USER= 'user'
+MYSQL_PASSWORD= 'pass'
+MYSQL_PORT= 1337
+

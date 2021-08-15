@@ -1,0 +1,78 @@
+﻿@page
+@model Contacts.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Contact</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ContactDto.LastName" class="control-label">Lastname</label>
+                <input asp-for="ContactDto.LastName" class="form-control" />
+                <span asp-validation-for="ContactDto.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactDto.FirstName" class="control-label">Firstname</label>
+                <input asp-for="ContactDto.FirstName" class="form-control" />
+                <span asp-validation-for="ContactDto.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactDto.Email" class="control-label"></label>
+                <input asp-for="ContactDto.Email" class="form-control" />
+                <span asp-validation-for="ContactDto.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactDto.LocalPhone" class="control-label">Phone</label>
+                <input asp-for="ContactDto.LocalPhone" class="form-control" />
+                <span asp-validation-for="ContactDto.LocalPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactDto.MobilePhone" class="control-label">Mobile</label>
+                <input asp-for="ContactDto.MobilePhone" class="form-control" />
+                <span asp-validation-for="ContactDto.MobilePhone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactDto.ZipCode.Number" class="control-label">Zip Code</label>
+                <select asp-for="ContactDto.ZipCode.Id" class="custom-select" id="zipCodeSelect" onchange="UpdateLocation()">
+                    <option value="0" selected>-----</option>
+                    @foreach (var zip in Model.ZipCode)
+                    {
+                        <option value="@zip.Id">@Html.DisplayFor(modelItem => zip.Number)</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactDto.ZipCode.Location" class="control-label">Location</label>
+                <select asp-for="ContactDto.ZipCode.Id" class="custom-select" id="locationSelect" onchange="UpdateZip()">
+                    <option value="0" selected>-----</option>
+                    @foreach (var zip in Model.ZipCode)
+                    {
+                        <option value="@zip.Id">@Html.DisplayFor(modelItem => zip.Location)</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+<script src="~/js/zipcode_handler.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Translation with Vue I18n</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <button v-for="locale in locales" :key="locale" @click="switchLocale(locale)">{{locale}}</button>
+        </div>
+        <p>{{ $t('language') }}</p>
+        <p>{{ message }}</p>
+        <p>{{ $t('main.welcome', {company: 'Lokalise'}) }}</p>
+        <p>{{ $t('message') }}</p>
+        <p>{{ $tc('main.new_message', 4) }}</p>
+        <p>{{ $tc('banana', 1) }}</p>
+        <h1>otherTests {{m}}</h1>
+        <p>{{ $t('key1') }}</p>
+        <p>{{ $t('nested.message1') }}</p>
+        <p>{{ $t('linkedString') }}</p>
+        <p>{{ $t('errors[0]') }}</p>
+        <p>{{ $t('errors[3]') }}</p>
+        <p>{{ $t('errors[1].internal1') }}</p>
+        <p>{{ $t('errors[2][0]') }}</p>
+        <p>{{ $t(m) }}</p>
+
+        <p>
+            Plugin page:
+            <a href="https://kazupon.github.io/vue-i18n/">kazupon.github.io/vue-i18n/</a>
+        </p>
+    </div>
+</body>
+
+<script>
+    const messages = {
+        en: {
+            "language": "English",
+            "message": "hello i18n!!",
+            "banana": "no bananas | {n} banana | {n} bananas",
+            "main": {
+                "welcome": "Hello from {company}!",
+                "new_message": "no messages | one message | {count} messages"
+            },
+            "linkedString": "'@:message + @:key1'",
+
+            "key1": "this is message1",
+            "nested": {
+                "message1": "this is nested message1"
+            },
+            "errors": [
+                "this is 0 error code message",
+                {
+                    "internal1": "this is internal 1 error message"
+                },
+                [
+                    "this is nested array error 1"
+                ],
+                "dou"
+            ]
+        },
+        el: {
+            "language": "Ελληνικά",
+            "message": "γεια i18n !!",
+            "banana": "καμία μπανάνα | {n} μπανάνα | {n} μπανένας",
+            "main": {
+                "welcome": "Καλημέρα από την εταιρεία {company}!",
+                "new_message": "κανένα μήνυμα | ένα μήνυμα | {count} μηνύματα |  {count} μηνυματάκια"
+            },
+            "linkedString": "'@:message + @:key1'",
+
+            "key1": "κλειδί1",
+            "nested": {
+                "message1": "nested μήνυμα1"
+            },
+            "errors": [
+                "0 error code μήνυμα",
+                {
+                    "internal1": "internal 1 error μήνυμα"
+                },
+                [
+                    "nested array error 1 μήνυμα"
+                ],
+                "ντου"
+            ]
+        }
+    }
+
+    const i18n = new VueI18n({
+        locale: 'en', // set locale
+        messages, // set locale messages
+    })
+
+    new Vue({
+        i18n,
+        el: '#app',
+        data() {
+            return {
+                msg: String,
+                locales: ['en', 'el'],
+                message: 'text',
+                m: ''
+            }
+        },
+        mounted() {
+            this.m = 'errors[2][0]';
+        },
+        methods: {
+            switchLocale(locale) {
+                this.$i18n.locale = locale;
+            }
+        }
+    }).$mount('#app')
+</script>
+
+
+<style>
+    h3 {
+        margin: 40px 0 0;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    a {
+        color: #42b983;
+    }
+</style>
+
+</html>

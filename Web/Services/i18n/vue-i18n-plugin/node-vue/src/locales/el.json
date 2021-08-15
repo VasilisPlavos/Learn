@@ -1,0 +1,24 @@
+{
+  "message": "γεια i18n !!",
+  "banana": "καμία μπανάνα | {n} μπανάνα | {n} μπανένας",
+  "main": {
+    "welcome": "Καλημέρα από την εταιρεία {company}!",
+    "new_message": "κανένα μήνυμα | ένα μήνυμα | {count} μηνύματα |  {count} μηνυματάκια"
+  },
+  "linkedString": "'@:message + @:key1'",
+
+  "key1": "κλειδί1", 
+  "nested": { 
+    "message1": "nested μήνυμα1"
+  },
+  "errors": [
+    "0 error code μήνυμα",
+    {
+      "internal1": "internal 1 error μήνυμα"
+    },
+    [
+      "nested array error 1 μήνυμα"
+    ],
+    "ντου"
+  ]
+}

@@ -1,0 +1,10 @@
+body {
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+.box {
+    padding: o.5em;
+    border: 0.2em solid red;
+    margin: 1em;
+}

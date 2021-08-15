@@ -1,0 +1,128 @@
+.energy-declaration-wrapper {
+    border: 5px solid #28a5d7;
+    display: inline-block;
+    min-width: 108px;
+    padding: 10px;
+    border-radius: 11px;
+  }
+  .energy-consuption {
+    font-family: Arial, sans-serif;    
+  }
+  .energy-consuption strong {
+    font-size: 200%;
+    margin-right: 0.1em;
+    margin-bottom: 0;
+  }
+  .energy-label{
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 16px;
+    height: 20px;
+    display: table;
+    color: white;
+    text-align: left;
+    padding: 3px 5px ;
+    background: hotpink;
+    border-color: hotpink;
+    margin-bottom: 5px;
+  }
+  .energy-label span {
+    display: block;
+    margin-top: -2px
+  }
+  
+  .energy-label-right:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top:  0;
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent; 
+  }
+  .energy-label-right:before{
+    right: -8px;
+    border-left: 8px solid transparent; 
+    border-left-color: inherit;
+  }
+  
+  .energy-label[data-luminaire-energy-class="a++"]{
+    background: #27974f; 
+    border-color: #27974f;
+  }
+  .energy-label[data-luminaire-energy-class^="a+"] span{
+    display:block;
+    margin-top: -2px
+  }
+  .energy-label[data-luminaire-energy-class="a+"]{
+    background: #59ad4f; 
+    border-color: #59ad4f;
+    min-width: 40px;
+  }
+  .energy-label[data-luminaire-energy-class="a"]{
+    background: #bbce4c; 
+    border-color: #bbce4c;
+    min-width: 50px;
+  }
+  .energy-label[data-luminaire-energy-class="b"]{
+    background: #ffed42; 
+    border-color: #ffed42;
+    min-width: 60px;
+  }
+  .energy-label[data-luminaire-energy-class="c"]{
+    background: #f0b041; 
+    border-color: #f0b041;
+    min-width: 70px;
+  }
+  .energy-label[data-luminaire-energy-class="d"]{
+    background: #de6637; 
+    border-color: #de6637;
+    min-width: 80px;
+  }
+  .energy-label[data-luminaire-energy-class="e"]{
+    background: #d22531; 
+    border-color: #d22531;
+    min-width: 90px;
+  }
+  
+  /* WIP*/
+  /*.label-wrapper {
+    position: relative;
+    border: 3px solid green;
+  
+  }*/
+  .cross {
+    width: 80%;
+    height: 80%;
+    background-color: hotpink;
+    position: absolute;
+    bottom: 0;
+  }
+  .cross:before, 
+  .cross:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid yellow;
+    border-left: 2px solid yellow;
+   /* transform: rotate(135deg);*/
+    transform: translateX(-50%) rotate(135deg);
+  }
+  .cross:after {
+      transform: translateX(50%) rotate(-45deg);
+  }
+  /*
+  a++ = 27974f
+  a+ = 59ad4f
+  a = bbce4c
+  b = ffed42
+  c = f0b041
+  d = de6637
+  e = d22531
+  */

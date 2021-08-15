@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+
+    <title>Our First Webpage</title>
+    <link href="https://fonts.googleapis.com/css?family=Barlow" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <header class="fixed-bar">
+            <h1 class="page-title" id="demo">Mike's World</h1>
+        </header>
+
+        <vueTests>
+
+            <div id="app">
+                {{ message }}
+            </div>
+        </vueTests>
+
+
+
+
+    </main>
+
+</body>
+
+<script>
+    var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+
+
+</script>
+
+
+
+<script>
+    var d = timeFunction();
+    document.getElementById("demo").innerHTML = d;
+
+    function timeFunction(){
+        var d = new Date();
+        var n = d.getDay();
+        if (n == 2) {
+            return n;
+        } else {
+            return 'nope';
+        }
+    }
+</script>
+
+</html>

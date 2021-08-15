@@ -1,0 +1,98 @@
+<!-- 
+I select Vue with Vuetify because I have familiarity with these technologies.
+I use API from Alpha Vantage for updating the currencies.
+I use Axios library for HTTP and API requests.
+More in README.md => https://github.com/VasilisPlavos/LearnWEB/blob/master/HTML-CSS-JS/Others/currency-calculator/README.md
+ -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Currency Calculator - Vasilis Plavos - Exercises</title>
+    <link rel="icon" href="./currency-icon.png" sizes="32x32" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <div id="navigation-menu">
+                <v-app-bar color="white" dense>
+                    <v-toolbar-title>Vasilis Plavos - Exercises</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        href="https://plavos.com/dev?utm_source=indeed&utm_medium=referral&utm_campaign=currency_calculator"
+                        icon>
+                        <v-icon color=red>mdi-heart</v-icon>
+                    </v-btn>
+                </v-app-bar>
+            </div>
+            <v-main>
+                <v-container>
+                    <br>
+                    <div id="calculator-container">
+                        <v-card max-width="650" min-width="270" min-height="200">
+                            <v-card-text>
+                                <h1 class="display-1 text--primary">Currency Calculator</h1>
+                                <p>Enter the amount and select the currencies to do the calculation.</p>
+                            </v-card-text>
+                            <v-col>
+                                <v-text-field v-model="amount" clearable autofocus :rules="amountRules" label="Amount" required outlined v-on:keyup.enter="calculate">
+                                </v-text-field>
+                            </v-col>
+                            <v-col>
+                                <v-select v-model="selectedFromCurrency" :items="currencies" label="From" outlined>
+                                </v-select>
+                            </v-col>
+                            <v-col>
+                                <v-select v-model="selectedToCurrency" :items="currencies" label="To" outlined>
+                                </v-select>
+                            </v-col>
+                            <v-col>
+                                <v-btn color="green" @click="calculate" dark large>Calculate</v-btn>
+                            </v-col>
+                            <v-col class="display-1">
+                                {{ exchangeResults }}
+                            </v-col>
+                            <v-card-text>
+                                <p><strong>Warning:</strong> The API limit is 5 requests per 1 minute. Thank you!</p>
+                            </v-card-text>
+                        </v-card>
+                    </div>
+
+                    <v-row justify="center">
+                        <v-dialog v-model="errorModal.isActive" persistent max-width="500">
+                            <v-card>
+                                <v-card-title class="headline">{{ errorModal.title }}</v-card-title>
+                                <v-card-text>{{ errorModal.subTitle }}</v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="primary" @click="errorModal.isActive = false">OK</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </v-row>
+                </v-container>
+            </v-main>
+            <v-footer app>
+                <h3>© 2020 Vasilis Plavos</h3>
+            </v-footer>
+        </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- versioning the js file to skip caching versions if required -->
+    <script src='main.js?v=20.090814'></script>
+</body>
+
+
+</html>

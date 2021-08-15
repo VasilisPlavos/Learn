@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Axios</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                JSON Object - Axios
+            </h1>
+
+            <div id="app">
+                {{ info }}
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                info: null
+            }
+        },
+        mounted() {
+            // the simple way is JS Object > post to Axios
+            let postQ = {
+                name: "Breanne Leven",
+                email: "bleven2@parallels.com",
+                phone: "9979512605",
+                associatedCompany: null,
+                jobTitle: "Design Engineer"
+            }
+
+            // the post to axios param
+            axios
+                    .post('api url here', postQ)
+                    .then(response => (this.info = response))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+
+            // if you have the data in JSON then you have to do this. JSON to JS Object > JS Obj post to Axios
+            let qTxt =
+                `{"name":"Julianne Bachellier","email":"jbachellier3@free.fr","phone":"2248493853","associatedCompany":"Jetwire","jobTitle":"Office Assistant III"}`
+
+            postQ = JSON.parse(qTxt);
+
+            // if you have a list of JSONs then add them in a JS list > for each JSON to JS Obj > JS obj post to Axios
+            var contacts = [
+                `{"name":"Ginni Prettjohn","email":"gprettjohn6@multiply.com","phone":null,"associatedCompany":null,"jobTitle":"Registered Nurse" }`,
+
+                `{"name":"Beret Moylan","email":"bmoylan7@github.io","phone":"3932494454","associatedCompany":"Yabox","jobTitle":"Account Coordinator" }`,
+
+                `{"name":"Rorie Moreing","email":"rmoreing8@google.ca","phone":"7912069943","associatedCompany":null,"jobTitle":null }`,
+
+                `{"name":"Kitty Faraker","email":"kfaraker9@yellowbook.com","phone":"6584639035","associatedCompany":null,"jobTitle":"Assistant Professor" }`
+            ]
+            
+            // Here is the method for the list
+            for (var i = 0; i < contacts.length; i++) {
+                postQ = JSON.parse(contacts[i]);
+                axios
+                    .post('api url here', postQ)
+                    .then(response => (this.info = response))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+
+            // This just returning some data to the html
+            this.info = postQ;
+
+        }
+    })
+</script>
+
+</html>

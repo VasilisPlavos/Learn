@@ -1,0 +1,64 @@
+{
+    "offers": [
+        {
+            "id": 3466424,
+            "src_id": "75",
+            "ad_type_id": 2,
+            "promo_types": {
+                "top": 0,
+                "exclusive": 0,
+                "urgent": 0
+            },
+            "suspicious": 0,
+            "archive": 0,
+            "date_expire": "2020-12-01 14:59:44",
+            "date_deleted": null,
+            "images_cnt": {
+                "primary": 1,
+                "gallery": 12,
+                "blueprints": 0,
+                "total": 13
+            }
+        },
+        {
+            "id": 3466424,
+            "src_id": "79",
+            "ad_type_id": 2,
+            "promo_types": {
+                "top": 0,
+                "exclusive": 0,
+                "urgent": 0
+            },
+            "suspicious": 0,
+            "archive": 0,
+            "date_expire": "2020-12-01 14:59:44",
+            "date_deleted": null,
+            "images_cnt": {
+                "primary": 1,
+                "gallery": 12,
+                "blueprints": 0,
+                "total": 13
+            }
+        },
+        {
+            "id": 3466424,
+            "src_id": "111",
+            "ad_type_id": 2,
+            "promo_types": {
+                "top": 0,
+                "exclusive": 0,
+                "urgent": 0
+            },
+            "suspicious": 0,
+            "archive": 0,
+            "date_expire": "2020-12-01 14:59:44",
+            "date_deleted": null,
+            "images_cnt": {
+                "primary": 1,
+                "gallery": 12,
+                "blueprints": 0,
+                "total": 13
+            }
+        }
+    ]
+}
