@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codelux.NetCore" Version="1.1.0" />
+    <PackageReference Include="Codelux.NetCore.ServiceStack" Version="1.1.0" />
+    <PackageReference Include="ServiceStack.OrmLite.Core" Version="5.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Example.Users.ManagementService.Common\Example.Users.ManagementService.Common.csproj" />
+  </ItemGroup>
+
+</Project>

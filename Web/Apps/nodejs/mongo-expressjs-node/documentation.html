@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<!-- saved from url=(0161)https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CloseBrace | The Dead-Simple Step-By-Step Guide for Front-End Developers to Getting Up and Running With Node.JS, Express, and MongoDB</title>
+      <meta name="description" content="Set up the full stack and have a webpage running in 30 minutes. Make it talk to your DB in another 30.">
+    <meta name="google-site-verification" content="ZlnNtuycQYx6jR8i4Eeqdu7lHbDvus2KWQv-5WyhdoM">
+    <link rel="shortcut icon" href="https://closebrace.com/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://closebrace.com/apple-touch-icon.png">
+    <link href="./documentation_files/css" rel="stylesheet">
+    <link href="./documentation_files/site.css" rel="stylesheet">
+
+    
+
+  <link rel="stylesheet" type="text/css" href="./documentation_files/prettify.css"></head>
+  <body>
+
+    <!--[if lt IE 11]>
+      <h3 class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</h3>
+    <![endif]-->
+          <!-- HEADER -->
+          <header>
+            <div class="inner">
+      
+              <!-- LOGO -->
+              <div class="logo">
+                <a href="https://closebrace.com/" class="hide-above-mobile"><img src="./documentation_files/logo.png" alt="CloseBrace Logo" class="img-logo"></a>
+                <a href="https://closebrace.com/" class="hide-mobile"><img src="./documentation_files/closebrace_logo_tm.svg" alt="CloseBrace Logo With Text" class="img-logo"></a>
+              </div>
+              <!-- /LOGO -->
+      
+              <!-- MENU & SEARCH -->
+              <div class="menu-wrap">
+      
+                <!-- MENU -->
+                <div class="menu">
+                  <div class="hamburger" id="hamburger">
+                    <a href="https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb#" class="link-main-nav"><img src="./documentation_files/hamburger.png" alt="menu icon"></a>
+                    <a href="https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb#" class="text link-main-nav">Menu</a>
+                  </div>
+                  <div class="main-nav" id="mainNav">
+                            <nav class="main-menu">
+                              <ul>
+                                      <li class="active">
+                                        <a href="https://closebrace.com/tutorials">Tutorials</a>
+                                      </li>
+                                      <li>
+                                        <a href="https://closebrace.com/about">About</a>
+                                      </li>
+                              </ul>
+                            </nav>            </div>
+                </div>
+                <!-- /MENU -->
+      
+                <!-- SEARCH -->
+                        <div class="search">
+                          <button type="button" class="btn btn-grey btn-outline btn-search" id="btnSearch"><span class="hide-phone">Search</span></button>
+                          <div class="search-box" id="searchBox">
+                            <div class="search-box-inner">
+                              <form method="post" action="https://closebrace.com/search">
+                                <input type="text" placeholder="SEARCH" class="searchbox" id="formMainSearch" name="searchTerms">
+                                <button type="submit" class="search-button">Go</button>
+                              </form>
+                              <a href="https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb#" id="lnkSearchClose" class="close-link">X</a>
+                            </div>
+                          </div>
+                        </div>          <!-- /SEARCH -->
+              </div>
+              <!-- /MENU & SEARCH -->
+      
+              <!-- USER BOX -->
+                      <div class="user-box">
+                        <p class="user-menu" id="userMenu">
+                            <a href="https://closebrace.com/account/log-in" class="log-in-link" id="linkHeaderLogIn">Log In</a> |
+                            <a href="https://closebrace.com/account/register">Register</a>
+                        </p>
+                        <div class="user-avatar">
+                            <a href="https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb#" id="linkUserImage"><img src="./documentation_files/usericon_id76rb.png" alt="Default User Icon" class="user-icon"></a>
+                        </div>
+              
+                        <div class="login-box" id="headerLoginBox">
+                          <div id="errorBox" class="error-box"></div>
+                          <form name="formLogin" id="formLogin" method="post" action="https://closebrace.com/account/log-in">
+                            <input type="hidden" name="action" value="login">
+                            <input type="hidden" name="destination" id="inputDestination" value="https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb">
+                            <fieldset>
+                              <label>Email <input type="email" name="userEmail" placeholder="codemaster@closebrace.com" id="userEmail" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"></label>
+                              <label>Password <input type="password" name="userPassword" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"></label>
+                              <label>
+                            </label></fieldset>
+                            <button type="submit" id="btnLogInSubmit" class="btn btn-primary">Log In</button> &nbsp;
+                            <button type="button" id="btnLogInCancel" class="btn btn-grey">Cancel</button>
+                          </form>
+                          <p>
+                            Forgot your password? <a href="https://closebrace.com/account/forgot-password">Click here to reset it</a>.
+                          </p>
+                        </div>
+              
+                      </div>        <!-- /USER BOX -->
+      
+            </div>
+          </header>
+          <!-- /HEADER -->
+
+    <!-- WRAPPER -->
+    <div id="wrapper" class="pad">
+
+            <!-- CONTENT -->
+      <article>
+
+        <!-- TITLE BOX -->
+        <section class="title-box">
+          <h1>The Dead-Simple Step-By-Step Guide for Front-End Developers to Getting Up and Running With Node.JS, Express, and MongoDB</h1>
+          <h2>Set up the full stack and have a webpage running in 30 minutes. Make it talk to your DB in another 30.</h2>
+          <div class="byline">
+            By <a href="https://closebrace.com/u/cwbuecheler">Christopher Buecheler</a> &nbsp; | &nbsp;
+            <a href="https://twitter.com/closebracejs" target="_blank">@closebracejs</a> &nbsp; | &nbsp;
+            Last Updated: 7th Aug 2019
+            <br>Posted In: <a href="https://closebrace.com/categories/nodejs-basics">Node.js Basics</a>
+          </div>
+        </section>
+        <!-- /TITLE BOX -->
+
+
+          <!-- INTRO IMAGE -->
+          <section class="intro-image">
+            <img src="./documentation_files/c8zegfht6jrzukkeuu0k.png" alt="Main Content Image">
+          </section>
+          <!-- /INTRO IMAGE -->
+
+        <!-- TUTORIAL INFO -->
+        <section class="tutorial-info">
+          <p>This tutorial has been tested with <a href="http://nodejs.org/">Node.js v10.15.x</a>, <a href="http://mongodb.com/">MongoDB v4.0.x</a>, and <a href="http://expressjs.com/">Express v4.16.x</a>. It will not work properly with older versions on some systems.</p>
+<p><a href="https://github.com/cwbuecheler/node-tutorial-for-frontend-devs">You can find/fork the entire sample project on GitHub</a></p>
+<p>This tutorial was originally published on <a href="http://cwbuecheler.com/">cwbuecheler.com</a> and <strong>does not</strong> include a video component.</p>
+
+        </section>
+        <!-- /TUTORIAL INFO -->
+
+        <!-- ARTICLE TEXT -->
+        <section class="article-text">
+            <p><strong>Updated February 1, 2019!</strong></p>
+<h3 id="introduction">Introduction</h3>
+<p>There are approximately one hundred million tutorials on the web for getting a "Hello, World!" app running with Node.js. This is great! It's especially great if your goal is to greet the world and then give up on your web career and go spend the rest of your life as, like, a jockey or something. That doesn't really describe most of us, so we go looking for more tutorials.</p>
+<p>In my experience, the "next level" tutorials out there seem about 30 levels further along. We go from "Hello, World!" to building out an entire blogging system with comments. Which is also great, but a lot of times those tutorials assume the reader has done a whole bunch of intermediate fiddling, and they often drop a bunch of big functions on you all at once. I tend to learn best by making lots of smaller, intermediate steps, and I don't think I'm the only one.</p>
+<p>I'm not the only one, right?</p>
+<p>Well, <a href="https://www.youtube.com/watch?v=z6ODMDtG6-I">good news, everyone!</a> I've done the fiddling and read a bunch of tutorials and shouted at my command prompt until things finally worked. I have a web project up and running which uses Node.JS, the Express framework, the EJS HTML pre-processor, and MongoDB for data. I can read to and write from the DB. From there, the sky's the limit.</p>
+<p>Here's the deal: I'm going to show you how to get all of this stuff set up. I'll be assuming that you're a front-end developer who knows HTML5/CSS3/JavaScript well enough that I don't have to explain those. If that's you, then this should be a solid primer.</p>
+<p>Your app will look pretty, it will connect to a DB, it'll get some results, and it'll do stuff with those results. Then for kicks we'll also make it save data to the DB. Through it all, I will explain what the code does, and how to write it, instead of just giving you massive functions to stare at. We'll go from nothing even installed, to a DB-driven web app written in a language you fully understand, and the foundation necessary to build additional functionality into your app. And we'll do it in about 60 minutes of installation and coding time. Is that awesome? I submit that it is.</p>
+<p>Let's go.</p>
+<h3 id="part-i-15-minutes-of-installing">Part I – 15 minutes of installing</h3>
+<p>If you're really starting from scratch, then getting everything up and running takes a little bit of time. None of it is difficult. I run Windows 10 on my main machine, so it'll be slightly different for those on a Mac or Ubuntu or other *nix system, but it's principally the same thing in all cases.</p>
+<h4 id="step-1-install-node-js">Step 1 – Install Node.js</h4>
+<p>This is really easy. Hit the <a href="http://nodejs.org/">Node.js website</a> and click the big green Install button for the LTS (long-term-stable) version. It'll detect your OS and give you the appropriate installer. Run the installer. That's it, you have installed Node.js and, equally important, NPM, which lets you add all kinds of great stuff to Node quickly and easily.</p>
+<ul>
+<li><strong>Open a command prompt</strong></li>
+<li><strong>cd to the directory in which you wish to keep your test apps</strong>
+(for the purposes of this tutorial, C:\node).</li>
+</ul>
+<h4 id="step-2-install-express-generator">Step 2 – Install Express Generator</h4>
+<p>Now that we have Node running, we need the rest of the stuff we're going to actually use to create a working website. To do that we're going to install Express, which is a framework that takes Node from a barebones application and turns it into something that behaves more like the web servers we're all used to working with (and actually quite a bit more than that). We need to start with Express-Generator, which is actually different than Express itself … it's a scaffolding app that creates a skeleton for express-driven sites. In your command prompt, type the following:</p>
+<div class="code-box">
+<h5>Command C:\node&gt;</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node</span><span class="pun">&gt;</span><span class="pln">npm install </span><span class="pun">-</span><span class="pln">g express</span><span class="pun">-</span><span class="pln">generator</span></pre>
+</div>
+
+<p>The generator should auto-install, and since it (like all packages installed with -g) lives in your master NPM installation directory, it should already be available in your system path. So let's use our generator to create the scaffolding for a website.</p>
+<h4 id="step-3-create-an-express-project">Step 3 – Create an Express Project</h4>
+<p>We're going to use Express and EJS, but not the Stylus CSS preprocessor (which people sometimes use in this stack). We're just going to use straight CSS for right now. We have to use EJS or another templating engine to gain access to our Node/Express-based data. EJS's not hard to learn if you already know HTML, since it's just HTML with some embedded JavaScript. Express defaults to Jade, but we're not using that because a) it's deprecated in favor of the new version, which is called Pug, and b) it's indentation-based and I don't like indentation-based markup. It's too easy for one accidental extra tab or space to break your whole page.</p>
+<p>A quick note on indentation: everything is this tutorial has been normalized to 2-space indents because that's become standard in the JavaScript world. If you want to use four spaces, or actual tabs, that's just fine by me.</p>
+<p>Anyway, still in c:\node or wherever you're storing your node apps, type this:</p>
+<div class="code-box">
+<h5>Command C:\node\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node</span><span class="pun">&gt;</span><span class="pln">express </span><span class="pun">--</span><span class="pln">view</span><span class="pun">=</span><span class="str">"ejs"</span><span class="pln"> nodetest1</span></pre>
+</div>
+
+<p>Hit enter and watch it go. You'll see something like this:</p>
+<div class="code-box">
+<h5>Command C:\node\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node</span><span class="pun">&gt;</span><span class="pln">express </span><span class="pun">--</span><span class="pln">view</span><span class="pun">=</span><span class="str">"ejs"</span><span class="pln"> nodetest1
+
+create </span><span class="pun">:</span><span class="pln"> nodetest1\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\public\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\public\javascripts\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\public\images\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\public\stylesheets\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\public\stylesheets\style</span><span class="pun">.</span><span class="pln">css
+create </span><span class="pun">:</span><span class="pln"> nodetest1\routes\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\routes\index</span><span class="pun">.</span><span class="pln">js
+create </span><span class="pun">:</span><span class="pln"> nodetest1\routes\users</span><span class="pun">.</span><span class="pln">js
+create </span><span class="pun">:</span><span class="pln"> nodetest1\views\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\views\error</span><span class="pun">.</span><span class="pln">ejs
+create </span><span class="pun">:</span><span class="pln"> nodetest1\views\index</span><span class="pun">.</span><span class="pln">ejs
+create </span><span class="pun">:</span><span class="pln"> nodetest1\app</span><span class="pun">.</span><span class="pln">js
+create </span><span class="pun">:</span><span class="pln"> nodetest1\package</span><span class="pun">.</span><span class="pln">json
+create </span><span class="pun">:</span><span class="pln"> nodetest1\b</span><span class="kwd">in</span><span class="pln">\
+ create </span><span class="pun">:</span><span class="pln"> nodetest1\b</span><span class="kwd">in</span><span class="pln">\www
+
+change directory</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> cd nodetest1
+
+install dependencies</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> npm install
+
+run the app</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> SET DEBUG</span><span class="pun">=</span><span class="pln">nodetest1</span><span class="pun">:*</span><span class="pln"> </span><span class="pun">&amp;</span><span class="pln"> npm start
+</span></pre>
+</div>
+
+<h4 id="step-4-edit-dependencies">Step 4 – Edit Dependencies</h4>
+<p><strong>MAKE SURE TO CD INTO YOUR <code>nodetest</code> FOLDER.</strong> OK, now we have some basic structure in there, but we're not quite done. You'll note that the express-generator routine created a file called <code>package.json</code> in your <code>nodetest1</code> directory. Open this up in a text editor and it'll look like this:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\package.json</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pun">{</span><span class="pln">
+  </span><span class="str">"name"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"nodetest1"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"version"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"0.0.0"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"private"</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"scripts"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"start"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"node ./bin/www"</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="str">"dependencies"</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"cookie-parser"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"~1.4.3"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"debug"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"~2.6.9"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"ejs"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"~2.5.7"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"express"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"~4.16.0"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"http-errors"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"~1.6.2"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"morgan"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"~1.9.0"</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span></pre>
+</div>
+
+<p>This is a basic JSON file describing our app and its dependencies. We need to add a few things to it. Specifically, calls for MongoDB and Monk. We could do that by editing our file … but we can also install those dependencies with NPM and it'll add them automatically. Head back to your command line and type the following:</p>
+<div class="code-box">
+<h5>Command C:\node\nodetest1</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node\nodetest1</span><span class="pun">&gt;</span><span class="pln">npm install </span><span class="pun">--</span><span class="pln">save monk@</span><span class="pun">^</span><span class="lit">6.0</span><span class="pun">.</span><span class="lit">6</span><span class="pln"> mongodb@</span><span class="pun">^</span><span class="lit">3.1</span><span class="pun">.</span><span class="lit">13</span></pre>
+</div>
+
+<p>This will add those two dependencies to our <code>package.json</code> file (you can switch back to your text editor to check). It'll also install them for use in our app … but right now those are the <em>only</em> two dependencies we've installed, because there's an important step when getting set up with Express that we haven't done yet.</p>
+<h4 id="step-5-install-dependencies">Step 5 – Install Dependencies</h4>
+<p>Now we've defined our dependencies and we're ready to go. Note that new versions of NPM modules are frequently rolled out. The versions listed in this tutorial are proven to work; if you go with the latest versions, I'm afraid you're on your own.</p>
+<p>Return to your command prompt and type this:</p>
+<div class="code-box">
+<h5>Command C:\node\nodetest1\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node\nodetest1</span><span class="pun">&gt;</span><span class="pln">npm install</span></pre>
+</div>
+
+<p>That will read the JSON file and install all the stuff listed in the dependencies object that aren't yet installed (yes, including Express – we installed the generator globally, but we still have to install the actual module inside this one particular project). You might get a few vulnerability warnings depending on versions, but you can ignore them. We're not deploying this anywhere, so security's not really a concern. Anyway, at the time of the "last updated" date above, there are zero known vulnerabilities in the project.</p>
+<p>Once NPM has run its course, you should have a <code>node_modules</code> directory which contains all of our dependencies for this tutorial. This will also create a file called <code>package-lock.json</code> which you can ignore completely. It's important, but only if you're an experienced Node developer building production-level apps. You now have a fully-functioning app ready and waiting to run, so let's test out our web server! Type the following:</p>
+<div class="code-box">
+<h5>Command C:\node\nodtest1\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node\nodetest1</span><span class="pun">&gt;</span><span class="pln">npm start</span></pre>
+</div>
+
+<p>Hit enter, and you'll get this:</p>
+<div class="code-box">
+<h5>Node Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pun">&gt;</span><span class="pln"> nodetest1@0</span><span class="pun">.</span><span class="lit">0.0</span><span class="pln"> start C</span><span class="pun">:</span><span class="pln">\node\nodetest1
+</span><span class="pun">&gt;</span><span class="pln"> node </span><span class="pun">./</span><span class="pln">bin</span><span class="pun">/</span><span class="pln">www</span></pre>
+</div>
+
+<p>Everything working? Awesome! Open a browser and head for <strong><a href="http://localhost:3000/">http://localhost:3000</a></strong> where you will see a welcome to Express page.</p>
+<p class="content-image"><img src="./documentation_files/n2yum6mksnly0wzcnjja.png" alt="Welcome to Express Page"></p>
+
+<p>You are now running your own Node JS webserver, with the Express engine and EJS HTML preprocessor installed. Not so tough, huh?</p>
+<div style="border:1px solid #0C0;background:#FFF;padding:30px;margin:0 0 1rem 0;">
+  <h4>New: Express.js Cheat Sheet</h4>
+  <p>Looking for a handy reference for Express? I've put together a beautiful cheat sheet full of commands, along with a bunch of other great resources. Click the button below to learn more!</p>
+  <p class="center" style="margin:0;">
+    <a href="https://closebrace.com/expressjscheatsheet" class="btn btn-primary">Get Your Cheat Sheet</a>
+  </p>
+</div>
+
+<h3 id="part-2-ok-fine-let-s-do-quot-hello-world-quot-">Part 2 – OK, Fine, let's do "Hello, World!"</h3>
+<p>Fire up your favorite text editor or IDE. I like and use both <a href="http://www.sublimetext.com/">Sublime Text</a> and <a href="https://code.visualstudio.com/">VS Code</a>. Point it at your <code>nodetest1</code> directory and open <code>app.js</code>. This is kind of the heart of your, well, app. Not a big surprise there. Here's a breakdown of what you're going to see:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">var</span><span class="pln"> createError </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'http-errors'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> express </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> path </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'path'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> cookieParser </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'cookie-parser'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'morgan'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> indexRouter </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'./routes/index'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> usersRouter </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'./routes/users'</span><span class="pun">);</span><span class="pln">
+</span></pre>
+</div>
+
+<p>This creates a bunch of basic JavaScript variables and ties them to certain packages, dependencies, node functionality, and routes. Routes are kind of like controllers in this setup – they direct traffic and also contain some programming logic (you can establish a more traditional MVC architecture with Express if you like. That's outside of the scope of this article). Back when we set up this project, Express created all of this stuff for us. We're going to totally ignore the user route for now and just work in the top level route (controlled by <code>c:\node\nodetest1\routes\index.js</code>).</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">var</span><span class="pln"> app </span><span class="pun">=</span><span class="pln"> express</span><span class="pun">();</span></pre>
+</div>
+
+<p>This one's important. It instantiates Express and assigns our app variable to it. The next section uses this variable to configure a bunch of Express stuff.</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">// view engine setup</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="str">'views'</span><span class="pun">,</span><span class="pln"> path</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="pln">__dirname</span><span class="pun">,</span><span class="pln"> </span><span class="str">'views'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="str">'view engine'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'ejs'</span><span class="pun">);</span><span class="pln">
+
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">logger</span><span class="pun">(</span><span class="str">'dev'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">express</span><span class="pun">.</span><span class="pln">json</span><span class="pun">());</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">express</span><span class="pun">.</span><span class="pln">urlencoded</span><span class="pun">({</span><span class="pln"> extended</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln"> </span><span class="pun">}));</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">cookieParser</span><span class="pun">());</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">express</span><span class="pun">.</span><span class="kwd">static</span><span class="pun">(</span><span class="pln">path</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="pln">__dirname</span><span class="pun">,</span><span class="pln"> </span><span class="str">'public'</span><span class="pun">)));</span><span class="pln">
+
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> indexRouter</span><span class="pun">);</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/users'</span><span class="pun">,</span><span class="pln"> usersRouter</span><span class="pun">);</span><span class="pln">
+</span></pre>
+</div>
+
+<p>This tells the app where to find its views, what engine to use to render those views (EJS), and calls a few methods to get things up and running. Note also that the final line of the second block is telling Express to serve static objects from the /public/ dir, but to make them actually seem like they're coming from the top level (it also does this with the views directory). For example, the images directory is <code>C:\node\nodetest1\public\images</code> … but it is accessed at <code>http://localhost:3000/images</code>.</p>
+<p>That final block, the last two lines, is important. It's telling Express that requests to <code>http://localhost:3000/</code> should use the index router (which is defined up near the top of the file), and requests to <code>http://localhost:3000/users</code> shold use the users router file.</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">// catch 404 and forward to error handler</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">next</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">next</span><span class="pun">(</span><span class="pln">createError</span><span class="pun">(</span><span class="lit">404</span><span class="pun">));</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+</span><span class="com">// error handler</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">err</span><span class="pun">,</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">next</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="com">// set locals, only providing error in development</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">message </span><span class="pun">=</span><span class="pln"> err</span><span class="pun">.</span><span class="pln">message</span><span class="pun">;</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">error </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">app</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'env'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">===</span><span class="pln"> </span><span class="str">'development'</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> err </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+
+</span><span class="com">// render the error page</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">status</span><span class="pun">(</span><span class="pln">err</span><span class="pun">.</span><span class="pln">status </span><span class="pun">||</span><span class="pln"> </span><span class="lit">500</span><span class="pun">);</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'error'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+</span></pre>
+</div>
+
+<p>These are error handlers for development and production (and 404's). We're not really worrying about the different between those two right now, but basically if your app is in development mode, your errors will give you more information. Obviously you don't want to print a stack trace out on a production site that anyone on the web can see.</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> app</span><span class="pun">;</span></pre>
+</div>
+
+<p>A core part of Node is that basically all modules export an object which can easily be called elsewhere in the code. Our master app exports its app object.</p>
+<p>Now then, let's make stuff. We're not going to just stick "Hello, World!" on our index page. Instead we're going to use this as an opportunity to learn a bit more about routes and to take a look at how EJS works for putting pages together.</p>
+<p>We're going to start by adding a new <code>app.use</code> directive to <code>app.js</code>. Find the section that looks like this:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> indexRouter</span><span class="pun">);</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/users'</span><span class="pun">,</span><span class="pln"> usersRouter</span><span class="pun">);</span></pre>
+</div>
+
+<p>These directives are telling Express what route files to use. Now, normally I'd advocate setting up separate route files for different parts of your app. For example, the users route file might contain routes for adding users, deleting them, updating them, and so forth, while a new route file called "locations" might handle adding, editing, deleting and displaying location data (in an app for which that was required). In this case, to keep things simple, we're going to do everything in the index router. That means you can completely ignore the /users line.</p>
+<p>Remember that the Express scaffolding already defined the <code>routes</code> variable and pointed it at the index router. We're going to add a <code>helloworld</code> method to that router which will render a different page than the default. In your text editor, open up your <code>routes</code> folder, find <code>index.js</code>, and open it. It will look like this:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\routes\index.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">var</span><span class="pln"> express </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> router </span><span class="pun">=</span><span class="pln"> express</span><span class="pun">.</span><span class="typ">Router</span><span class="pun">();</span><span class="pln">
+
+</span><span class="com">/* GET home page. */</span><span class="pln">
+router</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'index'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> title</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Express'</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+</span><span class="kwd">module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> router</span><span class="pun">;</span><span class="pln">
+</span></pre>
+</div>
+
+<p>Pretty sparse, right? Basically we're requiring our Express functionality, then attaching a "router" variable to Express's router method, then using that method when an attempt is made to HTTP get the top level directory of our website. Finally we export our router function back to our app.</p>
+<p>We can easily clone that get function for another page, so let's do that. At the bottom of the file, just <strong>above</strong> the module.exports line, add this code:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\routes\index.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">/* GET Hello World page. */</span><span class="pln">
+router</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/helloworld'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'helloworld'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> title</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Hello, World!'</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span></pre>
+</div>
+
+<p>That's all it takes to handle routing the URI, but we don't have any actual page for res.render to … render. That's where EJS comes in. Open up your views folder, and then go ahead and open <code>index.ejs</code>. Before you do anything else, <strong>save it as <code>helloworld.ejs</code></strong>.</p>
+<p>Now take a look at the code:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\views\helloworld.ejs</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="dec">&lt;!DOCTYPE html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+  </span><span class="tag">&lt;head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;title&gt;</span><span class="pun">&lt;%=</span><span class="pln"> title %&gt;</span><span class="tag">&lt;/title&gt;</span><span class="pln">
+    </span><span class="tag">&lt;link</span><span class="pln"> </span><span class="atn">rel</span><span class="pun">=</span><span class="atv">'stylesheet'</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">'/stylesheets/style.css'</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+  </span><span class="tag">&lt;body&gt;</span><span class="pln">
+    </span><span class="tag">&lt;h1&gt;</span><span class="pun">&lt;%=</span><span class="pln"> title %&gt;</span><span class="tag">&lt;/h1&gt;</span><span class="pln">
+    </span><span class="tag">&lt;p&gt;</span><span class="pln">Welcome to </span><span class="pun">&lt;%=</span><span class="pln"> title %&gt;</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></pre>
+</div>
+
+<p>This is pretty straightforward. Note the use of the "title" variable which we set above, in our <code>index.js</code> route. This means we don't even have to change the text at all in order for it to show different stuff from the home page. But let's change it anyway to:</p>
+<div class="code-box">
+<pre class="prettyprint prettyprinted" style=""><span class="tag">&lt;p&gt;</span><span class="pln">Hello, World! Welcome to </span><span class="pun">&lt;%=</span><span class="pln"> title %&gt;</span><span class="tag">&lt;/p&gt;</span></pre>
+</div>
+
+<p>Save the file, go to your command prompt, <code>ctrl-c</code> (or <code>cmd-c</code>) to kill your server if it's already running, and then type:</p>
+<div class="code-box">
+<h5>Command C:\node\nodetest1\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">npm start</span></pre>
+</div>
+
+<p>In order to restart the server. By the way, this seems a good time to mention: changes to EJS templates do not require a server restart, but basically whenever you change a js file, such as <code>app.js</code> or the route files, you'll need to restart to see changes.</p>
+<p>SO … with the server restarted, navigate to <code>http://localhost:3000/helloworld</code> and enjoy the completely asinine text that gets displayed:</p>
+<p class="content-image"><img src="./documentation_files/bloxu1lply3pmka3utzr.png" alt="Hello World Page"></p>
+
+<p>OK! So now we've got our router routing us to our view, which we are viewing. Let's do some modeling. I'll give you a moment if you need to fix your hair or makeup.</p>
+<h3 id="part-3-create-our-db-and-read-stuff-from-it">Part 3 – Create our DB and read stuff from it</h3>
+<h4 id="step-1-install-mongodb">Step 1 – Install MongoDB</h4>
+<p>We're breaking this up into two parts: Windows and Mac. We'll do Windows first.</p>
+<p><strong>Windows</strong></p>
+<p>We're leaving our text editor for a bit and going back to our command prompt. Well, first we're going to our web browser, pointing it to <a href="http://mongodb.com/">http://mongodb.com/</a> and downloading Mongo. You don't want the "try free" button, which is going to push their enterprise server or cloud server on you, neither of which you need for local development. Instead, hover over "products" and click "MongoDB Server" - this will take you to the Community Server download page. It will auto-detect your OS and give you the appropriate download link.</p>
+<p>Click the download button and run the installer. If you're on Windows, it'll offer to install a GUI called Compass. You can do that if you want, but we won't be using it in this tutorial. It'll also ask if you want to register MongoDB as a service. The answer is "yes" because it makes everything else a lot easier. The DB server will just run in the background whenever your machine is on (using minimal resources, don't worry) and you won't need to start it up every single time.</p>
+<p>Once it's installed, you're all set.</p>
+<p><strong>Mac</strong></p>
+<p>If you're on OSX, it's a little more complicated to set MongoDB up as a background service, but it can be done. I recommend using Homebrew to do the installation. If you're not familiar with Homebrew, that's OK. It comes with OSX and you don't really need to do anything to configure it. Head for your terminal and type the following:</p>
+<div class="code-box">
+<h5>Terminal ~\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">brew update</span></pre>
+</div>
+
+<p>This will snag all the latest info Homebrew needs to make sure it's installing the right stuff. Now let's install MongoDB with this command:</p>
+<div class="code-box">
+<h5>Terminal ~\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">brew install mongodb</span></pre>
+</div>
+
+<p>Let that run and it'll install what you need. Next step, make a directory in which to store your data. MongoDB themselves suggest <code>/data/db</code> because that's what MongoDB looks for by default. I'd go with that, too. Here's what to type:</p>
+<div class="code-box">
+<h5>Terminal ~\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">mkdir </span><span class="pun">-</span><span class="pln">p </span><span class="pun">/</span><span class="pln">data</span><span class="pun">/</span><span class="pln">db</span></pre>
+</div>
+
+<p>Because you used Homebrew to install MongoDB, you can pretty easily start MongoDB up as a service by typing:</p>
+<div class="code-box">
+<h5>Terminal ~\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">brew services start mongodb</span></pre>
+</div>
+
+<p>Once it's installed and started, we can move on to working with it!</p>
+<h4 id="step-2-run-mongo">Step 2 – Run mongo</h4>
+<p>Now <strong>open a new command prompt or terminal window</strong> because we're going to be talking to this database server while also running our Express server. In that new window, we're going to use a utility that comes with MongoDB, which is called "Mongo". It's basically a way to access your DB from the command line. Just type this:</p>
+<div class="code-box">
+<h5>Terminal ~\ or C:\Node</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">mongo</span></pre>
+</div>
+
+<p>You'll see something like the following:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="typ">MongoDB</span><span class="pln"> shell version v4</span><span class="pun">.</span><span class="lit">0.5</span><span class="pln">
+connecting to</span><span class="pun">:</span><span class="pln"> mongodb</span><span class="pun">:</span><span class="com">//127.0.0.1:27017</span><span class="pln">
+</span><span class="typ">MongoDB</span><span class="pln"> server version</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4.0</span><span class="pun">.</span><span class="lit">5</span><span class="pln">
+</span><span class="typ">Server</span><span class="pln"> has startup warnings</span><span class="pun">:</span><span class="pln">
+</span><span class="pun">[</span><span class="pln">a bunch of warnings that you can ignore </span><span class="kwd">for</span><span class="pln"> </span><span class="kwd">this</span><span class="pln"> tutorial</span><span class="pun">]</span><span class="pln">
+</span><span class="pun">[</span><span class="typ">Possibly</span><span class="pln"> an annoying ad </span><span class="kwd">for</span><span class="pln"> their cloud service</span><span class="pun">]</span><span class="pln">
+</span><span class="pun">&gt;</span></pre>
+</div>
+
+<p>All right, you've got MongoDB up and running, and you've connected to it with the client. We'll use this client to manually work on our database, for a bit, but it's not necessary for running the website. Only the server daemon (mongod) is needed for that.</p>
+<h4 id="step-3-create-a-database">Step 3 – Create a Database</h4>
+<p>The first thing we're going to do is create a database in which to store stuff. In your Mongo console, type the following:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">use</span><span class="pln"> nodetest1</span></pre>
+</div>
+
+<p>Now we're using the database "nodetest1," which is great except nothing actually exists yet. To make the database exist, we have to add some data. We're going to start off by doing that right inside of the Mongo client.</p>
+<h4 id="step-4-add-some-data">Step 4 – Add some Data</h4>
+<p>My favorite thing about MongoDB is that it uses JSON for its structure, which means it was instantly familiar for me. If you're not familiar with JSON, you'll need to do some reading, as I'm afraid that's outside the scope of this tutorial.</p>
+<p>Let's add a record to our collection. For the purposes of this tutorial, we're just going to have a simple database of usernames and email addresses. Our data format will thus look like this:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pun">{</span><span class="pln">
+    </span><span class="str">"_id"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1234</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"cwbuecheler"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"cwbuecheler@nospam.com"</span><span class="pln">
+</span><span class="pun">}</span></pre>
+</div>
+
+<p>You can create your own <code>_id</code> assignment if you really want, but I find it's best to let Mongo just do its thing. It will provide a unique identifier for every single top-level collection entry. Let's add one and see how it works. In your Mongo client, type this:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">db</span><span class="pun">.</span><span class="pln">usercollection</span><span class="pun">.</span><span class="pln">insert</span><span class="pun">({</span><span class="pln"> </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser1"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser1@testdomain.com"</span><span class="pln"> </span><span class="pun">})</span></pre>
+</div>
+
+<p>Something important to note here: that <code>db</code> stands for our database, which as mentioned above we've defined as <code>nodetest1</code>. The <code>usercollection</code> part is our collection. Note that there wasn't a step where we created the <code>usercollection</code> collection. That's because the first time we add to it, it's going to be auto-created. Handy. OK, Hit enter. Assuming everything went right, you should see:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="typ">WriteResult</span><span class="pun">({</span><span class="pln"> </span><span class="str">"nInserted"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="pun">})</span></pre>
+</div>
+
+<p>which is Mongo's odd way of telling you everything went according to plan. That's not very exciting, though, so type this:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">db</span><span class="pun">.</span><span class="pln">usercollection</span><span class="pun">.</span><span class="pln">find</span><span class="pun">().</span><span class="pln">pretty</span><span class="pun">()</span></pre>
+</div>
+
+<p>In case you're curious, the .pretty() method gives us linebreaks. It will return:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pun">{</span><span class="pln">
+    </span><span class="str">"_id"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ObjectId</span><span class="pun">(</span><span class="str">"5202b481d2184d390cbf6eca"</span><span class="pun">),</span><span class="pln">
+    </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser1"</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser1@testdomain.com"</span><span class="pln">
+</span><span class="pun">}</span></pre>
+</div>
+
+<p>Except, of course, your <code>ObjectId</code> will be different, since as mentioned, Mongo is automatically generating those. That's all there is to writing to MongoDB from the client app, and if you've ever worked with JSON services before, you are probably going "oh, wow, that's going to be easy to implement on the web." … you're right!</p>
+<p>A quick note on DB structure: obviously in the long run you're unlikely to be storing everything at the top level. There are a ton of resources on the internet for schema design in MongoDB. For example, our own <a href="https://closebrace.com/categories/five-minute-react">Five Minute React</a> series of tutorials dives into it.</p>
+<p>Now that we've got one record, let's add a a couple more. In your Mongo console, type the following:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">newstuff </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[{</span><span class="pln"> </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser2"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser2@testdomain.com"</span><span class="pln"> </span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser3"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser3@testdomain.com"</span><span class="pln"> </span><span class="pun">}]</span><span class="pln">
+db</span><span class="pun">.</span><span class="pln">usercollection</span><span class="pun">.</span><span class="pln">insert</span><span class="pun">(</span><span class="pln">newstuff</span><span class="pun">);</span></pre>
+</div>
+
+<p>Note that, yes, we can pass an array with multiple objects to our collection. Handy! Another use of db.usercollection.find().pretty() will show all three records:</p>
+<div class="code-box">
+<h5>Mongo Console</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pun">{</span><span class="pln">
+        </span><span class="str">"_id"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ObjectId</span><span class="pun">(</span><span class="str">"5202b481d2184d390cbf6eca"</span><span class="pun">),</span><span class="pln">
+        </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser1"</span><span class="pun">,</span><span class="pln">
+        </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser1@testdomain.com"</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+        </span><span class="str">"_id"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ObjectId</span><span class="pun">(</span><span class="str">"5202b49ad2184d390cbf6ecb"</span><span class="pun">),</span><span class="pln">
+        </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser2"</span><span class="pun">,</span><span class="pln">
+        </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser2@testdomain.com"</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+        </span><span class="str">"_id"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ObjectId</span><span class="pun">(</span><span class="str">"5202b49ad2184d390cbf6ecc"</span><span class="pun">),</span><span class="pln">
+        </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser3"</span><span class="pun">,</span><span class="pln">
+        </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"testuser3@testdomain.com"</span><span class="pln">
+</span><span class="pun">}</span></pre>
+</div>
+
+<p>Now we're going to start actually interacting with the web server and site that we set up earlier. You can quit out of the MongoDB console with ctrl-c or by typing "exit" and hitting enter. We're done here.</p>
+<h4 id="step-5-hook-mongo-up-to-node">Step 5 – Hook Mongo up to Node</h4>
+<p>This is where the rubber meets the road. Let's start by building a page that just spits out our DB entries in a mildly pretty form. Here's the HTML we're shooting to generate:</p>
+<div class="code-box">
+<pre class="prettyprint prettyprinted" style=""><span class="tag">&lt;ul&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"mailto:testuser1@testdomain.com"</span><span class="tag">&gt;</span><span class="pln">testuser1</span><span class="tag">&lt;/a&gt;&lt;/li&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"mailto:testuser2@testdomain.com"</span><span class="tag">&gt;</span><span class="pln">testuser2</span><span class="tag">&lt;/a&gt;&lt;/li&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"mailto:testuser3@testdomain.com"</span><span class="tag">&gt;</span><span class="pln">testuser3</span><span class="tag">&lt;/a&gt;&lt;/li&gt;</span><span class="pln">
+</span><span class="tag">&lt;/ul&gt;</span></pre>
+</div>
+
+<p>I know this isn't rocket science, but that's the point. We're just doing a simple DB read-and-write in this tutorial, not trying to build a whole website. First things first, we need to add a few lines to our main <code>app.js</code> file—the heart and soul of our app—in order to actually connect to our MongoDB instance. Open <code>C:\node\nodetest1\app.js</code> and at the top you'll see:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">var</span><span class="pln"> createError </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'http-errors'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> express </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> path </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'path'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> cookieParser </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'cookie-parser'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'morgan'</span><span class="pun">);</span></pre>
+</div>
+
+<p>Now add these three lines:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">var</span><span class="pln"> createError </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'http-errors'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> express </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> path </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'path'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> cookieParser </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'cookie-parser'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'morgan'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// New Code</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> monk </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'monk'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> db </span><span class="pun">=</span><span class="pln"> monk</span><span class="pun">(</span><span class="str">'localhost:27017/nodetest1'</span><span class="pun">);</span><span class="pln">
+</span></pre>
+</div>
+
+<p>These lines tell our app we want to talk to MongoDB, we're going to use Monk to do it, and our database is located at <code>localhost:27017/nodetest1</code>. Note that 27017 is the default port your MongoDB instance should be running on. If for some reason you've changed it, obviously use that port instead. Now look further down in the file, where you have this:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> indexRouter</span><span class="pun">);</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/users'</span><span class="pun">,</span><span class="pln"> usersRouter</span><span class="pun">);</span></pre>
+</div>
+
+<p>We need to do some work here. Those <code>app.use</code> statements (along with the others you'll find in <code>app.js</code>) are establishing middleware for Express. The short, simple explanation is: they're providing custom functions that the rest of your app can make use of. It's pretty straightforward, but due to chaining it needs to come <em>before</em> our route definitions, so that they can make use of it.</p>
+<p><strong>Above</strong> the two lines just mentioned, add the following:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">// Make our db accessible to our router</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln">res</span><span class="pun">,</span><span class="kwd">next</span><span class="pun">){</span><span class="pln">
+    req</span><span class="pun">.</span><span class="pln">db </span><span class="pun">=</span><span class="pln"> db</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">next</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></pre>
+</div>
+
+<p><strong>NOTE: If you don't put this above the routing stuff mentioned above (<code>app.use('/', indexRouter);</code>), your app WILL NOT WORK.</strong></p>
+<p>We already defined <code>db</code> when we added Mongo and Monk to <code>app.js</code>. It's our Monk connection object. By adding this function to <code>app.use</code>, we're adding that object to every HTTP request (ie: <code>req</code>) our app makes. This is fine and will not cause performance issues. Unlike MySQL, MongoDB connections don't need to be manually opened and closed, so the db object will just be there, not using any resources, until we need it.</p>
+<p>So, again, that code needs to go above our routing code. Your entire <code>app.js</code> should look like this, now:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\app.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="kwd">var</span><span class="pln"> createError </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'http-errors'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> express </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> path </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'path'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> cookieParser </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'cookie-parser'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> logger </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'morgan'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// New Code</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> monk </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'monk'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> db </span><span class="pun">=</span><span class="pln"> monk</span><span class="pun">(</span><span class="str">'localhost:27017/nodetest1'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> indexRouter </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'./routes/index'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> usersRouter </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">require</span><span class="pun">(</span><span class="str">'./routes/users'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> app </span><span class="pun">=</span><span class="pln"> express</span><span class="pun">();</span><span class="pln">
+
+</span><span class="com">// view engine setup</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="str">'views'</span><span class="pun">,</span><span class="pln"> path</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="pln">__dirname</span><span class="pun">,</span><span class="pln"> </span><span class="str">'views'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="str">'view engine'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'ejs'</span><span class="pun">);</span><span class="pln">
+
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">logger</span><span class="pun">(</span><span class="str">'dev'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">express</span><span class="pun">.</span><span class="pln">json</span><span class="pun">());</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">express</span><span class="pun">.</span><span class="pln">urlencoded</span><span class="pun">({</span><span class="pln"> extended</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln"> </span><span class="pun">}));</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">cookieParser</span><span class="pun">());</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="pln">express</span><span class="pun">.</span><span class="kwd">static</span><span class="pun">(</span><span class="pln">path</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="pln">__dirname</span><span class="pun">,</span><span class="pln"> </span><span class="str">'public'</span><span class="pun">)));</span><span class="pln">
+
+</span><span class="com">// Make our db accessible to our router</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln">res</span><span class="pun">,</span><span class="kwd">next</span><span class="pun">){</span><span class="pln">
+req</span><span class="pun">.</span><span class="pln">db </span><span class="pun">=</span><span class="pln"> db</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">next</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> indexRouter</span><span class="pun">);</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="str">'/users'</span><span class="pun">,</span><span class="pln"> usersRouter</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// catch 404 and forward to error handler</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">next</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="kwd">next</span><span class="pun">(</span><span class="pln">createError</span><span class="pun">(</span><span class="lit">404</span><span class="pun">));</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+</span><span class="com">// error handler</span><span class="pln">
+app</span><span class="pun">.</span><span class="kwd">use</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">err</span><span class="pun">,</span><span class="pln"> req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">next</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="com">// set locals, only providing error in development</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">message </span><span class="pun">=</span><span class="pln"> err</span><span class="pun">.</span><span class="pln">message</span><span class="pun">;</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">error </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">app</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'env'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">===</span><span class="pln"> </span><span class="str">'development'</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> err </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+
+</span><span class="com">// render the error page</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">status</span><span class="pun">(</span><span class="pln">err</span><span class="pun">.</span><span class="pln">status </span><span class="pun">||</span><span class="pln"> </span><span class="lit">500</span><span class="pun">);</span><span class="pln">
+res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'error'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+</span><span class="kwd">module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> app</span><span class="pun">;</span><span class="pln">
+</span></pre>
+</div>
+
+<p>Next thing we need to do is modify our route so that we can actually show data that's held in our database, using our <code>db</code> object.</p>
+<h4 id="step-6-pull-your-data-from-mongo-and-display-it">Step 6 – Pull your data from Mongo and display it</h4>
+<p>Open up <code>C:\node\nodetest1\routes\index.js</code> in your editor. It's still got the index route, and the goofy /helloworld route. Let's add a third:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\routes\index.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">/* GET Userlist page. */</span><span class="pln">
+router</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/userlist'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> db </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">db</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> collection </span><span class="pun">=</span><span class="pln"> db</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'usercollection'</span><span class="pun">);</span><span class="pln">
+    collection</span><span class="pun">.</span><span class="pln">find</span><span class="pun">({},{},</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">e</span><span class="pun">,</span><span class="pln">docs</span><span class="pun">){</span><span class="pln">
+        res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'userlist'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="str">"userlist"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> docs
+        </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span></pre>
+</div>
+
+<p>OK … that's getting fairly complicated. All it's really doing, though, is extracting the <code>db</code> object we passed to our http request, and then using that <code>db</code> connection to fill our <code>docs</code> variable with database documents, ie: user data. Then we do a page render just like the other two <code>GET</code>s in this route file.</p>
+<p>Basically, we tell our app which collection we want to use (<code>usercollection</code>) and do a find, then return the results as the variable <code>docs</code>. Once we have those documents, we then do a render of <code>userlist</code> (which will need a corresponding EJS template), giving it the <code>userlist</code> variable to work with, and passing our database documents to that variable.</p>
+<p>Next let's set up our EJS template. Navigate to <code>C:\node\nodetest1\views\</code> and open <code>index.ejs</code>. Once again, <strong>immediately save it as userlist.ejs</strong>. Then edit the HTML so it looks like this:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\view\userlist.ejs</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="dec">&lt;!DOCTYPE html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+  </span><span class="tag">&lt;head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;title&gt;</span><span class="pln">User List</span><span class="tag">&lt;/title&gt;</span><span class="pln">
+    </span><span class="tag">&lt;link</span><span class="pln"> </span><span class="atn">rel</span><span class="pun">=</span><span class="atv">'stylesheet'</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">'/stylesheets/style.css'</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+  </span><span class="tag">&lt;body&gt;</span><span class="pln">
+    </span><span class="tag">&lt;h1&gt;</span><span class="pln">User List</span><span class="tag">&lt;/h1&gt;</span><span class="pln">
+    </span><span class="tag">&lt;ul&gt;</span><span class="pln">
+      </span><span class="pun">&lt;%</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> list </span><span class="pun">=</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> userlist</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          list </span><span class="pun">+=</span><span class="pln"> </span><span class="str">'&lt;li&gt;&lt;a href="mailto:'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> userlist</span><span class="pun">[</span><span class="pln">i</span><span class="pun">].</span><span class="pln">email </span><span class="pun">+</span><span class="pln"> </span><span class="str">'"&gt;'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> userlist</span><span class="pun">[</span><span class="pln">i</span><span class="pun">].</span><span class="pln">username </span><span class="pun">+</span><span class="pln"> </span><span class="str">'&lt;/a&gt;&lt;/li&gt;'</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      %&gt;
+      </span><span class="pun">&lt;%-</span><span class="pln"> list %&gt;
+    </span><span class="tag">&lt;/ul&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></pre>
+</div>
+
+<p>This is saying that we're going to pull in the set of documents we just called <code>userlist</code> over in the route file, and then for each entry, get the email and username values from the object and put them into our html. Note that we're using <code>&lt;%-</code> instead of <code>&lt;%=</code>. That's because the latter renders escaped HTML, so you'd just see all of the HTML in plaintext (props to the readers who caught this bug and mailed me about it!). Oh, also, this seems like a good place to mention that we don't <em>have</em> to keep repeating the <code>&lt;html&gt;</code> tags and similar on every page. EJS supports including partial files. It's just outside of the scope of this tutorial.</p>
+<p>We're all set. Save that file, and let's restart our node server. Remember how to do that? Go to your command prompt, head for <code>C:\node\nodetest1\</code> and <code>ctrl-c</code> or <code>cmd-c</code> to kill your server if it's still running from way back before. Then type:</p>
+<div class="code-box">
+<h5>Command C:\node\nodetest1\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node\nodetest1</span><span class="pun">&gt;</span><span class="pln">npm start</span></pre>
+</div>
+
+<p>Now open your browser and head to <a href="http://localhost:3000/userlist">http://localhost:3000/userlist</a> and marvel at the results.</p>
+<p class="content-image"><img src="./documentation_files/diyuyqg8kc6kqmsraxds.png" alt="DB Ouput Page - Default Data"></p>
+
+<p>You're now pulling data from the DB and spitting it out onto a web page. Nice!</p>
+<p>There one more thing I badly wanted to cover in this tutorial, but because it's already about as long as the Bible, I'm going to breeze through it here. You could very easily change your userlist view from an Express-driven web page complete with EJS template to a plain old JSON response. You could then access this with AJAX and manipulate it on the client-side, with jQuery for example, instead of on the server side. In fact, I wanted to cover that so badly that I <em>wrote an entire second tutorial on it</em>. You can find the link at the end of this one!</p>
+<p>Let's finish this up.</p>
+<h3 id="part-4-the-holy-grail-writing-to-the-db">Part 4 – The holy grail: writing to the DB</h3>
+<p>Writing to the database is not particularly difficult. Essentially we need to set up a route that takes a <code>POST</code>, rather than a <code>GET</code>.</p>
+<h4 id="step-1-create-your-data-input">Step 1 – Create your data input</h4>
+<p>We're going quick and dirty here: two ugly, unstyled text inputs and a submit button. 1996-style, but before we get to that, we're going to do some javacripting. Let's start by quickly wiring up a route for our add user form. Open <code>/routes/index.js</code> and add the following code <strong>above</strong> the last module.exports line:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\routes\index.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">/* GET New User page. */</span><span class="pln">
+router</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/newuser'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'newuser'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> title</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Add New User'</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span></pre>
+</div>
+
+<p>Now we just need a template. Open up /views/index.ejs, save it as newuser.ejs, and replace the whole file contents with this:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\views\newuser.ejs</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="dec">&lt;!DOCTYPE html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+  </span><span class="tag">&lt;head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;title&gt;</span><span class="pln">Add User</span><span class="tag">&lt;/title&gt;</span><span class="pln">
+    </span><span class="tag">&lt;link</span><span class="pln"> </span><span class="atn">rel</span><span class="pun">=</span><span class="atv">'stylesheet'</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">'/stylesheets/style.css'</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+  </span><span class="tag">&lt;body&gt;</span><span class="pln">
+    </span><span class="tag">&lt;h1&gt;</span><span class="pun">&lt;%=</span><span class="pln"> title %&gt;</span><span class="tag">&lt;/h1&gt;</span><span class="pln">
+    </span><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"formAddUser"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"adduser"</span><span class="pln"> </span><span class="atn">method</span><span class="pun">=</span><span class="atv">"post"</span><span class="pln"> </span><span class="atn">action</span><span class="pun">=</span><span class="atv">"/adduser"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"inputUserName"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"username"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"username"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+      </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"inputUserEmail"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"email"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"useremail"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+      </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"btnSubmit"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"submit"</span><span class="tag">&gt;</span><span class="pln">Submit</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/form&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></pre>
+</div>
+
+<p>Here we're creating a form with the ID <code>formAddUser</code> (I like to preface my IDs with the type of thing we're ID'ing. It's a personal quirk). Method is <code>post</code>, action is <code>adduser</code>. Pretty straightforward. Under that we've defined our two inputs and our button.</p>
+<p>If you restart your node server and go to <code>http://localhost:3000/newuser</code> you'll see your form in all its glory.</p>
+<p class="content-image"><img src="./documentation_files/vhu4f6od4ach0v8gm0wt.png" alt="Submit Form"></p>
+
+<p>Go ahead and submit. Enjoy the 404 error. We're about to fix that.</p>
+<h4 id="step-2-create-your-db-functions">Step 2 – Create your DB functions</h4>
+<p>OK, this is pretty much the same process as with the user list. We don't need another app.use statement since we've already wrapped our database object into every request (see above). That means it'll be accessible to any new routes we write. That means that all we need to do is add a route for POSTing to /adduser.</p>
+<p>Go back to <code>/routes/index.js</code> and let's create our insertion function. Once again, you'll want to put this <strong>above</strong> the final module.exports line (it doesn't REALLY matter, but it makes things cleaner to wrap up with the export). This is a big one, so I've commented the code pretty thoroughly. Here it is:</p>
+<div class="code-box">
+<h5>C:\node\nodetest1\routes\index.js</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="com">/* POST to Add User Service */</span><span class="pln">
+router</span><span class="pun">.</span><span class="pln">post</span><span class="pun">(</span><span class="str">'/adduser'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="com">// Set our internal DB variable</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> db </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">db</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="com">// Get our form values. These rely on the "name" attributes</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> userName </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">username</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> userEmail </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">useremail</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="com">// Set our collection</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> collection </span><span class="pun">=</span><span class="pln"> db</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'usercollection'</span><span class="pun">);</span><span class="pln">
+
+    </span><span class="com">// Submit to the DB</span><span class="pln">
+    collection</span><span class="pun">.</span><span class="pln">insert</span><span class="pun">({</span><span class="pln">
+        </span><span class="str">"username"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> userName</span><span class="pun">,</span><span class="pln">
+        </span><span class="str">"email"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> userEmail
+    </span><span class="pun">},</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">err</span><span class="pun">,</span><span class="pln"> doc</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">err</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="com">// If it failed, return error</span><span class="pln">
+            res</span><span class="pun">.</span><span class="pln">send</span><span class="pun">(</span><span class="str">"There was a problem adding the information to the database."</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="com">// And forward to success page</span><span class="pln">
+            res</span><span class="pun">.</span><span class="pln">redirect</span><span class="pun">(</span><span class="str">"userlist"</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+
+</span><span class="pun">});</span><span class="pln">
+</span></pre>
+</div>
+
+<p>Obviously in the real world you would want a <em>ton</em> more validating, error-checking, and the like. You'd want to check for duplicate usernames and emails, for example. And to vet that the email address at least looks like a legit entry. But this'll work for now. As you can see, on successfully adding to the DB, we forward the user back to the userlist page, where they should see their newly added user.</p>
+<p>Are there smoother ways to do this? Absolutely. We're staying as bare-bones as possible here. Now, let's go add some data!</p>
+<h4 id="step-3-connect-and-add-data-to-your-db">Step 3 – Connect and add data to your DB</h4>
+<p>Head to your command prompt, kill your node server if it's still running, and restart it:</p>
+<div class="code-box">
+<h5>Command C:\node\nodetest1\</h5>
+<pre class="prettyprint prettyprinted" style=""><span class="pln">C</span><span class="pun">:</span><span class="pln">\node\nodetest1</span><span class="pun">&gt;</span><span class="pln">npm start</span></pre>
+</div>
+
+<p>Assuming your server is running, which it should be, return to your web browser and point it at <a href="http://localhost:3000/newuser">http://localhost:3000/newuser</a> again. There's our exciting form, just like before. Except now let's fill in some values before we hit submit. I went with username "noderocks" and email "noderocks@rockingnode.com" … you can go with whatever you'd like.</p>
+<p class="content-image"><img src="./documentation_files/lagztjgjbwpvhsndtolh.png" alt="Working Add User Form"></p>
+
+<p>Click submit, and check it out … we're back at /userlist and there's our new entry!</p>
+<p class="content-image"><img src="./documentation_files/kanawa2h8doby2aswpyq.png" alt="New Entry Shown On User List"></p>
+
+<p>We are officially reading and writing from a MongoDB database using Node.js, Express, and EJS. You are now what the kids call a "full stack" developer (probably not a GOOD one, just yet, but I didn't promise that).</p>
+<p>Congratulations. Seriously. If you followed this all the way through, and if you really paid attention to what you were doing and didn't just paste code, you should have a really solid grasp on routes and views, reading from the DB, and posting to the DB. That is <strong>all you need</strong> to get started developing whatever app you want to build. I don't know about you, but I think that's really cool.</p>
+<h3 id="part-5-next-steps">Part 5 – Next steps</h3>
+<div style="border:1px solid #0C0;background:#FFF;padding:30px;margin:0 0 1rem 0;">
+  <h4>New: Express.js Cheat Sheet</h4>
+  <p>Looking for a handy reference for Express? I've put together a beautiful cheat sheet full of commands, along with a bunch of other great resources. Click the button below to learn more!</p>
+  <p class="center" style="margin:0;">
+    <a href="https://closebrace.com/expressjscheatsheet" class="btn btn-primary">Get Your Cheat Sheet</a>
+  </p>
+</div>
+
+<p>The "sequel" to this tutorial is now available! Find it at: <a href="https://closebrace.com/tutorials/2017-03-02/creating-a-simple-restful-web-app-with-nodejs-express-and-mongodb">Creating a Simple RESTful Web App with Node.js, Express, and MongoDB</a>.</p>
+<p>From here, there's a million different directions you could go. I recommend completing the tutorial mentioned above, or you could dive into our <a href="https://closebrace.com/categories/five-minute-react">Five Minute React series</a>, which will step you through building and deploying a barebones web application using a custom Express.js API and a React front-end.</p>
+<p>I hope this tutorial's been helpful. I wrote it because I could've used it when I got started, and I couldn't seem to find something that was quite at this level, or that broke things down in such long, long, <em>loooong</em> detail. If you made it this far, thanks for sticking with it!
+</p>
+
+        </section>
+        <!-- /ARTICLE TEXT -->
+
+      </article>
+      <!-- /CONTENT -->
+
+<script async="" src="./documentation_files/analytics.js.download"></script><script>
+document.addEventListener("DOMContentLoaded", function() {
+  // We need a few things passed from handlebars
+  const cbCommentInfo = {
+    user: '',
+    isVerified: false,
+    isAdmin: false,
+    userImage: null,
+    isPro: false,
+    postId: '58b8805692d5a4750e16c4f2',
+    postTitle: 'The Dead-Simple Step-By-Step Guide for Front-End Developers to Getting Up and Running With Node.JS, Express, and MongoDB',
+  }
+
+  initCommentClick(cbCommentInfo);
+  getArticleComments('58b8805692d5a4750e16c4f2', cbCommentInfo);
+});
+</script>
+
+    </div>
+    <!-- /WRAPPER -->
+
+    <!-- FOOTER -->
+    <footer>
+      © <span class="copy-date">2018</span> CloseBrace™, LLC.<br>
+              <nav class="main-menu">
+                <ul>
+                      <li>
+                        <a href="https://closebrace.com/">Home</a>
+                      </li>
+                      <li class="active">
+                        <a href="https://closebrace.com/tutorials">Tutorials</a>
+                      </li>
+                      <li>
+                        <a href="https://closebrace.com/about">About</a>
+                      </li>
+                      <li>
+                        <a href="https://closebrace.com/contact">Contact Us</a>
+                      </li>
+                </ul>
+              </nav>      <nav class="footer-menu">
+        <ul>
+          <li><a href="https://closebrace.com/terms-of-service">Terms of Service</a></li>
+          <li><a href="https://closebrace.com/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://closebrace.com/community-guidelines">Community Guidelines</a></li>
+        </ul>
+      </nav>      <nav class="social-icons">
+        <span>Visit Us: </span>
+        <ul>
+          <li><a href="https://www.youtube.com/channel/UCuRrj99X_0F0Eoux7EOgbHw" target="_blank" class="youtube">YouTube</a></li>
+          <li><a href="https://twitter.com/closebracejs" target="_blank" class="twitter">Twitter</a></li>
+        </ul>
+      </nav>      <div class="credits">
+        Powered By <a href="http://keystonejs.com/" target="_blank">KeystoneJS</a>
+        <br>
+        Hosted By <a href="https://m.do.co/c/39ccd670096c" target="_blank">DigitalOcean</a>
+      </div>    </footer>
+    <!-- /FOOTER -->    <!-- Drip 
+    <script type="text/javascript">
+      var _dcq = _dcq || [];
+      var _dcs = _dcs || {};
+      _dcs.account = '9284947';
+
+      (function() {
+        var dc = document.createElement('script');
+        dc.type = 'text/javascript'; dc.async = true;
+        dc.src = '//tag.getdrip.com/9284947.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(dc, s);
+      })();
+    </script>
+    end Drip -->
+
+  
+  
+  <script src="./documentation_files/build.js.download"></script>
+  <script src="./documentation_files/saved_resource"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-97151687-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+<iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeMetricsController0" allowpaymentrequest="true" src="./documentation_files/outer.html" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><script src="./documentation_files/ck.5.js.download" async="true" crossorigin="anonymous"></script><div class="nsc-panel nsc-panel-compact nsc-hide">
+    <div class="nsc-panel-move"></div>
+    <div class="nsc-panel-tooltip">
+        <div class="nsc-panel-tooltip-layout" layout="row" layout-align="start center">CTRL+V to toggle the panel</div>
+    </div>
+
+    <div class="nsc-panel-layout" flex="" layout="row" layout-align="start center">
+        <div class="nsc-panel-groups" flex="" layout="row" layout-align="start start">
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <div class="nsc-panel-button separated active">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-cursor-normal" data-i18n="videoPanelSimpleCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorDefault">&nbsp;</span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-shade" data-i18n="videoPanelFocusMouse" data-event="nimbus-editor-active-tools" data-event-param="cursorShadow">&nbsp;</span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-circle" data-i18n="videoPanelAnimatedCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorRing">&nbsp;</span>
+                            </li>
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-tail"></span>-->
+                            <!--</li>-->
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-long"></span>-->
+                            <!--</li>-->
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-normal" data-i18n="videoPanelSimpleCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorDefault">&nbsp;</span>
+                            </li>
+                            <!--<li class="nsc-panel-dropdown-icon" flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-none" data-event="nimbus-editor-active-tools" data-event-param="cursorNone"></span>-->
+                            <!--</li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-pen" data-i18n="videoPanelPen" data-event="nimbus-editor-active-tools" data-event-param="pen">&nbsp;</span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-arrow-line" data-i18n="videoPanelArrow" data-event="nimbus-editor-active-tools" data-event-param="arrow">&nbsp;</span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-square" data-i18n="videoPanelSquare" data-event="nimbus-editor-active-tools" data-event-param="square">&nbsp;</span>
+                </button>
+                <div class="nsc-panel-button separated">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-attention" data-i18n="videoPanelMark" data-event="nimbus-editor-active-tools" data-event-param="notifRed">&nbsp;</span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-attention" data-i18n="videoPanelMark" data-event="nimbus-editor-active-tools" data-event-param="notifRed">&nbsp;</span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-question" data-i18n="videoPanelQuestion" data-event="nimbus-editor-active-tools" data-event-param="notifBlue">&nbsp;</span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-done" data-i18n="videoPanelCheckmark" data-event="nimbus-editor-active-tools" data-event-param="notifGreen">&nbsp;</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nsc-panel-button assembled">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+							<span class="nsc-icon nsc-icon-fill-none nsc-panel-icon-fill">
+								<span class="nsc-panel-icon-fill-inner" id="nsc_panel_button_colors" style="background:#00FF00;" data-event="nimbus-editor-active-color" data-event-param="#00FF00">&nbsp;</span>
+							</span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown">
+                        <div class="nsc-panel-drop-area">
+                            <div class="nsc-panel-colors">
+
+                                <!-- picked -->
+                                <div class="nsc-colors-picked">
+                                    <div class="nsc-colors-picked-layout" flex="" layout="row" layout-align="start start" layout-wrap="">
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#000000">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #000000;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#0000FF">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #0000FF;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF00FF">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #FF00FF;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FFFF">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #00FFFF;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FF00">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #00FF00;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFF00">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #FFFF00;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF0000">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #FF0000;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <div class="nsc-colors-picked-item">
+                                            <button class="nsc-colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFFFF">
+                                                <span class="nsc-colors-picked-button-inner" style="background: #FFFFFF;">&nbsp;</span>
+                                            </button>
+                                        </div>
+                                        <!--<div class="nsc-colors-picked-item">-->
+                                        <!--<button class="nsc-colors-picked-button custom" type="button"> -->
+                                        <!--<i class="nsc-icon ic-color-custom"></i> -->
+                                        <!--</button>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <!-- /picked -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button nsc-hide" type="button">
+                    <span class="nsc-icon nsc-icon-eraser" data-i18n="videoPanelClear" data-event="nimbus-editor-active-tools" data-event-param="clear">&nbsp;</span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-eraser-all" data-i18n="videoPanelClearAll" data-event="nimbus-editor-active-tools" data-event-param="clearAll">&nbsp;</span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-webcam" data-i18n="videoPanelCamera" id="nimbus_web_camera_toggle">&nbsp;</span>
+                </button>
+            </div>
+            <!-- /group -->
+        </div>
+
+        <div class="nsc-panel-actions" flex="none" layout="row" layout-align="start center">
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_play" style="display: none;">
+                <span class="nsc-icon nsc-icon-play">&nbsp;</span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_pause">
+                <span class="nsc-icon nsc-icon-pause">&nbsp;</span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_stop">
+                <span class="nsc-icon nsc-icon-stop">&nbsp;</span>
+            </button>
+        </div>
+
+        <!-- panel togglers -->
+        <div class="nsc-panel-togglers" layout="row" layout-align="start center" flex="none">
+            <button class="nsc-panel-toggle-button" type="button">
+                <span class="nsc-icon nsc-icon-panel-close" data-i18n="videoPanelHideShowPanel">&nbsp;</span>
+            </button>
+        </div>
+        <!-- /panel togglers -->
+
+    </div>
+</div>
+<div class="nsc-video-editor nsc-hide"></div><div class="nsc-content-camera nsc-hide" style="top: 0px; left: 0px;">
+    <div class="nsc-content-camera-buttons" flex="none" layout="row" layout-align="start start">
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_collapse" style="display: none">
+            <span class="nsc-icon nsc-icon-panel-collapse"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_expand">
+            <span class="nsc-icon nsc-icon-panel-expand"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_close">
+            <span class="nsc-icon nsc-icon-panel-close"></span>
+        </button>
+    </div>
+    <div class="nsc-content-camera-container">
+        <div class="nsc-content-camera-shadow"></div>
+    </div>
+</div>
+<div class="formkit-slide-in" data-object="slide-in"><button class="formkit-close" type="button" data-formkit-close="" aria-label="Close">✕</button><form action="https://app.convertkit.com/forms/828741/subscriptions" style="background-color:#ffffff;border-radius:4px" class="seva-form formkit-form" method="post" data-sv-form="828741" data-uid="4ef9e736c3" data-format="slide in" data-version="5" min-width="400 500 600"><div class="formkit-background"></div><div data-style="minimal"><div class="formkit-header" style="color:#ff671b;font-size:27px;font-weight:700" data-element="header">Get Free JavaScript Tutorials</div><div class="formkit-subheader" style="color:#686868;font-size:18px" data-element="subheader"><p>Tutorials and Tips in your inbox every Friday.</p></div><ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul><div data-element="fields" data-stacked="false" class="seva-fields formkit-fields"><div class="formkit-field"><input type="text" class="formkit-input" name="email_address" style="border-color:#e3e3e3;border-radius:4px;color:#000;font-weight:400" placeholder="Your email address" required=""></div><button data-element="submit" class="formkit-submit formkit-submit" style="background-color:#ff671b;border-radius:4px;color:#fff;font-weight:700"><div class="formkit-spinner"><div></div><div></div><div></div></div><span>Get One Right Now</span></button></div><div class="formkit-guarantee" style="color:#4d4d4d;font-size:13px;font-weight:400" data-element="guarantee"><p>&nbsp;<br>&nbsp;</p></div></div><style>.formkit-form[data-uid="4ef9e736c3"] *{font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;box-sizing:border-box;}.formkit-form[data-uid="4ef9e736c3"]{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}.formkit-form[data-uid="4ef9e736c3"] legend{border:none;font-size:inherit;margin-bottom:10px;padding:0;position:relative;display:table;}.formkit-form[data-uid="4ef9e736c3"] fieldset{border:0;padding:0.01em 0 0 0;margin:0;min-width:0;}.formkit-form[data-uid="4ef9e736c3"] body:not(:-moz-handler-blocked) fieldset{display:table-cell;}.formkit-form[data-uid="4ef9e736c3"] h1,.formkit-form[data-uid="4ef9e736c3"] h2,.formkit-form[data-uid="4ef9e736c3"] h3,.formkit-form[data-uid="4ef9e736c3"] h4,.formkit-form[data-uid="4ef9e736c3"] h5,.formkit-form[data-uid="4ef9e736c3"] h6{color:inherit;font-size:inherit;font-weight:inherit;}.formkit-form[data-uid="4ef9e736c3"] p{color:inherit;font-size:inherit;font-weight:inherit;}.formkit-form[data-uid="4ef9e736c3"][data-format="modal"]{display:none;}.formkit-form[data-uid="4ef9e736c3"][data-format="slide in"]{display:none;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input,.formkit-form[data-uid="4ef9e736c3"] .formkit-select,.formkit-form[data-uid="4ef9e736c3"] .formkit-checkboxes{width:100%;}.formkit-form[data-uid="4ef9e736c3"] .formkit-button,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit{border:0;border-radius:5px;color:#ffffff;cursor:pointer;display:inline-block;text-align:center;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:15px;overflow:hidden;padding:0;position:relative;vertical-align:middle;}.formkit-form[data-uid="4ef9e736c3"] .formkit-button:hover,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit:hover,.formkit-form[data-uid="4ef9e736c3"] .formkit-button:focus,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit:focus{outline:none;}.formkit-form[data-uid="4ef9e736c3"] .formkit-button:hover > span,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit:hover > span,.formkit-form[data-uid="4ef9e736c3"] .formkit-button:focus > span,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit:focus > span{background-color:rgba(0,0,0,0.1);}.formkit-form[data-uid="4ef9e736c3"] .formkit-button > span,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit > span{display:block;-webkit-transition:all 300ms ease-in-out;transition:all 300ms ease-in-out;padding:12px 24px;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input{background:#ffffff;font-size:15px;padding:12px;border:1px solid #e3e3e3;-webkit-flex:1 0 auto;-ms-flex:1 0 auto;flex:1 0 auto;line-height:1.4;margin:0;-webkit-transition:border-color ease-out 300ms;transition:border-color ease-out 300ms;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input:focus{outline:none;border-color:#1677be;-webkit-transition:border-color ease 300ms;transition:border-color ease 300ms;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input::-webkit-input-placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input::-moz-placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input:-ms-input-placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="4ef9e736c3"] .formkit-input::placeholder{color:inherit;opacity:0.8;}.formkit-form[data-uid="4ef9e736c3"] [data-group="dropdown"]{position:relative;display:inline-block;width:100%;}.formkit-form[data-uid="4ef9e736c3"] [data-group="dropdown"]::before{content:"";top:calc(50% - 2.5px);right:10px;position:absolute;pointer-events:none;border-color:#4f4f4f transparent transparent transparent;border-style:solid;border-width:6px 6px 0 6px;height:0;width:0;z-index:999;}.formkit-form[data-uid="4ef9e736c3"] [data-group="dropdown"] select{height:auto;width:100%;cursor:pointer;color:#333333;line-height:1.4;margin-bottom:0;padding:0 6px;-webkit-appearance:none;-moz-appearance:none;appearance:none;font-size:15px;padding:12px;padding-right:25px;border:1px solid #e3e3e3;background:#ffffff;}.formkit-form[data-uid="4ef9e736c3"] [data-group="dropdown"] select:focus{outline:none;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"]{text-align:left;margin:0;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"]{margin-bottom:10px;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] *{cursor:pointer;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"]:last-of-type{margin-bottom:0;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"]{display:none;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"] + label::after{content:none;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"]:checked + label::after{border-color:#ffffff;content:"";}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] input[type="checkbox"]:checked + label::before{background:#10bf7a;border-color:#10bf7a;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] label{position:relative;display:inline-block;padding-left:28px;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] label::before,.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] label::after{position:absolute;content:"";display:inline-block;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] label::before{height:16px;width:16px;border:1px solid #e3e3e3;background:#ffffff;left:0px;top:3px;}.formkit-form[data-uid="4ef9e736c3"] [data-group="checkboxes"] [data-group="checkbox"] label::after{height:4px;width:8px;border-left:2px solid #4d4d4d;border-bottom:2px solid #4d4d4d;-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg);left:4px;top:8px;}.formkit-form[data-uid="4ef9e736c3"] .formkit-alert{background:#f9fafb;border:1px solid #e3e3e3;border-radius:5px;-webkit-flex:1 0 auto;-ms-flex:1 0 auto;flex:1 0 auto;list-style:none;margin:25px auto;padding:12px;text-align:center;width:100%;}.formkit-form[data-uid="4ef9e736c3"] .formkit-alert:empty{display:none;}.formkit-form[data-uid="4ef9e736c3"] .formkit-alert-success{background:#d3fbeb;border-color:#10bf7a;color:#0c905c;}.formkit-form[data-uid="4ef9e736c3"] .formkit-alert-error{background:#fde8e2;border-color:#f2643b;color:#ea4110;}.formkit-form[data-uid="4ef9e736c3"] .formkit-spinner{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:0px;width:0px;margin:0 auto;position:absolute;top:0;left:0;right:0;width:0px;overflow:hidden;text-align:center;-webkit-transition:all 300ms ease-in-out;transition:all 300ms ease-in-out;}.formkit-form[data-uid="4ef9e736c3"] .formkit-spinner > div{margin:auto;width:12px;height:12px;background-color:#fff;opacity:0.3;border-radius:100%;display:inline-block;-webkit-animation:formkit-bouncedelay-formkit-form-data-uid-4ef9e736c3- 1.4s infinite ease-in-out both;animation:formkit-bouncedelay-formkit-form-data-uid-4ef9e736c3- 1.4s infinite ease-in-out both;}.formkit-form[data-uid="4ef9e736c3"] .formkit-spinner > div:nth-child(1){-webkit-animation-delay:-0.32s;animation-delay:-0.32s;}.formkit-form[data-uid="4ef9e736c3"] .formkit-spinner > div:nth-child(2){-webkit-animation-delay:-0.16s;animation-delay:-0.16s;}.formkit-form[data-uid="4ef9e736c3"] .formkit-submit[data-active] .formkit-spinner{opacity:1;height:100%;width:50px;}.formkit-form[data-uid="4ef9e736c3"] .formkit-submit[data-active] .formkit-spinner ~ span{opacity:0;}.formkit-form[data-uid="4ef9e736c3"] .formkit-powered-by[data-active="false"]{opacity:0.35;}@-webkit-keyframes formkit-bouncedelay-formkit-form-data-uid-4ef9e736c3-{0%,80%,100%{-webkit-transform:scale(0);-ms-transform:scale(0);transform:scale(0);}40%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}}@keyframes formkit-bouncedelay-formkit-form-data-uid-4ef9e736c3-{0%,80%,100%{-webkit-transform:scale(0);-ms-transform:scale(0);transform:scale(0);}40%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1);}} .formkit-form[data-uid="4ef9e736c3"]{border:1px solid #e3e3e3;max-width:700px;position:relative;overflow:hidden;}.formkit-form[data-uid="4ef9e736c3"] .formkit-background{width:100%;height:100%;position:absolute;top:0;left:0;background-size:cover;background-position:center;opacity:0.3;z-index:1;}.formkit-form[data-uid="4ef9e736c3"] [data-style="minimal"]{padding:20px;width:100%;z-index:2;position:relative;}.formkit-form[data-uid="4ef9e736c3"] .formkit-header{margin:0 0 27px 0;text-align:center;}.formkit-form[data-uid="4ef9e736c3"] .formkit-subheader{margin:18px 0;text-align:center;}.formkit-form[data-uid="4ef9e736c3"] .formkit-guarantee{font-size:13px;margin:10px 0 15px 0;text-align:center;}.formkit-form[data-uid="4ef9e736c3"] .formkit-guarantee > p{margin:0;}.formkit-form[data-uid="4ef9e736c3"] .formkit-powered-by{color:#7d7d7d;display:block;font-size:12px;margin:10px 0 0 0;text-align:center;}.formkit-form[data-uid="4ef9e736c3"] .formkit-fields{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;margin:25px auto 0 auto;}.formkit-form[data-uid="4ef9e736c3"] .formkit-field{min-width:220px;}.formkit-form[data-uid="4ef9e736c3"] .formkit-field,.formkit-form[data-uid="4ef9e736c3"] .formkit-submit{margin:0 0 15px 0;-webkit-flex:1 0 100%;-ms-flex:1 0 100%;flex:1 0 100%;}.formkit-form[data-uid="4ef9e736c3"][min-width~="600"] [data-style="minimal"]{padding:40px;}.formkit-form[data-uid="4ef9e736c3"][min-width~="600"] .formkit-fields[data-stacked="false"]{margin-left:-5px;margin-right:-5px;}.formkit-form[data-uid="4ef9e736c3"][min-width~="600"] .formkit-fields[data-stacked="false"] .formkit-field,.formkit-form[data-uid="4ef9e736c3"][min-width~="600"] .formkit-fields[data-stacked="false"] .formkit-submit{margin:0 5px 15px 5px;}.formkit-form[data-uid="4ef9e736c3"][min-width~="600"] .formkit-fields[data-stacked="false"] .formkit-field{-webkit-flex:100 1 auto;-ms-flex:100 1 auto;flex:100 1 auto;}.formkit-form[data-uid="4ef9e736c3"][min-width~="600"] .formkit-fields[data-stacked="false"] .formkit-submit{-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;} </style></form><style>.formkit-slide-in {
+  position: fixed;
+  bottom: 0px;
+  right: 40px;
+  min-width: 300px;
+  width: 80vw;
+  max-width: 600px;
+  padding-bottom: 40px;
+  transform: translateY(100%);
+  transition: transform 400ms ease-in-out; }
+  .formkit-slide-in [data-format="slide in"] {
+    display: -ms-flexbox !important;
+    display: flex !important;
+    margin: 0; }
+  .formkit-slide-in .formkit-close {
+    opacity: 0;
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font: inherit;
+    font-size: 24px;
+    line-height: 48px;
+    outline: none;
+    padding: 0;
+    position: absolute;
+    top: -48px;
+    right: 0px;
+    width: 48px;
+    text-align: center;
+    -webkit-appearance: none; }
+  .formkit-slide-in[data-active] {
+    transform: translateY(0%); }
+    .formkit-slide-in[data-active] .formkit-close {
+      opacity: 1; }
+</style></div></body></html>

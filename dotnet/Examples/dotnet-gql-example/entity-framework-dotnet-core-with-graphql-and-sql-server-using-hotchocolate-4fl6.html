@@ -1,0 +1,2897 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate) - DEV</title>
+      <meta name="last-updated" content="2020-11-05 17:25:08 UTC">
+      <meta name="user-signed-in" content="false">
+        <!-- Experimental web monetization payment pointer for micropayments -->
+        <!-- It lets readers make micropayments to websites they visit. -->
+        <!-- This is step 1: Get live in production to test for platform-wide payment pointer. -->
+        <!-- Step 2: Allow authors to set their payment pointer so they can directly monetize their content based on visitors. -->
+        <!-- Step 3: Enable further functionality based on what we learn from this experimentation and how the ecosystem evolves. -->
+        <meta name="monetization" content="$ilp.uphold.com/24HhrUGG7ekn">
+      <meta name="environment" content="production">
+      
+
+<link rel="stylesheet" media="all" href="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/crayons-9880d9d4686dc7632f339891bb296b414fb2f2baf5db2ffd76df63780e4a81bb.css" />
+<link rel="stylesheet" media="all" href="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/views-55e626d9225e15663e722bd37edaa4dd2da9f54f86a7b503d4731d62f14132d5.css" />
+<link rel="stylesheet" media="all" href="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/minimal-c46ee83e16de30817c55a266c827b7580bea019ba5f2127ba8d4accccc102277.css" />
+
+      <style>
+        .home {
+          position: relative;
+          margin: auto;
+          max-width: 1250px;
+        }
+      </style>
+        <script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~Search-0404504f6cce3694e905.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/vendor-8a8dc187209d74194878.chunk.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/Search-7617dd8cb7b1775d8b2c.chunk.js" defer="defer"></script>
+      <script src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/base-6654718585e533ff70b6d21e3dc0ff973306d46421b565064a44487bc2e1e848.js" defer="defer"></script>
+      
+    <link rel="canonical" href="https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6" />
+    <meta name="description" content="This article will cover two graphql options available for dotnet core:   Hotchocolate  Graphql-Dotnet... Tagged with dotnet, graphql, efcore, mssql.">
+    <meta name="keywords" content="dotnet, graphql, efcore, mssql, software, coding, development, engineering, inclusive, community">
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6" />
+    <meta property="og:title" content="Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)" />
+    <meta property="og:description" content="This article will cover two graphql options available for dotnet core:   Hotchocolate  Graphql-Dotnet..." />
+    <meta property="og:site_name" content="DEV Community" />
+    <meta name="twitter:site" content="@thepracticaldev">
+    <meta name="twitter:creator" content="@">
+    <meta name="twitter:title" content="Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)">
+    <meta name="twitter:description" content="This article will cover two graphql options available for dotnet core:   Hotchocolate  Graphql-Dotnet...">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:widgets:new-embed-design" content="on">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+      <meta property="og:image" content="https://dev.to/social_previews/article/275295.png" />
+      <meta name="twitter:image:src" content="https://dev.to/social_previews/article/275295.png">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+      <link rel="shortcut icon" type="image/x-icon" href="https://dev-to.s3.us-east-2.amazonaws.com/favicon.ico" />
+      <link rel="apple-touch-icon" href="https://res.cloudinary.com/practicaldev/image/fetch/s--gDM0_LTS--/c_limit,f_png,fl_progressive,q_80,w_180/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="https://res.cloudinary.com/practicaldev/image/fetch/s--l0c3Kmql--/c_limit,f_png,fl_progressive,q_80,w_152/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/practicaldev/image/fetch/s--gDM0_LTS--/c_limit,f_png,fl_progressive,q_80,w_180/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png">
+      <link rel="apple-touch-icon" sizes="167x167" href="https://res.cloudinary.com/practicaldev/image/fetch/s--2ecYCSjC--/c_limit,f_png,fl_progressive,q_80,w_167/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png">
+      <link href="https://res.cloudinary.com/practicaldev/image/fetch/s--t7tVouP9--/c_limit,f_png,fl_progressive,q_80,w_192/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png" rel="icon" sizes="192x192" />
+      <link href="https://res.cloudinary.com/practicaldev/image/fetch/s--lrmEcD2H--/c_limit,f_png,fl_progressive,q_80,w_128/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png" rel="icon" sizes="128x128" />
+      <meta name="apple-mobile-web-app-title" content="dev.to">
+      <meta name="application-name" content="dev.to">
+      <meta property="fb:pages" content="568966383279687" />
+      <meta name="theme-color" content="#000000" />
+      <link rel="manifest" href="/manifest.json" />
+      <link rel="search" href="https://dev.to/open-search.xml" type="application/opensearchdescription+xml" title="DEV Community" />
+
+      <meta property="forem:name" content="DEV" />
+      <meta property="forem:logo" content="https://res.cloudinary.com/practicaldev/image/fetch/s--PFPhV65b--/c_limit,f_png,fl_progressive,q_80,w_512/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png" />
+      <meta property="forem:domain" content="dev.to" />
+  </head>
+      <body
+        data-user-status="logged-out"
+        class="sans-serif-article-body default-header"
+        data-pusher-key="ef46a9ae106e4241008c"
+        data-app-domain="ZGV2LnRv"
+        data-honeybadger-key="a45862f6"
+        data-release-footprint="6f34241c359e3af9c0c079db9a9c1f54e0b58036"
+        data-ga-tracking="UA-71991109-1">
+        <div id="body-styles">
+          <style>
+            :root {
+              --accent-brand: #3b49df;
+              --accent-brand-darker: #323ebe;
+              --accent-brand-lighter: #4150f5;
+              --accent-brand-a10: rgba(59, 73, 223, 0.10);
+            }
+          </style>
+        </div>
+        <div id="audiocontent" data-podcast="">
+          
+        </div>
+        <div class="navigation-progress" id="navigation-progress"></div>
+<header class="crayons-header print-hidden" role="banner">
+  <a href="#articles-list" class="skip-content-link">Skip to content</a>
+  <div class="crayons-header__container">
+    <a href="/" class="site-logo" aria-label="DEV Home">
+    <svg width="50" height="40" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="40" rx="3" style="fill: currentColor;"/><path d="M19.099 23.508c0 1.31-.423 2.388-1.27 3.234-.838.839-1.942 1.258-3.312 1.258h-4.403V12.277h4.492c1.31 0 2.385.423 3.224 1.27.846.838 1.269 1.912 1.269 3.223v6.738zm-2.808 0V16.77c0-.562-.187-.981-.562-1.258-.374-.285-.748-.427-1.122-.427h-1.685v10.107h1.684c.375 0 .75-.138 1.123-.415.375-.285.562-.708.562-1.27zM28.185 28h-5.896c-.562 0-1.03-.187-1.404-.561-.375-.375-.562-.843-.562-1.404V14.243c0-.562.187-1.03.562-1.404.374-.375.842-.562 1.404-.562h5.896v2.808H23.13v3.65h3.088v2.808h-3.088v3.65h5.054V28zm7.12 0c-.936 0-1.684-.655-2.246-1.965l-3.65-13.758h3.089l2.807 10.804 2.808-10.804H41.2l-3.65 13.758C36.99 27.345 36.241 28 35.305 28z" style="fill: var(--base-inverted);"/></svg>
+</a>
+
+
+    <div id="pwa-nav-buttons" class="pwa-nav-buttons">
+      <button type="button" id="app-back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 306 306" role="img" aria-labelledby="araw2aciw2b0tz8jn21zysvptqde0h1h" class="crayons-icon"><title id="araw2aciw2b0tz8jn21zysvptqde0h1h">Back</title>
+    <path d="M247.35 35.7L211.65 0l-153 153 153 153 35.7-35.7L130.05 153z"></path>
+</svg>
+
+      </button>
+      <button type="button" id="app-forward-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 306 306" role="img" aria-labelledby="ahxnv2bwhsb22gzcov5f1f3nk12fss7l" class="crayons-icon"><title id="ahxnv2bwhsb22gzcov5f1f3nk12fss7l">Forward</title>
+    <path d="M94.35 0l-35.7 35.7L175.95 153 58.65 270.3l35.7 35.7 153-153z"></path>
+</svg>
+
+      </button>
+      <button type="button" id="app-refresh-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 408 408" role="img" aria-labelledby="ao7em12qj5yicf6rsbfxa1972gbqunqc" class="crayons-icon"><title id="ao7em12qj5yicf6rsbfxa1972gbqunqc">Refresh</title>
+    <path d="M346.8 61.2C311.1 22.95 260.1 0 204 0 91.8 0 0 91.8 0 204s91.8 204 204 204c94.35 0 173.4-66.3 196.35-153H346.8c-20.4 58.65-76.5 102-142.8 102-84.15 0-153-68.85-153-153S119.85 51 204 51c43.35 0 79.05 17.85 107.1 45.9l-81.6 81.6H408V0l-61.2 61.2z"></path>
+</svg>
+
+      </button>
+    </div>
+
+    <div class="crayons-header--search" id="header-search">
+      <form acceptCharset="UTF-8" method="get" action="/search">
+        <input class="crayons-header--search-input crayons-textfield" type="text" name="q" id="nav-search" placeholder="Search..." autoComplete="off" />
+      </form>
+    </div>
+
+    <div class="crayons-header__links">
+        <a href="/enter" class="crayons-btn crayons-btn--ghost-brand hidden mr-2 whitespace-nowrap s:block" data-no-instant>
+          Log in
+        </a>
+
+        <a href="/enter?state=new-user" class="crayons-btn hidden mr-2 whitespace-nowrap s:block" data-no-instant>
+          Create account
+        </a>
+      <div class="crayons-header__menu s:hidden" id="crayons-header__menu">
+        <button type="button" class="crayons-header__menu__trigger" id="navigation-butt" aria-label="Navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="a35ywpvdmh8gijj7tlcf5i52fq46yyq9" class="crayons-icon"><title id="a35ywpvdmh8gijj7tlcf5i52fq46yyq9">Navigation menu</title>
+    <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"></path>
+</svg>
+
+        </button>
+        <div class="crayons-dropdown left-2 right-2 s:left-auto p-0 crayons-header__menu__dropdown block">
+    <div class="authentication-header__container border-0 border-b-1 border-solid border-base-20">
+      <figure class="authentication-header__image-container">
+        <img class="authentication-header__image" src="https://res.cloudinary.com/practicaldev/image/fetch/s--g3JdSGe6--/c_limit,f_auto,fl_progressive,q_80,w_190/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/rainbowdev.svg"
+              alt="Secondary DEV logo" />
+      </figure>
+      <div class="authentication-header__content">
+        <h2 class="authentication-header__title">
+          <a href="/">DEV</a> is a community of 498,842 amazing developers
+
+        </h2>
+        <p class="authentication-header__description">
+            We&#39;re a place where coders share, stay up-to-date and grow their careers.
+
+        </p>
+        <div class="authentication-header__actions">
+          <a href="/enter?state=new-user" class="crayons-btn" aria-label="Create new account" data-no-instant>
+  Create new account
+</a>
+<a href="/enter" class="crayons-btn crayons-btn--ghost-brand" aria-label="Log in">
+  Log in
+</a>
+
+        </div>
+      </div>
+    </div>
+    <div class="border-0 border-b-1 border-solid border-base-20 p-1">
+      <a href="/about" class="crayons-link crayons-link--block" id="last-nav-link">
+        About DEV
+      </a>
+      <a href="/p/information" class="crayons-link crayons-link--block" id="last-nav-link">
+        Learn more
+      </a>
+    </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+        <div id="active-broadcast" class="broadcast-wrapper"></div>
+        <div id="message-notice"></div>
+        <div class="app-shell-loader">
+          loading...
+        </div>
+    <!-- End Top Shell -->
+
+  <div id="base-payment-pointer" data-payment-pointer="$ilp.uphold.com/24HhrUGG7ekn"></div>
+<style>.app-shell-loader {display: none;}</style>
+<div id="page-content" class="wrapper stories stories-show" data-current-page="stories-show">
+  <div id="page-content-inner">
+    
+
+
+<style>
+  .html-variant-wrapper { display: none}
+</style>
+
+<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.10/webcomponents-loader.js"
+        integrity="sha384-3HK5hxQbkFqOIxMbpROlRmRtYl2LBZ52t+tqcjzsmr9NJuOWQxl8RgQSyFvq2lhy"
+        crossorigin="anonymous" defer></script>
+
+  <script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~clipboardCopy-fca68f3ece57b0176f01.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/clipboardCopy-517ce7723117a01d360f.chunk.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~webShare-d4285d32d82efc396ce0.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/webShare-2ec481d2cb952f3f9178.chunk.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~articlePage-c4df12e142d093b86ce8.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/vendor-8a8dc187209d74194878.chunk.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/articlePage-1cf71a79fa93dc1d872d.chunk.js" defer="defer"></script>
+
+    <script type="application/ld+json">
+      {"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6"},"url":"https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6","image":["https://dev.to/social_previews/article/275295.png","https://dev.to/social_previews/article/275295.png","https://dev.to/social_previews/article/275295.png"],"publisher":{"@context":"http://schema.org","@type":"Organization","name":"DEV Community","logo":{"@context":"http://schema.org","@type":"ImageObject","url":"https://res.cloudinary.com/practicaldev/image/fetch/s--t7tVouP9--/c_limit,f_png,fl_progressive,q_80,w_192/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png","width":"192","height":"192"}},"headline":"Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)","author":{"@context":"http://schema.org","@type":"Person","url":"https://dev.to/mnsr","name":"mnsr"},"datePublished":"2020-03-06T08:54:58Z","dateModified":"2020-03-06T23:01:09Z"}
+    </script>
+
+  
+<div class="crayons-layout crayons-layout--3-cols crayons-layout--article">
+  <aside class="crayons-layout__sidebar-left" aria-label="Article actions">
+    <div class="crayons-article-actions">
+  <div class="crayons-article-actions__inner">
+
+      <button
+  role="checkbox"
+  id="reaction-butt-like"
+  class="crayons-reaction crayons-reaction--like"
+  data-category="like"
+  title="Heart">
+  <span class="crayons-reaction__icon crayons-reaction__icon--inactive">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="apuddaziyco189ya3hr689fbz6vytca9" class="crayons-icon"><title id="apuddaziyco189ya3hr689fbz6vytca9">Heart</title>
+    <path d="M21.179 12.794l.013.014L12 22l-9.192-9.192.013-.014A6.5 6.5 0 0112 3.64a6.5 6.5 0 019.179 9.154zM4.575 5.383a4.5 4.5 0 000 6.364L12 19.172l7.425-7.425a4.5 4.5 0 10-6.364-6.364L8.818 9.626 7.404 8.21l3.162-3.162a4.5 4.5 0 00-5.99.334l-.001.001z"></path>
+</svg>
+
+  </span>
+  <span class="crayons-reaction__icon crayons-reaction__icon--active">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="afzcw6k6v329qwaxcbivizwaz2p55xag" class="crayons-icon"><title id="afzcw6k6v329qwaxcbivizwaz2p55xag">Heart</title>
+    <path d="M2.821 12.794a6.5 6.5 0 017.413-10.24h-.002L5.99 6.798l1.414 1.414 4.242-4.242a6.5 6.5 0 019.193 9.192L12 22l-9.192-9.192.013-.014z"></path>
+</svg>
+
+  </span>
+  <span class="crayons-reaction__count" id="reaction-number-like" alt="count"><span class="bg-base-40 opacity-25 p-2 inline-block radius-default"></span></span>
+</button>
+
+      <button
+  role="checkbox"
+  id="reaction-butt-unicorn"
+  class="crayons-reaction crayons-reaction--unicorn"
+  data-category="unicorn"
+  title="Unicorn">
+  <span class="crayons-reaction__icon crayons-reaction__icon--inactive">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a2rlhgdo0m0zaihisa4oakikvwze455w" class="crayons-icon"><title id="a2rlhgdo0m0zaihisa4oakikvwze455w">Unicorn</title>
+    <path d="M5.645 8.013c.013-.265-.261-.323-.4-.183-1.16 1.17-1.822 3.865-.344 7.32.294.961 1.938 3.19.84 6.131l-.003.006c-.094.255.206.404.366.263 1.395-1.226 1.933-3.593 1.1-6.375-.488-1.657-1.955-4.226-1.559-7.162zm-3.22 2.738c.05-.137-.124-.417-.326-.225-.939.893-1.316 2.863-.976 4.605.547 2.878 2.374 3.526 2.066 6.629-.028.102.176.38.348.154 1.546-2.033.409-4.453-.241-6.006-1.005-2.386-1.087-4.118-.871-5.157z" fill="#08090A"></path>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.622 7.223l8.579-3.68c.598-.256 1.087.547.6.985l-6.618 5.941c.881 2.043 2.738 6.34 2.931 6.775 1.348 3.031-2.055 4.918-3.807 3.583a7.027 7.027 0 01-.623-.574c-.974-.965-2.419-2.398-5.207-1.877.284-2.115-.313-3.737-.883-5.288-.38-1.032-.747-2.032-.837-3.124-.346-3.329 3.763-8.23 4.696-7.953.386.115.326 1.229.266 2.319-.051.948-.102 1.88.143 2.12.145.142.428.43.76.773zM11.5 16.5l2.5.5 2.5 2 1-.5-2-4.5-1.5-4-1.5-1-1-1-1-1.5L10 8l-.5 1.5 1 2.5 1 4.5z"></path>
+</svg>
+
+  </span>
+  <span class="crayons-reaction__icon crayons-reaction__icon--active">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="aqget2f86piakb2b637nsqzis9ar6xp9" class="crayons-icon"><title id="aqget2f86piakb2b637nsqzis9ar6xp9">Unicorn</title>
+    <path d="M5.645 8.013c.013-.265-.261-.323-.4-.183-1.16 1.17-1.822 3.865-.344 7.32.294.961 1.938 3.19.84 6.131l-.003.006c-.094.255.206.404.366.263 1.395-1.226 1.933-3.593 1.1-6.375-.488-1.657-1.955-4.226-1.559-7.162zm-3.22 2.738c.05-.137-.124-.417-.326-.225-.939.893-1.316 2.863-.976 4.605.547 2.878 2.374 3.526 2.066 6.629-.028.102.176.38.348.154 1.546-2.033.409-4.453-.241-6.006-1.005-2.386-1.087-4.118-.871-5.157zM22.2 3.543l-8.579 3.68c-.332-.343-.615-.63-.76-.773-.527-.517.313-4.224-.409-4.439-.933-.277-5.042 4.624-4.696 7.953.224 2.735 2.193 4.89 1.72 8.412 3.446-.644 4.841 1.697 5.83 2.45 1.752 1.335 5.155-.551 3.807-3.582-.193-.435-2.05-4.732-2.931-6.775l6.619-5.94c.486-.44-.003-1.242-.601-.986zm-9.418 9.535a.828.828 0 01-.74-.9.825.825 0 01.81-.76c.479 0 .85.42.81.903a.824.824 0 01-.88.757z"></path>
+</svg>
+
+  </span>
+  <span class="crayons-reaction__count" id="reaction-number-unicorn" alt="count"><span class="bg-base-40 opacity-25 p-2 inline-block radius-default"></span></span>
+</button>
+
+      <button
+  role="checkbox"
+  id="reaction-butt-readinglist"
+  class="crayons-reaction crayons-reaction--readinglist"
+  data-category="readinglist"
+  title="Saved">
+  <span class="crayons-reaction__icon crayons-reaction__icon--inactive">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="agtvjtyffbbrr3cbl02vp5lp24v5yzpx" class="crayons-icon"><title id="agtvjtyffbbrr3cbl02vp5lp24v5yzpx">Saved</title>
+    <path d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z"></path>
+</svg>
+
+  </span>
+  <span class="crayons-reaction__icon crayons-reaction__icon--active">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="apx0q0b3yuwu42778sfrac1kk4ef0cd5" class="crayons-icon"><title id="apx0q0b3yuwu42778sfrac1kk4ef0cd5">Saved</title>
+    <path d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1z"></path>
+</svg>
+
+  </span>
+  <span class="crayons-reaction__count" id="reaction-number-readinglist" alt="count"><span class="bg-base-40 opacity-25 p-2 inline-block radius-default"></span></span>
+</button>
+
+
+    <div class="align-center m:relative">
+      <button id="article-show-more-button" class="dropbtn crayons-btn crayons-btn--ghost-dimmed crayons-btn--icon-rounded" aria-label="Toggle dropdown menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a74n41pvtusrur4jwvgwn4fcfbgu3som" class="dropdown-icon crayons-icon"><title id="a74n41pvtusrur4jwvgwn4fcfbgu3som">More...</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+      </button>
+      <div class="crayons-dropdown p-1 right-1 left-1 s:left-auto bottom-100 m:bottom-0 m:right-auto m:left-100 fs-base">
+        <clipboard-copy for="article-copy-link-input" aria-live="polite" aria-controls="article-copy-link-announcer" class="dropdown-link-row">
+          <div class="flex items-center">
+            <input type="text" id="article-copy-link-input" value="https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6" class="crayons-textfield" readonly />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="article-copy-icon" role="img" aria-labelledby="ainecphdsco4rle4i20sookpxc42s63v" class="crayons-icon mx-2 shrink-0"><title id="ainecphdsco4rle4i20sookpxc42s63v">Notifications</title>
+    <path d="M7 6V3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 013 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2zm-2 5v2h6v-2H7zm0 4v2h6v-2H7z"></path>
+</svg>
+
+          </div>
+          <div id="article-copy-link-announcer" role="alert" class="crayons-notice crayons-notice--success my-2 p-1" hidden>Copied to Clipboard</div>
+        </clipboard-copy>
+        <web-share-wrapper shareurl="https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6" sharetext="Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)" template="web-share-button">
+          <a
+            target="_blank"
+            class="dropdown-link-row crayons-link crayons-link--block"
+            rel="noopener"
+            href='https://twitter.com/intent/tweet?text="Entity%20Framework%20DotNet%20Core%20with%20GraphQL%20and%20SQL%20Server%20%28using%20HotChocolate%29" by mnsr %23DEVCommunity https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6'>
+            Share to Twitter
+          </a>
+          <a
+            target="_blank"
+            class="dropdown-link-row crayons-link crayons-link--block"
+            rel="noopener"
+            href="https://www.linkedin.com/shareArticle?mini=true&url=https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6&title=Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)&summary=This article will cover two graphql options available for dotnet core:   Hotchocolate  Graphql-Dotnet...&source=DEV">
+            Share to LinkedIn
+          </a>
+          <a
+            target="_blank"
+            class="dropdown-link-row crayons-link crayons-link--block"
+            rel="noopener"
+            href="https://www.reddit.com/submit?url=https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6&title=Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)">
+            Share to Reddit
+          </a>
+          <a
+            target="_blank"
+            class="dropdown-link-row crayons-link crayons-link--block"
+            rel="noopener"
+            href="https://news.ycombinator.com/submitlink?u=https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6&t=Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)">
+            Share to Hacker News
+          </a>
+          <a
+            target="_blank"
+            class="dropdown-link-row crayons-link crayons-link--block"
+            rel="noopener"
+            href="https://www.facebook.com/sharer.php?u=https://dev.to/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6">
+            Share to Facebook
+          </a>
+        </web-share-wrapper>
+        <template id="web-share-button">
+          <a href="#" class="dropdown-link-row crayons-link crayons-link--block">Share Post</a>
+        </template>
+        <a href="/report-abuse" class="dropdown-link-row crayons-link crayons-link--block">Report Abuse</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="html-variant-wrapper" id="html-variant-article-show-below-article" data-variant-id="382">
+        <div></div>
+      </div>
+
+  </aside>
+
+  <main class="crayons-layout__content grid gap-4">
+    <div class="article-wrapper">
+
+
+      <article class="crayons-card crayons-article mb-4"
+        id="article-show-container"
+        data-author-id="318318"
+        data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6"
+        data-published="true">
+        <header class="crayons-article__header" id="main-title">
+
+          <div class="crayons-article__header__meta">
+            <h1 class="fs-3xl s:fs-4xl l:fs-5xl fw-bold s:fw-heavy lh-tight mb-4 long">
+              Entity Framework DotNet Core with GraphQL and SQL Server (using HotChocolate)
+            </h1>
+
+              <div class="mb-4 spec__tags">
+                  <a class="crayons-tag mr-1" href="/t/dotnet" style="background-color:#5D2590;color:#FFFFFF"><span class="crayons-tag__prefix">#</span>dotnet</a>
+                  <a class="crayons-tag mr-1" href="/t/graphql" style="background-color:#171e26;color:#ff5bc8"><span class="crayons-tag__prefix">#</span>graphql</a>
+                  <a class="crayons-tag mr-1" href="/t/efcore" style="background-color:;color:"><span class="crayons-tag__prefix">#</span>efcore</a>
+                  <a class="crayons-tag mr-1" href="/t/mssql" style="background-color:;color:"><span class="crayons-tag__prefix">#</span>mssql</a>
+              </div>
+
+            <div class="crayons-article__subheader">
+              <a href="/mnsr" class="flex items-center mr-4 mb-4 s:mb-0 fw-medium crayons-link">
+                <span class="crayons-avatar crayons-avatar--l mr-2"><img class="crayons-avatar__image" src="https://res.cloudinary.com/practicaldev/image/fetch/s--eakGMjq---/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/318318/82b10726-2f76-4f77-95dc-9f8ba0daf8fe.jpeg" alt="mnsr profile image" /></span>
+                mnsr
+              </a>
+
+              <span class="fs-s mb-4 s:mb-0">
+                  <time datetime="2020-03-06T08:54:58Z" class="date-no-year">Mar  6</time>
+
+
+                <span class="mr-4">・5 min read</span>
+              </span>
+              <span id="action-space" class="mb-4 s:mb-0"></span>
+            </div>
+          </div>
+        </header>
+
+        <div class="crayons-article__main">
+
+          <div class="crayons-article__body text-styles spec__body" data-article-id="275295" id="article-body">
+            <p>This article will cover two graphql options available for dotnet core:</p>
+
+<ul>
+<li><a href="https://hotchocolate.io/">Hotchocolate</a></li>
+<li>
+<a href="https://graphql-dotnet.github.io/">Graphql-Dotnet</a> (briefly)</li>
+</ul>
+
+
+<hr>
+
+<p>So you're a dotnet developer and you've heard the hype surrounding graphql, and you think "oh yeah, I just HAVE to try this!". Well prepared to be deeply underwhelmed.</p>
+
+<p>As a start, you'd probably google something along the lines of "dotnet graphql". You'd be presented with graphql-dotnet. You click on the github link, only to be presented with this:</p>
+
+<p><a href="https://res.cloudinary.com/practicaldev/image/fetch/s--nQlHpQ7V--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/ydedjdugofqlyvot0m3k.PNG" class="article-body-image-wrapper"><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--nQlHpQ7V--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/ydedjdugofqlyvot0m3k.PNG" alt="graphql-dotnet-warning" loading="lazy"></a></p>
+
+<p>Yikes! Then you decide to go into the releases page, and see the Version 2.4.0 release date: 15 Nov 2018... BIG YIKES.</p>
+
+<p>Ok screw that. What's next? </p>
+
+<p>Hotchocolate to the rescue? What the hell is that? This was the question that first came to mind when I saw a youtube video on graphql and dotnet. It's really the only option you have when it comes to GraphQL solutions in the dotnet world. </p>
+
+<p>The latest official release, as of this post, is 10.3.6 which was released 7 days ago. OK! That's reassuring. The latest preview version was released &lt; 24 hours ago - AWESOME. It's active, it's running, so lets start this.</p>
+
+
+<hr>
+
+<p>Before I proceed, this will be just a basic overview to get started with Hotchocolate graphql, entityframework core and SQL Server. You will end up with a local server, and a graphql playground. I won't be going too in-depth with it, but hopefully you'll get a much better start than I did. </p>
+
+
+<hr>
+
+<h2>
+  <a name="overview" href="#overview" class="anchor">
+  </a>
+  Overview
+</h2>
+
+<p>Things we will be doing:</p>
+
+<ol>
+<li>Create the project </li>
+<li>Setting up our Startup.cs file</li>
+<li>Setup the database</li>
+<li>Adding entities</li>
+<li>Adding the DB Context</li>
+<li>Adding the schema</li>
+<li>Updating the Startup.cs file with our Query types and DB Context</li>
+</ol>
+
+
+<hr>
+
+<h2>
+  <a name="create-the-project" href="#create-the-project" class="anchor">
+  </a>
+  Create the project
+</h2>
+
+<p>Things I'm going to use, and I'll assume you have them installed because I won't cover them:</p>
+
+<ul>
+<li>VSCODE (Omnisharp + C# extensions installed)</li>
+<li>SQL Server, or access to one</li>
+<li>dotnet core 3.1 installed</li>
+</ul>
+
+
+<hr>
+
+<p>First, we load up our trusty terminal (CMD, Bash, ZSH, whatever) create a project folder and navigate to it and create the project:<br>
+</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="o">&gt;</span> md dotnet-gql-test
+<span class="o">&gt;</span> <span class="nb">cd </span>dotnet-gql-test
+<span class="o">&gt;</span> dotnet new web
+</code></pre></div>
+
+
+
+<p>This wil create a new <strong>empty</strong> web application. Once that's done, we install the dependencies:<br>
+</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="o">&gt;</span> dotnet add package Microsoft.EntityFrameworkCore
+<span class="o">&gt;</span> dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+<span class="o">&gt;</span> dotnet add package HotChocolate.AspNetCore
+<span class="o">&gt;</span> dotnet add package HotChocolate.AspNetCore.Playground
+<span class="o">&gt;</span> code <span class="nb">.</span>
+</code></pre></div>
+
+
+
+<p>This will install the above packages, and open up vscode. When you open up vscode, you may see some popups, just click install for C# extensions, wait for Omnisharp to install if it already isn't installed, and let it install any missing required assets.</p>
+
+<p>So far, our  csproj file should look like this:<br>
+</p>
+
+<div class="highlight"><pre class="highlight xml"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk.Web"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;PropertyGroup&gt;</span>
+    <span class="nt">&lt;TargetFramework&gt;</span>netcoreapp3.1<span class="nt">&lt;/TargetFramework&gt;</span>
+    <span class="nt">&lt;RootNamespace&gt;</span>dotnet_gql_test<span class="nt">&lt;/RootNamespace&gt;</span>
+  <span class="nt">&lt;/PropertyGroup&gt;</span>
+
+  <span class="nt">&lt;ItemGroup&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"HotChocolate.AspNetCore"</span> <span class="na">Version=</span><span class="s">"10.3.6"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"HotChocolate.AspNetCore.Playground"</span> <span class="na">Version=</span><span class="s">"10.3.6"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.EntityFrameworkCore"</span> <span class="na">Version=</span><span class="s">"3.1.2"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.EntityFrameworkCore.SqlServer"</span> <span class="na">Version=</span><span class="s">"3.1.2"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/ItemGroup&gt;</span>
+
+<span class="nt">&lt;/Project&gt;</span>
+</code></pre></div>
+
+
+
+<h2>
+  <a name="startupcs" href="#startupcs" class="anchor">
+  </a>
+  Startup.cs
+</h2>
+
+<p>Open up the Startup.cs file, and change it to the following:<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code><span class="k">using</span> <span class="nn">HotChocolate</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HotChocolate.AspNetCore</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.DependencyInjection</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Extensions.Hosting</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">dotnet_gql_test</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">Startup</span>
+  <span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">services</span><span class="p">.</span><span class="nf">AddGraphQL</span><span class="p">(</span>
+        <span class="n">SchemaBuilder</span><span class="p">.</span><span class="nf">New</span><span class="p">()</span>
+        <span class="c1">// AddQueryType&lt;T&gt;() here </span>
+        <span class="p">.</span><span class="nf">Create</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="nf">IsDevelopment</span><span class="p">())</span>
+          <span class="n">app</span><span class="p">.</span><span class="nf">UseDeveloperExceptionPage</span><span class="p">();</span>
+
+      <span class="n">app</span>
+        <span class="p">.</span><span class="nf">UseRouting</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">UseWebSockets</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">UseGraphQL</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">UsePlayground</span><span class="p">();</span>
+    <span class="p">}</span>    
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div>
+
+
+
+<p>This boilerplate, will allow us to eventually use a GraphiQL style playground to test our queries. </p>
+
+
+<hr>
+
+<h2>
+  <a name="the-database" href="#the-database" class="anchor">
+  </a>
+  The database
+</h2>
+
+<p>In our test database for this example, lets say we have a table<br>
+</p>
+
+<div class="highlight"><pre class="highlight sql"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">Locations</span><span class="p">]</span>
+  <span class="p">[</span><span class="n">ID</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="p">[</span><span class="n">Code</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">5</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+  <span class="p">[</span><span class="n">Active</span><span class="p">]</span> <span class="p">[</span><span class="nb">bit</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span>
+</code></pre></div>
+
+
+
+<p>Lets insert some test data:<br>
+</p>
+
+<div class="highlight"><pre class="highlight sql"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="p">[</span><span class="n">Locations</span><span class="p">]</span>
+  <span class="p">([</span><span class="n">Name</span><span class="p">],</span> <span class="p">[</span><span class="n">Code</span><span class="p">],</span> <span class="p">[</span><span class="n">Active</span><span class="p">])</span>
+<span class="k">VALUES</span>
+  <span class="p">(</span><span class="nv">"Sydney"</span><span class="p">,</span> <span class="nv">"SYD"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">GO</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="p">[</span><span class="n">Locations</span><span class="p">]</span>
+  <span class="p">([</span><span class="n">Name</span><span class="p">],</span> <span class="p">[</span><span class="n">Code</span><span class="p">],</span> <span class="p">[</span><span class="n">Active</span><span class="p">])</span>
+<span class="k">VALUES</span>
+  <span class="p">(</span><span class="nv">"Los Angeles"</span><span class="p">,</span> <span class="nv">"LAX"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">GO</span>
+</code></pre></div>
+
+
+
+<h2>
+  <a name="entity" href="#entity" class="anchor">
+  </a>
+  Entity
+</h2>
+
+<p>This is pretty much the same as your standard .NET EntityFramework entity you'd use. It's basically a class with the matching column names and types as the <code>CREATE TABLE</code> query above.<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code><span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.ComponentModel.DataAnnotations.Schema</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">dotnet_gql_test</span>
+<span class="p">{</span>
+  <span class="p">[</span><span class="nf">Table</span><span class="p">(</span><span class="s">"Locations"</span><span class="p">)]</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">Locations</span>
+  <span class="p">{</span>
+    <span class="p">[</span><span class="nf">DatabaseGenerated</span><span class="p">(</span><span class="n">DatabaseGeneratedOption</span><span class="p">.</span><span class="n">Identity</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">ID</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">Required</span><span class="p">,</span> <span class="nf">MaxLength</span><span class="p">(</span><span class="m">50</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">Required</span><span class="p">,</span> <span class="nf">MaxLength</span><span class="p">(</span><span class="m">5</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Code</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">Required</span><span class="p">]</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">Active</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div>
+
+
+
+<p><strong>Important</strong>: This is outside the scope of this article, but you can create a LocationType to complement this. You can find more information about it here: <a href="https://hotchocolate.io/docs/schema-descriptions">https://hotchocolate.io/docs/schema-descriptions</a></p>
+
+
+<hr>
+
+<h2>
+  <a name="the-db-context" href="#the-db-context" class="anchor">
+  </a>
+  The DB Context
+</h2>
+
+<p>Again, it's pretty much identical to any standard DB Context in .NET Entity Framework. But here, for simplicity's sake, I'm going to add the database connection string.<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code><span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">dotnet_gql_test</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">MyDbContext</span><span class="p">:</span> <span class="n">DbContext</span>
+  <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">string</span> <span class="n">DbConnectionString</span> <span class="p">=</span> <span class="s">"Data Source=database.url;Initial Catalog=mydatabasename;Persist Security Info=True;Connect Timeout=30;User ID=user;Password=pass"</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">MyDbContext</span><span class="p">(</span><span class="n">DbContextOptions</span><span class="p">&lt;</span><span class="n">MyDbContext</span><span class="p">&gt;</span> <span class="n">options</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="p">{}</span>
+
+    <span class="k">public</span> <span class="n">DbSet</span><span class="p">&lt;</span><span class="n">Locations</span><span class="p">&gt;</span> <span class="n">Location</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div>
+
+
+
+
+<hr>
+
+<h2>
+  <a name="the-schema" href="#the-schema" class="anchor">
+  </a>
+  The Schema
+</h2>
+
+<p>Hear comes the meaty part. This is what we will have access to in our graphql playground. As a basic query, we'll return a list of Locations from our Location table, and another query that accepts an argument for a specific location code. The schema is pretty straightforward, you'll have one class that has queries, and another class that extends ObjectType and configures the fields for the query. The latter will be added to our Startup.cs file as a QueryType in the Schema definition.</p>
+
+<p>First, we'll create the query class. This contains all the queries for this example.<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Threading.Tasks</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HotChocolate</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">HotChocolate.Types</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.EntityFrameworkCore</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">dotnet_gql_test</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">LocationQueries</span>
+  <span class="p">{</span>
+    <span class="c1">// GetLocations: Return a list of all locations</span>
+    <span class="c1">// Notice the [Service]. It's an auto hook up from HotChocolate</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Locations</span><span class="p">&gt;&gt;</span> <span class="nf">GetLocations</span><span class="p">([</span><span class="n">Service</span><span class="p">]</span> <span class="n">MyDbContext</span> <span class="n">dbContext</span><span class="p">)</span> <span class="p">=&gt;</span>
+      <span class="k">await</span> <span class="n">dbContext</span>
+        <span class="p">.</span><span class="n">Location</span>
+        <span class="p">.</span><span class="nf">AsNoTracking</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">OrderBy</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+
+    <span class="c1">// GetLocation: Return a list of locations by location code</span>
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Locations</span><span class="p">&gt;&gt;</span> <span class="nf">GetLocation</span><span class="p">([</span><span class="n">Service</span><span class="p">]</span> <span class="n">MyDbContext</span> <span class="n">dbContext</span><span class="p">,</span> <span class="kt">string</span> <span class="n">code</span><span class="p">)</span> <span class="p">=&gt;</span>
+      <span class="k">await</span> <span class="n">dbContext</span>
+        <span class="p">.</span><span class="n">Location</span>
+        <span class="p">.</span><span class="nf">AsNoTracking</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">Where</span><span class="p">(</span><span class="n">w</span> <span class="p">=&gt;</span> <span class="n">w</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">code</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">OrderBy</span><span class="p">(</span><span class="n">o</span> <span class="p">=&gt;</span> <span class="n">o</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">ToListAsync</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+
+
+
+<p>Next, we create the query type.<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code><span class="k">using</span> <span class="nn">HotChocolate.Types</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">dotnet_gql_test</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">LocationQueryType</span> <span class="p">:</span> <span class="n">ObjectType</span><span class="p">&lt;</span><span class="n">LocationQueries</span><span class="p">&gt;</span>
+  <span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IObjectTypeDescriptor</span><span class="p">&lt;</span><span class="n">LocationQueries</span><span class="p">&gt;</span> <span class="n">descriptor</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">base</span><span class="p">.</span><span class="nf">Configure</span><span class="p">(</span><span class="n">descriptor</span><span class="p">);</span>
+
+      <span class="n">descriptor</span>
+        <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="n">f</span> <span class="p">=&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">GetLocations</span><span class="p">(</span><span class="k">default</span><span class="p">))</span>
+
+      <span class="n">descriptor</span>
+        <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="n">f</span> <span class="p">=&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">GetLocation</span><span class="p">(</span><span class="k">default</span><span class="p">,</span> <span class="k">default</span><span class="p">))</span>
+        <span class="p">.</span><span class="nf">Argument</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span> <span class="n">a</span> <span class="p">=&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">Type</span><span class="p">&lt;</span><span class="n">StringType</span><span class="p">&gt;());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div>
+
+
+
+<p>This lets our schema know that we have 2 queries available. <code>GetLocations</code> will get all locations. <code>GetLocation</code> will get a location by <code>code</code>.</p>
+
+
+<hr>
+
+<h2>
+  <a name="back-to-the-startupcs-file" href="#back-to-the-startupcs-file" class="anchor">
+  </a>
+  Back to the Startup.cs file
+</h2>
+
+<p>Now that we have everything set up, we can update our Startup.cs file with the data context, and schema builder.</p>
+
+<p>To do this, the update the <code>ConfigureServices</code> function with the following:<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code>    <span class="k">public</span> <span class="k">void</span> <span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="c1">// Add DbContext</span>
+      <span class="n">services</span>
+        <span class="p">.</span><span class="n">AddDbContext</span><span class="p">&lt;</span><span class="n">MyDbContext</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
+          <span class="n">options</span><span class="p">.</span><span class="nf">UseSqlServer</span><span class="p">(</span><span class="n">MyDbContext</span><span class="p">.</span><span class="n">DbConnectionString</span><span class="p">));</span>
+
+      <span class="c1">// Add GraphQL Services</span>
+      <span class="n">services</span>
+        <span class="p">.</span><span class="nf">AddDataLoaderRegistry</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">AddGraphQL</span><span class="p">(</span><span class="n">SchemaBuilder</span>
+            <span class="p">.</span><span class="nf">New</span><span class="p">()</span>
+            <span class="c1">// Here, we add the LocationQueryType as a QueryType</span>
+            <span class="p">.</span><span class="n">AddQueryType</span><span class="p">&lt;</span><span class="n">LocationQueryType</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="nf">Create</span><span class="p">());</span>
+    <span class="p">}</span>
+</code></pre></div>
+
+
+
+<h2>
+  <a name="build-and-run" href="#build-and-run" class="anchor">
+  </a>
+  Build and run
+</h2>
+
+<p>To build and run, type the following in your terminal:<br>
+</p>
+
+<div class="highlight"><pre class="highlight shell"><code><span class="o">&gt;</span> dotnet run
+<span class="c"># an alternative is "dotnet watch run" - this adds a watcher when coding</span>
+</code></pre></div>
+
+
+
+<p>Open your browser to <a href="http://localhost:5000/playground">http://localhost:5000/playground</a>. This will display a graphiql playground. In this you should be able to successfully run the queries:<br>
+</p>
+
+<div class="highlight"><pre class="highlight graphql"><code><span class="p">{</span><span class="w">
+  </span><span class="n">locations</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">name</span><span class="w">
+    </span><span class="n">code</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+
+
+
+<p>The above will return all locations.<br>
+</p>
+
+<div class="highlight"><pre class="highlight graphql"><code><span class="p">{</span><span class="w">
+  </span><span class="n">location</span><span class="p">(</span><span class="n">code</span><span class="p">:</span><span class="w"> </span><span class="s2">"lax"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">name</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+
+
+
+<p>The above will return "Los angeles".</p>
+
+
+<hr>
+
+<p>This covers the basic fundamentals of EFCore and GraphQL. It's not difficult, but documentation covering everything is quite sparse or non-existant. </p>
+
+<p>If you have any questions, or you think I missed something (or worse, made typos), feel free to hit me up in the comments.</p>
+
+<p>Hope this helps someone.</p>
+
+
+          </div>
+
+        </div>
+          <section id="comments" data-updated-at="2020-11-05 17:25:07 UTC" class="text-padding mb-4 border-t-1 border-0 border-solid border-base-10">
+      <header class="relative flex justify-between items-center mb-4">
+        <h3 class="crayons-title">Discussion</h3>
+        <div id="comment-subscription">
+          <div role="presentation" class="crayons-btn-group">
+            <span class="crayons-btn crayons-btn--outlined">Subscribe</span>
+          </div>
+        </div>
+      </header>
+      <div
+        class="comments-container"
+        id="comments-container"
+        data-commentable-id="275295"
+        data-commentable-type="Article">
+        <div id="response-templates-data"></div>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~validateFileInputs-27f454ed74f27d85f57b.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/validateFileInputs-2497ea436d88d2ad394b.chunk.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~responseTemplates-4061931ff618b097125a.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/responseTemplates-f69a81b9ccb0e265f641.chunk.js" defer="defer"></script>
+
+
+<form class="comment-form" id="new_comment" action="/comments" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+
+  <input type="hidden" name="authenticity_token" value="NOTHING" id="new_comment_authenticity_token">
+
+    <input value="275295" type="hidden" name="comment[commentable_id]" id="comment_commentable_id" />
+    <input value="Article" type="hidden" name="comment[commentable_type]" id="comment_commentable_type" />
+    
+
+  <span class="crayons-avatar crayons-avatar--l mr-2 shrink-0">
+    <img src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png" width="32" height="32" alt="pic" class="crayons-avatar__image" id="comment-primary-user-profile--avatar">
+  </span>
+  <div class="comment-form__inner">
+    <div class="comment-form__field">
+      <textarea placeholder="Add to the discussion" onfocus="handleFocus(event)" onkeyup="handleKeyUp(event)" onkeydown="handleKeyDown(event)" oninput="handleChange(event)" id="text-area" required="required" class="crayons-textfield comment-textarea crayons-textfield--ghost" aria-label="Add a comment to the discussion" name="comment[body_markdown]">
+</textarea>
+      <div class="comment-form__toolbar">
+        <div class="editor-image-upload">
+          <input type="file" id="image-upload-main" name="file" accept="image/*" style="display:none">
+          <button type="button" class="crayons-btn crayons-btn--s crayons-btn--icon-left crayons-btn--ghost-dimmed" onclick="handleImageUpload(event,'main')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="a66zq3w5qob8u6k7kauii0qqsx1uvgmy" class="crayons-icon"><title id="a66zq3w5qob8u6k7kauii0qqsx1uvgmy">Image</title>
+    <path d="M20 5H4v14l9.292-9.294a1 1 0 011.414 0L20 15.01V5zM2 3.993A1 1 0 012.992 3h18.016c.548 0 .992.445.992.993v16.014a1 1 0 01-.992.993H2.992A.993.993 0 012 20.007V3.993zM8 11a2 2 0 110-4 2 2 0 010 4z"></path>
+</svg>
+
+            <span class="hidden s:inline-block">Upload image</span>
+          </button>
+          <label class="image-upload-file-label" id="image-upload-file-label-main"></label>
+          <input type="submit" id='image-upload-submit-main' value="Upload" style="display:none">
+          <input class="hidden" id="uploaded-image-main" />
+        </div>
+
+        <button type="button" class="crayons-btn crayons-btn--s crayons-btn--icon-left crayons-btn--ghost-dimmed response-templates-button" title="Use a response template" data-has-listener="false" data-form-id="new_comment">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="armvrdrpg048dyr3qysv0pw5wburpnr" class="crayons-icon"><title id="armvrdrpg048dyr3qysv0pw5wburpnr">Templates</title>
+    <path d="M3 18.5V5a3 3 0 013-3h14a1 1 0 011 1v18a1 1 0 01-1 1H6.5A3.5 3.5 0 013 18.5zM19 20v-3H6.5a1.5 1.5 0 100 3H19zM10 4H6a1 1 0 00-1 1v10.337A3.485 3.485 0 016.5 15H19V4h-2v8l-3.5-2-3.5 2V4z"></path>
+</svg>
+
+          <span class="hidden s:inline-block">Templates</span>
+        </button>
+
+        <a href="/p/editor_guide" class="crayons-btn crayons-btn--ghost-dimmed crayons-btn--icon crayons-btn--s ml-auto" target="_blank" rel="noopener" title="Markdown Guide">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-labelledby="a7mfzfmnddhlu61mc0im0tskydejk6jc" class="crayons-icon"><title id="a7mfzfmnddhlu61mc0im0tskydejk6jc">Editor guide</title>
+    <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"></path>
+</svg>
+
+        </a>
+      </div>
+    </div>
+
+    <div class="response-templates-container crayons-card crayons-card--secondary p-4 mb-4 comment-form__templates fs-base hidden">
+      <header>
+        <button type="button" class="personal-template-button active" data-target-type="personal" data-form-id="new_comment">Personal</button>
+        <button type="button" class="moderator-template-button hidden" data-target-type="moderator" data-form-id="new_comment">Moderator</button>
+      </header>
+
+      <img class="loading-img hidden" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/loading-ellipsis-b714cf681fd66c853ff6f03dd161b77aa3c80e03cdc06f478b695f42770421e9.svg" alt="loading">
+
+      <div class="personal-responses-container">
+      </div>
+      <div class="moderator-responses-container hidden">
+      </div>
+
+      <a target="_blank" rel="noopener nofollow" href="/settings/response-templates">
+        Create template
+      </a>
+      <p>Templates let you quickly answer FAQs or store snippets for re-use.</p>
+    </div>
+
+    <div class="comment-form__preview text-styles text-styles--secondary" id="preview-div"></div>
+
+    <div class="comment-form__buttons mb-4">
+      <button type="submit" class="crayons-btn mr-2 js-btn-enable" onclick="validateField(event)" disabled>Submit</button>
+      <button type="button" class="preview-toggle crayons-btn crayons-btn--secondary comment-action-preview js-btn-enable mr-2" disabled>Preview</button>
+      <a href="/404.html" class="crayons-btn crayons-btn--ghost js-btn-dismiss hidden">Dismiss</a>
+    </div>
+  </div>
+
+  <div class="code-of-conduct" id="toggle-code-of-conduct-checkbox"></div>
+</form>
+
+        <div class="comment-trees" id="comment-trees-container">
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mh5j"></div>
+<div id="comment-node-398313"
+     class="single-comment-node root  comment-deep-0" data-comment-id="398313" data-comment-author-id="138723" data-content-user-id="138723">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/softchris">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--lyLjQn6P--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/138723/76116967-2b0e-456c-8430-85493e2174aa.jpeg" alt="softchris profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Chris Noring
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/chris_noring" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/softchris" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/softchris/comment/mh5j">
+    <time datetime="2020-03-13T16:42:35Z">
+      Mar 13
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a7e404lyv6i0vlhju97of2pxqtw6fe9i" class="dropdown-icon"><title id="a7e404lyv6i0vlhju97of2pxqtw6fe9i">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/softchris/comment/mh5j" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="138723" data-action="settings-button" data-path="/softchris/comment/mh5j/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="138723" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="398313">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/softchris/comment/mh5j/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/softchris/comment/mh5j"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>I would love to use HotChocolate, API looks amazing but API is very changed per 10.3.6. There's no way you can follow the docs even for hello world.. Right now I'm actively reading the source code instead of relying on the docs.. Give this lib a few months to get things in order - this is not ready for production !! If you use this tutorial for example, you will get up and running <a href="https://hotchocolate.io/docs/tutorial-01-gettingstarted" rel="nofollow">hotchocolate.io/docs/tutorial-01-g...</a> but if you look at this page you get stuck straight away as the docs aren't updated, <a href="https://hotchocolate.io/docs/introduction" rel="nofollow">hotchocolate.io/docs/introduction</a> . That's not a great look on an intro page</p>
+
+
+        <button class="reaction-button" id="button-for-comment-398313" data-comment-id="398313" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="398313" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mh5j">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mh5j" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+      <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mhj9"></div>
+<div id="comment-node-398667"
+     class="single-comment-node child  comment-deep-1" data-comment-id="398667" data-comment-author-id="260913" data-content-user-id="260913">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/michaelstaib">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--O5CRTOSv--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/260913/fc34e5c5-de2b-44eb-93a5-812da8941309.png" alt="michaelstaib profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Michael Staib
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/michael_staib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/michaelstaib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/michaelstaib/comment/mhj9">
+    <time datetime="2020-03-14T08:24:21Z">
+      Mar 14
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="anhhfizntmiq775yz3l10ey74qerourm" class="dropdown-icon"><title id="anhhfizntmiq775yz3l10ey74qerourm">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/michaelstaib/comment/mhj9" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="260913" data-action="settings-button" data-path="/michaelstaib/comment/mhj9/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="260913" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="398667">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/michaelstaib/comment/mhj9/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/michaelstaib/comment/mhj9"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>That is not entirely true the API has not changed and you just have to add <code>using HotChocolate.Execution;</code> to get the extension methods.</p>
+
+<p>I also answered this in your issue.<br>
+<a href="https://github.com/ChilliCream/hotchocolate/issues/1553" rel="nofollow">github.com/ChilliCream/hotchocolat...</a></p>
+
+<p>Regarding production ready. We are. HotChocolate is the most spec compliant and the fastest GraphQL library for .NET. If you run just the parser kitchen sink tests from Facebook GraphQL-DotNet crashes but Hot Chocolate will run each of them.</p>
+
+<p>Also it is the most feature rich GraphQL Platform for .NET. We have a very active support channel which solves problems of their users very quickly. If you post a question to us we answer within 12 hours most of the times immediately.</p>
+
+<p>Further, apart from that we have a far bigger platform with tools like Banana Cake Pop (GraphQL IDE) or our .NET clients.</p>
+
+<p>We will add to our documentation that you have to add this using. I thought personally that this is not necessary since most Dev IDEs will auto import those. It is basically the same like with Microsofts ServiceCollection many methods are extension methods that have to be imported.</p>
+
+
+        <button class="reaction-button" id="button-for-comment-398667" data-comment-id="398667" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="398667" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mhj9">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mhj9" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+      <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mhlm"></div>
+<div id="comment-node-398732"
+     class="single-comment-node child  comment-deep-2" data-comment-id="398732" data-comment-author-id="138723" data-content-user-id="138723">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/softchris">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--lyLjQn6P--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/138723/76116967-2b0e-456c-8430-85493e2174aa.jpeg" alt="softchris profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Chris Noring
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/chris_noring" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/softchris" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/softchris/comment/mhlm">
+    <time datetime="2020-03-14T11:52:37Z">
+      Mar 14
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a8v628jlh5tjmilh8xjl73ftbr447h79" class="dropdown-icon"><title id="a8v628jlh5tjmilh8xjl73ftbr447h79">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/softchris/comment/mhlm" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="138723" data-action="settings-button" data-path="/softchris/comment/mhlm/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="138723" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="398732">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/softchris/comment/mhlm/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/softchris/comment/mhlm"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>hi Michael. I'm on VS Code.. there is no auto import happening. That's what a lot of devs use if on Mac or Linux. Please add the needed usings for all your examples or add a link to a sample project on GitHub where I can figure this out. I appreciate you taking the time to answer. As I said it looks like a great API, great features but I'm sure you understand how frustrating it is to get stuck  </p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-398732" data-comment-id="398732" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="398732" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mhlm">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mhlm" class="toggle-reply-form thread-indication" rel="nofollow">Thread</a>
+      </div>
+    </div>
+      <div class="comment-hash-marker" id="mhm1"></div>
+<div id="comment-node-398737"
+     class="single-comment-node child  comment-deep-3" data-comment-id="398737" data-comment-author-id="260913" data-content-user-id="260913">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/michaelstaib">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--O5CRTOSv--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/260913/fc34e5c5-de2b-44eb-93a5-812da8941309.png" alt="michaelstaib profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Michael Staib
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/michael_staib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/michaelstaib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/michaelstaib/comment/mhm1">
+    <time datetime="2020-03-14T11:59:05Z">
+      Mar 14
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a43dwtimgqin90kvef0n4de5b0mgostb" class="dropdown-icon"><title id="a43dwtimgqin90kvef0n4de5b0mgostb">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/michaelstaib/comment/mhm1" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="260913" data-action="settings-button" data-path="/michaelstaib/comment/mhm1/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="260913" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="398737">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/michaelstaib/comment/mhm1/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/michaelstaib/comment/mhm1"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>I do get that. We are working hard on out new documentation that we will release alongside the 10.4 release coming next week. I will add the usings to the examples and we will have blog posts going up with the 10.4 release showing how to use it with entity framework in more depth. </p>
+
+<p>Hot Chocolate is developed on macOS and VSCode. That is why I thought that any other IDE would do the same auto import when pressing command + . on the missing method. But I agree that is not actually that obvious. Be assured that we will update the docs over the next week.</p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-398737" data-comment-id="398737" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="398737" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mhm1">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mhm1" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+
+</div>
+
+    </details>
+
+</div>
+
+    </details>
+
+</div>
+
+    </details>
+
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mei7"></div>
+<div id="comment-node-396611"
+     class="single-comment-node root  comment-deep-0" data-comment-id="396611" data-comment-author-id="348898" data-content-user-id="348898">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/toddfulton">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--GR0TXhlP--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/348898/e7da706a-c53b-4acc-b840-adc59451ad20.png" alt="toddfulton profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Todd-Fulton
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/Todd-Fulton" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/toddfulton/comment/mei7">
+    <time datetime="2020-03-11T02:22:59Z">
+      Mar 11
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="ae5c5zeyf8io7kcuir3yoc6fj9sf7kcg" class="dropdown-icon"><title id="ae5c5zeyf8io7kcuir3yoc6fj9sf7kcg">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/toddfulton/comment/mei7" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="348898" data-action="settings-button" data-path="/toddfulton/comment/mei7/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="348898" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="396611">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/toddfulton/comment/mei7/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/toddfulton/comment/mei7"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>Thanks, been trying to figure out how to hook up a database to hotchocolate for a couple days. Looks like instead of hc, it's handled by asp.net and ef core, which I know next to nothing about. Lol, was reading <a href="https://hotchocolate.io/docs/tutorial-mongo" rel="nofollow">Hotchocolate's - Tutorial Mongo</a> where they say:</p>
+
+<blockquote>
+<p>"You are all fired up and want to get started with a little tutorial walking you through an end-to-end example with MongoDB as your database?" </p>
+</blockquote>
+
+<p>...but nothing about actually hooking up to mongodb, as of yet (<em>facepalm</em>). From reading this my next guess would be to combine info from that tut with <a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-3.1&amp;tabs=visual-studio" rel="nofollow">Create a web API with ASP.NET Core and MongoDB</a> somehow, and then implementing the schema and resolvers and such instead of a rest api. Lots to learn.</p>
+
+<p>Thanks again.</p>
+
+
+        <button class="reaction-button" id="button-for-comment-396611" data-comment-id="396611" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="396611" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mei7">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mei7" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+      <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="meol"></div>
+<div id="comment-node-396781"
+     class="single-comment-node child  comment-deep-1" data-comment-id="396781" data-comment-author-id="260913" data-content-user-id="260913">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/michaelstaib">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--O5CRTOSv--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/260913/fc34e5c5-de2b-44eb-93a5-812da8941309.png" alt="michaelstaib profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Michael Staib
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/michael_staib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/michaelstaib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/michaelstaib/comment/meol">
+    <time datetime="2020-03-11T11:45:16Z">
+      Mar 11
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="adklrr8dfbiod8cltmnn7y18qggdqpfh" class="dropdown-icon"><title id="adklrr8dfbiod8cltmnn7y18qggdqpfh">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/michaelstaib/comment/meol" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="260913" data-action="settings-button" data-path="/michaelstaib/comment/meol/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="260913" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="396781">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/michaelstaib/comment/meol/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/michaelstaib/comment/meol"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>That tutorial for mongo was not supposed to be published on the documentation. It kind of is not finished and stops mid-sentence.</p>
+
+<p>Here is a good example of how you can do mongo with hc:<br>
+<a href="https://github.com/ChilliCream/graphql-workshop/tree/master/src/Server/PureCodeFirst" rel="nofollow">github.com/ChilliCream/graphql-wor...</a></p>
+
+<p>Also we have an open slack channel where we help people along:<br>
+<a href="https://join.slack.com/t/hotchocolategraphql/shared_invite/enQtNTA4NjA0ODYwOTQ0LTViMzA2MTM4OWYwYjIxYzViYmM0YmZhYjdiNzBjOTg2ZmU1YmMwNDZiYjUyZWZlMzNiMTk1OWUxNWZhMzQwY2Q" rel="nofollow">join.slack.com/t/hotchocolategraph...</a></p>
+
+<p>However, version 10.4 is soon out and will bring support for projections and with that makes it even easier to bind your database to hc.</p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-396781" data-comment-id="396781" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="396781" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/meol">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/meol" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+      <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mep5"></div>
+<div id="comment-node-396791"
+     class="single-comment-node child  comment-deep-2" data-comment-id="396791" data-comment-author-id="349177" data-content-user-id="349177">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/pascalsenn">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--sB84vOmk--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/349177/a90de582-0e1b-44c7-9529-6246d299c043.png" alt="pascalsenn profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              PascalSenn
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/PascalSenn" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/pascalsenn/comment/mep5">
+    <time datetime="2020-03-11T12:00:16Z">
+      Mar 11
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a7vr0sdbfeu41sr6rkxyr1gzj7ha0hip" class="dropdown-icon"><title id="a7vr0sdbfeu41sr6rkxyr1gzj7ha0hip">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/pascalsenn/comment/mep5" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="349177" data-action="settings-button" data-path="/pascalsenn/comment/mep5/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="349177" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="396791">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/pascalsenn/comment/mep5/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/pascalsenn/comment/mep5"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>Regarding projections:</p>
+
+<p>Given this Query type we generate all the nested types you need. By annotating with attributes you can add additional behavior on top of it.<br>
+</p>
+
+<div class="highlight"><pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Query</span> <span class="p">{</span>
+     <span class="p">[</span><span class="n">UsePaging</span><span class="p">]</span>
+     <span class="p">[</span><span class="n">UseSelection</span><span class="p">]</span> <span class="c1">// &lt;--- creates the projections on the database</span>
+     <span class="p">[</span><span class="n">UseSorting</span><span class="p">]</span>
+     <span class="p">[</span><span class="n">UseFiltering</span><span class="p">]</span>
+     <span class="k">public</span> <span class="n">IQueryable</span><span class="p">&lt;</span><span class="n">Jedi</span><span class="p">&gt;</span> <span class="nf">GetJedis</span><span class="p">([</span><span class="n">Service</span><span class="p">]</span><span class="n">DBContext</span> <span class="n">ctx</span><span class="p">)</span> 
+       <span class="p">=&gt;</span> <span class="n">ctx</span><span class="p">.</span><span class="n">Jedis</span><span class="p">.</span><span class="nf">AsQueryable</span><span class="p">()</span>
+
+<span class="p">}</span>
+
+</code></pre></div>
+
+
+
+<p>When you now execute this query<br>
+</p>
+
+<div class="highlight"><pre class="highlight graphql"><code><span class="p">{</span><span class="w">
+  </span><span class="n">jedis</span><span class="p">(</span><span class="n">where</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s2">"Han"</span><span class="p">},</span><span class="w"> </span><span class="n">order_by</span><span class="p">:{</span><span class="n">side</span><span class="p">:</span><span class="n">DESC</span><span class="p">})</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+
+
+
+<p>This SQL statement is executed:<br>
+</p>
+
+<div class="highlight"><pre class="highlight sql"><code><span class="k">SELECT</span> <span class="p">[</span><span class="n">p</span><span class="p">].[</span><span class="n">Name</span><span class="p">],[</span><span class="n">p</span><span class="p">].[</span><span class="n">Side</span><span class="p">]</span>
+<span class="k">FROM</span> <span class="p">[</span><span class="n">Jedis</span><span class="p">]</span> <span class="k">AS</span> <span class="p">[</span><span class="n">p</span><span class="p">]</span>
+<span class="k">WHERE</span> <span class="p">[</span><span class="n">p</span><span class="p">].[</span><span class="n">Name</span><span class="p">]</span> <span class="o">=</span><span class="nv">"Han"</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="p">[</span><span class="n">p</span><span class="p">].[</span><span class="n">Side</span><span class="p">]</span> <span class="k">DESC</span>
+</code></pre></div>
+
+
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-396791" data-comment-id="396791" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="396791" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mep5">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mep5" class="toggle-reply-form thread-indication" rel="nofollow">Thread</a>
+      </div>
+    </div>
+      <div class="comment-hash-marker" id="mfei"></div>
+<div id="comment-node-397194"
+     class="single-comment-node child  comment-deep-3" data-comment-id="397194" data-comment-author-id="348898" data-content-user-id="348898">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/toddfulton">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--GR0TXhlP--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/348898/e7da706a-c53b-4acc-b840-adc59451ad20.png" alt="toddfulton profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Todd-Fulton
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/Todd-Fulton" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/toddfulton/comment/mfei">
+    <time datetime="2020-03-11T21:20:53Z">
+      Mar 11
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="absck7caiitlsipl10r1o51ollfh0h6q" class="dropdown-icon"><title id="absck7caiitlsipl10r1o51ollfh0h6q">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/toddfulton/comment/mfei" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="348898" data-action="settings-button" data-path="/toddfulton/comment/mfei/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="348898" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="397194">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/toddfulton/comment/mfei/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/toddfulton/comment/mfei"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>Thank you for info and redirect to the repo.</p>
+
+<p>I actually got it working with the BookAPI example on the ms site, and the startwars example repo. I basically just followed the BookAPI tutorial until they started talking about controllers, then looked at the starwars repo and implemented a resolver that used the <code>BookService</code> that was connected to mongo, instead of the in-memory repository, and then implemented the types for the book and query and hooked it all up in startup.</p>
+
+<p>I'll go through the workshop repo and see how it compares to what I did to see if I was on the right track, and start learning about all the other stuff.</p>
+
+<p>Thank you kindly!</p>
+
+
+        <button class="reaction-button" id="button-for-comment-397194" data-comment-id="397194" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="397194" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mfei">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mfei" class="toggle-reply-form thread-indication" rel="nofollow">Thread</a>
+      </div>
+    </div>
+      <div class="comment-hash-marker" id="mhj4"></div>
+<div id="comment-node-398662"
+     class="single-comment-node child flat-node comment-deep-4" data-comment-id="398662" data-comment-author-id="349177" data-content-user-id="349177">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/pascalsenn">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--sB84vOmk--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/349177/a90de582-0e1b-44c7-9529-6246d299c043.png" alt="pascalsenn profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              PascalSenn
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/PascalSenn" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/pascalsenn/comment/mhj4">
+    <time datetime="2020-03-14T08:14:10Z">
+      Mar 14
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="abfv3o4pdldpno4otfwjki7fz1fouztj" class="dropdown-icon"><title id="abfv3o4pdldpno4otfwjki7fz1fouztj">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/pascalsenn/comment/mhj4" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="349177" data-action="settings-button" data-path="/pascalsenn/comment/mhj4/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="349177" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="398662">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/pascalsenn/comment/mhj4/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/pascalsenn/comment/mhj4"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>Join the slack channel if you have any questions, you get usually an answer real quickly :)</p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-398662" data-comment-id="398662" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="398662" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mhj4">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mhj4" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+
+</div>
+
+
+</div>
+
+    </details>
+
+</div>
+
+    </details>
+
+</div>
+
+    </details>
+
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="110fh"></div>
+<div id="comment-node-474959"
+     class="single-comment-node root  comment-deep-0" data-comment-id="474959" data-comment-author-id="416842" data-content-user-id="416842">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/aahock">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--pwEzPYra--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/416842/badac8ac-0961-4b55-8a93-a10b5b427ae5.png" alt="aahock profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              aahock
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/aahock" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/aahock/comment/110fh">
+    <time datetime="2020-06-25T17:03:54Z">
+      Jun 25
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="ank8hafjny24zaaytcpjpxokk8togvql" class="dropdown-icon"><title id="ank8hafjny24zaaytcpjpxokk8togvql">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/aahock/comment/110fh" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="416842" data-action="settings-button" data-path="/aahock/comment/110fh/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="416842" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="474959">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/aahock/comment/110fh/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/aahock/comment/110fh"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>Thanks mnse.  That was a big help.  I also had the EXACT same thoughts today as I was researching where to find a graphql library for .net 3.1.  2018?  Uh, no thanks.  Next!</p>
+
+<p>Seems like Hot Chocolate is the only game in town.  Hope it works.  Whoever came up w/the name Hot Chocolate for a GraphQL .NET library should see a psychiatrist.  Immediately.  And take a marketing course.</p>
+
+
+        <button class="reaction-button" id="button-for-comment-474959" data-comment-id="474959" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="474959" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/110fh">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/110fh" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+    </details>
+
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="11ike"></div>
+<div id="comment-node-487254"
+     class="single-comment-node root  comment-deep-0" data-comment-id="487254" data-comment-author-id="426842" data-content-user-id="426842">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/deltait">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--01Fkc0nk--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/426842/9a88a63d-c9ea-4827-8b08-6e1e0f6526c0.png" alt="deltait profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              LeTrung
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/delta-it" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/deltait/comment/11ike">
+    <time datetime="2020-07-08T09:26:23Z">
+      Jul  8
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="atswumjos99ujrd4cx4rzk0e449ptjfn" class="dropdown-icon"><title id="atswumjos99ujrd4cx4rzk0e449ptjfn">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/deltait/comment/11ike" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="426842" data-action="settings-button" data-path="/deltait/comment/11ike/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="426842" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="487254">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/deltait/comment/11ike/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/deltait/comment/11ike"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>I am working on version 10.4.3 and I am following this document for Subscriptions but might it out of date because IEventMessage, IEventSender is obsoleted, do you have any new instruction for Subscriptions?<br>
+<a href="https://hotchocolate.io/docs/code-first-subscription" rel="nofollow">hotchocolate.io/docs/code-first-su...</a></p>
+
+
+        <button class="reaction-button" id="button-for-comment-487254" data-comment-id="487254" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="487254" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/11ike">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/11ike" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+    </details>
+
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="10a1b"></div>
+<div id="comment-node-463773"
+     class="single-comment-node root  comment-deep-0" data-comment-id="463773" data-comment-author-id="408066" data-content-user-id="408066">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/bossjake">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--DsMp1Wwp--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/408066/6aa59609-2344-4093-858b-8a9b87a27521.png" alt="bossjake profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              BossJake
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/BossJake" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/bossjake/comment/10a1b">
+    <time datetime="2020-06-13T09:23:53Z">
+      Jun 13
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="a2sgzfzonoa9vdwa5ht0hnwkvaao8ey0" class="dropdown-icon"><title id="a2sgzfzonoa9vdwa5ht0hnwkvaao8ey0">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/bossjake/comment/10a1b" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="408066" data-action="settings-button" data-path="/bossjake/comment/10a1b/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="408066" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="463773">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/bossjake/comment/10a1b/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/bossjake/comment/10a1b"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <p>Hey Michael, I'm new to GraphQL hot chocoloate but this is really a good example and an easy tutorial to follow. Thank you!. </p>
+
+<p>Question #1: In your example, you use "code" as a parameter for the LocationQueries.GetLocation(). If I want to use Id or Active, how do we implement this? </p>
+
+<p>Can we do it like GetLocationByCode or GetLocationByActive. Is this even the right approach? I've done it this way. Is this correct?</p>
+
+<p><a href="https://dev-to-uploads.s3.amazonaws.com/i/kssi2a4yaa1u0144dgnf.png" rel="nofollow">dev-to-uploads.s3.amazonaws.com/i/...</a></p>
+
+<p>Question #2: Do you have an example on how we can query or get the data from a Rest API?<br>
+i.e. I want to fetch the data from an http rest api and expose it in the Location Query Type.</p>
+
+
+        <button class="reaction-button" id="button-for-comment-463773" data-comment-id="463773" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="463773" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/10a1b">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/10a1b" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+    </details>
+
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="naf2"></div>
+<div id="comment-node-411400"
+     class="single-comment-node root  comment-deep-0" data-comment-id="411400" data-comment-author-id="360223" data-content-user-id="360223">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/lkoss12">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--mmN0pbEB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/360223/6868cad0-e182-4c2f-8714-934fa525218e.jpeg" alt="lkoss12 profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Loren Koss
+            </span>
+          </span>
+        </a>
+          <a href="https://github.com/lkoss12" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/lkoss12/comment/naf2">
+    <time datetime="2020-04-03T15:22:37Z">
+      Apr  3
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="adllotygknu1g6t36ryfo7vz81kjim54" class="dropdown-icon"><title id="adllotygknu1g6t36ryfo7vz81kjim54">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/lkoss12/comment/naf2" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="360223" data-action="settings-button" data-path="/lkoss12/comment/naf2/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="360223" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="411400">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/lkoss12/comment/naf2/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/lkoss12/comment/naf2"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>Great article!  I recommend changing your AddDbContext to make the dbcontext with Transient scpe like this:<br>
+services<br>
+        .AddDbContext(options =&gt;<br>
+          options.UseSqlServer(MyDbContext.DbConnectionString), ServiceLifetime.Transient);</p>
+
+<p>With GraphQL, many queries could happen simultaneously and you will find that queries in one dbcontext cant be run at the same time.  </p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-411400" data-comment-id="411400" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="411400" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/naf2">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/naf2" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+    </details>
+
+                    <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mf95"></div>
+<div id="comment-node-397051"
+     class="single-comment-node root  comment-deep-0" data-comment-id="397051" data-comment-author-id="50675" data-content-user-id="50675">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/andres">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--e7Tn86ua--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/50675/5c72622a-cde6-41aa-87e1-f6996500f9a4.jpg" alt="andres profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Andrés Pérez
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/andres_perez_z" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/Oxyrus" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/andres/comment/mf95">
+    <time datetime="2020-03-11T17:03:39Z">
+      Mar 11
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="akygit0ojujm7yuyiqawo14wio8wi4k5" class="dropdown-icon"><title id="akygit0ojujm7yuyiqawo14wio8wi4k5">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/andres/comment/mf95" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="50675" data-action="settings-button" data-path="/andres/comment/mf95/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="50675" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="397051">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/andres/comment/mf95/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/andres/comment/mf95"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>I'm still looking for some resource on how to approach relationships in entity. Last time I asked they said it was a WIP :( </p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-397051" data-comment-id="397051" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="397051" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mf95">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mf95" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+      <details open>
+      <summary><span>&nbsp;</span></summary>
+      <div class="comment-hash-marker" id="mfhe"></div>
+<div id="comment-node-397268"
+     class="single-comment-node child  comment-deep-1" data-comment-id="397268" data-comment-author-id="260913" data-content-user-id="260913">
+    <div class="inner-comment">
+
+
+      <div class="details ">
+        <a href="/michaelstaib">
+          <img class="profile-pic" src="https://res.cloudinary.com/practicaldev/image/fetch/s--O5CRTOSv--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/260913/fc34e5c5-de2b-44eb-93a5-812da8941309.png" alt="michaelstaib profile image" />
+          <span class="comment-username">
+            <span class="comment-username-inner">
+              Michael Staib
+            </span>
+          </span>
+        </a>
+          <a href="https://twitter.com/michael_staib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" /></a>
+          <a href="https://github.com/michaelstaib" rel="noopener noreferrer" target="_blank">
+            <img class="icon-img" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+          </a>
+        <div class="comment-date">
+  <a href="/michaelstaib/comment/mfhe">
+    <time datetime="2020-03-12T00:18:22Z">
+      Mar 12
+    </time>
+  </a>
+</div>
+
+        <button class="dropbtn" aria-label="Toggle dropdown menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" aria-labelledby="acn2ivrzah9soqq1jgx3bh5t1e9qeyw7" class="dropdown-icon"><title id="acn2ivrzah9soqq1jgx3bh5t1e9qeyw7">Dropdown menu</title><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a2 2 0 11-4 0 2 2 0 014 0zm7 0a2 2 0 11-4 0 2 2 0 014 0zm5 2a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+
+        </button>
+        <div class="dropdown">
+          <div class="crayons-dropdown p-1 right-1 left-1 s:right-0 s:left-auto fs-base">
+            <a href="/michaelstaib/comment/mfhe" class="crayons-link crayons-link--block">Permalink</a>
+            <span class="comment-actions hidden" data-user-id="260913" data-action="settings-button" data-path="/michaelstaib/comment/mfhe/settings">
+            </span>
+            <span class="comment-actions hidden" data-action="hide-button" data-commentable-user-id="318318" data-user-id="260913" style="display: none; width: 100%;">
+              <a href="#" class="crayons-link crayons-link--block hide-comment" data-hide-type="hide" data-comment-id="397268">
+                Hide
+              </a>
+            </span>
+            <span class="mod-actions hidden mod-actions-comment-button" data-path="/michaelstaib/comment/mfhe/mod"></span>
+            <span class="report-abuse-link-wrapper" data-path="/report-abuse?url=https://dev.to/michaelstaib/comment/mfhe"></span>
+          </div>
+        </div>
+      </div>
+      <div class="body ">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>That is what pascal actually posted up there:</p>
+
+<p>public class Query {<br>
+     [UsePaging]<br>
+     [UseSelection] // &lt;--- creates the projections on the database<br>
+     [UseSorting]<br>
+     [UseFiltering]<br>
+     public IQueryable GetJedis([Service]DBContext ctx) <br>
+       =&gt; ctx.Jedis.AsQueryable()</p>
+
+<p>}</p>
+
+<p>You put our new selections middleware on the resolver and then basically the whole subtree is selectable in one go.</p>
+
+<p>Try out our preview for 10.4</p>
+
+<p>You only need to declare that on the root resolver and hc will allow full selection of the whole tree.</p>
+
+</body></html>
+
+        <button class="reaction-button" id="button-for-comment-397268" data-comment-id="397268" title="heart">
+          <img alt="Favorite heart outline button" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/favorite-heart-outline-button-0e707584abc59ba8dfe82cacff79233a8e1cb9791379a4d9715bd8318e72eb6b.svg" />
+          <img class="voted-heart" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/emoji/emoji-one-heart-f5a59d5d1b6cfe4e2c956c0ed63cd644820683dcd5c5a051d810fa6efe67a6ce.png" alt="Favorite heart button" />
+        </button>
+      </div>
+      <div class="actions" data-comment-id="397268" data-path="/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/mfhe">
+        <span class="current-user-actions hidden" style="display:none">
+        </span>
+          <a href="#/mnsr/entity-framework-dotnet-core-with-graphql-and-sql-server-using-hotchocolate-4fl6/comments/new/mfhe" class="toggle-reply-form" rel="nofollow">Reply</a>
+      </div>
+    </div>
+  
+</div>
+
+    </details>
+
+</div>
+
+    </details>
+
+        </div>
+      </div>
+      <div class="align-center">
+
+
+  <a href="/code-of-conduct" class="crayons-link crayons-link--brand">Code of Conduct</a>
+<span class="opacity-25 px-2">&bull;</span>
+<a href="/report-abuse" class="crayons-link crayons-link--brand">Report abuse</a>
+
+</div>
+
+  </section>
+
+
+      </article>
+
+          <section class="crayons-card crayons-card--secondary text-padding mb-4 print-hidden">
+    <h2 class="crayons-title">Read next</h2>
+      <a href="/glyphack/introduction-to-graphql-server-with-golang-1npk" data-preload-image="" class="crayons-link mt-6 block">
+        <div class="flex items-center">
+          <span class="crayons-avatar crayons-avatar--xl m:crayons-avatar--2xl mr-4 shrink-0">
+            <img loading="lazy" alt="glyphack profile image" class="crayons-avatar__image" width="100" height="100" src="https://res.cloudinary.com/practicaldev/image/fetch/s--AUem-mwt--/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/131621/61b7198e-6609-448a-b631-c4ac87ddc017.jpg" />
+          </span>
+          <div>
+            <h3 class="fs-xl mb-0 lh-tight">‌How To Create GraphQL Server With Golang</h3>
+            <p class="opacity-75 pt-1">
+              Shayegan Hooshyari - <time datetime="2020-02-17T15:39:28Z">Feb 17</time>
+            </p>
+          </div>
+        </div>
+      </a>
+      <a href="/ahmdtalat/graphql-server-authentication-with-jwt-3mdi" data-preload-image="https://res.cloudinary.com/practicaldev/image/fetch/s--V5TnzAfd--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/3t4weyp8mid30pdawmon.png" class="crayons-link mt-6 block">
+        <div class="flex items-center">
+          <span class="crayons-avatar crayons-avatar--xl m:crayons-avatar--2xl mr-4 shrink-0">
+            <img loading="lazy" alt="ahmdtalat profile image" class="crayons-avatar__image" width="100" height="100" src="https://res.cloudinary.com/practicaldev/image/fetch/s--IpHePJQj--/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/308231/c99ea00b-0213-493e-bbcb-4b5973e58d1e.jpg" />
+          </span>
+          <div>
+            <h3 class="fs-xl mb-0 lh-tight">Graphql server authentication with JWT</h3>
+            <p class="opacity-75 pt-1">
+              Ahmed Talaat - <time datetime="2020-02-19T14:23:45Z">Feb 19</time>
+            </p>
+          </div>
+        </div>
+      </a>
+      <a href="/drminnaar/rest-api-guide-14n2" data-preload-image="https://res.cloudinary.com/practicaldev/image/fetch/s--OJQSoAly--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/hum1vpykx40t3hi24w4k.png" class="crayons-link mt-6 block">
+        <div class="flex items-center">
+          <span class="crayons-avatar crayons-avatar--xl m:crayons-avatar--2xl mr-4 shrink-0">
+            <img loading="lazy" alt="drminnaar profile image" class="crayons-avatar__image" width="100" height="100" src="https://res.cloudinary.com/practicaldev/image/fetch/s--rr1mN1ZW--/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/51969/c263fde6-4909-48cf-8c9d-e13ee7263f60.png" />
+          </span>
+          <div>
+            <h3 class="fs-xl mb-0 lh-tight">REST API Guide</h3>
+            <p class="opacity-75 pt-1">
+              Douglas Minnaar - <time datetime="2020-02-02T07:23:26Z">Feb  2</time>
+            </p>
+          </div>
+        </div>
+      </a>
+      <a href="/sven5/using-custom-claims-for-azure-ad-b2c-roles-720" data-preload-image="" class="crayons-link mt-6 block">
+        <div class="flex items-center">
+          <span class="crayons-avatar crayons-avatar--xl m:crayons-avatar--2xl mr-4 shrink-0">
+            <img loading="lazy" alt="sven5 profile image" class="crayons-avatar__image" width="100" height="100" src="https://res.cloudinary.com/practicaldev/image/fetch/s--mDOYwtTf--/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/295657/cb38bf6c-4e3b-41a1-a801-d697d6601796.jpeg" />
+          </span>
+          <div>
+            <h3 class="fs-xl mb-0 lh-tight">Using custom claims for Azure AD B2C roles</h3>
+            <p class="opacity-75 pt-1">
+              Sven Glöckner - <time datetime="2020-02-14T11:49:24Z">Feb 14</time>
+            </p>
+          </div>
+        </div>
+      </a>
+  </section>
+
+    </div>
+  </main>
+
+  <aside class="crayons-layout__sidebar-right" aria-label="Right sidebar navigation">
+      <div class="crayons-article-sticky grid gap-4 break-word print-hidden" id="article-show-primary-sticky-nav">
+  <div class="crayons-card crayons-card--secondary branded-7 p-4 pt-0 gap-4 grid" style="border-top-color: #4571d6;">
+    <div class="-mt-4">
+      <a href="/mnsr" class="flex">
+        <span class="crayons-avatar crayons-avatar--xl  mr-2 shrink-0">
+          <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--WdqTizS4--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/318318/82b10726-2f76-4f77-95dc-9f8ba0daf8fe.jpeg" class="crayons-avatar__image" alt="mnsr profile image">
+        </span>
+        <span class="crayons-link crayons-subtitle-2 mt-5">mnsr</span>
+      </a>
+    </div>
+      <div class="color-base-70">
+        Full stac. Big Mac. 
+      </div>
+
+    <div>
+      <button class="crayons-btn follow-action-button w-100" data-info="{&quot;id&quot;:318318,&quot;className&quot;:&quot;User&quot;,&quot;style&quot;:&quot;&quot;}" data-follow-action-button="true" />&nbsp;
+    </div>
+
+      <div class="user-metadata-details">
+  <ul class="user-metadata-details-inner">
+
+        <li>
+          <div class="key">
+            Location
+          </div>
+          <div class="value">
+            Sydney
+          </div>
+        </li>
+    <li>
+      <div class="key">
+        Joined
+      </div>
+      <div class="value">
+        <time datetime="2020-01-15T23:48:12Z" class="date">Jan 15, 2020</time>
+      </div>
+    </li>
+  </ul>
+</div>
+
+  </div>
+
+
+      <div class="crayons-card crayons-card--secondary">
+        <header class="crayons-card__header">
+          <h3 class="crayons-subtitle-2">
+            Trending on <a href="https://dev.to">DEV</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="24" height="24" role="img" aria-labelledby="ajtgob0zkmjitjp1qwgs5d3x0r4pxgmv" class="crayons-icon crayons-icon--default"><title id="ajtgob0zkmjitjp1qwgs5d3x0r4pxgmv">Hot</title>
+    <g class="nc-icon-wrapper">
+        <path fill="#F4900C" d="M39 23a16.96 16.96 0 00-1.04-5.868c-.46 5.389-3.333 8.157-6.335 6.868-2.812-1.208-.917-5.917-.777-8.164.236-3.809-.012-8.169-6.931-11.794 2.875 5.5.333 8.917-2.333 9.125-2.958.231-5.667-2.542-4.667-7.042-3.238 2.386-3.332 6.402-2.333 9 1.042 2.708-.042 4.958-2.583 5.208-2.84.28-4.418-3.041-2.963-8.333A16.936 16.936 0 005 23c0 9.389 7.611 17 17 17s17-7.611 17-17z"></path>
+        <path fill="#FFCC4D" d="M32.394 27.999c.148 3.084-2.561 4.293-4.019 3.709-2.106-.843-1.541-2.291-2.083-5.291s-2.625-5.083-5.708-6c2.25 6.333-1.247 8.667-3.08 9.084-1.872.426-3.753-.001-3.968-4.007A11.964 11.964 0 0010 34c0 .368.023.73.055 1.09C13.125 38.124 17.342 40 22 40s8.875-1.876 11.945-4.91c.032-.36.055-.722.055-1.09 0-2.187-.584-4.236-1.606-6.001z"></path>
+    </g>
+</svg>
+
+          </h3>
+        </header>
+        <div>
+            <a class="crayons-link crayons-link--contentful flex" href="/mindset/git-commit-message-16fb">
+              <span class="crayons-avatar mr-2 shrink-0">
+                <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--EfjePf8z--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/239119/74f1b99c-86fa-40a8-bee9-4b4c30099d47.png" class="crayons-avatar__image" loading="lazy" alt="Jayesh Tembhekar ⚡ profile image">
+              </span>
+              <div>
+                Git commit message 💬
+                <div class="crayons-link__secondary -ml-1">
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>discuss</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>git</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>beginners</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>help</span>
+                </div>
+              </div>
+            </a>
+            <a class="crayons-link crayons-link--contentful flex" href="/madza/what-folder-structure-do-you-use-to-organize-your-projects-2f2m">
+              <span class="crayons-avatar mr-2 shrink-0">
+                <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--gkqqTuyb--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/159737/9f8f2a93-d0a1-4d77-a1f6-c3fc67ebde90.jpg" class="crayons-avatar__image" loading="lazy" alt="Madza profile image">
+              </span>
+              <div>
+                How do you organize your projects?
+                <div class="crayons-link__secondary -ml-1">
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>watercooler</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>productivity</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>beginners</span>
+                </div>
+              </div>
+            </a>
+            <a class="crayons-link crayons-link--contentful flex" href="/aurelio/how-i-remember-everything-i-learn-19mi">
+              <span class="crayons-avatar mr-2 shrink-0">
+                <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--r9cviNWU--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/93284/cce107c2-3ef4-4cc0-aa70-96dfc4fbeada.png" class="crayons-avatar__image" loading="lazy" alt="Aurelio profile image">
+              </span>
+              <div>
+                How I remember everything I learn
+                <div class="crayons-link__secondary -ml-1">
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>productivity</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>learning</span>
+                    <span class="crayons-tag"><span class="crayons-tag__prefix">#</span>tips</span>
+                </div>
+              </div>
+            </a>
+        </div>
+      </div>
+</div>
+
+  </aside>
+</div>
+
+
+<div class="mod-actions-menu"></div>
+<div id="mod-actions-menu-btn-area"></div>
+<div data-testid="flag-user-modal-container" class="flag-user-modal-container hidden"></div>
+
+<div class="fullscreen-code js-fullscreen-code"></div>
+
+  <script async>
+    var waitingOnPodcast = setInterval(function() {
+  if (typeof initializePodcastPlayback !== 'undefined') {
+    initializePodcastPlayback();
+    clearInterval(waitingOnPodcast);
+  }
+}, 1);
+
+    if (document.head.querySelector('meta[name="user-signed-in"][content="true"]')) {
+  function displayPollResults(json) {
+    var totalVotes = json.voting_data.votes_count;
+    json.voting_data.votes_distribution.forEach(function(point) {
+      var pollOptionItem = document.getElementById('poll_option_list_item_'+point[0]);
+      var optionText = document.getElementById('poll_option_label_'+point[0]).textContent;
+      if (json.user_vote_poll_option_id === point[0]) {
+        var votedClass = 'optionvotedfor'
+      } else {
+        var votedClass = 'optionnotvotedfor'
+      }
+      if (totalVotes === 0) {
+        var percent = 0;
+      } else {
+        var percent = (point[1]/totalVotes)*100;
+      }
+      var roundedPercent = Math.round( percent * 10 ) / 10
+      var percentFromRight = (100-roundedPercent)
+      var html = '<span><span class="ltag-votepercent ltag-'+votedClass+'" style="right:'+percentFromRight+'%"></span>        <span class="ltag-votepercenttext">'+optionText+' — '+roundedPercent+'%</span></span>';
+      pollOptionItem.innerHTML = html;
+      pollOptionItem.classList.add('already-voted')
+      document.getElementById('showmethemoney-'+json.poll_id).innerHTML = '<span class="ltag-voting-results-count">'+totalVotes+' total votes</span>';
+    })
+  }
+
+  var polls = document.getElementsByClassName('ltag-poll');
+  for (var i = 0; i < polls.length; i += 1) {
+    var poll = polls[i]
+    var pollId = poll.dataset.pollId
+    window.fetch('/poll_votes/'+pollId)
+    .then(function(response){
+      response.json().then(
+        function(json) {
+          if (json.voted) {
+            displayPollResults(json)
+          } else {
+            var els = document.getElementById('poll_'+json.poll_id).getElementsByClassName('ltag-polloption');
+
+            for (i = 0; i < els.length; i += 1) {
+              els[i].addEventListener('click', function(e) {
+                var tokenMeta = document.querySelector("meta[name='csrf-token']")
+                if (!tokenMeta) {
+                  alert('Whoops. There was an error. Your vote was not counted. Try refreshing the page.')
+                  return
+                }
+                var csrfToken = tokenMeta.getAttribute('content')
+                var optionId = e.target.dataset.optionId
+                window.fetch('/poll_votes', {
+                  method: 'POST',
+                  headers: {
+                    'X-CSRF-Token': csrfToken,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({poll_vote: { poll_option_id: optionId } }),
+                  credentials: 'same-origin',
+                }).then(function(response){
+                  response.json().then(function(j){displayPollResults(j)})
+                })
+              });
+            }
+
+            document.getElementById('showmethemoney-'+json.poll_id).addEventListener('click', function() {
+              pollId = this.dataset.pollId
+              window.fetch('/poll_skips', {
+                method: 'POST',
+                headers: {
+                  'X-CSRF-Token': csrfToken,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({poll_skip: {poll_id: pollId }}),
+                credentials: 'same-origin',
+              }).then(function(response){
+                response.json().then(function(j){displayPollResults(j)})
+              })
+            });
+          }
+        }
+      )
+    })
+  }
+} else {
+    var els = document.getElementsByClassName('ltag-poll')
+    for (i = 0; i < els.length; i += 1) {
+      els[i].onclick = function(e) {
+        if (typeof showModal !== "undefined") {
+          showModal('poll');
+        }
+      }
+    }
+}
+
+    function activateRunkitTags() {
+  if (!areAnyRunkitTagsPresent())
+    return
+
+  var checkRunkit = setInterval(function() {
+    try {
+      dynamicallyLoadRunkitLibrary()
+
+      if (typeof(RunKit) === 'undefined') {
+        return
+      }
+
+      replaceTagContentsWithRunkitWidget()
+      clearInterval(checkRunkit);
+    } catch(e) {
+      console.error(e);
+      clearInterval(checkRunkit);
+    }
+  }, 200);
+}
+
+function isRunkitTagAlreadyActive(runkitTag) {
+  return runkitTag.querySelector("iframe") !== null;
+};
+
+function areAnyRunkitTagsPresent() {
+  var presentRunkitTags = document.getElementsByClassName("runkit-element");
+
+  return presentRunkitTags.length > 0
+}
+
+function replaceTagContentsWithRunkitWidget() {
+  var targets = document.getElementsByClassName("runkit-element");
+  for (var i = 0; i < targets.length; i++) {
+    if (isRunkitTagAlreadyActive(targets[i])) {
+      continue;
+    }
+
+    var wrapperContent = targets[i].textContent;
+    if (/^(<iframe src)/.test(wrapperContent) === false) {
+      if (targets[i].children.length > 0) {
+        var preamble = targets[i].children[0].textContent;
+        var content = targets[i].children[1].textContent;
+        targets[i].innerHTML = "";
+        var notebook = RunKit.createNotebook({
+          element: targets[i],
+          source: content,
+          preamble: preamble
+        });
+      }
+    }
+  }
+};
+
+function dynamicallyLoadRunkitLibrary() {
+  if (typeof(dynamicallyLoadScript) === "undefined")
+    return
+
+  dynamicallyLoadScript("//embed.runkit.com")
+}
+
+activateRunkitTags();
+
+    var videoPreviews = document.getElementsByClassName("ltag__twitter-tweet__media__video-wrapper");
+[].forEach.call(videoPreviews, function(el) {
+  el.onclick = function(e) {
+    var divHeight = el.offsetHeight;
+    el.style.maxHeight = divHeight + "px";
+    el.getElementsByClassName("ltag__twitter-tweet__media--video-preview")[0].style.display = "none";
+    el.getElementsByClassName("ltag__twitter-tweet__video")[0].style.display = "block";
+    el.getElementsByTagName("video")[0].play();
+  }
+});
+var tweets = document.getElementsByClassName("ltag__twitter-tweet__main");
+[].forEach.call(tweets, function(tweet){
+  tweet.onclick = function(e) {
+    if (e.target.nodeName == "A" || e.target.parentElement.nodeName == "A") {
+      return;
+    }
+    window.open(tweet.dataset.url,"_blank");
+  }
+});
+
+    function isUserSignedIn() {
+  return document.head.querySelector('meta[name="user-signed-in"][content="true"]') !== null;
+}
+
+// Hiding/showing elements
+// ***************************************
+function clearSubscriptionArea() {
+  const subscriptionSignedIn = document.getElementById('subscription-signed-in');
+  if (subscriptionSignedIn) {
+    subscriptionSignedIn.classList.add("hidden");
+  }
+
+  const subscriptionSignedOut = document.getElementById('subscription-signed-out');
+  if (subscriptionSignedOut) {
+    subscriptionSignedOut.classList.add("hidden");
+  }
+
+  const responseMessage = document.getElementById('response-message');
+  if (responseMessage) {
+    responseMessage.classList.add("hidden");
+  }
+
+  const subscriberAppleAuth = document.getElementById('subscriber-apple-auth');
+  if (subscriberAppleAuth) {
+    subscriberAppleAuth.classList.add("hidden");
+  }
+
+  hideConfirmationModal();
+}
+
+function showSignedIn() {
+  clearSubscriptionArea();
+  const subscriptionSignedIn = document.getElementById('subscription-signed-in');
+  if (subscriptionSignedIn) {
+    subscriptionSignedIn.classList.remove("hidden");
+  }
+
+  const profileImages = document.getElementById('profile-images');
+  if (profileImages) {
+    profileImages.classList.remove("signed-out");
+    profileImages.classList.add("signed-in");
+  }
+}
+
+function showSignedOut() {
+  clearSubscriptionArea();
+
+  const subscriptionSignedOut = document.getElementById('subscription-signed-out');
+  if (subscriptionSignedOut) {
+    subscriptionSignedOut.classList.remove("hidden");
+  }
+
+  const profileImages = document.getElementById('profile-images');
+  if (profileImages) {
+    profileImages.classList.remove("signed-in");
+    profileImages.classList.add("signed-out");
+  }
+
+  const subscriberProfileImage = document.querySelector('.ltag__user-subscription-tag__subscriber-profile-image');
+  if (subscriberProfileImage) {
+    subscriberProfileImage.classList.add("hidden");
+  }
+}
+
+function showResponseMessage(noticeType, msg) {
+  clearSubscriptionArea();
+  const responseMessage = document.getElementById('response-message');
+  if (responseMessage) {
+    responseMessage.classList.remove("hidden");
+    responseMessage.classList.add(`crayons-notice--${noticeType}`);
+    responseMessage.textContent = msg;
+  }
+}
+
+function showAppleAuthMessage() {
+  clearSubscriptionArea();
+  const subscriber = userData();
+  if (subscriber) {
+    updateProfileImages('.ltag__user-subscription-tag__subscriber-profile-image', subscriber);
+  }
+
+  const subscriberAppleAuth = document.getElementById('subscriber-apple-auth');
+  if (subscriberAppleAuth) {
+    subscriberAppleAuth.classList.remove("hidden");
+  }
+}
+
+function showSubscribed() {
+  updateSubscriberData();
+  const authorUsername = document.getElementById('user-subscription-tag')?.dataset.authorUsername;
+  const alreadySubscribedMsg = `You are already subscribed.`;
+  showResponseMessage('success', alreadySubscribedMsg);
+}
+
+function showConfirmationModal() {
+  const confirmationModal = document.getElementById('user-subscription-confirmation-modal');
+  if (confirmationModal) {
+    confirmationModal.classList.remove("hidden");
+  }
+}
+
+function hideConfirmationModal() {
+  const confirmationModal = document.getElementById('user-subscription-confirmation-modal');
+  if (confirmationModal) {
+    confirmationModal.classList.add("hidden");
+  }
+}
+
+// Updating DOM elements
+// ***************************************
+function updateSubscriberData() {
+  const subscriber = userData();
+  if (subscriber.email) {
+    updateElementsTextContent('.ltag__user-subscription-tag__subscriber-email', subscriber.email);
+  }
+
+  updateProfileImages('.ltag__user-subscription-tag__subscriber-profile-image', subscriber);
+}
+
+function updateElementsTextContent(identifier, value) {
+  const elements = document.querySelectorAll(identifier);
+
+  elements.forEach(function(element) {
+    element.textContent = value;
+  });
+}
+
+function updateProfileImages(identifier, subscriber) {
+  const profileImages = document.querySelectorAll(`img${identifier}`);
+
+  profileImages.forEach(function(profileImage) {
+    profileImage.src = subscriber.profile_image_90;
+    profileImage.alt = `${subscriber.username} profile image`;
+  });
+}
+
+// Adding event listeners for 'click'
+// ***************************************
+function addSignInClickHandler() {
+  const signInBtn = document.getElementById('sign-in-btn');
+  if (signInBtn) {
+    signInBtn.addEventListener('click', function(e) {
+      if (typeof showModal !== 'undefined') {
+        showModal('user_subscription');
+      }
+    });
+  }
+}
+
+function addConfirmationModalClickHandlers() {
+  const subscribeBtn = document.getElementById('subscribe-btn');
+  if (subscribeBtn) {
+    subscribeBtn.addEventListener('click', function(e) {
+      showConfirmationModal();
+    });
+  }
+
+  const cancelBtn = document.getElementById('cancel-btn');
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', function(e) {
+      hideConfirmationModal();
+    });
+  }
+
+  const closeConfirmationModal = document.getElementById('close-confirmation-modal');
+  if (closeConfirmationModal) {
+    closeConfirmationModal.addEventListener('click', function(e) {
+      hideConfirmationModal();
+    });
+  }
+
+  const confirmationModal = document.getElementById('confirmation-btn')
+  if (confirmationModal) {
+    confirmationModal.addEventListener('click', function(e) {
+      handleSubscription();
+    });
+  }
+}
+
+// API calls
+// ***************************************
+function submitSubscription() {
+  const headers = {
+    Accept: 'application/json',
+    'X-CSRF-Token': window.csrfToken,
+    'Content-Type': 'application/json',
+  }
+
+  const articleBody = document.getElementById('article-body');
+  const articleId = (articleBody ? articleBody.dataset.articleId : null);
+
+  const subscriber = userData();
+  const body = JSON.stringify(
+      {
+        user_subscription: {
+          source_type: 'Article',
+          source_id: articleId,
+          subscriber_email: subscriber.email
+        }
+      }
+    )
+
+  return fetch('/user_subscriptions', {
+    method: 'POST',
+    headers: headers,
+    credentials: 'same-origin',
+    body: body,
+  }).then(function(response) {
+    return response.json();
+  });
+}
+
+function fetchIsSubscribed() {
+  const articleBody = document.getElementById('article-body');
+  const articleId = (articleBody ? articleBody.dataset.articleId : null);
+
+  const params = new URLSearchParams({
+    source_type: 'Article',
+    source_id: articleId
+  }).toString();
+
+  const headers = {
+    Accept: 'application/json',
+    'X-CSRF-Token': window.csrfToken,
+    'Content-Type': 'application/json',
+  }
+
+  return fetch(`/user_subscriptions/subscribed?${params}`, {
+    method: 'GET',
+    headers: headers,
+    credentials: 'same-origin',
+  }).then(function(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error(`Base data error: ${response.status} - ${response.statusText}`);
+    }
+  });
+}
+
+// Handle API responses
+// ***************************************
+function handleSubscription() {
+  submitSubscription().then(function(response) {
+    if (response.success) {
+      const userSubscriptionTag = document.getElementById('user-subscription-tag');
+      const authorUsername = (userSubscriptionTag ? userSubscriptionTag.dataset.authorUsername : null);
+      const successMsg = `You are now subscribed and may receive emails from ${authorUsername}`;
+      showResponseMessage('success', successMsg);
+    } else {
+      showResponseMessage('danger', response.error);
+    }
+  });
+}
+
+function checkIfSubscribed() {
+  fetchIsSubscribed().then(function(response) {
+    const subscriber = userData();
+    const isSubscriberAuthedWithApple = (subscriber.email ? subscriber.email.endsWith('@privaterelay.appleid.com') : false);
+
+    if (response.is_subscribed) {
+      showSubscribed();
+    } else if (isSubscriberAuthedWithApple) {
+      showAppleAuthMessage();
+    } else {
+      updateSubscriberData();
+    }
+  });
+}
+
+// We load this JS on every Article. This is to only run it on Articles
+// where the UserSubscription liquid tag is present
+if (document.getElementById('user-subscription-tag')) {
+  // The markup defaults to signed out UX
+  if (isUserSignedIn()) {
+    showSignedIn();
+    addConfirmationModalClickHandlers();
+
+    // We need access to some DOM elements (i.e. csrf token, article id, userData, etc.)
+    document.addEventListener('DOMContentLoaded', function() {
+      checkIfSubscribed();
+    });
+  } else {
+    showSignedOut();
+    addSignInClickHandler();
+  }
+}
+
+  </script>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+  </div>
+</div>
+<!-- Start Bottom Shell -->
+    <footer class="crayons-footer print-hidden">
+  <div id="footer-container" class="crayons-layout crayons-footer__container">
+    <div class="crayons-footer__info">
+      <div><a href="/" class="site-logo" aria-label="DEV Home">
+    <svg width="50" height="40" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="40" rx="3" style="fill: currentColor;"/><path d="M19.099 23.508c0 1.31-.423 2.388-1.27 3.234-.838.839-1.942 1.258-3.312 1.258h-4.403V12.277h4.492c1.31 0 2.385.423 3.224 1.27.846.838 1.269 1.912 1.269 3.223v6.738zm-2.808 0V16.77c0-.562-.187-.981-.562-1.258-.374-.285-.748-.427-1.122-.427h-1.685v10.107h1.684c.375 0 .75-.138 1.123-.415.375-.285.562-.708.562-1.27zM28.185 28h-5.896c-.562 0-1.03-.187-1.404-.561-.375-.375-.562-.843-.562-1.404V14.243c0-.562.187-1.03.562-1.404.374-.375.842-.562 1.404-.562h5.896v2.808H23.13v3.65h3.088v2.808h-3.088v3.65h5.054V28zm7.12 0c-.936 0-1.684-.655-2.246-1.965l-3.65-13.758h3.089l2.807 10.804 2.808-10.804H41.2l-3.65 13.758C36.99 27.345 36.241 28 35.305 28z" style="fill: var(--base-inverted);"/></svg>
+</a>
+</div>
+      <p>A constructive and inclusive social network. Open source and radically transparent.</p>
+      <div>  <a
+    href="https://twitter.com/thepracticaldev"
+    target="_blank"
+    class="crayons-link crayons-link--secondary mx-2"
+    rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="anqa6pp24n19mhm5t9uq3j7n8l3z8qer" class="crayons-icon"><title id="anqa6pp24n19mhm5t9uq3j7n8l3z8qer">Twitter</title>
+    <path d="M22.162 5.656a8.383 8.383 0 01-2.402.658A4.196 4.196 0 0021.6 4c-.82.488-1.719.83-2.656 1.015a4.182 4.182 0 00-7.126 3.814 11.874 11.874 0 01-8.62-4.37 4.168 4.168 0 00-.566 2.103c0 1.45.738 2.731 1.86 3.481a4.168 4.168 0 01-1.894-.523v.052a4.185 4.185 0 003.355 4.101 4.211 4.211 0 01-1.89.072A4.185 4.185 0 007.97 16.65a8.395 8.395 0 01-6.191 1.732 11.83 11.83 0 006.41 1.88c7.693 0 11.9-6.373 11.9-11.9 0-.18-.005-.362-.013-.54a8.495 8.495 0 002.087-2.165l-.001-.001z" fill="#65bbf2"></path>
+</svg>
+
+  </a>
+  <a
+    href="https://facebook.com/thepracticaldev"
+    target="_blank"
+    class="crayons-link crayons-link--secondary mx-2"
+    rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="arbvdrvpouxivyr94h9mkj46ev7lhspj" class="crayons-icon"><title id="arbvdrvpouxivyr94h9mkj46ev7lhspj">Facebook</title>
+    <path d="M15.402 21v-6.966h2.333l.349-2.708h-2.682V9.598c0-.784.218-1.319 1.342-1.319h1.434V5.857a19.188 19.188 0 00-2.09-.107c-2.067 0-3.482 1.262-3.482 3.58v1.996h-2.338v2.708h2.338V21H4a1 1 0 01-1-1V4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1h-4.598z"></path>
+</svg>
+
+  </a>
+  <a
+    href="https://github.com/thepracticaldev"
+    target="_blank"
+    class="crayons-link crayons-link--secondary mx-2"
+    rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="ab6fesj6rgcemeov3x841bsxss6otlqp" class="crayons-icon"><title id="ab6fesj6rgcemeov3x841bsxss6otlqp">Github</title>
+    <path d="M12 2C6.475 2 2 6.475 2 12a9.994 9.994 0 006.838 9.488c.5.087.687-.213.687-.476 0-.237-.013-1.024-.013-1.862-2.512.463-3.162-.612-3.362-1.175-.113-.288-.6-1.175-1.025-1.413-.35-.187-.85-.65-.013-.662.788-.013 1.35.725 1.538 1.025.9 1.512 2.338 1.087 2.912.825.088-.65.35-1.087.638-1.337-2.225-.25-4.55-1.113-4.55-4.938 0-1.088.387-1.987 1.025-2.688-.1-.25-.45-1.275.1-2.65 0 0 .837-.262 2.75 1.026a9.28 9.28 0 012.5-.338c.85 0 1.7.112 2.5.337 1.912-1.3 2.75-1.024 2.75-1.024.55 1.375.2 2.4.1 2.65.637.7 1.025 1.587 1.025 2.687 0 3.838-2.337 4.688-4.562 4.938.362.312.675.912.675 1.85 0 1.337-.013 2.412-.013 2.75 0 .262.188.574.688.474A10.016 10.016 0 0022 12c0-5.525-4.475-10-10-10z"></path>
+</svg>
+
+  </a>
+  <a
+    href="https://instagram.com/thepracticaldev"
+    target="_blank"
+    class="crayons-link crayons-link--secondary mx-2"
+    rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="atw58375ieh7c1n41ccrj2ajh6xaw7uh" class="crayons-icon"><title id="atw58375ieh7c1n41ccrj2ajh6xaw7uh">Instagram</title>
+    <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772c-.5.508-1.105.902-1.772 1.153-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm6.5-.25a1.25 1.25 0 10-2.5 0 1.25 1.25 0 002.5 0zM12 9a3 3 0 110 6 3 3 0 010-6z"></path>
+</svg>
+
+  </a>
+  <a
+    href="https://twitch.com/thepracticaldev"
+    target="_blank"
+    class="crayons-link crayons-link--secondary mx-2"
+    rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="akax93fx2exsu6zcdzg1cq3rx1umjgzj" class="crayons-icon"><title id="akax93fx2exsu6zcdzg1cq3rx1umjgzj">Twitch</title>
+    <path d="M4.3 3H21v11.7l-4.7 4.7h-3.9l-2.5 2.4H7v-2.4H3V6.2L4.3 3zM5 17.4h4v2.4h.095l2.5-2.4h3.877L19 13.872V5H5v12.4zM15 8h2v4.7h-2V8zm0 0h2v4.7h-2V8zm-5 0h2v4.7h-2V8z"></path>
+</svg>
+
+  </a>
+</div>
+      <p class="fs-xs color-base-60">DEV Community copyright 2016 - 2020</p>
+      <p class="fs-xs color-base-60">Built on <a href="https://www.forem.com">Forem</a> — the <a href="https://dev.to/t/opensource">open source</a> software that powers <a href="https://dev.to">DEV</a> and other inclusive communities.</p>
+      <p class="fs-xs color-base-60">Made with love and <a href="https://dev.to/t/rails">Ruby on Rails</a>.</p>
+    </div>
+
+    <nav class="crayons-footer__nav">
+        <a href="/" class="crayons-link crayons-link--block">Home</a>
+            <a href="https://dev.to/listings" class="crayons-link crayons-link--block">
+              Listings
+            </a>
+            <a href="https://dev.to/pod" class="crayons-link crayons-link--block">
+              Podcasts
+            </a>
+            <a href="https://dev.to/videos" class="crayons-link crayons-link--block">
+              Videos
+            </a>
+            <a href="https://dev.to/tags" class="crayons-link crayons-link--block">
+              Tags
+            </a>
+            <a href="https://dev.to/code-of-conduct" class="crayons-link crayons-link--block">
+              Code of Conduct
+            </a>
+            <a href="https://dev.to/faq" class="crayons-link crayons-link--block">
+              FAQ
+            </a>
+            <a href="https://shop.dev.to/" class="crayons-link crayons-link--block">
+              DEV Shop
+            </a>
+            <a href="https://dev.to/sponsors" class="crayons-link crayons-link--block">
+              Sponsors
+            </a>
+            <a href="https://dev.to/about" class="crayons-link crayons-link--block">
+              About
+            </a>
+            <a href="https://dev.to/privacy" class="crayons-link crayons-link--block">
+              Privacy Policy
+            </a>
+            <a href="https://dev.to/terms" class="crayons-link crayons-link--block">
+              Terms of use
+            </a>
+            <a href="https://dev.to/contact" class="crayons-link crayons-link--block">
+              Contact
+            </a>
+          <a href="/enter" class="crayons-link crayons-link--block fw-bold">
+            Sign In/Up
+          </a>
+    </nav>
+
+      <img class="crayons-footer__mascot" alt="Sloan, the sloth mascot" width="52" height="120" loading="lazy" src="https://dev-to-uploads.s3.amazonaws.com/i/wmv3mtusjwb3r13d5h2f.png" />
+  </div>
+</footer>
+<div id="snack-zone"></div>
+
+    <div id="global-signup-modal" class="authentication-modal crayons-modal crayons-modal--s fixed hidden">
+  <div class="authentication-modal__box crayons-modal__box">
+    <button type="button" class="authentication-modal__close-btn close-modal-button crayons-btn crayons-btn--icon crayons-btn--ghost">
+      <svg width="24" height="24" viewBox="0 0 24 24" class="crayons-icon" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636l4.95 4.95z" />
+      </svg>
+    </button>
+    <div class="crayons-modal__box__body p-0">
+      <div class="authentication-modal__container">
+        <figure class="authentication-modal__image-container">
+          <img class="authentication-modal__image" src="https://res.cloudinary.com/practicaldev/image/fetch/s--g3JdSGe6--/c_limit,f_auto,fl_progressive,q_80,w_190/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/rainbowdev.svg"
+              alt="Secondary DEV logo" />
+        </figure>
+        <div class="authentication-modal__content">
+          <h1 class="authentication-modal__title">
+            Log in to continue
+          </h1>
+          <p class="authentication-modal__description">
+              We&#39;re a place where coders share, stay up-to-date and grow their careers.
+          </p>
+        </div>
+      </div>
+
+      <div class="authentication-modal__actions">
+        <a href="/enter" class="crayons-btn" aria-label="Log in" data-no-instant>
+          Log in
+        </a>
+        <a href="/enter?state=new-user" class="crayons-btn crayons-btn--ghost-brand" aria-label="Create new account" data-no-instant>
+          Create new account
+        </a>
+      </div>
+      <footer class="authentication-modal__footer">
+        <p class="authentication-modal__footer-label">
+          We strive for transparency and don't collect excess data.
+        </p>
+      </footer>
+    </div>
+  </div>
+  <div class="crayons-modal__overlay"></div>
+</div>
+
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/runtime~signupModalShortcuts-07818c40f48ebcd18b6e.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/vendor-8a8dc187209d74194878.chunk.js" defer="defer"></script>
+<script src="https://practicaldev-herokuapp-com.freetls.fastly.net/packs/js/signupModalShortcuts-618d9ff83cddfabb4825.chunk.js" defer="defer"></script>
+
+  <div id="live-article-indicator" class="live-article-indicator"></div>
+  <img class="icon-img" style="display:none" alt="twitter logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/twitter-logo-7693bfa09ce3f28fea334a5dcf36ddf1c8d58b01bbfd78cca3b1383498bd86a8.svg" />
+  <img class="icon-img" style="display:none" alt="github logo" src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/github-logo-ba8488d21cd8ee1fee097b8410db9deaa41d0ca30b004c0c63de0a479114156f.svg" />
+  </body>
+  </html>
+
