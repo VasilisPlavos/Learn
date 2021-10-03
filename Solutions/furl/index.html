@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Create one facebook url for all devices!">
+    <meta name="author" content="Vasilis Plavos">
+    <title>Furl - Magic Facebook Link - Created by Vasilis Plavos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <!-- Favicons -->
+    <link rel="icon" href="https://plavos.com/wp-content/uploads/2020/08/vp-icon-c.png" sizes="32x32" type="image/png">
+
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+
+        #tooltip {
+            background: #333;
+            color: white;
+            font-weight: bold;
+            padding: 4px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+</head>
+
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-start mb-0">Furl</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <a class="nav-link" href="https://plavos.com">Visit Plavos.com</a>
+                    <!-- <a class="nav-link" href="#">Contact</a> -->
+                </nav>
+            </div>
+        </header>
+
+        <main class="px-3">
+            <h1>👋 Furl your Facebook Page</h1>
+            <p class="lead">With Furl you can redirect users to your Facebook page based on the device that they use.
+            </p>
+            <label id="findFacebookId">Enter facebook page id</label>
+            <div class="input-group mb-3">
+                <input id="fbPageIdInput" type="text" class="form-control" placeholder="example 6815841748">
+                <button class="btn btn-outline-secondary" type="button" id="createLink">Create link</button>
+            </div>
+            <div class="component" id="fbPageIdOutput"><a href="https://lookup-id.com/" target="_blank">ℹ️ Find your
+                    facebook page id</a>
+            </div>
+
+
+
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p>From <a href="https://plavos.com" class="text-white">Vasilis Plavos</a> with <span
+                    class="text-white">❤</span> using <a href="https://el.piliapp.com/facebook/smart-url/"
+                    class="text-white">PiliApp</a>, <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>
+                and <a href="https://getbootstrap.com/docs/5.1/examples/cover/" class="text-white">Cover theme</a>.</p>
+        </footer>
+    </div>
+
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var pageId = urlParams.get('fbpage');
+        if (pageId) {
+            setTimeout(function () {
+                window.location.href = `https://el.piliapp.com/lnk/facebook/page/${pageId}`;
+            }, 1000);
+
+        }
+
+        var button = document.querySelector("#createLink");
+        button.addEventListener('click', generateUrl);
+
+        function generateUrl() {
+            var id = document.querySelector("#fbPageIdInput").value;
+            var output = document.querySelector("#fbPageIdOutput");
+            if (id) {
+                var domain = window.location.href;
+                output.innerHTML = `<a href="${domain}?fbpage=${id}" target="_blank">${domain}?fbpage=${id}</a>`
+            } else {
+                output.innerHTML =
+                    `Please add your facebook page id. <a href="https://lookup-id.com/" target="_blank">👉 Find your facebook page id</a>`
+
+            }
+        }
+    </script>
+</body>
+
+</html>
