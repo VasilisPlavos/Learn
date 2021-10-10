@@ -34,11 +34,13 @@ module.exports = class Cart {
 
   static deleteProduct(id, productPrice) {
     fs.readFile(p, (err, fileContent) => {
-      if (err) {
-        return;
-      }
+      if (err) { return; }
+
       const updateCart = { ...JSON.parse(fileContent) };
       const product = updateCart.products.findIndex((p) => p.id === id);
+
+      if (!product){ return; }
+
       const productQty = product.qty;
       updateCart.products = updateCart.products.filter((p) => p.id !== id);
       updateCart.totalPrice = updateCart.totalPrice - productPrice * productQty;
