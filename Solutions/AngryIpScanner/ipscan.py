@@ -24,6 +24,8 @@ def ping(host_or_ip, packets=1, timeout=1):
         result = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return result.returncode == 0
 
+print('scanning...')
+
 pings = []
 
 # for x in range(1000):
@@ -43,6 +45,7 @@ for x in range(1000):
         ip = f'192.168.{x}.{y}'
         pingRes = ping(ip)
         if pingRes == True:
+            print(ip)
             pings.append(ip)
 
 print(pings)
