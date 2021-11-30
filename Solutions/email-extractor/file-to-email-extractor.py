@@ -62,5 +62,7 @@ def start():
         emailList = cleanRawEmailList(rawEmailList)
         export(emailList, filename)
 
-for i in range(10):
-        start()
+# for i in range(10):
+#         start()
+
+start()

@@ -3,7 +3,7 @@ You can use it in order to export emails from a file. This file can be .mbox .vc
 
 ### How it works:
 - Enter the file with the emails inside this folder
-- Open the file file-to-email-extractor.py
+- Run the file with "py file-to-email-extractor.py"
 - Enter the name of the file that has the emails inside (eg. gmailemails.mbox)
 - Wait until it finish. If the file is big it can take up to 30 minutes or maybe more!
 - When it will finish you will have a new file inside your folder with the name filename.emails.txt
