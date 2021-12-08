@@ -11,12 +11,8 @@ request(url, (error, response, html) => {
     const dataContainer = $(".chars-content");
     var str = dataContainer.text();
 
-    while (str.includes("\r\n")) {
-      str = str.replace("\r\n", "");
-    }
-    while (str.includes("  ")) {
-      str = str.replace("  ", " ");
-    }
+    while (str.includes("\r\n")) {  str = str.replace("\r\n", ""); }
+    while (str.includes("  ")) { str = str.replace("  ", " "); }
 
     console.log("");
     console.log("Source: ", url);
