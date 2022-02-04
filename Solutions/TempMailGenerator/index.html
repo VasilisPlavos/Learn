@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta name="theme-color" content="#7952b3" />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <link href="style.css" rel="stylesheet" />
+    <title>Hello, world!</title>
+  </head>
+  <body class="text-center">
+    <main class="form-signin">
+    <div class="alert alert-primary" role="alert" id="serverAlert">
+      Please run it on server!
+    </div>
+      <form>
+        <img
+          class="mb-4"
+          src="https://seeklogo.com/images/G/google-material-design-check-logo-B26F6F7B81-seeklogo.com.png"
+          alt=""
+          width="72"
+          height="57"
+          style="visibility: hidden;"
+        />
+        <h1 class="h3 mb-3 fw-normal">Failed! Please check Console</h1>
+
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control"
+            id="emailAddress"
+            placeholder="name@example.com"
+            disabled
+          />
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            disabled
+          />
+          <label for="floatingPassword">Password</label>
+        </div>
+        <br />
+
+        <button
+          class="w-100 btn btn-lg btn-primary"
+          onClick="window.open('https://mail.tm/en/');"
+        >
+          <span class="icon">Go to mail.tm</span>
+        </button>
+
+        <p class="mt-5 mb-3 text-muted">
+          From 
+          <a href="http://plavos.com/dev" target="_blank">Vasilis Plavos</a> with ❤ using 
+          <a href="https://api.mail.tm/" target="_blank">Mail.tm API</a>, and
+          <a href="https://getbootstrap.com" target="_blank">Bootstrap</a>.
+          
+          &copy; <span id="thisYear">2022</span>
+        </p>
+      </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+  <script src="./index.js" type="module"></script>
+</html>
