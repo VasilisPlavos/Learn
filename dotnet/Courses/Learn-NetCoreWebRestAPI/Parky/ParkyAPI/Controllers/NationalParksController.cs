@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using ParkyAPI.Models;
 using ParkyAPI.Models.Dtos;
 using ParkyAPI.Repository.IRepository;
@@ -21,24 +22,34 @@ namespace ParkyAPI.Controllers
     {
         private readonly INationalParkRepository _npRepo;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
 
-        public NationalParksController(INationalParkRepository npRepo, IMapper mapper)
+        public NationalParksController(INationalParkRepository npRepo, IMapper mapper, IMemoryCache memoryCache)
         {
             _npRepo = npRepo;
             _mapper = mapper;
+            _memoryCache = memoryCache;
         }
 
         /// <summary>
         /// Get list of national parks.
+        /// With Duration = 10 client cache the response for 10 seconds. With memoryCache server keep the data without requesting from database.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [ResponseCache(Duration = 10)]
         [ProducesResponseType(200, Type = typeof(List<NationalParkDto>))]
         public async Task<IActionResult> GetNationalParksAsync()
         {
-            // getting from the NationalPark here
-            var parks = await _npRepo.GetNationalParksAsync();
-
+            _memoryCache.TryGetValue("parks", out ICollection<NationalPark> parks);
+            if (parks == null)
+            {
+                // getting from the NationalPark here
+                parks = await _npRepo.GetNationalParksAsync();
+                // SlidingExpiration to 60 seconds: If this memoryObject will not requested for the next 60 seconds memory will erase it
+                // AbsoluteExpirationRelativeToNow to 1 day: memory will erase this memoryObject 1 day after it will created
+                _memoryCache.Set("parks", parks, new MemoryCacheEntryOptions(){SlidingExpiration = TimeSpan.FromSeconds(60), AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1)});
+            }
 
             return Ok(parks);
         }

@@ -6,7 +6,7 @@
     <members>
         <member name="M:ParkyAPI.Controllers.NationalParksController.GetNationalParksAsync">
             <summary>
-            Get list of national parks.
+            Get list of national parks. With Duration = 10 client cache the response for 10 seconds. With memoryCache server keep the data without requesting from database.
             </summary>
             <returns></returns>
         </member>
