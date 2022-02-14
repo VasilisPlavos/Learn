@@ -8,7 +8,7 @@ namespace ParkyAPI.Repository.IRepository
 {
     public interface INationalParkRepository
     {
-        ICollection<NationalPark> GetNationalParks();
+        Task<ICollection<NationalPark>> GetNationalParksAsync();
         NationalPark GetNationalPark(int nationalParkId);
         bool NationalParkExists(string name);
         bool NationalParkExists(int id);

@@ -34,20 +34,13 @@ namespace ParkyAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<NationalParkDto>))]
-        public IActionResult GetNationalParks()
+        public async Task<IActionResult> GetNationalParksAsync()
         {
             // getting from the NationalPark here
-            var objList = _npRepo.GetNationalParks();
+            var parks = await _npRepo.GetNationalParksAsync();
 
-            // use mapper to return NationalParkDto entities here
-            var objDto = new List<NationalParkDto>();
 
-            foreach (var obj in objList)
-            {
-                objDto.Add(_mapper.Map<NationalParkDto>(obj));
-            }
-
-            return Ok(objDto);
+            return Ok(parks);
         }
 
         /// <summary>

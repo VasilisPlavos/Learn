@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ParkyAPI.Repository
 {
@@ -33,11 +34,11 @@ namespace ParkyAPI.Repository
             return _db.NationalParks.FirstOrDefault(nationalPark => nationalPark.Id == nationalParkId);
         }
 
-        public ICollection<NationalPark> GetNationalParks()
+        public async Task<ICollection<NationalPark>> GetNationalParksAsync()
         {
             // this works also but we want them OrderByName
             // return _db.NationalParks.ToList();
-            return _db.NationalParks.OrderBy(nationalPark => nationalPark.Name).ToList();
+            return await _db.NationalParks.OrderBy(nationalPark => nationalPark.Name).ToListAsync();
         }
 
         public bool NationalParkExists(string name)

@@ -4,7 +4,7 @@
         <name>ParkyAPI</name>
     </assembly>
     <members>
-        <member name="M:ParkyAPI.Controllers.NationalParksController.GetNationalParks">
+        <member name="M:ParkyAPI.Controllers.NationalParksController.GetNationalParksAsync">
             <summary>
             Get list of national parks.
             </summary>
