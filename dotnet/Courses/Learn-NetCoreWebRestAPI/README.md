@@ -2,6 +2,8 @@
 ### Database: PM Console database commands
 * add-migration AddNationalParkToDb
 * update-database
+* Add-Migration AddNationalParkToDb -Context AppDbContext
+* update-database -Context AppDbContext
 
 ### Disable warnings about commenting
 Go to **Properties > Build > Errors and warnings > Suppress warnings > 1591**
