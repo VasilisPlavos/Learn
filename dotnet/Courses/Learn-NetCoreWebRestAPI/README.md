@@ -2,6 +2,7 @@
 ### Database: PM Console database commands
 * add-migration AddNationalParkToDb
 * update-database
+## When more that 1 database exist
 * Add-Migration AddNationalParkToDb -Context AppDbContext
 * update-database -Context AppDbContext
 
