@@ -14,6 +14,12 @@
     update-database
     ```
 
+1.  **Start running!**
+
+
+    * **Site** is running at 
+    * **API UI** (Swagger UI) running at [localhost:44369/swagger](https://localhost:44369/swagger)
+
 # OLD
 
 Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.

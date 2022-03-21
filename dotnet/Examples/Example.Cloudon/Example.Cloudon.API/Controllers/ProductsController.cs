@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Example.Cloudon.API.Databases;
 using Example.Cloudon.API.Entities;
 using Example.Cloudon.API.Services;
 
@@ -22,8 +16,13 @@ namespace Example.Cloudon.API.Controllers
             _productService = productService;
         }
 
+        /// <summary>
+        /// Get individual product
+        /// </summary>
+        /// <param name="id"> The id of the product </param>
+        /// <returns></returns>
         // GET: api/Products/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _productService.GetProductAsync(id);
@@ -31,6 +30,12 @@ namespace Example.Cloudon.API.Controllers
             return product;
         }
 
+        /// <summary>
+        /// Update individual product
+        /// </summary>
+        /// <param name="id"> The id of the product </param>
+        /// <param name="product"></param>
+        /// <returns></returns>
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -41,6 +46,11 @@ namespace Example.Cloudon.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Create Individual product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -49,6 +59,11 @@ namespace Example.Cloudon.API.Controllers
             return await _productService.AddAsync(product);
         }
 
+        /// <summary>
+        /// Delete individual product
+        /// </summary>
+        /// <param name="id"> The id of the product </param>
+        /// <returns></returns>
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)

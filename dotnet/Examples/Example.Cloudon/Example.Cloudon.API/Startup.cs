@@ -9,7 +9,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Example.Cloudon.API.Databases;
 using Microsoft.EntityFrameworkCore;
@@ -35,9 +37,24 @@ namespace Example.Cloudon.API
             services.AddMyServices(); // Adding Services and Repository Interfaces here
             services.AddControllers();
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Example.Cloudon.API", Version = "v1" });
-            });
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Title = "Cloudon API", 
+                        Version = "v1",
+                        Description = "Example Api for Cloudon",
+                        Contact = new OpenApiContact()
+                        {
+                            Email = "v1@plavos.com",
+                            Name = "Vasilis Plavos",
+                            Url = new Uri("https://plavos.com/dev#work")
+                        }
+                    });
+                    
+                    var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, "Example.Cloudon.API.xml");
+                    c.IncludeXmlComments(cmlCommentsFullPath);
+                }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

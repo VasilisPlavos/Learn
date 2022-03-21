@@ -17,36 +17,36 @@ namespace Example.Cloudon.API.Services
 
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductRepository _productRepo;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepo)
         {
-            _productRepository = productRepository;
+            _productRepo = productRepo;
         }
 
         public async Task<List<Product>> GetProductsAsync(List<int> productIds)
         {
-            return await _productRepository.GetProductsAsync(productIds);
+            return await _productRepo.GetProductsAsync(productIds);
         }
 
         public async Task<Product> GetProductAsync(int productId)
         {
-            return await _productRepository.GetProductAsync(productId);
+            return await _productRepo.GetProductAsync(productId);
         }
 
         public async Task<bool> UpdateAsync(Product product)
         {
-            return await _productRepository.UpdateAsync(product);
+            return await _productRepo.UpdateAsync(product);
         }
 
         public async Task<Product> AddAsync(Product product)
         {
-            return await _productRepository.AddAsync(product);
+            return await _productRepo.AddAsync(product);
         }
 
         public async Task<Product> DeleteAsync(int productId)
         {
-            return await _productRepository.DeleteAsync(productId);
+            return await _productRepo.DeleteAsync(productId);
         }
     }
 }
