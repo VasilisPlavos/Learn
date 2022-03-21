@@ -1,9 +1,21 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <h1 align="center">
-  CloudOn Example starter
+  CloudOn Example
 </h1>
 
 ## 🚀 Quick start
+
+1.  **Prepare Applications on Visual Studio**
+
+    1. Use Visual Studio to to open the solution file `Example.Cloudon.sln` .
+    1. On Visual Studio right click Solution `Example.Cloudon` folder and select properties 
+    1. Select `Common Properties` > `Startup Project` > `Multiple startup projects`
+        1. Project `Example.Cloudon.API` -> Action: `Start`
+        1. Project `Example.Cloudon.Web` -> Action: `Start`
+    1. Select `Apply` and `OK`
+
+    `
+
+
 
 1.  **Prepare Sql Database**
 
@@ -17,7 +29,7 @@
 1.  **Start running!**
 
 
-    * **Site** is running at 
+    * **Site** is running at [localhost:44369/swagger](https://localhost:44369/swagger)
     * **API UI** (Swagger UI) running at [localhost:44369/swagger](https://localhost:44369/swagger)
 
 # OLD
@@ -115,5 +127,3 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 [Build, Deploy, and Host On The Only Cloud Built For Gatsby](https://www.gatsbyjs.com/products/cloud/)
 
 Gatsby Cloud is an end-to-end cloud platform specifically built for the Gatsby framework that combines a modern developer experience with an optimized, global edge network.
-
-<!-- AUTO-GENERATED-CONTENT:END -->
