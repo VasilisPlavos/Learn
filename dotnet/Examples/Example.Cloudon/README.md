@@ -27,7 +27,10 @@
     ```
 
 1.  **Start running!**
-
+    
+    On Visual Studio, right to `Start` button you will see `<Multiple Startup Projects>`. 
+    
+    If NO, please repeat step 1. If YES, press `Start`. 
 
     * **Site** is running at [localhost:44369/swagger](https://localhost:44369/swagger)
     * **API UI** (Swagger UI) running at [localhost:44369/swagger](https://localhost:44369/swagger)
