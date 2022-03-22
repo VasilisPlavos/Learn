@@ -48,8 +48,10 @@ namespace Example.Cloudon.API.Controllers
 
         private string GenerateToken(string username)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var jwtSecret = _configuration[Consts.ConfigurationKeys.Jwt.Secret];
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
             var claims = new[] { new Claim(ClaimTypes.NameIdentifier, username) };
             var token = new JwtSecurityToken
             (
@@ -57,6 +59,7 @@ namespace Example.Cloudon.API.Controllers
                 _configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.UtcNow.AddDays(7),
+
                 signingCredentials: credentials
             );
 
