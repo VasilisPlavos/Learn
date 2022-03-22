@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Text;
 using Example.Cloudon.API.Databases;
+using Example.Cloudon.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +27,7 @@ namespace Example.Cloudon.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddDbContext<ApplicationDbContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection-testing")) // Database connection
                 );
@@ -64,7 +66,7 @@ namespace Example.Cloudon.API
                     c.IncludeXmlComments(cmlCommentsFullPath);
                 });
 
-            var jwtSecret = Configuration["Jwt:Secret"];
+            var jwtSecret = Configuration[Consts.ConfigurationKeys.Jwt.Secret];
             services.AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
