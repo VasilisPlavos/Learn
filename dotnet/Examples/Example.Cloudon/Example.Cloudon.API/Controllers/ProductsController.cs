@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Example.Cloudon.API.Entities;
 using Example.Cloudon.API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Example.Cloudon.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
