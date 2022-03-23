@@ -27,13 +27,20 @@ namespace Example.Cloudon.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(opts => 
+                opts.AddPolicy("_myAllowSpecificOrigins", builder => 
+                    { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
+
             services.AddDbContext<ApplicationDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection-testing")) // Database connection
-                );
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection-testing"))
+                ); // Database connection
+
 
             services.AddMyServices(); // Adding Services and Repository Interfaces here
+            services.AddHttpClient();
             services.AddControllers();
+            services.AddResponseCaching();
+            services.AddMemoryCache();
 
             services.AddSwaggerGen(c =>
                 {
@@ -101,6 +108,7 @@ namespace Example.Cloudon.API
             app.UseRouting();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseResponseCaching();
             app.UseAuthentication();
             app.UseAuthorization();
 

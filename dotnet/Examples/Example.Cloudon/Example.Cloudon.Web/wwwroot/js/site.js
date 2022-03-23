@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+var loginLogoutButton = document.querySelector("#login-logout");
 
 if (location.pathname !== "/login")
 {
@@ -15,15 +16,6 @@ if (location.pathname !== "/login")
     function getCookie(cookieName) {
         const cookieValue = document.cookie.match("(^|;)\\s*" + cookieName + "\\s*=\\s*([^;]+)");
         return cookieValue ? cookieValue.pop() : "";
-//        var cookies = ` ${document.cookie}`.split(";");
-//        var val = "";
-//        for (var i = 0; i < cookies.length; i++) {
-//            var cookie = cookies[i].split("=");
-//            if (cookie[0] == ` ${cname}`) {
-//                return cookie[1];
-//            }
-//        }
-//        return "";
     }
 
     function logout() {
@@ -34,9 +26,9 @@ if (location.pathname !== "/login")
 
     if (isUserAuth())
     {
-        var logoutButton = document.querySelector("#login-logout");
-        logoutButton.innerText = "Αποσύνδεση";
-        logoutButton.href = "/logout";
+        loginLogoutButton.innerText = "Αποσύνδεση";
+        loginLogoutButton.style.cursor = "pointer";
+        loginLogoutButton.addEventListener("click", function() { logout() });
     } else
     {
         logout();

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Example.Cloudon.API.Entities;
 using Example.Cloudon.API.Services;
@@ -19,6 +20,23 @@ namespace Example.Cloudon.API.Controllers
         }
 
         // TODO: add debugger
+
+        /// <summary>
+        /// This method can sync products from SoftOne API or load all product listings from database.
+        /// </summary>
+        /// <param name="sync">true to sync products from SoftOne API</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<List<Product>>> GetAllProducts(bool sync)
+        {
+            if (sync)
+            {
+                await _productService.SoftoneSyncAsync();
+            }
+
+            var products = await _productService.GetAllProductsAsync();
+            return Ok(products);
+        }
 
         /// <summary>
         /// Get individual product
