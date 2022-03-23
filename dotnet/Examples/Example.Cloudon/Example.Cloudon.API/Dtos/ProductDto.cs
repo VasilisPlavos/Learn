@@ -1,17 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Example.Cloudon.API.Entities
+namespace Example.Cloudon.API.Dtos
 {
-    public class Product
+    public class ProductDto
     {
-        [Key]
-        public int Id { get; set; }
         public string Barcode { get; set; }
         public string Code { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public DateTime? DateUpdated { get; set; }
         public string Description { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal? Discount { get; set; }

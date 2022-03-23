@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Example.Cloudon.API.Databases;
+using Example.Cloudon.API.Dtos;
 using Example.Cloudon.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,14 @@ namespace Example.Cloudon.API.Repository
     public interface IProductRepository
     {
         Task<Product> AddAsync(Product product);
+        Task<List<Product>> AddAsync(List<Product> products);
         Task<Product> DeleteAsync(int productId);
         Task<List<Product>> GetAllProductsAsync();
         Task<List<Product>> GetProductsAsync(List<int> productIds);
+        Task<List<Product>> GetSoftOneProductsAsync(List<string> productCodes, string source);
         Task<bool> UpdateAsync(Product product);
+        Task<bool> UpdateAsync(List<Product> products);
+        
     }
 
     public class ProductRepository : IProductRepository
@@ -28,6 +33,13 @@ namespace Example.Cloudon.API.Repository
             _db.Products.Add(product);
             await _db.SaveChangesAsync();
             return product;
+        }
+
+        public async Task<List<Product>> AddAsync(List<Product> products)
+        {
+            _db.Products.AddRange(products);
+            await _db.SaveChangesAsync();
+            return products;
         }
 
         public async Task<Product> DeleteAsync(int productId)
@@ -62,5 +74,17 @@ namespace Example.Cloudon.API.Repository
             return true;
         }
 
+        public async Task<bool> UpdateAsync(List<Product> products)
+        {
+            _db.Products.UpdateRange(products);
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Product>> GetSoftOneProductsAsync(List<string> productCodes, string source)
+        {
+            var products = await _db.Products.Where(x => productCodes.Contains(x.Code) || x.Source == source).ToListAsync();
+            return products;
+        }
     }
 }
