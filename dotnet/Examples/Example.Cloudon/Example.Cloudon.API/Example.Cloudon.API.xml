@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Example.Cloudon.API</name>
+    </assembly>
+    <members>
+        <member name="M:Example.Cloudon.API.Controllers.ProductsController.GetAllProducts(System.Boolean)">
+            <summary>
+            This method can sync products from SoftOne API or load all product listings from database.
+            </summary>
+            <param name="sync">true to sync products from SoftOne API</param>
+            <returns></returns>
+        </member>
+        <member name="M:Example.Cloudon.API.Controllers.ProductsController.GetProduct(System.Int32)">
+            <summary>
+            Get individual product
+            </summary>
+            <param name="id"> The id of the product </param>
+            <returns></returns>
+        </member>
+        <member name="M:Example.Cloudon.API.Controllers.ProductsController.PutProduct(System.Int32,Example.Cloudon.API.Entities.Product)">
+            <summary>
+            Update individual product
+            </summary>
+            <param name="id"> The id of the product </param>
+            <param name="product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Example.Cloudon.API.Controllers.ProductsController.PostProduct(Example.Cloudon.API.Entities.Product)">
+            <summary>
+            Create Individual product
+            </summary>
+            <param name="product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Example.Cloudon.API.Controllers.ProductsController.DeleteProduct(System.Int32)">
+            <summary>
+            Delete individual product
+            </summary>
+            <param name="id"> The id of the product </param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

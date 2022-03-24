@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="p-4" style="border-radius:20px;">
+	<div class="row">
+		<div class="col-6">
+			<h2 id="title" class="text-primary">Περιμένετε...</h2>
+		</div>
+		<div class="col-6 text-right">
+			<a style="display: none" id="initProductsButton" class="btn btn-primary text-white"><i class="fa fa-arrow-circle-o-down"></i> &nbsp; Αρχικοποίηση</a>
+			<a style="display: none" id="updateProductsButton" class="btn btn-primary text-white"><i class="fa fa-repeat"></i> &nbsp; Update</a>
+			<a href="/Products/Edit" style="display: none" id="addProductButton" class="btn btn-primary text-white"><i class="fas fa-plus"></i> &nbsp; Add Product</a>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div style="background-color:#cde8e2" class="p-3 rounded">
+		<table id="tblData" class="display" style="width:100%">
+			<thead>
+			<tr>
+				<th>Code</th>
+				<th>Name</th>
+				<th>Barcode</th>
+				<th>WholesalePrice</th>
+				<th>RetailPrice</th>
+				<th>Discount</th>
+				<th></th>
+			</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+<script src="js/products.js" defer></script>

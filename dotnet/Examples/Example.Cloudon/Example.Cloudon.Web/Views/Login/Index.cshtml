@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	ViewData["Title"] = "Login";
+	var jwt = ViewBag.Jwt;
+}
+
+@{
+	if (jwt == null)
+	{
+		<h1>Login</h1>
+		<p>Username: test, Password: test</p>
+		<form method="post">
+			<input name="username"  type="text" placeholder="Username..." value="test" />
+			<input name="password" type="password" placeholder="Password..." value="test" />
+			<button type="submit" value="Submit">Login</button>
+		</form>
+	}
+	else
+	{
+		<script>
+			localStorage.setItem("CloudOnApiKey", "@jwt");
+			window.location.replace("home");
+		</script>
+	}
+}
+
