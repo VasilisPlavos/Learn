@@ -36,7 +36,8 @@
 ## Features
 1. API-based solution
 1. Swagger UI for the API
-1. JWT for API Authentication/Authorization
+1. JWT for API Authorization
+1. User password stored hashed
 
 ## 🧐 What's inside `Example.Cloudon.API`
 
@@ -48,6 +49,8 @@ A quick look at the infrastructure of the API
     ├── Dtos
     ├── Entities
     ├── Helpers
+    ├──── Extentions
+    ├──── Consts.cs
     ├── Repository
     ├── Services
     ├── DependencyInjectionRegistry.cs
@@ -60,7 +63,11 @@ A quick look at the infrastructure of the API
 
 1.  **`/Entities`**: This directory contain all Entities of the main database (`Databases/ApplicationDbContext.cs`)
 
-1.  **`/Helpers`**: This directory contain Helpers for the everything
+1.  **`/Helpers`**: This directory contain Helpers for everything
+
+1.  **`/Extentions`**: This directory contain Extentions for everything
+
+1.  **`/Consts.cs`**: This file is a directory of keys and configurations
 
 1.  **`/Repository`**: This directory contain Interfaces ussing for CRUD opperations. **Important:** this is the only directory that is connected with the databases!
 
