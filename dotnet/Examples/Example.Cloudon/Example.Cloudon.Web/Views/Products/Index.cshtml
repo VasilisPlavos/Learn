@@ -11,19 +11,23 @@
 			<h2 class="text-primary">Λίστα προϊόντων</h2>
 		</div>
 		<div class="col-6 text-right">
-			<a id="updateProductsButton" class="btn btn-primary text-white"><i class="fa fa-arrow-circle-o-down"></i> &nbsp; Αρχικοποίηση</a>
-			<a class="btn btn-primary text-white"><i class="fa fa-repeat"></i> &nbsp; Update</a>
-			<a class="btn btn-primary text-white"><i class="fas fa-plus"></i> &nbsp; Add Product</a>
+			<a style="display: none" id="initProductsButton" class="btn btn-primary text-white"><i class="fa fa-arrow-circle-o-down"></i> &nbsp; Αρχικοποίηση</a>
+			<a style="display: none" id="updateProductsButton" class="btn btn-primary text-white"><i class="fa fa-repeat"></i> &nbsp; Update</a>
+			<a href="/Products/New" style="display: none" id="addProductButton" class="btn btn-primary text-white"><i class="fas fa-plus"></i> &nbsp; Add Product</a>
 		</div>
 	</div>
 	<br />
 	<br />
 	<div style="background-color:#cde8e2" class="p-3 rounded">
-		<table id="tblData" class="table table-striped table-bordered" style="width:100%">
+		<table id="tblData" class="display" style="width:100%">
 			<thead>
-			<tr class="table-danger">
+			<tr>
+				<th>Code</th>
 				<th>Name</th>
-				<th>State</th>
+				<th>Barcode</th>
+				<th>WholesalePrice</th>
+				<th>RetailPrice</th>
+				<th>Discount</th>
 				<th></th>
 			</tr>
 			</thead>

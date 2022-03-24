@@ -4,26 +4,26 @@
 // Write your JavaScript code.
 var loginLogoutButton = document.querySelector("#login-logout");
 
+function logout() {
+    document.cookie = "UserAuth=false; expires=Fri, 31 Dec 1999 23:59:59 GMT; SameSite=None; Secure";
+    localStorage.removeItem('CloudOnApiKey');
+    window.location.replace("login");
+}
+
+function isUserAuth() {
+    let userAuth = getCookie("UserAuth");
+    if (!userAuth) return false;
+    return true;
+}
+
+function getCookie(cookieName) {
+    const cookieValue = document.cookie.match("(^|;)\\s*" + cookieName + "\\s*=\\s*([^;]+)");
+    return cookieValue ? cookieValue.pop() : "";
+}
+
+
 if (location.pathname !== "/login")
 {
-    function isUserAuth()
-    {
-        let userAuth = getCookie("UserAuth");
-        if (!userAuth) return false;
-        return true;
-    }
-
-    function getCookie(cookieName) {
-        const cookieValue = document.cookie.match("(^|;)\\s*" + cookieName + "\\s*=\\s*([^;]+)");
-        return cookieValue ? cookieValue.pop() : "";
-    }
-
-    function logout() {
-        document.cookie = "UserAuth=false; expires=Fri, 31 Dec 1999 23:59:59 GMT; SameSite=None; Secure";
-        localStorage.removeItem('CloudOnApiKey');
-        window.location.replace("login");
-    }
-
     if (isUserAuth())
     {
         loginLogoutButton.innerText = "Αποσύνδεση";

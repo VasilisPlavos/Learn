@@ -27,6 +27,7 @@ namespace Example.Cloudon.API.Controllers
         /// <param name="sync">true to sync products from SoftOne API</param>
         /// <returns></returns>
         [HttpGet]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 3, VaryByQueryKeys = new[] { "sync" })]
         public async Task<ActionResult<List<Product>>> GetAllProducts(bool sync)
         {
             if (sync)
