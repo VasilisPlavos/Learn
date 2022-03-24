@@ -19,8 +19,6 @@ namespace Example.Cloudon.API.Controllers
             _productService = productService;
         }
 
-        // TODO: add debugger
-
         /// <summary>
         /// This method can sync products from SoftOne API or load all product listings from database.
         /// </summary>

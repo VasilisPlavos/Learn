@@ -26,7 +26,6 @@ async function InitProductsPage() {
             dataSet.push([p.code, p.name, p.barcode, p.wholesalePrice, p.retailPrice, p.discount, p.id]);
         }
         loadDataTable(dataSet);
-
     }
     
 }
@@ -64,8 +63,6 @@ async function GetProductsAsync(sync) {
 
     return response;
 }
-
-
 
 function loadDataTable(dataSet) {
     tblData = $('#tblData').DataTable({

@@ -90,18 +90,5 @@ namespace Example.Cloudon.API.Controllers
             var token = await AuthenticateUser(user);
             return token;
         }
-
-        // TODO: Delthen
-        [HttpPost("auth")]
-        [Authorize]
-        public IActionResult Auth()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity == null) return null;
-
-            var userClaims = identity.Claims;
-            var userName = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            return Ok($"{userName}");
-        }
     }
 }
