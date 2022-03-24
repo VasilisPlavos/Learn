@@ -52,7 +52,7 @@ async function GetProductsAsync(sync) {
             cache: "no-cache",
             headers: {
                 'Content-Type': "application/json",
-                'Key': coApiKey
+                'Authorization': coApiKey
             },
             redirect: "follow",
             referrerPolicy: "no-referrer"

@@ -51,7 +51,7 @@ namespace Example.Cloudon.Web.Controllers
 
             var dateExpires = DateTimeOffset.FromUnixTimeSeconds((long)token.Payload.Exp).DateTime;
 
-            ViewBag.Jwt = jwt;
+            ViewBag.Jwt = $"Bearer {jwt}";
             Response.Cookies.Append("UserAuth", "true", new CookieOptions { Expires = dateExpires, SameSite = SameSiteMode.None, Secure = true});
             return View();
         }
