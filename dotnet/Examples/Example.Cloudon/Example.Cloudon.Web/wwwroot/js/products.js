@@ -35,13 +35,12 @@ async function initProductsAsync() {
     displayButton("#initProductsButton", false);
     displayButton("#updateProductsButton", true, updateProductsAsync);
     displayButton("#addProductButton", true);
-    loadDataTable(dataSet);
-    console.log(products);
+    location.reload();
 }
 
 async function updateProductsAsync() {
-    var products = await GetProductsAsync(false);
-    console.log(products);
+    var products = await GetProductsAsync(true);
+    location.reload();
 }
 
 async function GetProductsAsync(sync) {

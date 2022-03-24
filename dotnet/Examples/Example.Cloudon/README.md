@@ -30,7 +30,7 @@
     
     If NO, please repeat step 1. If YES, press `Start`. 
 
-    * **Site** is running at [localhost:44369/swagger](https://localhost:44369/swagger)
+    * **Site** is running at [localhost:44329](https://localhost:44329/)
     * **API UI** (Swagger UI) running at [localhost:44369/swagger](https://localhost:44369/swagger)
 
 ## Features
