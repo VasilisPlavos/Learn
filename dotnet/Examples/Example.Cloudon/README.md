@@ -17,7 +17,7 @@
 
 1.  **Prepare Sql Database**
 
-    Use the Package Manager Console ([install instructions](https://www.gatsbyjs.com/docs/tutorial/part-0/#gatsby-cli)) to make database connection and push entities to database.
+    Use the Package Manager Console to make database connection and push entities to database.
 
     ```shell
     add-migration db
