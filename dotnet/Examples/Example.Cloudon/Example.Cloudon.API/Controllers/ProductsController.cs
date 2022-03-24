@@ -79,7 +79,7 @@ namespace Example.Cloudon.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            return await _productService.AddAsync(product);
+            return await _productService.SaveOrUpdateAsync(product);
         }
 
         /// <summary>

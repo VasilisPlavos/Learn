@@ -12,6 +12,7 @@ function displayButton(selector, visible, eventListenerFunction) {
 
 async function InitProductsPage() {
     var products = await GetProductsAsync(false);
+    document.querySelector("#title").innerText = 'Λίστα προϊόντων';
     if (products.length === 0) {
         displayButton("#initProductsButton", true, initProductsAsync);
         var table = document.querySelector("#tblData");
@@ -25,6 +26,7 @@ async function InitProductsPage() {
             dataSet.push([p.code, p.name, p.barcode, p.wholesalePrice, p.retailPrice, p.discount, p.id]);
         }
         loadDataTable(dataSet);
+
     }
     
 }
@@ -79,7 +81,7 @@ function loadDataTable(dataSet) {
                 title: "", 
                 render: function (title) {
                     return `<div class="text-center">
-                                <a href="/Products/${title}" class='btn btn-success text-white'
+                                <a href="/Products/edit/${title}" class='btn btn-success text-white'
                                     style='cursor:pointer;'> <i class='far fa-edit'></i></a>
                                     &nbsp;
                                 <a onclick=Delete("${title}") class='btn btn-danger text-white'

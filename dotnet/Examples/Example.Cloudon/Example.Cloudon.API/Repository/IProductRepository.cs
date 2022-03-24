@@ -18,7 +18,8 @@ namespace Example.Cloudon.API.Repository
         Task<List<Product>> GetSoftOneProductsAsync(List<string> productCodes, string source);
         Task<bool> UpdateAsync(Product product);
         Task<bool> UpdateAsync(List<Product> products);
-        
+
+        Task<Product> SaveOrUpdateAsync(Product product);
     }
 
     public class ProductRepository : IProductRepository
@@ -79,6 +80,19 @@ namespace Example.Cloudon.API.Repository
             _db.Products.UpdateRange(products);
             await _db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<Product> SaveOrUpdateAsync(Product product)
+        {
+            if (_db.Products.Any(x => x.Id == product.Id))
+            {
+                await UpdateAsync(product);
+                return product;
+            }
+            else
+            {
+                return await AddAsync(product);
+            }
         }
 
         public async Task<List<Product>> GetSoftOneProductsAsync(List<string> productCodes, string source)

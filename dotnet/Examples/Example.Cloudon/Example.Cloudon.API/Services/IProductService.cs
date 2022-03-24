@@ -9,6 +9,7 @@ using Example.Cloudon.API.Dtos;
 using Example.Cloudon.API.Entities;
 using Example.Cloudon.API.Helpers;
 using Example.Cloudon.API.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using MediaTypeHeaderValue = Microsoft.Net.Http.Headers.MediaTypeHeaderValue;
@@ -23,6 +24,7 @@ namespace Example.Cloudon.API.Services
         Task<Product> GetProductAsync(int productId);
         Task<bool> SoftoneSyncAsync();
         Task<bool> UpdateAsync(Product product);
+        Task<Product> SaveOrUpdateAsync(Product product);
     }
 
     public class ProductService : IProductService
@@ -118,5 +120,9 @@ namespace Example.Cloudon.API.Services
             return await _productRepo.UpdateAsync(product);
         }
 
+        public async Task<Product> SaveOrUpdateAsync(Product product)
+        {
+            return await _productRepo.SaveOrUpdateAsync(product);
+        }
     }
 }
