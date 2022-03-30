@@ -31,10 +31,7 @@ namespace Com.Codebyte.Solutions.Solutions
             string result = null;
             foreach (var c in word.ToCharArray())
             {
-                if (lettersRequired.Length == 0)
-                {
-                    return result;
-                }
+                if (lettersRequired.Length == 0) return result;
 
                 result += c;
                 if (lettersRequired.Contains(c))

@@ -7,7 +7,6 @@ namespace Com.Codebyte.Solutions
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             MinWindowSubstringMain.Test();
             var a = Console.ReadKey();
         }
