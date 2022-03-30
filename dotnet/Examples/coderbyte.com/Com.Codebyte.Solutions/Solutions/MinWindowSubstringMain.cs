@@ -46,10 +46,7 @@ namespace Com.Codebyte.Solutions.Solutions
 
         public static void Test()
         {
-            Console.WriteLine("== Min Window Substring ==");
-            Console.WriteLine("");
-            Console.WriteLine("== RUNNING TEST CASES ==");
-            Console.WriteLine("");
+            TestHelper.Console.WriteLine.Start("Min Window Substring");
 
             Run(new string[] { "aaabaaddae", "aed" }, "dae");
             Run(new string[] { "aabdccdbcacd", "aad" }, "aabd");
@@ -65,7 +62,6 @@ namespace Com.Codebyte.Solutions.Solutions
             var output = MinWindowSubstring(input);
             Console.WriteLine($"OUTPUT: {output}");
             Console.WriteLine(output == outputExpected ? "CORRECT" : "NOT CORRECT");
-            Console.WriteLine(" ======== ");
             Console.WriteLine("");
         }
     }

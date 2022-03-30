@@ -7,7 +7,10 @@ namespace Com.Codebyte.Solutions
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("== RUNNING TEST CASES ==");
+            Console.WriteLine("");
             MinWindowSubstringMain.Test();
+            FirstFactorialMain.Test();
             var a = Console.ReadKey();
         }
     }
