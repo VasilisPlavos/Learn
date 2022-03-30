@@ -9,8 +9,10 @@ namespace Com.Coderbyte.Solutions
         {
             Console.WriteLine("== RUNNING TEST CASES ==");
             Console.WriteLine("");
-            MinWindowSubstringMain.Test();
             FirstFactorialMain.Test();
+            MinWindowSubstringMain.Test();
+            SecondSmallestSecondGreatestMain.Test();
+            FindWordsFromDictionaryMain.Test();
             var a = Console.ReadKey();
         }
     }
