@@ -1,7 +1,7 @@
 ﻿using System;
-using Com.Codebyte.Solutions.Solutions;
+using Com.Coderbyte.Solutions.Solutions;
 
-namespace Com.Codebyte.Solutions
+namespace Com.Coderbyte.Solutions
 {
     internal class Program
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Com.Codebyte.Solutions.Helpers;
+using Com.Coderbyte.Solutions.Helpers;
 
-namespace Com.Codebyte.Solutions.Solutions
+namespace Com.Coderbyte.Solutions.Solutions
 {
     public class FirstFactorialMain
     {

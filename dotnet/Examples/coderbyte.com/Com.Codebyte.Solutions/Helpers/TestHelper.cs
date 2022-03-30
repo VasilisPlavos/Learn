@@ -1,4 +1,4 @@
-﻿namespace Com.Codebyte.Solutions.Helpers
+﻿namespace Com.Coderbyte.Solutions.Helpers
 {
     public static class TestHelper
     {
