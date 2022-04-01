@@ -62,7 +62,7 @@ export async function getAllPostsForHome(preview) {
   const data = await fetchAPI(
     `
     query AllPosts {
-      posts(first: 20, where: { orderby: { field: DATE, order: DESC } }) {
+      posts(first: 20, where: {orderby: {field: DATE, order: DESC}}) {
         edges {
           node {
             title
@@ -70,14 +70,18 @@ export async function getAllPostsForHome(preview) {
             slug
             date
             featuredImage {
-              sourceUrl
+              node {
+                sourceUrl
+              }
             }
             author {
-              name
-              firstName
-              lastName
-              avatar {
-                url
+              node{
+                name
+                firstName
+                lastName
+                avatar {
+                  url
+                }
               }
             }
           }
@@ -121,10 +125,14 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       slug
       date
       featuredImage {
-        sourceUrl
+        node {
+          sourceUrl
+        }
       }
       author {
-        ...AuthorFields
+        node {
+          ...AuthorFields
+        }
       }
       categories {
         edges {
@@ -156,7 +164,9 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
               excerpt
               content
               author {
-                ...AuthorFields
+                node {
+                  ...AuthorFields
+                }
               }
             }
           }

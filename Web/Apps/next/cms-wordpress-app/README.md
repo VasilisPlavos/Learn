@@ -1,5 +1,8 @@
 # A statically generated blog example using Next.js and WordPress
 
+## INFO
+This test use the data uploaded on a 000webhost wp site using graphQL.
+
 This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using [WordPress](https://wordpress.org) as the data source.
 
 ## Demo
