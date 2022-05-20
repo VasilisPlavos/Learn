@@ -1,5 +1,6 @@
 ﻿using System;
 using Com.Coderbyte.Solutions.Solutions;
+using Com.Coderbyte.Solutions.Solutions.CodeSignal;
 
 namespace Com.Coderbyte.Solutions
 {
@@ -13,6 +14,7 @@ namespace Com.Coderbyte.Solutions
             MinWindowSubstringMain.Test();
             SecondSmallestSecondGreatestMain.Test();
             FindWordsFromDictionaryMain.Test();
+            CodeSignal.Tests();
             var a = Console.ReadKey();
         }
     }
