@@ -1,0 +1,5 @@
+{"type": "module",
+  "dependencies": {
+    "@squoosh/lib": "^0.4.0"
+  }
+}
