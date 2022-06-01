@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "f24e242d-2699-4a60-883d-2e966205c3cf"
+    "analytics": "db1c6604-0e5d-482f-9071-a692012a9b0e"
   },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "apm": {
+    "apm-new": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,15 +20,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apm",
+            "outputPath": "dist/apm-new",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/api"
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -72,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "apm:build:production"
+              "browserTarget": "apm-new:build:production"
             },
             "development": {
-              "browserTarget": "apm:build:development"
+              "browserTarget": "apm-new:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "apm:build"
+            "browserTarget": "apm-new:build"
           }
         },
         "test": {
@@ -106,5 +105,5 @@
       }
     }
   },
-  "defaultProject": "apm"
+  "defaultProject": "apm-new"
 }
