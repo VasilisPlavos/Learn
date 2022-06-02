@@ -61,5 +61,7 @@ export class ProductListComponent {
     },
   ];
 
-  toggleImage(): void { this.showImage = !this.showImage; }
+  toggleImage(): void {
+    this.showImage = !this.showImage;
+  }
 }
