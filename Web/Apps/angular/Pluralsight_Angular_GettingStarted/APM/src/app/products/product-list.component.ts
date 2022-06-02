@@ -4,10 +4,11 @@ import { Component } from '@angular/core';
   selector: 'pm-products',
   templateUrl: './product-list.component.html',
 })
-
 export class ProductListComponent {
-  pageTitle: string = 'Product List';
-  products: any[] = [
+  pageTitle = 'Product List';
+  imageStyle = { width: 50, margin: 2 };
+  showImage = false;
+  products = [
     {
       productId: 1,
       productName: 'Leaf Rake',
@@ -59,4 +60,6 @@ export class ProductListComponent {
       imageUrl: 'assets/images/xbox-controller.png',
     },
   ];
+
+  toggleImage(): void { this.showImage = !this.showImage; }
 }
