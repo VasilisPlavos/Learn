@@ -8,6 +8,7 @@ export class ProductListComponent {
   pageTitle = 'Product List';
   imageStyle = { width: 50, margin: 2 };
   showImage = false;
+  listFilter: string = 'cart';
   products = [
     {
       productId: 1,
