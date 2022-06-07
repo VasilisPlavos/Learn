@@ -18,13 +18,14 @@
       />
     </div>
 
-    <div
-      class="form-group"
-      *ngFor="let color of colorsControls"
-      [formGroup]="color"
-    >
-      <input type="text" class="form-control" formControlName="name" />
+    <div class="form-group" *ngFor="let color of colorsControls let i = index" [formGroup]="color">
+      <div class="d-flex align-item-center">
+        <input type="text" class="form-control" formControlName="name" />
+        <span style="padding-left: 10px;" (click)="removeColor(i)">X</span>
+      </div>
     </div>
+
+    <button type="button" class="btn btn-primary" (click)="addColor()">Add color</button>
   </form>
   {{ myForm.value | json }}
 </div>

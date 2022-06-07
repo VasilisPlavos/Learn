@@ -23,12 +23,19 @@ export class Edit2Component implements OnInit {
     console.log(this.colorsControls);
   }
 
-  get colorsControls() {
-    var colorsArray = this.myForm.get('colors') as FormArray;
-    return colorsArray.controls as FormGroup[];
+  get colors() : FormArray
+  { return this.myForm.get('colors') as FormArray;  }
+  
+  get colorsControls() : FormGroup[]
+  { return this.colors.controls as FormGroup[]; }
+
+  addColor() : void
+  { this.colors.push(this.colorItem('')); }
+
+  removeColor(index : number){
+    this.colors.removeAt(index);
   }
 
-  private colorItem(color: string) {
-    return this.fb.group({ name: color });
-  }
+  private colorItem(color: string) 
+  { return this.fb.group({ name: color }); }
 }
