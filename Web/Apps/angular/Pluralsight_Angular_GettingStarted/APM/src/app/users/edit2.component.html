@@ -1,0 +1,67 @@
+<div class="container mt-5">
+  <h3>Example with FormBuilder</h3>
+  <form [formGroup]="myForm">
+    <div class="form-group">      
+      <div *ngIf="fName"> 
+        {{ 
+          { property: "fName", touched: fName.touched, untouched: fName.untouched, pristine: fName.pristine, dirty: fName.dirty, valid: fName.valid, invalid: fName.invalid } 
+          | json 
+        }}
+      </div><br />
+      
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter first name"
+        formControlName="firstName"
+      />
+      <span
+        class="text-danger"
+        *ngIf="myForm.get('firstName')?.errors?.required"
+        >firstName is required</span
+      >
+      <span
+        class="text-danger"
+        *ngIf="myForm.get('firstName')?.errors?.minlength"
+        >minlength error</span
+      >
+
+
+
+    </div>
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter last name"
+        formControlName="lastName"
+      />
+      <span class="text-danger" *ngIf="myForm.get('lastName')?.invalid"
+        >lastName is required</span
+      >
+    </div>
+
+    <div
+      class="form-group"
+      *ngFor="let color of colorsControls; let i = index"
+      [formGroup]="color"
+    >
+      <div class="d-flex align-item-center">
+        <input type="text" class="form-control" formControlName="name" />
+        <span style="padding-left: 10px" (click)="removeColor(i)">X</span>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="myForm.invalid"
+      (click)="addColor()"
+    >
+      Add color
+    </button>
+  </form>
+  {{ myForm.value | json }}
+
+
+
+</div>
