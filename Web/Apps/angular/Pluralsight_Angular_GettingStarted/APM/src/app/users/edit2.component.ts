@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './edit2.component.html',
@@ -11,8 +11,8 @@ export class Edit2Component implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      firstName: ['Joe'],
-      lastName: ['Doe'],
+      firstName: [null, [Validators.required, Validators.minLength(3)]],
+      lastName: [null, Validators.required],
       colors: this.fb.array([
         this.colorItem('Red'),
         this.colorItem('Green'),
@@ -20,7 +20,13 @@ export class Edit2Component implements OnInit {
       ]),
     });
 
-    console.log(this.colorsControls);
+    console.log(this.myForm);
+  }
+
+  get fName(){
+    console.log(1)
+    console.log(this.myForm.get('firstName'))
+    return this.myForm.get('firstName')
   }
 
   get colors() : FormArray
