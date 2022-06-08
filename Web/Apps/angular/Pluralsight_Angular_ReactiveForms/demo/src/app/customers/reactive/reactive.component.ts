@@ -25,6 +25,10 @@ export class ReactiveComponent implements OnInit {
       rating: [null, ratingRange(1,5)],
       sendCatalog: [true],
     });
+
+    this.customerForm.get('notification')?.valueChanges.subscribe(
+      v => this.setNotification(v)
+    );
   }
 
   populateData(): void {
