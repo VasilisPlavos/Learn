@@ -10,7 +10,14 @@ import { Customer } from '../customer';
 export class ReactiveComponent implements OnInit {
   customerForm!: FormGroup;
   customer = new Customer();
+  emailMessage!: string;
+
   constructor(private fb: FormBuilder) {}
+
+  private validationMessages : any = {
+    required: 'Please enter your email address.',
+    email: 'Please enter a valid email address.'
+  };
 
   ngOnInit(): void {
     this.customerForm = this.fb.group({
@@ -29,7 +36,21 @@ export class ReactiveComponent implements OnInit {
     this.customerForm.get('notification')?.valueChanges.subscribe(
       v => this.setNotification(v)
     );
+
+    const emailControl = this.customerForm.get('emailGroup.email');
+    emailControl?.valueChanges.subscribe(
+      v => this.setMessage(emailControl)
+    );
   }
+
+  setMessage(c: AbstractControl): void {
+    this.emailMessage = '';
+    if ((c.touched || c.dirty) && c.errors) {
+      this.emailMessage = Object.keys(c.errors).map(
+        key => this.validationMessages[key]).join(' ');      
+    }
+  }
+
 
   populateData(): void {
     this.customerForm.setValue({
