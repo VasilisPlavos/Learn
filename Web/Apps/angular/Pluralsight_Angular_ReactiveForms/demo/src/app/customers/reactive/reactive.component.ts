@@ -16,7 +16,10 @@ export class ReactiveComponent implements OnInit {
     this.customerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email]],
+      emailGroup: this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        confirmEmail: ['', [Validators.required]],
+        }, { validator: emailMatcher }),
       phone: '',
       notification: 'email',
       rating: [null, ratingRange(1,5)],
@@ -48,6 +51,16 @@ export class ReactiveComponent implements OnInit {
     console.log(this.customerForm);
     console.log('Saved: ' + JSON.stringify(this.customerForm?.value));
   }
+}
+
+function emailMatcher(c:AbstractControl):{ [key: string] : boolean } | null {
+  const emailControl = c.get('email');
+  const confirmEmailControl = c.get('confirmEmail');
+
+  if (emailControl?.pristine || confirmEmailControl?.pristine){ return null; }
+  if (emailControl?.value === confirmEmailControl?.value) { return null; }
+
+  return { match: true };
 }
 
 function ratingRange(min: number, max: number): ValidatorFn 
