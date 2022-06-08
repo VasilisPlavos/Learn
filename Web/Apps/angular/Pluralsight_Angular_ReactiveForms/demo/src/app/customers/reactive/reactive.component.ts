@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, ValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from '../customer';
 
 @Component({
@@ -10,7 +10,6 @@ import { Customer } from '../customer';
 export class ReactiveComponent implements OnInit {
   customerForm!: FormGroup;
   customer = new Customer();
-
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -18,6 +17,9 @@ export class ReactiveComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
+      phone: '',
+      notification: 'email',
+      rating: [null, ratingRange(1,5)],
       sendCatalog: [true],
     });
   }
@@ -28,11 +30,34 @@ export class ReactiveComponent implements OnInit {
       lastName: 'Spar',
       email: 'js@ma.il',
       sendCatalog: false,
-    })
+    });
+  }
+
+  setNotification(notifyVia: string): void {
+    const phoneControl = this.customerForm.get('phone');
+    if (notifyVia == 'text') {
+      phoneControl?.setValidators(Validators.required);
+    } else {
+      phoneControl?.clearValidators();
+    }
+
+    phoneControl?.updateValueAndValidity();
   }
 
   save(): void {
     console.log(this.customerForm);
     console.log('Saved: ' + JSON.stringify(this.customerForm?.value));
+  }
+}
+
+function ratingRange(min: number, max: number): ValidatorFn 
+{
+  return (c: AbstractControl): { [key: string]: boolean } | null =>
+  {
+    var v = c.value;
+    if (v != null && (isNaN(v) || v < min || v > max)) {
+      return { range: true };
+    }
+    return null;
   }
 }
