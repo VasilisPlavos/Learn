@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, ValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, ValidatorFn, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { debounceTime } from "rxjs/operators";
 import { Customer } from '../customer';
 
@@ -32,6 +32,8 @@ export class ReactiveComponent implements OnInit {
       notification: 'email',
       rating: [null, ratingRange(1,5)],
       sendCatalog: [true],
+
+      addresses: this.fb.array([this.buildAddress()])
     });
 
     this.customerForm.get('notification')?.valueChanges.subscribe(
@@ -42,6 +44,27 @@ export class ReactiveComponent implements OnInit {
     emailControl?.valueChanges
       .pipe(debounceTime(500))
       .subscribe(() => this.setMessage(emailControl));
+
+      console.log(this.customerForm.get('addresses'))
+  }
+
+  buildAddress() : FormGroup {
+    return this.fb.group({
+      addressType: 'home',
+      street1: '',
+      street2: '',
+      city: '',
+      state: '',
+      zip: '' 
+    })
+  }
+
+  addAddress(): void {
+    this.addresses.push(this.buildAddress());
+  }
+
+  get addresses(): FormArray{
+    return <FormArray>this.customerForm.get('addresses');
   }
 
   setMessage(c: AbstractControl): void {
