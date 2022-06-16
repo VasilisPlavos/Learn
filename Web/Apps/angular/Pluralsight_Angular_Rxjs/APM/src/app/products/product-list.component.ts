@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { catchError, combineLatest, EMPTY, map, Observable, Subject } from 'rxjs';
+import { catchError, combineLatest, EMPTY, map, Observable, startWith, Subject } from 'rxjs';
 
 import { Product } from './product';
 import { ProductCategory } from '../product-categories/product-category';
@@ -21,10 +21,12 @@ export class ProductListComponent {
   
   constructor(private productCategoryService: ProductCategoryService, private productService: ProductService) { }
 
-  products$ : Observable<Product[]> = combineLatest([this.productService.productsWithCategory$, this.categorySelectedAction$])
-    .pipe(map(([products, selectedCategoryId]) => { 
-      return products.filter(p => selectedCategoryId ? p.categoryId === selectedCategoryId : true) 
-    }),
+  products$ : Observable<Product[]> = combineLatest(
+    [
+      this.productService.productsWithCategory$,
+      this.categorySelectedAction$.pipe(startWith(0))
+    ])
+    .pipe(map(([products, selectedCategoryId]) => products.filter(p => selectedCategoryId ? p.categoryId === selectedCategoryId : true)),
           catchError(err => {
             console.log(err);
             this.errorMessage = err; 
