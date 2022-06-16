@@ -14,7 +14,7 @@ export class ProductListAltComponent {
   errorMessage = '';
   selectedProductId : number | undefined;
 
-  products$ : Observable<Product[]> = this.productService.products$
+  products$ : Observable<Product[]> = this.productService.productsWithCategory$
     .pipe(catchError(err => 
       {
         console.log(err);
