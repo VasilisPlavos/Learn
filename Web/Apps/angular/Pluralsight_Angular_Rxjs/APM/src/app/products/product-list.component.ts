@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { catchError, EMPTY, map, Observable } from 'rxjs';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { catchError, combineLatest, EMPTY, map, Observable, Subject } from 'rxjs';
 
 import { Product } from './product';
 import { ProductCategory } from '../product-categories/product-category';
@@ -15,46 +15,34 @@ import { ProductService } from './product.service';
 export class ProductListComponent {
   pageTitle = 'Product List';
   errorMessage = '';
-  categories: ProductCategory[] = [];
-  selectedCategoryId : number | undefined;
+
+  private categorySelectedSubject = new Subject<number>();
+  categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+  
   constructor(private productCategoryService: ProductCategoryService, private productService: ProductService) { }
 
-  products$ : Observable<Product[]> = this.productService.productsWithCategory$
-  .pipe(catchError(err => 
-    {
+  products$ : Observable<Product[]> = combineLatest([this.productService.productsWithCategory$, this.categorySelectedAction$])
+    .pipe(map(([products, selectedCategoryId]) => { 
+      return products.filter(p => selectedCategoryId ? p.categoryId === selectedCategoryId : true) 
+    }),
+          catchError(err => {
+            console.log(err);
+            this.errorMessage = err; 
+            return EMPTY;
+        }))
+
+  categories$ : Observable<ProductCategory[]> = this.productCategoryService.productCategories$
+    .pipe(catchError(err => {
       console.log(err);
       this.errorMessage = err; 
       return EMPTY;
     }));
-
-    productsSimpleFilter$ = this.productService.productsWithCategory$
-      .pipe(map(products => 
-        products.filter(product => 
-          this.selectedCategoryId ? product.categoryId === this.selectedCategoryId : true)));
-
-    categories$ : Observable<ProductCategory[]> = this.productCategoryService.productCategories$
-      .pipe(catchError(err => {
-        console.log(err);
-        this.errorMessage = err; 
-        return EMPTY;
-      }));
 
   onAdd(): void {
     console.log('Not yet implemented');
   }
 
   onSelected(categoryId: string): void {
-    this.selectedCategoryId = +categoryId;
-    this.productsSimpleFilter$ = this.productService.productsWithCategory$
-    .pipe(map(products => 
-      products.filter(product => 
-        this.selectedCategoryId ? product.categoryId === this.selectedCategoryId : true)));
-
-  this.categories$ = this.productCategoryService.productCategories$
-    .pipe(catchError(err => {
-      console.log(err);
-      this.errorMessage = err; 
-      return EMPTY;
-    }));
+    this.categorySelectedSubject.next(+categoryId);
   }
 }
