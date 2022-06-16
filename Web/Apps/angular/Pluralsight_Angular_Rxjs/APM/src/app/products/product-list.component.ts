@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { catchError, EMPTY, Subscription } from 'rxjs';
 import { ProductCategory } from '../product-categories/product-category';
 
 import { Product } from './product';
@@ -14,6 +14,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Product List';
   errorMessage = '';
   categories: ProductCategory[] = [];
+
+  products$ = this.productService.productsWithCategory$
+  .pipe(catchError(err => 
+    {
+      this.errorMessage = err; 
+      return EMPTY;
+    }));
 
   products: Product[] = [];
   sub!: Subscription;
