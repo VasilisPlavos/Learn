@@ -25,20 +25,16 @@ export class ProductListComponent {
 
   products$ : Observable<Product[]> = combineLatest(
     [
-      this.productService.productsWithCategory$,
-      this.categorySelectedAction$,
-      this.productService.productsWithAdd$
-    ])
-    .pipe(map(([products, selectedCategoryId, productsAsAny]) => {
-
-      products = productsAsAny;
-      return products.filter(p => selectedCategoryId ? p.categoryId === selectedCategoryId : true)
-    }),
-          catchError(err => {
+      this.productService.productsWithAdd$,
+      this.categorySelectedAction$
+    ]).pipe(
+        map(([products, selectedCategoryId]) => 
+          products.filter(p => selectedCategoryId ? p.categoryId === selectedCategoryId : true)),
+        catchError(err => {
             console.log(err);
             this.errorMessageSubject.next(err);
             return EMPTY;
-        }))
+          }))
 
   categories$ : Observable<ProductCategory[]> = this.productCategoryService.productCategories$
     .pipe(catchError(err => {

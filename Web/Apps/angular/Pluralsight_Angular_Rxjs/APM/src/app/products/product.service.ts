@@ -69,7 +69,8 @@ export class ProductService {
     this.productsWithCategory$,
     this.productInsertedAction$
   ).pipe(
-    scan((acc: Product[], value: any) => [...acc, value])
+    scan((acc: Product[], value: any) => [...acc, value]),
+    map(x => x as Array<Product>)
     );
 
   addProduct(newProduct? : Product){
