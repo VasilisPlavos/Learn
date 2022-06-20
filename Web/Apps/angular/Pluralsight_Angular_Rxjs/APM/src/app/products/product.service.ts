@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { BehaviorSubject, combineLatest, merge, Observable, Subject, throwError } from 'rxjs';
-import { catchError, map, scan, tap } from 'rxjs/operators';
+import { catchError, map, scan, shareReplay, tap } from 'rxjs/operators';
 
 import { Product } from './product';
 import {ProductCategoryService} from "../product-categories/product-category.service";
@@ -38,13 +38,13 @@ export class ProductService {
     this.products$,
     this.productCategoryService.productCategories$
   ]).pipe(
-    map(([products, categories]) =>
-      products.map(product => (
-        {
-          ...product,
-          category: categories.find(c => product.categoryId == c.id)?.name,
-        }) as Product)
-    )
+      map(([products, categories]) =>
+        products.map(product => (
+          {
+            ...product,
+            category: categories.find(c => product.categoryId == c.id)?.name,
+          }) as Product)),
+      shareReplay(1)
   );
 
   private productSelectedSubject = new BehaviorSubject<number>(0);
@@ -56,7 +56,9 @@ export class ProductService {
   ]).pipe(
       map(([products, selectedProductId]) => 
         products.find(p => p.id === selectedProductId)),
-      tap(x => console.log('selectedProduct', x)));
+      tap(x => console.log('selectedProduct', x)),
+      shareReplay(1)
+      );
 
   selectedProductChanged(productId: number) : void {
     this.productSelectedSubject.next(productId);
