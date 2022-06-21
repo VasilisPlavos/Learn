@@ -24,4 +24,10 @@ export class ProductDetailComponent {
       this.errorMessageSubject.next(err);
       return EMPTY;
     }));
+
+  productSuppliers$ = this.productService.selectedProductSuppliers$
+    .pipe(catchError(err => {
+      this.errorMessageSubject.next(err);
+      return EMPTY;
+    }));
   }
