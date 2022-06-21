@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { catchError, EMPTY, Subject } from 'rxjs';
+import { catchError, EMPTY, map, Subject } from 'rxjs';
 
 import { ProductService } from '../product.service';
 import { Supplier } from "../../suppliers/supplier";
@@ -11,7 +11,6 @@ import { Supplier } from "../../suppliers/supplier";
 })
 
 export class ProductDetailComponent {
-  pageTitle = 'Product Detail';
   productSuppliers: Supplier[] | null = null;
 
   constructor(private productService: ProductService) { }
@@ -25,6 +24,9 @@ export class ProductDetailComponent {
       return EMPTY;
     }));
 
+  pageTitle$ = this.product$.pipe(map(product => 
+    product ? `Product Detail for ${product.productName}` : null));
+  
   productSuppliers$ = this.productService.selectedProductSuppliers$
     .pipe(catchError(err => {
       this.errorMessageSubject.next(err);
