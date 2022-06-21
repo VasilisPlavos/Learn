@@ -17,7 +17,7 @@ export class ProductService {
   constructor(
     private http: HttpClient,
     private productCategoryService: ProductCategoryService,
-    private productSuplyService: SupplierService
+    private supplierService: SupplierService
     ) {}
 
   products$ = this.http.get<Product[]>(this.productsUrl)
