@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { BehaviorSubject, combineLatest, merge, Observable, Subject, throwError } from 'rxjs';
-import { catchError, map, scan, shareReplay, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, from, merge, Observable, Subject, throwError } from 'rxjs';
+import { catchError, filter, map, mergeMap, scan, shareReplay, switchMap, tap, toArray } from 'rxjs/operators';
 
 import { Product } from './product';
 import { ProductCategoryService } from '../product-categories/product-category.service';
 import { SupplierService } from '../suppliers/supplier.service';
+import { Supplier } from '../suppliers/supplier';
 
 @Injectable({ providedIn: 'root' })
 
@@ -68,9 +69,26 @@ export class ProductService {
       scan((acc: Product[], value: any) => [...acc, value]), 
       map((x) => x as Product[]));
 
-  selectedProductSuppliers$ = combineLatest([this.selectedProduct$, this.supplierService.suppliers$])
-    .pipe(map(([selectedProduct, suppliers]) => 
-      suppliers.filter(supplier => selectedProduct?.supplierIds?.includes(supplier.id))));
+  // Get It All approach
+  // selectedProductSuppliers$ = combineLatest([this.selectedProduct$, this.supplierService.suppliers$])
+  //   .pipe(map(([selectedProduct, suppliers]) => 
+  //     suppliers.filter(supplier => selectedProduct?.supplierIds?.includes(supplier.id))));
+  
+  // Just in Time approach
+  selectedProductSuppliers$ = this.selectedProduct$
+    .pipe(
+      filter(product => Boolean(product)),
+      switchMap(product => {
+        var supplierIds: number[] = [];
+        if (product?.supplierIds?.length) supplierIds = product.supplierIds;
+        return from(supplierIds)
+          .pipe(
+            mergeMap(supplierId => this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)),
+            toArray(),
+            tap(d => console.log(d))
+            )
+          })
+    );
 
   addProduct(newProduct?: Product) {
     newProduct = newProduct || this.fakeProduct();
