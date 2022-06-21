@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { SupplierTestComponent } from './suppliers/supplier-test/supplier-test.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { PageNotFoundComponent } from './page-not-found.component';
   declarations: [
     AppComponent,
     WelcomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SupplierTestComponent
   ],
   bootstrap: [AppComponent]
 })
