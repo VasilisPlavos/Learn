@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SupplierTestComponent } from './suppliers/supplier-test/supplier-test.component';
+import { ChartsComponent } from './kendo/charts/charts/charts.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { SupplierTestComponent } from './suppliers/supplier-test/supplier-test.c
     AppComponent,
     WelcomeComponent,
     PageNotFoundComponent,
-    SupplierTestComponent
+    SupplierTestComponent,
+    ChartsComponent
   ],
   bootstrap: [AppComponent]
 })
