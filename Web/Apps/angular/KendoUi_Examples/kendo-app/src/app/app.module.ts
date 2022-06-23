@@ -15,6 +15,8 @@ import { ChartsComponent } from './kendo/charts/charts/charts.component';
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+
 
 
 
@@ -26,7 +28,8 @@ import 'hammerjs';
     InMemoryWebApiModule.forRoot(AppData, { delay: 1000 }),
     AppRoutingModule,
     ChartsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ButtonsModule
   ],
   declarations: [
     AppComponent,
