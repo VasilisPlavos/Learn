@@ -12,13 +12,21 @@ import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SupplierTestComponent } from './suppliers/supplier-test/supplier-test.component';
 import { ChartsComponent } from './kendo/charts/charts/charts.component';
+import { ChartsModule } from '@progress/kendo-angular-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import 'hammerjs';
+
+
+
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(AppData, { delay: 1000 }),
-    AppRoutingModule
+    AppRoutingModule,
+    ChartsModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
