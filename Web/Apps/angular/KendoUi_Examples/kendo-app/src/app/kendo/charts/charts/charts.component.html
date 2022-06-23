@@ -1,3 +1,70 @@
 <p>charts works!</p>
 <button kendoButton [look]="'default'">button</button>
 <button kendoButton>button</button>
+
+<kendo-chart [categoryAxis]="{ categories: years }">
+  <kendo-chart-title text="GDP growth %"></kendo-chart-title>
+  <kendo-chart-legend
+    position="bottom"
+    orientation="horizontal"
+  ></kendo-chart-legend>
+  <kendo-chart-tooltip format="{0}%"></kendo-chart-tooltip>
+  <kendo-chart-series>
+    <kendo-chart-series-item
+      *ngFor="let item of series"
+      type="line"
+      style="smooth"
+      [data]="item.data"
+      [name]="item.name"
+    >
+    </kendo-chart-series-item>
+  </kendo-chart-series>
+</kendo-chart>
+
+<kendo-chart>
+    <kendo-chart-title text="Units sold"></kendo-chart-title>
+
+    <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item [categories]=years>
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+    <kendo-chart-series>
+        <kendo-chart-series-item
+        *ngFor="let item of series"
+        type="area"
+        [data]="item.data"
+        [name]="item.name"
+        >
+        </kendo-chart-series-item>
+    </kendo-chart-series>
+</kendo-chart>
+
+<kendo-chart>
+  <kendo-chart-title text="Units sold"></kendo-chart-title>
+  <kendo-chart-category-axis>
+    <kendo-chart-category-axis-item
+      [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
+      [title]="{ text: 'Months' }"
+    >
+    </kendo-chart-category-axis-item>
+  </kendo-chart-category-axis>
+  <kendo-chart-series-defaults [highlight]="{ inactiveOpacity: 0.3 }">
+  </kendo-chart-series-defaults>
+  <kendo-chart-series>
+    <kendo-chart-series-item
+      type="area"
+      [data]="[123, 276, 310, 212, 240, 156, 98]"
+    >
+    </kendo-chart-series-item>
+    <kendo-chart-series-item
+      type="area"
+      [data]="[165, 210, 287, 144, 190, 167, 212]"
+    >
+    </kendo-chart-series-item>
+    <kendo-chart-series-item
+      type="area"
+      [data]="[56, 140, 195, 46, 123, 78, 95]"
+    >
+    </kendo-chart-series-item>
+  </kendo-chart-series>
+</kendo-chart>
