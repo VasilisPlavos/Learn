@@ -16,6 +16,7 @@ import { SupplierTestComponent } from './suppliers/supplier-test/supplier-test.c
       },
       { path: 'suppliertest', component: SupplierTestComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: 'contact', loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule) },
       { path: '**', component: PageNotFoundComponent }
     ])
   ],
