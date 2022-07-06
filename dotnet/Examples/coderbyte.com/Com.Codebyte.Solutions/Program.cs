@@ -9,8 +9,6 @@ namespace Com.Coderbyte.Solutions
     {
         static void Main(string[] args)
         {
-            Codility.Tests();
-
             Console.WriteLine("== RUNNING TEST CASES ==");
             Console.WriteLine("");
             FirstFactorialMain.Test();
@@ -18,6 +16,7 @@ namespace Com.Coderbyte.Solutions
             SecondSmallestSecondGreatestMain.Test();
             FindWordsFromDictionaryMain.Test();
             CodeSignal.Tests();
+            Codility.Tests();
             var a = Console.ReadKey();
         }
     }
