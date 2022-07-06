@@ -31,13 +31,10 @@ namespace Com.Coderbyte.Solutions.Solutions.Codility
                 var availableLocations = locations.Distinct().ToList();
                 var locationsToCompare = locations.Skip(i).ToList();
                 var days = 0;
-                foreach (var l in locationsToCompare)
+                foreach (var l in locationsToCompare.Where(l => availableLocations.Count > 0))
                 {
-                    if (availableLocations.Count > 0)
-                    {
-                        availableLocations.Remove(l);
-                        days++;
-                    }
+                    availableLocations.Remove(l);
+                    days++;
                 }
 
                 if (availableLocations.Count == 0 && days < shortestTrip) shortestTrip = days;
