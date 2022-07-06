@@ -6,7 +6,7 @@ namespace Com.Coderbyte.Solutions.Solutions.Codility
     {
         public static void Tests()
         {
-            TestHelper.Console.WriteLine.Start("Codility Test1");
+            TestHelper.Console.WriteLine.Start("Codility Test1 - demo");
             MissingInteger.Test();
 
             //TestHelper.Console.WriteLine.Start("CodeSignal Test2");
