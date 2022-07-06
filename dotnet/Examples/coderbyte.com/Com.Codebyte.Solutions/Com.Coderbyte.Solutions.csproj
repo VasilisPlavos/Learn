@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Folder Include="Solutions\CodeSignal\" />
+    <Folder Include="Solutions\Codility\" />
   </ItemGroup>
 
 </Project>
