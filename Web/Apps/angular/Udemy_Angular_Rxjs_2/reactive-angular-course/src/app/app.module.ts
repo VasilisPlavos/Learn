@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CourseCardListComponent } from './course-card-list/course-card-list.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -40,6 +41,7 @@ import { LoadingComponent } from './loading/loading.component';
     HomeComponent,
     AboutComponent,
     CourseComponent,
+    CourseCardListComponent,
     CourseDialogComponent,
     LoginComponent,
     LessonComponent,
@@ -47,7 +49,7 @@ import { LoadingComponent } from './loading/loading.component';
     MessagesComponent,
     SearchLessonsComponent,
     LoadingComponent
-
+    
   ],
   imports: [
     BrowserModule,
