@@ -1,3 +1,7 @@
+## Quick start
+1. npm install
+2. npm run server -> for the server
+3. npm start -> for the frontend
 
 ## The Reactive Angular Course
 
