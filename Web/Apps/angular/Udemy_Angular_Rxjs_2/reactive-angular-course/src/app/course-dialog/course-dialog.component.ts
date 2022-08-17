@@ -5,6 +5,7 @@ import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import * as moment from 'moment';
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import { CoursesService } from '../services/courses.service';
 
 @Component({
     selector: 'course-dialog',
@@ -19,6 +20,7 @@ export class CourseDialogComponent implements AfterViewInit {
 
     constructor(
         private fb: FormBuilder,
+        private courseService: CoursesService,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) course:Course) {
 
@@ -39,8 +41,10 @@ export class CourseDialogComponent implements AfterViewInit {
 
     save() {
 
-      const changes = this.form.value;
+        const changes = this.form.value;
 
+        this.courseService.saveCourse(this.course.id, changes)
+            .subscribe((v) => { this.dialogRef.close(v)});
     }
 
     close() {
