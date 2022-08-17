@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, shareReplay } from "rxjs/operators";
 import { Course, sortCoursesBySeqNo } from "../model/course";
 
 @Injectable({ providedIn: 'root' })
@@ -12,6 +12,9 @@ export class CoursesService {
 
     loadAllCourses() : Observable<Course[]> {
         return this.http.get<Course[]>('/api/courses')
-        .pipe(map(res => res["payload"].sort(sortCoursesBySeqNo)));
+        .pipe(
+            map(res => res["payload"].sort(sortCoursesBySeqNo)),
+            shareReplay()
+            );
     }
 }
