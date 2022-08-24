@@ -3,7 +3,7 @@
 using riverbank.Dtos;
 using riverbank.Helpers;
 
-var lines = await File.ReadAllLinesAsync(@"C:\Users\vplav\Desktop\Del\book.csv");
+var lines = await File.ReadAllLinesAsync("C:\\Users\\vplav\\Gits\\Learn\\dotnet\\Examples\\riverbank\\Files\\book.csv");
 var headers = lines[0].Split(',');
 lines = lines[1..];
 
