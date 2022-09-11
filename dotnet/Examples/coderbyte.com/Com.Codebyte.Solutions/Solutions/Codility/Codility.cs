@@ -9,20 +9,14 @@ namespace Com.Coderbyte.Solutions.Solutions.Codility
             TestHelper.Console.WriteLine.Start("Codility demo test");
             MissingInteger.Test();
 
-            TestHelper.Console.WriteLine.Start("Codility Test1");
-            Task1.Test();
+            TestHelper.Console.WriteLine.Start("Codility FileRenamer");
+            FileRenamer.Test();
 
-            TestHelper.Console.WriteLine.Start("Codility Test2");
-            Task2.Test();
+            //TestHelper.Console.WriteLine.Start("Codility Test1");
+            //Task1.Test();
 
-            //TestHelper.Console.WriteLine.Start("CodeSignal Test2");
+            //TestHelper.Console.WriteLine.Start("Codility Test2");
             //Task2.Test();
-
-            //TestHelper.Console.WriteLine.Start("CodeSignal Test3");
-            //Task3.Test();
-
-            //TestHelper.Console.WriteLine.Start("CodeSignal Test4");
-            //Task4.Test();
         }
     }
 }
