@@ -1,8 +1,8 @@
 const path = require("path");
 const express = require("express");
+const db = require("./util/database");
 
 const errorController = require("./controllers/error");
-const db = require("./util/database");
 
 const app = express();
 
@@ -12,13 +12,11 @@ app.set("views", "views");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
-db.execute("SELECT * FROM products")
+db.execute("SELECT id FROM products LIMIT 1")
   .then((result) => {
-    console.log(result[0],result[1]);
+    if (result) console.log("db connected");
   })
-  .catch((err) => {
-    console.log(err);
-  });
+  .catch((err) => console.log("db not connected", err));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
