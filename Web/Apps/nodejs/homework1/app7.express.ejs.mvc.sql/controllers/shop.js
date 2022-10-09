@@ -70,12 +70,17 @@ exports.postCart = async (req, res, next) => {
   res.redirect("/cart");
 };
 
-exports.postCartDeleteProduct = (req, res, next) => {
-  const productId = req.body.productId;
-  Product.findById(productId, (product) => {
-    Cart.deleteProduct(productId, product.price);
-    res.redirect("/cart");
+exports.postCartDeleteProduct = async (req, res, next) => {
+  var cart = await req.user.getCart();
+  var cartProductsToDelete = await cart.getProducts({
+    where: { id: req.body.productId },
   });
+
+  for (const product of cartProductsToDelete) {
+    await product.CartItem.destroy();
+  }
+
+  res.redirect("/cart");
 };
 
 exports.getOrders = (req, res, next) => {
