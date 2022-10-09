@@ -14,9 +14,8 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  Product.findOne({ where: { id: prodId } })
-    // Product.findByPk(prodId) // this works also
+  Product.findOne({ where: { id: req.params.productId } })
+    // Product.findByPk(req.params.productId) // this works also
     .then((product) => {
       res.render("shop/product-detail", {
         product: product,
@@ -66,15 +65,15 @@ exports.postCart = async (req, res, next) => {
   if (cartSelectedProducts[0]) {
     quantity = cartSelectedProducts[0].CartItem.quantity;
   }
-  
+
   await cart.addProduct(product, { through: { quantity: ++quantity } });
   res.redirect("/cart");
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  Product.findById(prodId, (product) => {
-    Cart.deleteProduct(prodId, product.price);
+  const productId = req.body.productId;
+  Product.findById(productId, (product) => {
+    Cart.deleteProduct(productId, product.price);
     res.redirect("/cart");
   });
 };
