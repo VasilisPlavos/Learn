@@ -13,11 +13,9 @@ const Product = sequelize.define(
     title: DataTypes.STRING,
     imageUrl: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.DOUBLE,
+    price: DataTypes.DOUBLE
   },
-  {
-    timestamps: false,
-  }
+  { timestamps: false }
 );
 
 module.exports = Product;

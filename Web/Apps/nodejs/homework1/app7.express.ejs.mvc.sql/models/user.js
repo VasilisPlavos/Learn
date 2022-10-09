@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../util/database");
 
-const Cart = sequelize.define(
-  "cart",
+const User = sequelize.define(
+  "user",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -10,8 +10,12 @@ const Cart = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
   },
-  { timestamps: false }
+  {
+    timestamps: false,
+  }
 );
 
-module.exports = Cart;
+module.exports = User;
