@@ -22,7 +22,7 @@ const myMw3 = (req, res, next) => {
 // app.use(myMw2);
 // app.use(myMw3);
 
-const pipeline = [ myMw1, myMw2, myMw3 ]
+const pipeline = [ myMw1, myMw3, myMw2 ]
 app.use(pipeline);
 
 app.listen(3000, () => console.log(`app start at http://localhost:3000`));
