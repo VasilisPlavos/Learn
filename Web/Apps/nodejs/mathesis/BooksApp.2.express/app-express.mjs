@@ -1,44 +1,23 @@
 import express from "express";
+import { engine } from "express-handlebars";
 import { BookList } from "./bookList.mjs";
 
 const app = express();
+app.use(express.static("public")); // set folder for static files
+app.engine("hbs", engine({ extname: ".hbs" }));
+app.set("view engine", "hbs");
 
 const bookList = new BookList();
 
 app.get("/books", async (req, res) => {
-  if (req.url === "/books") {
-    await bookList.loadBooksFromFileAsync();
-    res.write(pageTopChunk);
-    res.write("<ul>");
-    for (const book of bookList.myBooks.books) {
-      res.write(`<li>${book.title} - ${book.author}</li>`);
-    }
-    res.write("</ul>");
-    res.write(pageBottomChunk);
-    res.end();
-  } else {
-    res.writeHead(303, { location: "/books" });
-    res.end();
-  }
+  await bookList.loadBooksFromFileAsync();
+  res.render("bookList", { books: bookList.myBooks.books });
 });
 
-app.use((req, res) => { res.send('404 not found') });
+import booksExampleRouter from "./routes/books-example.mjs";
+app.use(booksExampleRouter);
 
-app.listen(3000, () => console.log(`app start at localhost:3000`));
+app.get("/", (req, res) => res.send("API is running..."));
+app.use((req, res) => res.status(404, "fd").send("404 not found"));
 
-const pageTopChunk = `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
-  </head>
-  <body>
-  `;
-
-const pageBottomChunk = `
-  </body>
-</html>
-  `;
+app.listen(3000, () => console.log(`app running: https://localhost:3000`));

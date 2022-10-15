@@ -1,0 +1,10 @@
+
+<ul>
+  {{#each books}}
+    <li>{{this.title}} - {{this.author}}</li>
+  {{/each}}
+</ul>
+
+{{#unless books}}
+  <p>Nothing here... Add your first book!</p>
+{{/unless}}
