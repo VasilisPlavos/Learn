@@ -1,8 +1,8 @@
-<h1>Books</h1>
+<h1>My Books{{#if username}} - {{username}} {{/if}}</h1>
 <a href="/books/add">Add book</a>
 <ul>
   {{#each books}}
-    <li>{{this.title}} - {{this.author}}</li>
+    <li>{{title}} - {{author}}</li>
   {{/each}}
 </ul>
 

@@ -1,3 +1,7 @@
-<a href="/books">Books</a>
-|
-<a href="/about">About</a>
+{{#if username}}
+  <a href="/books">Books</a>
+  |
+  <a href="/users/logout">Logout</a>
+{{else}}
+  <a href="/">Login</a>
+{{/if}}
