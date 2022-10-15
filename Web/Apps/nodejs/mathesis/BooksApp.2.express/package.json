@@ -8,7 +8,10 @@
   "license": "ISC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app-express.mjs"
+    "start": "nodemon app.mjs"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "dependencies": {
     "express": "^4.18.2",
