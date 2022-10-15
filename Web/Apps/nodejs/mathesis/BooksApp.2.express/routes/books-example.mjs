@@ -1,8 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-
-router.use(express.urlencoded({ extended: true }));
+// router.use(express.urlencoded({ extended: true }));
 
 // GET: /books-example?anyKey=anyValue
 router.get("/books-example", (req, res) => {
@@ -17,7 +16,6 @@ router.post("/books-example", (req, res) => {
   console.log(3, req.body);
 });
 
-
 // books-example/:anyValue/:anyValue
 router.get("/books-example/:title/:author", (req, res) => {
   res.send(req.params);
@@ -25,5 +23,4 @@ router.get("/books-example/:title/:author", (req, res) => {
   console.log(`author: ${req.params["author"]}`);
 });
 
-
-export default router;
+export { router };

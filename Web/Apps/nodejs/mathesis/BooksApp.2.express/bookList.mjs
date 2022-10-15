@@ -13,12 +13,12 @@ class BookList {
     }
   }
 
-  addBookToFile(newBook) {
+  async addBookToFileAsync(newBook) {
     if (!this.isBookInList(newBook)) {
       this.myBooks.books.push(newBook);
 
       try {
-        fs.writeFile(fileName, JSON.stringify(this.myBooks), { flag: "w+" });
+        await fs.writeFile(fileName, JSON.stringify(this.myBooks)); // { flag: "w+" });
       } catch (error) {
         throw error;
       }
@@ -33,10 +33,10 @@ class BookList {
     return bookFound;
   }
 }
-const bookList = new BookList();
-await bookList.loadBooksFromFileAsync();
-bookList.addBookToFile({ title: "Start wars 3", author: "Στάνισλαβ Λεμ" });
-await bookList.loadBooksFromFileAsync();
-console.log(bookList.myBooks);
+// const bookList = new BookList();
+// await bookList.loadBooksFromFileAsync();
+// bookList.addBookToFile({ title: "Start wars 3", author: "Στάνισλαβ Λεμ" });
+// await bookList.loadBooksFromFileAsync();
+// console.log(bookList.myBooks);
 
 export { BookList };
