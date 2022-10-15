@@ -1,9 +1,26 @@
+import "dotenv/config";
 import express from "express";
 import { engine } from "express-handlebars";
+import session from "express-session";
+import createMemoryStore from "memorystore";
+
+// routers
 import { router as booksExampleRouter } from "./routes/books-example.mjs";
 import { router as booksRouter } from "./routes/books.mjs";
 
+const MemoryStore = createMemoryStore(session);
+const myBooksSession = session({
+  secret: process.env.SESSION_SECRET,
+  store: new MemoryStore({ checkPeriod: 86400000 }),
+  resave: false,
+  saveUninitialized: true,
+  name: "myBooks-sid", // default is connect.sid
+  cookie: { maxAge: 1000 * 60 * 20 }, // 20 minutes
+});
+
 const app = express();
+
+app.use(myBooksSession);
 app.use(express.static("public")); // set folder for static files
 app.use(express.urlencoded({ extended: true }));
 

@@ -6,6 +6,7 @@ const router = express.Router();
 const bookList = new BookList();
 
 router.get("/books", async (req, res) => {
+  req.session.hitCounter++;
   await bookList.loadBooksFromFileAsync();
   res.render("bookList", { books: bookList.myBooks.books });
 });
