@@ -1,0 +1,15 @@
+<div class="container">
+  <form action="/books" method="post">
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+      <input type="text" class="form-control" id="author" name="author" />  
+      <div class="form-text">Add book author.</div>
+    </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control {{#if error.title}} is-invalid {{/if}}" id="title" name="title" />
+      <div class="invalid-feedback">{{error.title.msg}}</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
