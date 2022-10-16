@@ -34,10 +34,7 @@ app.use(usersRouter);
 
 app.get("/", (req, res) => res.render("home"));
 app.use((req, res) => res.status(404).send("404 not found"));
-
-app.route("/b").all((req, res) => {
-  console.log(req);
-});
+app.use((err, req, res, next) => res.status(404).send(err.message));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`app running: http://localhost:${PORT}`));

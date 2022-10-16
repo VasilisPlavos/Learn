@@ -9,7 +9,10 @@ router.post("/users", (req, res) => {
 
 router.get("/users/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("/");
+
+  // i do this temporary to kill the instance
+  // of the BookList(filename=username)
+  res.redirect("/books");
 });
 
 export { router };
