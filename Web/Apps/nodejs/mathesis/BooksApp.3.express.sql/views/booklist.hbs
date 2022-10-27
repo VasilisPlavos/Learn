@@ -1,0 +1,11 @@
+<h1>My Books{{#if username}} - {{username}} {{/if}}</h1>
+<a href="/books/add">Add book</a>
+<ul>
+  {{#each books}}
+    <li>{{title}} - {{author}}</li>
+  {{/each}}
+</ul>
+
+{{#unless books}}
+  <p>Nothing here... Add your first book!</p>
+{{/unless}}
