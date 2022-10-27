@@ -1,1 +1,1 @@
-this version is so simple that saves data to json files -> the next version has sequelize
+this version has sequelize and sqlite database
