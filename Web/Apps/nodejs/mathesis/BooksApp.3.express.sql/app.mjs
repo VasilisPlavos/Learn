@@ -5,7 +5,6 @@ import session from "express-session";
 import createMemoryStore from "memorystore";
 
 // routers
-import { router as booksExampleRouter } from "./routes/books-example.mjs";
 import { router as booksRouter } from "./routes/books.mjs";
 import { router as usersRouter } from "./routes/users.mjs";
 
@@ -28,7 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 app.engine("hbs", engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 
-app.use(booksExampleRouter);
 app.use(booksRouter);
 app.use(usersRouter);
 

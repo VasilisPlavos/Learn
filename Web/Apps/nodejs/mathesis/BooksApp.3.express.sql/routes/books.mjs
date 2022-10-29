@@ -1,9 +1,8 @@
 import express from "express";
-import { BookList } from "../bookList.mjs";
-import { body, validationResult } from "express-validator";
+import * as BookService from "../services/book.service.mjs";
+import * as Validator from "../validator/validations.mjs";
 
 const router = express.Router();
-var bookList = null;
 
 router.get("/books", (req, res, next) => {
   if (!auth(req, res)) return;
@@ -19,53 +18,43 @@ router.get("/books/add", (req, res) => {
   res.render("addbookform");
 });
 
-router.post(
-  "/books",
-  body("title")
-    .isAlpha()
-    .trim()
-    .withMessage("chars only")
-    .isLength({ min: 5 })
-    .withMessage("at least 5 chars"),
-  async (req, res) => {
-    if (!auth(req, res)) return;
-    const errors = validationResult(req);
-    if (errors.errors?.length > 0) {
-      var error = errors.mapped();
-      res.render("addbookform", { error: error });
-      return;
-    }
+router.get("/books/remove/:bookId", async (req, res) => {
+  const userId = req.session.userId;
+  const bookId = req.params.bookId;
+  await BookService.removeFavoriteAsync(userId, bookId);
+  res.redirect("/books");
+});
 
-    const book = {
-      title: req.body["title"],
-      author: req.body["author"],
-    };
-    await bookList.addBookToFileAsync(book);
-    res.redirect("/books");
-  }
-);
+router.post("/books", Validator.bookValidator, async (req, res) => {
+  if (!auth(req, res)) return;
+
+  // const title = req.body["title"];
+  // const author = req.body["author"];
+  const userId = req.session.userId;
+  const bookDto = {
+    title: req.body["title"],
+    author: req.body["author"],
+    comments: req.body["comments"],
+  };
+  await BookService.createAsync(userId, bookDto);
+
+  res.redirect("/books");
+});
 
 function auth(req, res) {
-  if (!req.session.username) {
-    bookList = null;
+  if (!req.session.username || !req.session.userId) {
     res.redirect("/");
     return false;
   }
 
   res.locals.username = req.session.username;
-  if (!bookList) bookList = new BookList(req.session.username);
   return true;
 }
 
 async function showBookListAsync(req, res, next) {
-  try {
-    await bookList.loadBooksFromFileAsync();
-  } catch (error) {
-    next(error); // error example. to activate it just make "bookList = null" before "bookList.loadBooksFromFileAsync();"
-    return;
-  }
+  var books = await BookService.showBoolListAsync(req.session.userId);
   res.render("bookList", {
-    books: bookList.myBooks.books,
+    books: books,
     // we don't need this because of res.locals.username -> they are similar
     // username: req.session.username,
   });
