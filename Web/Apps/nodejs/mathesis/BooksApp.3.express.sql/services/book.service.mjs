@@ -3,7 +3,7 @@ import { Book, User, UserBooks } from "../data/database.mjs";
 async function createBookAsync(userId, bookDto) {
   if (!bookDto.title || !bookDto.author) return;
 
-  var book = await Book.findOrCreate({
+  var [book, c] = await Book.findOrCreate({
     where: {
       title: bookDto.title,
       author: bookDto.author,
@@ -13,7 +13,7 @@ async function createBookAsync(userId, bookDto) {
   await UserBooks.findOrCreate({
     where: {
       userId: userId,
-      bookId: book[0].dataValues.id,
+      bookId: book.dataValues.id,
       userComment: bookDto.comments ?? null,
     },
   });
@@ -31,12 +31,12 @@ async function getBookDtoByIdAsync(userId, bookId) {
   var users = await User.findAll({ where: { id: userIds } });
 
   var comments = [];
-  var comment = '';
+  var comment = "";
   for (const bookComment of bookComments) {
     if (!bookComment.userComment) continue;
     if (bookComment.userId == userId) comment = bookComment.userComment;
     var user = users.find((x) => x.dataValues.id == bookComment.userId);
-    var username = user.dataValues.username; 
+    var username = user.dataValues.username;
     comments.push({ username: username, comment: bookComment.userComment });
   }
 
