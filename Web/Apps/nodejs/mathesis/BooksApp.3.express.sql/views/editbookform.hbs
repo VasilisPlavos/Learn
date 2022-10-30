@@ -7,8 +7,6 @@
       <input type="text" class="form-control"
         {{#if book}} value="{{this.book.author}}" {{/if}}
         id="author" name="author" disabled />
-
-      <div class="form-text">Add book author.</div>
     </div>
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
@@ -18,7 +16,7 @@
       <div class="invalid-feedback">{{error.title.msg}}</div>
     </div>
     <div class="mb-3">
-      <label for="comments" class="form-label">comments</label>
+      <label for="comments" class="form-label">Comments</label>
       <input type="text" class="form-control"
         {{#if book}} value="{{this.book.comment}}" {{/if}}
         id="comments" name="comments" />
@@ -28,16 +26,16 @@
 </div>
 <hr>
 <div class="container">
-<h2>Comments</h2>
-<ul class="list-group list-group-flush">
-  {{#each book.comments}}
-  <li class="list-group-item">
-    <strong>{{this.username}}</strong>: {{this.comment}}
-  </li>
-  {{/each}}
-  {{#unless book.comments}}
-  <p>No comments yet for this book. Add the first one!</p>
-  {{/unless}}
-</ul>
-<br><br><br>
+  <h2>Comments</h2>
+  <ul class="list-group list-group-flush">
+    {{#each book.comments}}
+    <li class="list-group-item">
+      <strong>{{this.username}}</strong>: {{this.comment}}
+    </li>
+    {{/each}}
+    {{#unless book.comments}}
+    <p>No comments yet for this book. Add the first one!</p>
+    {{/unless}}
+  </ul>
+  <br><br><br>
 </div>
