@@ -19,7 +19,7 @@ async function authenticateUserAsync(username, password) {
     return null;
   }
 
-  console.log("login", user);
+  console.log("login completed");
   return user;
 }
 
@@ -40,7 +40,7 @@ async function createAsync(username, password) {
     username: username,
     passwordHashed: hashedPassword,
   });
-  console.log("created", user);
+  console.log("created user");
   return user;
 }
 

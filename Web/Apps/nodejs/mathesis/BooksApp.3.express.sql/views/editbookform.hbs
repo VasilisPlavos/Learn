@@ -1,0 +1,27 @@
+<div class="container">
+  <form action="/books/edit/{{this.book.id}}" method="post">
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+
+      <input type="text" class="form-control"
+        {{#if book}} value="{{this.book.author}}" {{/if}}
+        id="author" name="author" />
+
+      <div class="form-text">Add book author.</div>
+    </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control {{#if error.title}} is-invalid {{/if}}"
+        {{#if book}} value="{{this.book.title}}" {{/if}}
+        id="title" name="title" />
+      <div class="invalid-feedback">{{error.title.msg}}</div>
+    </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">comments</label>
+      <input type="text" class="form-control"
+        {{#if book}} value="{{this.book.comment}}" {{/if}}
+        id="comments" name="comments" />
+    </div>
+    <button type="submit" class="btn btn-primary">Update book</button>
+  </form>
+</div>

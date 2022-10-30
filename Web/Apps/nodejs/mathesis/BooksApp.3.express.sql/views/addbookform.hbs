@@ -10,6 +10,10 @@
       <input type="text" class="form-control {{#if error.title}} is-invalid {{/if}}" id="title" name="title" />
       <div class="invalid-feedback">{{error.title.msg}}</div>
     </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">comments</label>
+      <input type="text" class="form-control" id="comments" name="comments" />
+    </div>
     <button type="submit" class="btn btn-primary">Create book</button>
   </form>
 </div>

@@ -19,11 +19,30 @@ async function createAsync(userId, bookDto) {
   });
 }
 
+async function getBookDtoByIdAsync(userId, bookId) {
+  var book = await Book.findByPk(bookId);
+  book = book.toJSON();
+
+  var comment = await UserBooks.findOne({
+    attributes: ["userComment"],
+    where: { userId: userId, bookId: bookId },
+  });
+
+  var bookDto = {
+    id: bookId,
+    author: book.author,
+    title: book.title,
+    comment: comment.dataValues.userComment,
+  };
+
+  return bookDto;
+}
+
 async function removeFavoriteAsync(userId, bookId) {
   await UserBooks.destroy({ where: { userId: userId, bookId: bookId } });
 }
 
-async function showBoolListAsync(userId) {
+async function showBookListAsync(userId) {
   if (!userId) {
     console.log("error: username not exist");
     return;
@@ -39,4 +58,41 @@ async function showBoolListAsync(userId) {
   return books;
 }
 
-export { createAsync, removeFavoriteAsync, showBoolListAsync };
+async function createOrUpdateCommentAsync(bookId, userId, comment) {
+  if (!bookId || !userId || !comment) return;
+
+  var userBook = await UserBooks.findOne({
+    where: {
+      userId: userId,
+      bookId: bookId,
+    },
+  });
+
+  if (!userBook) {
+    await UserBooks.create({
+      where: {
+        userId: userId,
+        bookId: bookId,
+        userComment: comment ?? null,
+      },
+    });
+  } else {
+    await UserBooks.update(
+      { userComment: comment ?? null },
+      {
+        where: {
+          userId: userId,
+          bookId: bookId,
+        },
+      }
+    );
+  }
+}
+
+export {
+  createAsync,
+  createOrUpdateCommentAsync,
+  getBookDtoByIdAsync,
+  removeFavoriteAsync,
+  showBookListAsync,
+};

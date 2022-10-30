@@ -18,7 +18,26 @@ router.get("/books/add", (req, res) => {
   res.render("addbookform");
 });
 
+router.get("/books/edit/:bookId", async (req, res) => {
+  if (!auth(req, res)) return;
+  const userId = req.session.userId;
+  const bookId = req.params.bookId;
+  var book = await BookService.getBookDtoByIdAsync(userId, bookId);
+  res.render("editbookform", { book });
+});
+
+router.post("/books/edit/:bookId", async (req, res) => {
+  if (!auth(req, res)) return;
+
+  const bookId = req.params.bookId;
+  const userId = req.session.userId;
+  const comment = req.body["comments"];
+  await BookService.createOrUpdateCommentAsync(bookId, userId, comment);
+  res.redirect("/books");
+});
+
 router.get("/books/remove/:bookId", async (req, res) => {
+  if (!auth(req, res)) return;
   const userId = req.session.userId;
   const bookId = req.params.bookId;
   await BookService.removeFavoriteAsync(userId, bookId);
@@ -52,7 +71,7 @@ function auth(req, res) {
 }
 
 async function showBookListAsync(req, res, next) {
-  var books = await BookService.showBoolListAsync(req.session.userId);
+  var books = await BookService.showBookListAsync(req.session.userId);
   res.render("bookList", {
     books: books,
     // we don't need this because of res.locals.username -> they are similar

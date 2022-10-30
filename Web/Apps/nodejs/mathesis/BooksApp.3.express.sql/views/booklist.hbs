@@ -2,7 +2,11 @@
 <a href="/books/add">Add book</a>
 <ul>
   {{#each books}}
-    <li>{{this.dataValues.title}} - {{this.dataValues.author}} <a href="books/remove/{{this.dataValues.id}}">[remove]</a></li>
+    <li>
+      {{this.dataValues.title}} - {{this.dataValues.author}}
+      <a href="books/remove/{{this.dataValues.id}}">[remove]</a>
+      <a href="books/edit/{{this.dataValues.id}}">[edit]</a>
+    </li>
   {{/each}}
 </ul>
 
