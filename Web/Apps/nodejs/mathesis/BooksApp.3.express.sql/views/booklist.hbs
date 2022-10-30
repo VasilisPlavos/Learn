@@ -1,11 +1,16 @@
-<h1>My Books{{#if username}} - {{username}} {{/if}}</h1>
-<a href="/books/add">Add book</a>
-<ul>
+<div class="container">
+  <h1>My Books{{#if username}} - {{username}} {{/if}}</h1>
+
+  <a class="btn btn-primary" href="/books/add">Add book</a>
+  <br><br>
+<ul class="list-group">
   {{#each books}}
-    <li>
+    <li class="list-group-item">     
       {{this.dataValues.title}} - {{this.dataValues.author}}
-      <a href="books/remove/{{this.dataValues.id}}">[remove]</a>
-      <a href="books/edit/{{this.dataValues.id}}">[edit]</a>
+      <span style="float: right;">
+        <a class="btn btn-success" href="books/edit/{{this.dataValues.id}}">Edit</a>
+        <a class="btn btn-danger" href="books/remove/{{this.dataValues.id}}">Delete</a>
+      </span>
     </li>
   {{/each}}
 </ul>
@@ -13,3 +18,8 @@
 {{#unless books}}
   <p>Nothing here... Add your first book!</p>
 {{/unless}}
+
+</div>
+
+
+

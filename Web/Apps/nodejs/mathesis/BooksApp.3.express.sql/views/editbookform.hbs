@@ -1,11 +1,12 @@
 <div class="container">
+  <h1>Edit book</h1>
   <form action="/books/edit/{{this.book.id}}" method="post">
     <div class="mb-3">
       <label for="author" class="form-label">Author</label>
 
       <input type="text" class="form-control"
         {{#if book}} value="{{this.book.author}}" {{/if}}
-        id="author" name="author" />
+        id="author" name="author" disabled />
 
       <div class="form-text">Add book author.</div>
     </div>
@@ -13,7 +14,7 @@
       <label for="title" class="form-label">Title</label>
       <input type="text" class="form-control {{#if error.title}} is-invalid {{/if}}"
         {{#if book}} value="{{this.book.title}}" {{/if}}
-        id="title" name="title" />
+        id="title" name="title" disabled />
       <div class="invalid-feedback">{{error.title.msg}}</div>
     </div>
     <div class="mb-3">
