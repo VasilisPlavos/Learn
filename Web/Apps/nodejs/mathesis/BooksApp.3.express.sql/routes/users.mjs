@@ -58,7 +58,7 @@ router.post(
 
     var username = req.body.username;
     var password = req.body.password;
-    var user = await UserService.createAsync(username, password);
+    var user = await UserService.createUserAsync(username, password);
     if (!user) {
       res.render("register", { messages: "error try again" });
       return;

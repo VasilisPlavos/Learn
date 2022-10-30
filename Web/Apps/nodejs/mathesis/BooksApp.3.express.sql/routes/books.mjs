@@ -13,6 +13,22 @@ router.get("/books", (req, res, next) => {
   showBookListAsync(req, res, next);
 });
 
+router.post("/books", Validator.bookValidator, async (req, res) => {
+  if (!auth(req, res)) return;
+
+  // const title = req.body["title"];
+  // const author = req.body["author"];
+  const userId = req.session.userId;
+  const bookDto = {
+    title: req.body["title"],
+    author: req.body["author"],
+    comments: req.body["comments"],
+  };
+  await BookService.createBookAsync(userId, bookDto);
+
+  res.redirect("/books");
+});
+
 router.get("/books/add", (req, res) => {
   if (!auth(req, res)) return;
   res.render("addbookform");
@@ -41,22 +57,6 @@ router.get("/books/remove/:bookId", async (req, res) => {
   const userId = req.session.userId;
   const bookId = req.params.bookId;
   await BookService.removeFavoriteAsync(userId, bookId);
-  res.redirect("/books");
-});
-
-router.post("/books", Validator.bookValidator, async (req, res) => {
-  if (!auth(req, res)) return;
-
-  // const title = req.body["title"];
-  // const author = req.body["author"];
-  const userId = req.session.userId;
-  const bookDto = {
-    title: req.body["title"],
-    author: req.body["author"],
-    comments: req.body["comments"],
-  };
-  await BookService.createAsync(userId, bookDto);
-
   res.redirect("/books");
 });
 

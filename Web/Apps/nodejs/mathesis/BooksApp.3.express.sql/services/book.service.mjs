@@ -1,6 +1,6 @@
 import { Book, UserBooks } from "../data/database.mjs";
 
-async function createAsync(userId, bookDto) {
+async function createBookAsync(userId, bookDto) {
   if (!bookDto.title || !bookDto.author) return;
 
   var book = await Book.findOrCreate({
@@ -90,7 +90,7 @@ async function createOrUpdateCommentAsync(bookId, userId, comment) {
 }
 
 export {
-  createAsync,
+  createBookAsync,
   createOrUpdateCommentAsync,
   getBookDtoByIdAsync,
   removeFavoriteAsync,

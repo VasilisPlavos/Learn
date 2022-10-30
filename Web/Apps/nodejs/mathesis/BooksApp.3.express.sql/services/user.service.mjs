@@ -23,7 +23,7 @@ async function authenticateUserAsync(username, password) {
   return user;
 }
 
-async function createAsync(username, password) {
+async function createUserAsync(username, password) {
   if (!username || !password) {
     console.log("username or password is empty");
     return null;
@@ -44,4 +44,4 @@ async function createAsync(username, password) {
   return user;
 }
 
-export { authenticateUserAsync, createAsync };
+export { authenticateUserAsync, createUserAsync };
