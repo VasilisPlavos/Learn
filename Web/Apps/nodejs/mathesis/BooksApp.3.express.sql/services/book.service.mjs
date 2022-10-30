@@ -1,4 +1,4 @@
-import { Book, UserBooks } from "../data/database.mjs";
+import { Book, User, UserBooks } from "../data/database.mjs";
 
 async function createBookAsync(userId, bookDto) {
   if (!bookDto.title || !bookDto.author) return;
@@ -23,16 +23,29 @@ async function getBookDtoByIdAsync(userId, bookId) {
   var book = await Book.findByPk(bookId);
   book = book.toJSON();
 
-  var comment = await UserBooks.findOne({
-    attributes: ["userComment"],
-    where: { userId: userId, bookId: bookId },
+  var bookComments = await UserBooks.findAll({
+    where: { bookId: bookId },
   });
+
+  var userIds = bookComments.map((x) => x.dataValues.userId);
+  var users = await User.findAll({ where: { id: userIds } });
+
+  var comments = [];
+  var comment = '';
+  for (const bookComment of bookComments) {
+    if (!bookComment.userComment) continue;
+    if (bookComment.userId == userId) comment = bookComment.userComment;
+    var user = users.find((x) => x.dataValues.id == bookComment.userId);
+    var username = user.dataValues.username; 
+    comments.push({ username: username, comment: bookComment.userComment });
+  }
 
   var bookDto = {
     id: bookId,
     author: book.author,
     title: book.title,
-    comment: comment.dataValues.userComment,
+    comment: comment,
+    comments: comments,
   };
 
   return bookDto;

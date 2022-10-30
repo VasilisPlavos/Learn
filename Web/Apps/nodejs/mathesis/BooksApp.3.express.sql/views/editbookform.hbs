@@ -26,3 +26,18 @@
     <button type="submit" class="btn btn-primary">Update book</button>
   </form>
 </div>
+<hr>
+<div class="container">
+<h2>Comments</h2>
+<ul class="list-group list-group-flush">
+  {{#each book.comments}}
+  <li class="list-group-item">
+    <strong>{{this.username}}</strong>: {{this.comment}}
+  </li>
+  {{/each}}
+  {{#unless book.comments}}
+  <p>No comments yet for this book. Add the first one!</p>
+  {{/unless}}
+</ul>
+<br><br><br>
+</div>
