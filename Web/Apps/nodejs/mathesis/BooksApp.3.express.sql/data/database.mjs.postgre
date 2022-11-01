@@ -1,0 +1,62 @@
+import "dotenv/config";
+import { DataTypes, Sequelize } from "sequelize";
+
+const sequelize = new Sequelize({
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
+  database: 'postgres',
+  schema: 'booklist',
+  dialect: 'postgres',
+  username: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  logging: false,
+  define: {
+    timestamps: false,
+    freezeTableName: true
+  },
+});
+
+const User = sequelize.define("User", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  username: DataTypes.STRING,
+  passwordHashed: DataTypes.STRING,
+});
+
+const Book = sequelize.define("Book", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  title: DataTypes.STRING,
+  author: DataTypes.STRING,
+});
+
+const UserBooks = sequelize.define("UserBooks", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  userId: { type: DataTypes.INTEGER },
+  bookId: { type: DataTypes.INTEGER },
+  userComment: { type: DataTypes.STRING },
+});
+
+try {
+  await sequelize.createSchema('booklist')
+}
+catch(error) {
+  console.log(error.message)
+}
+
+await sequelize.sync({ alter: true });
+
+export { User, Book, UserBooks };
