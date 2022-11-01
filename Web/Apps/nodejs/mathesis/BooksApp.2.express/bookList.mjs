@@ -1,12 +1,24 @@
 import fs from "fs/promises";
-const fileName = "myBooks.json";
 
 class BookList {
   myBooks = { books: [] };
 
+  constructor(username) {
+    if (!username) {
+      var message = "username is empty";
+      console.log(message);
+      throw new Error(message);
+    }
+    this.fileName = `myBooks_${username}.json`;
+  }
+
   async loadBooksFromFileAsync() {
     try {
-      const data = await fs.readFile(fileName, "utf-8");
+      const data = await fs.readFile(this.fileName, {
+        flag: "a+",
+        encoding: "utf-8",
+      });
+      if (!data) return;
       this.myBooks = JSON.parse(data);
     } catch (error) {
       throw error;
@@ -14,15 +26,10 @@ class BookList {
   }
 
   async addBookToFileAsync(newBook) {
-    if (!this.isBookInList(newBook)) {
-      this.myBooks.books.push(newBook);
-
-      try {
-        await fs.writeFile(fileName, JSON.stringify(this.myBooks)); // { flag: "w+" });
-      } catch (error) {
-        throw error;
-      }
-    }
+    if (this.isBookInList(newBook)) return;
+    this.myBooks.books.push(newBook);
+    await fs.writeFile(this.fileName, JSON.stringify(this.myBooks)); // { flag: "w+" });
+    return;
   }
 
   isBookInList(book) {
@@ -33,10 +40,5 @@ class BookList {
     return bookFound;
   }
 }
-// const bookList = new BookList();
-// await bookList.loadBooksFromFileAsync();
-// bookList.addBookToFile({ title: "Start wars 3", author: "Στάνισλαβ Λεμ" });
-// await bookList.loadBooksFromFileAsync();
-// console.log(bookList.myBooks);
 
 export { BookList };

@@ -1,0 +1,41 @@
+<div class="container">
+  <h1>Add comment</h1>
+  <form action="/books/edit/{{this.book.id}}" method="post">
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+
+      <input type="text" class="form-control"
+        {{#if book}} value="{{this.book.author}}" {{/if}}
+        id="author" name="author" disabled />
+    </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control {{#if error.title}} is-invalid {{/if}}"
+        {{#if book}} value="{{this.book.title}}" {{/if}}
+        id="title" name="title" disabled />
+      <div class="invalid-feedback">{{error.title.msg}}</div>
+    </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">Comments</label>
+      <input type="text" class="form-control"
+        {{#if book}} value="{{this.book.comment}}" {{/if}}
+        id="comments" name="comments" />
+    </div>
+    <button type="submit" class="btn btn-primary">Update book</button>
+  </form>
+</div>
+<hr>
+<div class="container">
+  <h2>Comments</h2>
+  <ul class="list-group list-group-flush">
+    {{#each book.comments}}
+    <li class="list-group-item">
+      <strong>{{this.username}}</strong>: {{this.comment}}
+    </li>
+    {{/each}}
+    {{#unless book.comments}}
+    <p>No comments yet for this book. Add the first one!</p>
+    {{/unless}}
+  </ul>
+  <br><br><br>
+</div>
