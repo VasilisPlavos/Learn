@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestEntries.Common\TestEntries.Common.csproj" />
     <ProjectReference Include="..\TestEntries.Contracts\TestEntries.Contracts.csproj" />
-    <ProjectReference Include="..\TestEntries.Processors\TestEntries.Processors.csproj" />
   </ItemGroup>
 
 </Project>
