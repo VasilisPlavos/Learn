@@ -37,6 +37,18 @@ function DependentButtons({ quantity }: any) {
   );
 }
 
+function Clock() {
+  const [date, dateSet] = useState(new Date().toLocaleTimeString());
+  setInterval(() => {dateSet(new Date().toLocaleTimeString())}, 1000);
+
+  return (
+    <div>
+      <h2>Clock</h2>
+      <h3>It's {date}</h3>
+    </div>
+  );
+}
+
 function App() {
   var hello = "Hello world";
 
@@ -48,6 +60,7 @@ function App() {
       <MyButton />
       <h2>Dependent buttons</h2>
       <DependentButtons quantity={3} />
+      <Clock />
     </div>
   );
 }
