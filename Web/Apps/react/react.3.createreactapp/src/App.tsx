@@ -24,7 +24,9 @@ function DependentButtons({ quantity }: any) {
 
   var elements: JSX.Element[] = [];
   for (let index = 0; index < quantity; index++) {
-    elements.push(<DependentButton key={index} count={count} onClick={increment} />);
+    elements.push(
+      <DependentButton key={index} count={count} onClick={increment} />
+    );
   }
 
   return (
@@ -39,7 +41,9 @@ function DependentButtons({ quantity }: any) {
 
 function Clock() {
   const [date, dateSet] = useState(new Date().toLocaleTimeString());
-  setInterval(() => {dateSet(new Date().toLocaleTimeString())}, 1000);
+  setInterval(() => {
+    dateSet(new Date().toLocaleTimeString());
+  }, 1000);
 
   return (
     <div>
