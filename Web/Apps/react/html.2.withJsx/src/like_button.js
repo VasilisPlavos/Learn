@@ -16,7 +16,7 @@ class LikeButton extends React.Component {
     // Display a "Like" <button>
     return (
       <div>
-        <button onClick={() => this.setState({ liked: true })}>Lijke</button>
+        <button onClick={() => this.setState({ liked: true })}>Like</button>
       </div>
     );
   }
