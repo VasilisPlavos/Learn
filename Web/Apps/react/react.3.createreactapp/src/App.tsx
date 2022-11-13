@@ -24,7 +24,7 @@ function DependentButtons({ quantity }: any) {
 
   var elements: JSX.Element[] = [];
   for (let index = 0; index < quantity; index++) {
-    elements.push(<DependentButton count={count} onClick={increment} />);
+    elements.push(<DependentButton key={index} count={count} onClick={increment} />);
   }
 
   return (
@@ -38,9 +38,11 @@ function DependentButtons({ quantity }: any) {
 }
 
 function App() {
+  var hello = "Hello world";
+
   return (
     <div className="App">
-      <h1>Counter</h1>
+      <h1>{hello}</h1>
       <h2>Independent buttons</h2>
       <MyButton />
       <MyButton />
