@@ -22,7 +22,7 @@ class LikeButton extends React.Component {
 }
 
 // Find all DOM containers, and render Like buttons into them.
-const domContainers = document.querySelectorAll(".like_button_container");
+const domContainers = document.querySelectorAll('#like_button_container');
 for (const domContainer of domContainers) {
   const commentId = +domContainer.dataset.commentid;
   const root = ReactDOM.createRoot(domContainer);
