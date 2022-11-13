@@ -39,6 +39,24 @@ function DependentButtons({ quantity }: any) {
   );
 }
 
+function DynInput(){
+  const [value, valueSet] = useState('enter input');
+
+  function updateValue(event: any) {
+    console.log(event);
+    valueSet(`${event.target.value}`);
+  }
+
+  return (
+    <div>
+      <hr />
+      <h2>Dynamic Input</h2>
+      <input type="text" onChange={updateValue} />
+      <p>{value}</p>
+    </div>
+  )
+}
+
 function Clock() {
   const [date, dateSet] = useState(new Date().toLocaleTimeString());
   setInterval(() => {
@@ -67,6 +85,7 @@ function App() {
       <h1>{hello}</h1>
       <NewHello props={user} />
       <NewHello username={"nio"} age={4} />
+      <DynInput />
       <h2>Independent buttons</h2>
       <MyButton />
       <MyButton />
