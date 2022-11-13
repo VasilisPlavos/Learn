@@ -49,12 +49,20 @@ function Clock() {
   );
 }
 
+function NewHello(props: any) {
+  console.log(props);
+  return <div>{JSON.stringify(props)}</div>;
+}
+
 function App() {
   var hello = "Hello world";
+  var user = { fname: "John", lname: "Doe" };
 
   return (
     <div className="App">
       <h1>{hello}</h1>
+      <NewHello props={user} />
+      <NewHello username={"nio"} age={4} />
       <h2>Independent buttons</h2>
       <MyButton />
       <MyButton />
