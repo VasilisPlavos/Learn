@@ -20,14 +20,14 @@ async function InitProductsPage() {
     } else {
         displayButton("#updateProductsButton", true, updateProductsAsync);
         displayButton("#addProductButton", true);
-        
+
         for (var p of products)
         {
             dataSet.push([p.code, p.name, p.barcode, p.wholesalePrice, p.retailPrice, p.discount, p.id]);
         }
         loadDataTable(dataSet);
     }
-    
+
 }
 
 async function initProductsAsync() {
@@ -43,11 +43,12 @@ async function updateProductsAsync() {
     location.reload();
 }
 
-async function GetProductsAsync(sync) {
-    const reqUrl = `https://localhost:44369/api/Products?sync=${sync}`;
+async function DeleteProductAsync(productId) {
+    const reqUrl = `https://localhost:44369/api/Products/${productId}`;
     var coApiKey = localStorage.getItem("CloudOnApiKey");
-    const response = fetch(reqUrl, {
-            method: "GET",
+    const response = await fetch(reqUrl,
+        {
+            method: "DELETE",
             mode: "cors",
             cache: "no-cache",
             headers: {
@@ -57,6 +58,24 @@ async function GetProductsAsync(sync) {
             redirect: "follow",
             referrerPolicy: "no-referrer"
         })
+
+    return response;
+}
+
+async function GetProductsAsync(sync) {
+    const reqUrl = `https://localhost:44369/api/Products?sync=${sync}`;
+    var coApiKey = localStorage.getItem("CloudOnApiKey");
+    const response = fetch(reqUrl, {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+            'Content-Type': "application/json",
+            'Authorization': coApiKey
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer"
+    })
         .then(response => { return response.json() })
         .catch((error) => { console.error("Error:", error) });
 
@@ -74,7 +93,7 @@ function loadDataTable(dataSet) {
             { title: "RetailPrice" },
             { title: "Discount" },
             {
-                title: "", 
+                title: "",
                 render: function (title) {
                     return `<div class="text-center">
                                 <a href="/Products/edit/${title}" class='btn btn-success text-white'
@@ -99,18 +118,15 @@ function Delete(productId) {
         buttons: true,
         dangerMode: true
     }).then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type: 'DELETE',
-                url: `https://localhost:44369/api/Products/${productId}`,
-                success: function () {
-                    toastr.success("Done");
-                    location.reload();
-                },
-                error: function() {
-                    toastr.error("Error");
-                }
-            });
-        }
+        if (!willDelete) return;
+        DeleteProductAsync(productId)
+            .then(response => {
+            toastr.success("Done");
+            location.reload();
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            toastr.error("Error");
+        });
     });
 }
