@@ -58,6 +58,7 @@ namespace Examples.CancellationToken.Api.WithControllers.Controllers
 				while (!cancellationToken.IsCancellationRequested)
 				{
 					Console.WriteLine(i++);
+					Thread.Sleep(100);
 				}
 			}, cancellationToken);
 
@@ -80,8 +81,6 @@ namespace Examples.CancellationToken.Api.WithControllers.Controllers
 
 			var task = new Task(() =>
 			{
-				cancellationToken.Register(() => Console.WriteLine("Operation is canceled"));
-
 				var i = 0;
 				while (true)
 				{
