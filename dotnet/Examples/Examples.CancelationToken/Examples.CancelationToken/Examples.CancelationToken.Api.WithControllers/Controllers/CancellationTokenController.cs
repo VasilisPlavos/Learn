@@ -37,7 +37,7 @@ namespace Examples.CancellationToken.Api.WithControllers.Controllers
 		{
 			// Abort the request on browser and see the Visual Studio debugger
 			var i = 0;
-			while (HttpContext.RequestAborted.IsCancellationRequested)
+			while (!HttpContext.RequestAborted.IsCancellationRequested)
 			{
 				Console.WriteLine(i++);
 			}
@@ -57,14 +57,14 @@ namespace Examples.CancellationToken.Api.WithControllers.Controllers
 				var i = 0;
 				while (!cancellationToken.IsCancellationRequested)
 				{
-					Console.WriteLine(i++);
-					Thread.Sleep(100);
+					Console.WriteLine(i++);			
+					Thread.Sleep(1);
 				}
 			}, cancellationToken);
 
 			task.Start();
 
-			Thread.Sleep(100);
+			Thread.Sleep(50);
 
 			cancellationTokenSource.Cancel();
 
@@ -92,11 +92,34 @@ namespace Examples.CancellationToken.Api.WithControllers.Controllers
 			task.Start();
 
 			Thread.Sleep(100);
-
+			
 			cancellationTokenSource.Cancel();
 
 			//task.Wait();
 			cancellationTokenSource.Dispose();
+			return "See the Visual Studio debugger";
+		}
+
+		private static bool _token = true;
+		[HttpGet("WithTaskThatStopsExternal")]
+		public string GetWithTaskThatStopsExternal(bool stop)
+		{
+			_token = stop != true;
+
+			if (stop) return "Task stop";
+
+			var task = new Task(() =>
+			{
+				var i = 0;
+				while (_token)
+				{
+					Console.WriteLine(i++);
+					Thread.Sleep(100);
+				}
+			});
+
+			task.Start();
+			task.Wait(100);
 			return "See the Visual Studio debugger";
 		}
 	}
