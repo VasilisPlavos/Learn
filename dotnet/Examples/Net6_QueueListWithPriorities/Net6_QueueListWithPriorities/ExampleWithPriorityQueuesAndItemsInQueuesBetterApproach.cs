@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Net6_QueueListWithPriorities.DTOs;
+using Net6_QueueListWithPriorities.Enums;
 
 namespace Net6_QueueListWithPriorities;
 
@@ -7,18 +8,18 @@ public static class ExampleWithPriorityQueuesAndItemsInQueuesBetterApproach
 {
     public static async Task RunAsync()
     {
-        // This solution is FIFO. 36 comes after 31
-        Console.WriteLine("This solution is FIFO. 36 comes after 31");
+	    // This solution is FIFO. 26 comes after 21
+	    Console.WriteLine("This solution is FIFO. 26 comes after 21");
 
-        var cts = new CancellationTokenSource();
-        var queue = new PriorityQueue<QueueItem, (int, DateTime)>();
+		var cts = new CancellationTokenSource();
+        var queue = new PriorityQueue<QueueItem, (Status, DateTime)>();
 
-        queue.Enqueue(new QueueItem { Name = "31", PriorityTitle = "Normal" }, (3, DateTime.UtcNow));
-        queue.Enqueue(new QueueItem { Name = "12", PriorityTitle = "Platinum" }, (1, DateTime.UtcNow));
-        queue.Enqueue(new QueueItem { Name = "23", PriorityTitle = "Gold" }, (2, DateTime.UtcNow));
-        queue.Enqueue(new QueueItem { Name = "24", PriorityTitle = "Gold" }, (2, DateTime.UtcNow));
-        queue.Enqueue(new QueueItem { Name = "15", PriorityTitle = "Platinum" }, (1, DateTime.UtcNow));
-        queue.Enqueue(new QueueItem { Name = "36", PriorityTitle = "Normal" }, (3, DateTime.UtcNow));
+		queue.Enqueue(new QueueItem { Name = "21", PriorityTitle = "Normal" }, (Status.Normal, DateTime.UtcNow));
+        queue.Enqueue(new QueueItem { Name = "02", PriorityTitle = "Platinum" }, (Status.Platinum, DateTime.UtcNow));
+        queue.Enqueue(new QueueItem { Name = "13", PriorityTitle = "Gold" }, (Status.Gold, DateTime.UtcNow));
+        queue.Enqueue(new QueueItem { Name = "14", PriorityTitle = "Gold" }, (Status.Gold, DateTime.UtcNow));
+        queue.Enqueue(new QueueItem { Name = "05", PriorityTitle = "Platinum" }, (Status.Platinum, DateTime.UtcNow));
+        queue.Enqueue(new QueueItem { Name = "26", PriorityTitle = "Normal" }, (Status.Normal, DateTime.UtcNow));
 
         while (!cts.IsCancellationRequested)
         {

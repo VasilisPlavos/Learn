@@ -10,12 +10,12 @@ public static class ExampleWithSeperatedQueues
 		var goldQueue = new Queue<string>();
 		var platinumQueue = new Queue<string>();
 
-		normalQueue.Enqueue("31");
-		platinumQueue.Enqueue("11");
-		goldQueue.Enqueue("21");
-		goldQueue.Enqueue("22");
-		platinumQueue.Enqueue("12");
-		normalQueue.Enqueue("32");
+		normalQueue.Enqueue("21");
+		platinumQueue.Enqueue("02");
+		goldQueue.Enqueue("13");
+		goldQueue.Enqueue("14");
+		platinumQueue.Enqueue("05");
+		normalQueue.Enqueue("26");
 
 		while (!cts.IsCancellationRequested)
 		{
