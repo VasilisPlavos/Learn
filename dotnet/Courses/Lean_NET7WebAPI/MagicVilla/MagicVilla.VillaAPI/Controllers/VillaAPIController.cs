@@ -48,8 +48,24 @@ namespace MagicVilla.VillaAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public ActionResult<VillaDto> DeleteVilla(int id)
 		{
-			var villa = GetVilla(id);
-			if (villa.Value != null) VillaStore.VillaList.Remove(villa.Value);
+			var villa = VillaStore.VillaList.FirstOrDefault(x => x.Id == id);
+			if (villa != null) VillaStore.VillaList.Remove(villa);
+			return NoContent();
+		}
+
+		[HttpPut("id")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public ActionResult<VillaDto> UpdateVilla(int id, VillaDto villaDto)
+		{
+			if (villaDto == null) return BadRequest();
+			if (villaDto.Id != id) return BadRequest();
+
+			var villa = VillaStore.VillaList.FirstOrDefault(x => x.Id == id);
+			if (villa == null) return NotFound();
+
+			villa.Name = villaDto.Name;
 			return NoContent();
 		}
 
