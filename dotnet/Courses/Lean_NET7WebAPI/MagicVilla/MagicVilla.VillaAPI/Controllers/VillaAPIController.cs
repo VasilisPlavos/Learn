@@ -121,7 +121,7 @@ namespace MagicVilla.VillaAPI.Controllers
 			patchDto.ApplyTo(villaDto, ModelState);
 			if (!ModelState.IsValid) return BadRequest(ModelState);
 
-			var villaForUpdate = new Villa()
+			var villaForUpdate = new Villa
 			{
 				Name = villaDto.Name,
 				DateCreated = villa.DateCreated,
