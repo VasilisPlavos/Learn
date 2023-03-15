@@ -14,7 +14,7 @@ namespace MagicVilla.VillaAPI.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			var villas = new List<Villa> { new() { Id = 1, Name = "Pool View 1" }, new() { Id = 2, Name = "Pool View 2" } };
+			var villas = new List<Villa> { new() { Id = 1, Name = "Pool View 1", DateCreated = DateTime.UtcNow }, new() { Id = 2, Name = "Pool View 2" } };
 			modelBuilder.Entity<Villa>().HasData(villas);
 		}
 	}
