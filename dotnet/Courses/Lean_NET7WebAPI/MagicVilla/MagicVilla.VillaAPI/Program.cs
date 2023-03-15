@@ -1,3 +1,5 @@
+using MagicVilla.VillaAPI.Data;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,11 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
 	.CreateLogger();
 
 builder.Host.UseSerilog();
+
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+{
+	opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
 builder.Services.AddControllers().AddNewtonsoftJson()
 // .AddXmlDataContractSerializerFormatters() // add this for XML format
 ;
