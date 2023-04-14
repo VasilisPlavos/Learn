@@ -1,3 +1,8 @@
+using Ifo.Hlp.Programs;
+
+await ImageEditorProgram.TestAsync();
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
