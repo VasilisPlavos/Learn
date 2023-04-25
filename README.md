@@ -2,6 +2,7 @@
 In this repo I am keeping all the code I create while I am reading courses, trying examples etc. In this way I can move here to find code I need on solution development.
 
 ### Things I learn:
+- Azure Functions
 - .Net Core 3 API
 - Full stack with .Net core and Vue
 - GraphQL API with .Net Core & HotChocolate
