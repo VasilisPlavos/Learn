@@ -27,7 +27,5 @@ namespace TestEntries.Api.Controllers
         {
             return await GetRandomJokeProcessor.GetResponseAsync(request);
         }
-
-
     }
 }
