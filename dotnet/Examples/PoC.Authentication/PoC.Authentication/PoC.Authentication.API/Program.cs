@@ -1,16 +1,16 @@
+using System.Security.Cryptography;
 using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PoC.Authentication.API.Data;
-using PoC.Authentication.API.Helpers;
-using PoC.Authentication.API.Services;
 using Swashbuckle.AspNetCore.Filters;
 
-var builder = WebApplication.CreateBuilder(args);
+using PoC.Authentication.API.Data;
+using PoC.Authentication.API.Services;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
@@ -34,45 +34,44 @@ builder.Services.AddSwaggerGen(opts =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
+        var validIssuers = builder.Configuration["JWT:Issuers"].Trim().Split(',');
+        var validAudiences = builder.Configuration["JWT:Audiences"].Trim().Split(',');
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
+            ValidateIssuer = false, // TODO: on production make it true
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey
-                (Encoding.UTF8.GetBytes(Consts.Jwt.Secret)),
-            ValidateIssuer = false,
-            ValidateAudience = false
+            ValidateAudience = false, // TODO: on production make it true
+            ValidateLifetime = true,
+            ValidAudiences = validAudiences,
+            ValidIssuers = validIssuers
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                {
+                    context.Response.Headers.Add("IS-TOKEN-EXPIRED", "true");
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 
-//builder.Services.AddAuthentication(x =>
-//    {
-//        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    })
-//    .AddJwtBearer(x =>
-//    {
-//        x.RequireHttpsMetadata = false;
-//        x.SaveToken = true;
-//        x.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuerSigningKey = true,
-//            ValidateIssuer = true,
-//            ValidIssuer = Consts.Jwt.Issuer,
-//            ValidateAudience = true,
-//            ValidAudience = Consts.Jwt.Audience,
-//            ValidateLifetime = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
-//        };
-//    });
-
 //builder.Services.AddCors(opts => opts.AddPolicy(name: "NgOrigins", policy =>
 //{
-//    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+//    policy.WithOrigins(builder.Configuration["JWT:Audiences"].Trim().Split(',')).AllowAnyMethod().AllowAnyHeader();
 //}));
 
 var app = builder.Build();
