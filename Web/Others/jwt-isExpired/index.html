@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <p id="process">Checking...</p>
     <p>check console</p>
 </body>
 <script>
@@ -25,5 +26,6 @@
 
     var IsUserAuth = IsUserAuth(jwt);
     console.log(IsUserAuth);
+    document.querySelector("#process").innerText = IsUserAuth ? 'Authorized' : 'Not authorized';
 </script>
 </html>
