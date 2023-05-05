@@ -16,8 +16,8 @@ namespace PoC.Authentication.API.Services;
 public interface IAuthService
 {
     Task<AccessOrRefreshResponse> AccessAuthenticatedOrAnonymousUserAsync(AccessRequest request);
-    Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt);
     Task<bool> CreateUserAsync(RegisterRequest request);
+    Task MoveOwnershipAsync(Guid sourceUserId, Guid destinationUserId);
     Task<AccessOrRefreshResponse> RefreshAuthorizedUserAsync(HttpRequest request, string refreshToken);
     Task<bool> RevokeUserTokenAsync(HttpRequest request, string refreshToken);
 }
@@ -25,12 +25,14 @@ public interface IAuthService
 public class AuthService : IAuthService
 {
     private readonly ApplicationDbContext _db;
+    private readonly IConfiguration _configuration;
     private readonly string _secret;
 
     public AuthService(ApplicationDbContext db, IConfiguration configuration)
     {
         _db = db;
-        _secret = configuration["JWT:Secret"];
+        _configuration = configuration;
+        _secret = _configuration["JWT:Secret"];
     }
 
     public async Task<AccessOrRefreshResponse?> AccessAuthenticatedOrAnonymousUserAsync(AccessRequest request)
@@ -53,14 +55,6 @@ public class AuthService : IAuthService
         }
 
         return await PrepareAccessResponseAsync(user.Id);
-    }
-
-    public async Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt)
-    {
-        var sourceUserId = UtilHelper.GetUserId(sourceJwt);
-        var destinationId = UtilHelper.GetUserId(request);
-        await MoveOwnershipAsync(sourceUserId, destinationId);
-        return true;
     }
 
     public async Task<bool> CreateUserAsync(RegisterRequest request)
@@ -94,7 +88,6 @@ public class AuthService : IAuthService
         var claims = new List<Claim>
         {
             new("userId", userId.ToString()),
-            //new(ClaimTypes.Email, anonymousOrUserEmail ?? ""),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
@@ -103,7 +96,7 @@ public class AuthService : IAuthService
         var token = new JwtSecurityToken
         (
             claims: claims,
-            expires: now.AddHours(1), //.AddMinutes(10),
+            expires: now.AddMinutes(15), //.AddHours(1),
             notBefore: now,
             signingCredentials: creds
         );
@@ -117,7 +110,7 @@ public class AuthService : IAuthService
             .Replace("/", "_").Replace("=", "");
         var refreshToken = new RefreshToken()
         {
-            ExpirationDate = DateTime.UtcNow.AddDays(30),
+            ExpirationDate = DateTimeOffset.UtcNow.AddDays(30).ToUnixTimeSeconds(),
             IsActive = true,
             UserId = userId,
             Value = refreshTokenValue
@@ -153,7 +146,7 @@ public class AuthService : IAuthService
         return principal;
     }
 
-    private async Task MoveOwnershipAsync(Guid sourceUserId, Guid destinationUserId)
+    public async Task MoveOwnershipAsync(Guid sourceUserId, Guid destinationUserId)
     {
         var projects = await _db.Projects.Where(x => x.OwnerId == sourceUserId).ToListAsync();
         foreach (var project in projects)
@@ -169,12 +162,13 @@ public class AuthService : IAuthService
     {
         var accessToken = GenerateAccessToken(userId);
         var refreshToken = await GenerateRefreshTokenAsync(userId);
+        
         return new AccessOrRefreshResponse
         {
-            AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
-            AccessToken_Exp = accessToken.ValidTo.Ticks.ToString(),
-            RefreshToken = refreshToken.Value,
-            RefreshToken_Exp = refreshToken.ExpirationDate.Ticks.ToString()
+            access_token = new JwtSecurityTokenHandler().WriteToken(accessToken),
+            access_token_exp = (long)accessToken.ValidTo.Subtract(DateTime.UnixEpoch).TotalSeconds,
+            refresh_token = refreshToken.Value,
+            refresh_token_exp = refreshToken.ExpirationDate
         };
     }
 
@@ -198,7 +192,7 @@ public class AuthService : IAuthService
         var refreshToken = await _db.RefreshTokens.FirstOrDefaultAsync
         (x =>
             x.Value == refreshTokenValue
-            && x.ExpirationDate > DateTime.UtcNow
+            && x.ExpirationDate > DateTimeOffset.UtcNow.ToUnixTimeSeconds()
             && x.IsActive
             && x.UserId == userId
         );

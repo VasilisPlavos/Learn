@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PoC.Authentication.API.Contracts;
 using PoC.Authentication.API.Entities;
 using PoC.Authentication.API.Helpers;
 using PoC.Authentication.API.Services;
@@ -37,6 +37,13 @@ namespace PoC.Authentication.API.Controllers
             }
 
             return await _projectsService.GetUserProjectsAsync(HttpContext.Request);
+        }
+
+        [HttpPost("claim")]
+        [Authorize]
+        public async Task<bool> ClaimOwnership(AccessRequest request)
+        {
+            return await _projectsService.ClaimOwnershipAsync(HttpContext.Request, request.SourceJwtToMove);
         }
 
 

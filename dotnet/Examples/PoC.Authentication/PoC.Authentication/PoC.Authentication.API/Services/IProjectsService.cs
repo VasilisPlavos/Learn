@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Net.Http.Headers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PoC.Authentication.API.Data;
 using PoC.Authentication.API.Entities;
-using System.IdentityModel.Tokens.Jwt;
-using Azure.Core;
 using System.Security.Cryptography;
 using PoC.Authentication.API.Helpers;
 
@@ -12,16 +8,19 @@ namespace PoC.Authentication.API.Services;
 
 public interface IProjectsService
 {
-    Task<List<Project>> GetUserProjectsAsync(HttpRequest request);
     Task<Project> CreateUserProjectAsync(HttpRequest request);
+    Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt);
+    Task<List<Project>> GetUserProjectsAsync(HttpRequest request);
 }
 
 public class ProjectsService : IProjectsService
 {
     private readonly ApplicationDbContext _db;
-    public ProjectsService(ApplicationDbContext db)
+    private readonly IAuthService _authService;
+    public ProjectsService(ApplicationDbContext db, IAuthService authService)
     {
         _db = db;
+        _authService = authService;
     }
     public async Task<Project> CreateUserProjectAsync(HttpRequest request)
     {
@@ -35,6 +34,14 @@ public class ProjectsService : IProjectsService
         _db.Projects.Add(project);
         await _db.SaveChangesAsync();
         return project;
+    }
+
+    public async Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt)
+    {
+        var sourceUserId = UtilHelper.GetUserId(sourceJwt);
+        var destinationId = UtilHelper.GetUserId(request);
+        await _authService.MoveOwnershipAsync(sourceUserId, destinationId);
+        return true;
     }
     public async Task<List<Project>> GetUserProjectsAsync(HttpRequest request)
     {

@@ -31,13 +31,6 @@ namespace PoC.Authentication.API.Controllers
             return await _authService.AccessAuthenticatedOrAnonymousUserAsync(request);
         }
 
-        [HttpPost("claim")]
-        [Authorize]
-        public async Task<bool> ClaimOwnership(AccessRequest request)
-        {
-            return await _authService.ClaimOwnershipAsync(HttpContext.Request, request.SourceJwtToMove);
-        }
-
         [HttpPost("register")]
         public async Task<bool> CreateUser(RegisterRequest request)
         {
