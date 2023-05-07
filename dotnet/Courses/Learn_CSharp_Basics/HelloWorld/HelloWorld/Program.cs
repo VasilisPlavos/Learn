@@ -1,37 +1,41 @@
-﻿using System;
-using System.Text;
+﻿using System.Collections;
+using Amazon.Models;
 
-
-
-Console.WriteLine("Hello, World!");
-
-// here: C:\Users\vplav\Bill\Downloads\Tor\Files\Courses\[FreeCourseLab.com] Udemy - C# Intermediate Classes, Interfaces and OOP\3\4
-
-
-
-var builder = new StringBuilder();
-builder.Append('-', 10);
-Console.WriteLine(builder);
-
-var person = new Person("Jack");
-
-person.PhoneList.Add("1");
-person.PhoneList.Add("2");
-
-foreach (var i in person.PhoneList)
+namespace HelloWorld
 {
-	Console.WriteLine(i);
-}
+	// here: C:\Users\vplav\Bill\Downloads\Tor\Files\Courses\[FreeCourseLab.com] Udemy - C# Intermediate Classes, Interfaces and OOP\6\1
 
-Console.WriteLine(person.Name);
 
-public class Person
-{
-	public readonly string? Name;
-	public readonly List<string> PhoneList = new(){"7"};
-
-	public Person(string? name)
+	class Program
 	{
-		Name = name;
+		static void Main(string[] args)
+		{
+
+			var shapes = new List<Shape>
+			{
+				new Circle(),
+				new Rectangle()
+			};
+
+			var canvas = new Canvas();
+			Canvas.DrawShapes(shapes);
+
+
+
+
+			 var list = new ArrayList
+			{
+				1,
+				2,
+				3,
+				4,
+				"ddd"
+			};
+			var ints = list.ToArray().OfType<int>().Where(x => x < 2).ToList();
+
+			var customer = new Customer();
+		}
 	}
+
 }
+
