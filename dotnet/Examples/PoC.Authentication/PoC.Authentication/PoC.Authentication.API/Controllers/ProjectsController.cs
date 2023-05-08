@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PoC.Authentication.API.Contracts;
 using PoC.Authentication.API.Entities;
 using PoC.Authentication.API.Helpers;
 using PoC.Authentication.API.Services;
@@ -9,6 +8,7 @@ namespace PoC.Authentication.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectsService _projectsService;
