@@ -10,30 +10,9 @@ namespace HelloWorld
 	{
 		static void Main(string[] args)
 		{
-
-			var shapes = new List<Shape>
-			{
-				new Circle(),
-				new Rectangle()
-			};
-
-			var canvas = new Canvas();
-			Canvas.DrawShapes(shapes);
-
-
-
-
-			 var list = new ArrayList
-			{
-				1,
-				2,
-				3,
-				4,
-				"ddd"
-			};
-			var ints = list.ToArray().OfType<int>().Where(x => x < 2).ToList();
-
-			var customer = new Customer();
+			Amazon.App.Run();
+			var car = new Car();
+			car = new Car("2");
 		}
 	}
 

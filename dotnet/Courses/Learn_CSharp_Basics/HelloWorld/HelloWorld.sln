@@ -5,7 +5,11 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{5CCD79E4-F292-45E5-8FDD-F5D3F99D13F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazon", "Amazon\Amazon.csproj", "{50743024-8BCA-4C2C-B499-EFAF3B960E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amazon", "Amazon\Amazon.csproj", "{50743024-8BCA-4C2C-B499-EFAF3B960E40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Interfaces.Examples", "HelloWorld.Interfaces.Examples\HelloWorld.Interfaces.Examples.csproj", "{BA7C5F83-4BFD-4387-9DE1-9248577474B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Poly.Vehicles", "HelloWorld.Poly.Vehicles\HelloWorld.Poly.Vehicles.csproj", "{17537BA4-A4B0-467A-8CA0-2630AE940CC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{50743024-8BCA-4C2C-B499-EFAF3B960E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50743024-8BCA-4C2C-B499-EFAF3B960E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50743024-8BCA-4C2C-B499-EFAF3B960E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA7C5F83-4BFD-4387-9DE1-9248577474B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA7C5F83-4BFD-4387-9DE1-9248577474B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA7C5F83-4BFD-4387-9DE1-9248577474B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA7C5F83-4BFD-4387-9DE1-9248577474B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

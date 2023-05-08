@@ -1,6 +1,4 @@
-﻿using Amazon.Models;
-
-namespace HelloWorld;
+﻿namespace Amazon.Models;
 
 public class Canvas
 {

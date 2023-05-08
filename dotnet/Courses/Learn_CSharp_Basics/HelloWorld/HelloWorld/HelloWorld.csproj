@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Amazon\Amazon.csproj" />
+    <ProjectReference Include="..\HelloWorld.Poly.Vehicles\HelloWorld.Poly.Vehicles.csproj" />
   </ItemGroup>
 
 </Project>
