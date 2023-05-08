@@ -9,7 +9,6 @@ namespace PoC.Authentication.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectsService _projectsService;
@@ -38,14 +37,5 @@ namespace PoC.Authentication.API.Controllers
 
             return await _projectsService.GetUserProjectsAsync(HttpContext.Request);
         }
-
-        [HttpPost("claim")]
-        [Authorize]
-        public async Task<bool> ClaimOwnership(AccessRequest request)
-        {
-            return await _projectsService.ClaimOwnershipAsync(HttpContext.Request, request.SourceJwtToMove);
-        }
-
-
     }
 }

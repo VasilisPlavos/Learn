@@ -31,6 +31,13 @@ namespace PoC.Authentication.API.Controllers
             return await _authService.AccessAuthenticatedOrAnonymousUserAsync(request);
         }
 
+        [HttpPost("claim")]
+        [Authorize]
+        public async Task<bool> ClaimOwnership(AccessRequest request)
+        {
+            return await _authService.ClaimOwnershipAsync(HttpContext.Request, request.SourceJwtToMove);
+        }
+
         [HttpPost("register")]
         public async Task<bool> CreateUser(RegisterRequest request)
         {
@@ -38,7 +45,6 @@ namespace PoC.Authentication.API.Controllers
         }
 
         [HttpPost("refresh")]
-        [Authorize]
         public async Task<AccessOrRefreshResponse> RefreshUserToken(RefreshTokenDto refreshToken)
         {
             return await _authService.RefreshAuthorizedUserAsync(HttpContext.Request, refreshToken.Value);

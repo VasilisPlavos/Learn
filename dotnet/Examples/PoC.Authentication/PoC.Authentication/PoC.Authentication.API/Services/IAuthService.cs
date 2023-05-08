@@ -17,6 +17,7 @@ public interface IAuthService
 {
     Task<AccessOrRefreshResponse> AccessAuthenticatedOrAnonymousUserAsync(AccessRequest request);
     Task<bool> CreateUserAsync(RegisterRequest request);
+    Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt);
     Task MoveOwnershipAsync(Guid sourceUserId, Guid destinationUserId);
     Task<AccessOrRefreshResponse> RefreshAuthorizedUserAsync(HttpRequest request, string refreshToken);
     Task<bool> RevokeUserTokenAsync(HttpRequest request, string refreshToken);
@@ -55,6 +56,13 @@ public class AuthService : IAuthService
         }
 
         return await PrepareAccessResponseAsync(user.Id);
+    }
+    public async Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt)
+    {
+        var sourceUserId = UtilHelper.GetUserId(sourceJwt);
+        var destinationId = UtilHelper.GetUserId(request);
+        await MoveOwnershipAsync(sourceUserId, destinationId);
+        return true;
     }
 
     public async Task<bool> CreateUserAsync(RegisterRequest request)
