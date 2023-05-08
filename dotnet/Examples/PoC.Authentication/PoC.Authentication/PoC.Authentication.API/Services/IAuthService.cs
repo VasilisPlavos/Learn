@@ -196,11 +196,11 @@ public class AuthService : IAuthService
 
     private async Task<bool> RevokeUserTokenAsync(Guid userId, string refreshTokenValue)
     {
-
+        var nowToUnixTimeSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var refreshToken = await _db.RefreshTokens.FirstOrDefaultAsync
         (x =>
             x.Value == refreshTokenValue
-            && x.ExpirationDate > DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            && x.ExpirationDate > nowToUnixTimeSeconds
             && x.IsActive
             && x.UserId == userId
         );
