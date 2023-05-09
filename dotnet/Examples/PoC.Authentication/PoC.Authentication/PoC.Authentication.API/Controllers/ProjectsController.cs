@@ -8,7 +8,6 @@ namespace PoC.Authentication.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectsService _projectsService;
@@ -28,6 +27,7 @@ namespace PoC.Authentication.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "SessionPolicy")]
         public async Task<ActionResult<List<Project>>> GetUserProjects()
         {
             if (UtilHelper.TokenIsExpired(HttpContext.Request))
