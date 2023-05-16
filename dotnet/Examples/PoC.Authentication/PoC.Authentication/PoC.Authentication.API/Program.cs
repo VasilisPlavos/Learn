@@ -10,6 +10,8 @@ using Swashbuckle.AspNetCore.Filters;
 using PoC.Authentication.API.Data;
 using PoC.Authentication.API.Services;
 using PoC.Authentication.API;
+using PoC.Authentication.API.Contracts;
+using PoC.Authentication.API.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,11 +35,17 @@ builder.Services.AddSwaggerGen(opts =>
     opts.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-builder.Services.AddScoped<IAuthService, AuthService>();
+var bearerSettings = new BearerSettings();
+builder.Configuration.Bind("JWT", bearerSettings);
+builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddSingleton<IAuthorizationHandler, SessionHandler>();
+builder.Services.AddSingleton(bearerSettings);
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<JwtBearerEvents, JwtBearerEventsHandler>();
+
+var serviceProvider = builder.Services.BuildServiceProvider();
 
 builder.Services.AddAuthentication(x =>
     {
@@ -46,8 +54,6 @@ builder.Services.AddAuthentication(x =>
     })
     .AddJwtBearer(options =>
     {
-        var validIssuers = builder.Configuration["JWT:Issuers"].Trim().Split(',');
-        var validAudiences = builder.Configuration["JWT:Audiences"].Trim().Split(',');
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -56,21 +62,11 @@ builder.Services.AddAuthentication(x =>
             ValidateIssuerSigningKey = true,
             ValidateAudience = false, // TODO: on production make it true
             ValidateLifetime = true,
-            ValidAudiences = validAudiences,
-            ValidIssuers = validIssuers
+            ValidAudiences = bearerSettings.ValidAudiences,
+            ValidIssuers = bearerSettings.ValidIssuers
         };
-        options.Events = new JwtBearerEvents
-        {
-            OnAuthenticationFailed = context =>
-            {
-                if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                {
-                    context.Response.Headers.Add("IS-TOKEN-EXPIRED", "true");
-                }
 
-                return Task.CompletedTask;
-            }
-        };
+        options.Events = serviceProvider.GetService<JwtBearerEvents>(); //JwtBearerEventsHandler.Instance(bearerSettings);
     });
 
 builder.Services.AddAuthorization(options =>

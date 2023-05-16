@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -21,20 +21,20 @@ public interface IAuthService
     Task MoveOwnershipAsync(Guid sourceUserId, Guid destinationUserId);
     Task<AccessOrRefreshResponse> RefreshAuthorizedUserAsync(HttpRequest request, string refreshToken);
     Task<bool> RevokeUserTokenAsync(HttpRequest request, string refreshToken);
+    Task AuthAsync(MessageReceivedContext context);
 }
 
 public class AuthService : IAuthService
 {
     private readonly ApplicationDbContext _db;
-    private readonly IConfiguration _configuration;
-    private readonly string _secret;
+    private readonly BearerSettings _bearerSettings;
 
-    public AuthService(ApplicationDbContext db, IConfiguration configuration)
+    public AuthService(ApplicationDbContext db,  BearerSettings bearerSettings)
     {
+        _bearerSettings = bearerSettings;
         _db = db;
-        _configuration = configuration;
-        _secret = _configuration["JWT:Secret"];
     }
+
 
     public async Task<AccessOrRefreshResponse?> AccessAuthenticatedOrAnonymousUserAsync(AccessRequest request)
     {
@@ -98,7 +98,7 @@ public class AuthService : IAuthService
             new("userId", userId.ToString()),
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_bearerSettings.Secret));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
         var now = DateTime.UtcNow;
         var token = new JwtSecurityToken
@@ -132,7 +132,7 @@ public class AuthService : IAuthService
     // TODO:
     public ClaimsPrincipal GetPrincipalFromExpiredToken(string jwt)
     {
-        var key = Encoding.UTF8.GetBytes(_secret);
+        var key = Encoding.UTF8.GetBytes(_bearerSettings.Secret);
         var tokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
@@ -156,11 +156,11 @@ public class AuthService : IAuthService
 
     public async Task MoveOwnershipAsync(Guid sourceUserId, Guid destinationUserId)
     {
-        var projects = await _db.Projects.Where(x => x.OwnerId == sourceUserId).ToListAsync();
+	    var projects = await _db.Projects.Where(x => x.OwnerId == sourceUserId).ToListAsync();
         foreach (var project in projects)
         {
             project.OwnerId = destinationUserId;
-            _db.Projects.Update(project);
+           _db.Projects.Update(project);
         }
 
         await _db.SaveChangesAsync();
@@ -192,6 +192,12 @@ public class AuthService : IAuthService
     {
         var userId = UtilHelper.GetUserId(request);
         return await RevokeUserTokenAsync(userId, refreshToken);
+    }
+
+    public async Task AuthAsync(MessageReceivedContext context)
+    {
+	    var a = 1;
+	    return;
     }
 
     private async Task<bool> RevokeUserTokenAsync(Guid userId, string refreshTokenValue)
