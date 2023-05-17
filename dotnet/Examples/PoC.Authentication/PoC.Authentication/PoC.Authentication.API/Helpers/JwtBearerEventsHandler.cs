@@ -15,7 +15,6 @@ public class JwtBearerEventsHandler : JwtBearerEvents
 
 	private async Task MessageReceivedHandler(MessageReceivedContext context)
 	{
-
-		await _authService.AuthAsync(context);
+        await _authService.AuthAsync(context);
 	}
 }

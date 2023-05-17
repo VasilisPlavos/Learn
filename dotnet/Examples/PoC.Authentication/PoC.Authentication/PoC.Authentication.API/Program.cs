@@ -37,13 +37,13 @@ builder.Services.AddSwaggerGen(opts =>
 
 var bearerSettings = new BearerSettings();
 builder.Configuration.Bind("JWT", bearerSettings);
-builder.Services.AddSingleton<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddSingleton<IAuthorizationHandler, SessionHandler>();
 builder.Services.AddSingleton(bearerSettings);
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<JwtBearerEvents, JwtBearerEventsHandler>();
+builder.Services.AddScoped<JwtBearerEvents, JwtBearerEventsHandler>();
 
 var serviceProvider = builder.Services.BuildServiceProvider();
 
