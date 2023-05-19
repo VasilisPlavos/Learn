@@ -20,24 +20,7 @@ builder.Services.AddSingleton<IRateLimitConfiguration, CustomRateLimitConfigurat
 builder.Services.AddInMemoryRateLimiting();
 
 // IP Rate Limit configuration from appsettings.json.
-
 builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
-builder.Services.Configure<ClientRateLimitOptions>(options =>
-{
-    options.EnableEndpointRateLimiting = true;
-    options.StackBlockedRequests = false;
-    options.HttpStatusCode = 429;
-    options.GeneralRules = new List<RateLimitRule>
-    {
-        new RateLimitRule
-        {
-            Endpoint = "*",
-            Period = "10s",
-            Limit = 2
-        }
-    };
-});
-
 //builder.Services.Configure<IpRateLimitOptions>(options =>
 //{
 //    options.EnableEndpointRateLimiting = true;
@@ -55,6 +38,24 @@ builder.Services.Configure<ClientRateLimitOptions>(options =>
 //    };
 //});
 
+// Client Rate Limit configuration
+builder.Services.Configure<ClientRateLimitOptions>(options =>
+{
+    options.EnableEndpointRateLimiting = true;
+    options.StackBlockedRequests = false;
+    options.HttpStatusCode = 429;
+    options.GeneralRules = new List<RateLimitRule>
+    {
+        new RateLimitRule
+        {
+            Endpoint = "*",
+            Period = "10s",
+            Limit = 2
+        }
+    };
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,12 +65,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseIpRateLimiting();
-
 // this middleware activated once the request is blocked by the client rate limiter
 // it works only for ClientRateLimitOptions not for IpRateLimitOptions
 app.UseMiddleware<MyCustomClientRateLimitMiddleware>();
 
+// To Implement middleware for IpRateLimitOptions:
+// 1. I need a new Middleware class -> public class MyCustomClientRateLimitMiddleware : IpRateLimitMiddleware {}
+// 2. I need to remove ->  app.UseIpRateLimiting();
+app.UseIpRateLimiting();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
