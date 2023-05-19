@@ -13,7 +13,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
+
+// builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 builder.Services.AddSingleton<IRateLimitConfiguration, CustomRateLimitConfiguration>();
+
 builder.Services.AddInMemoryRateLimiting();
 
 // IP Rate Limit configuration from appsettings.json.
@@ -49,6 +52,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseIpRateLimiting();
+
+// this middleware activated once the request is blocked by the IP rate limiter
+app.UseMiddleware<MyCustomClientRateLimitMiddleware>();
+
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
