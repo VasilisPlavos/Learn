@@ -22,7 +22,21 @@ builder.Services.AddInMemoryRateLimiting();
 // IP Rate Limit configuration from appsettings.json.
 
 builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
-
+builder.Services.Configure<ClientRateLimitOptions>(options =>
+{
+    options.EnableEndpointRateLimiting = true;
+    options.StackBlockedRequests = false;
+    options.HttpStatusCode = 429;
+    options.GeneralRules = new List<RateLimitRule>
+    {
+        new RateLimitRule
+        {
+            Endpoint = "*",
+            Period = "10s",
+            Limit = 2
+        }
+    };
+});
 
 //builder.Services.Configure<IpRateLimitOptions>(options =>
 //{
@@ -41,7 +55,6 @@ builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection(
 //    };
 //});
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,7 +66,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseIpRateLimiting();
 
-// this middleware activated once the request is blocked by the IP rate limiter
+// this middleware activated once the request is blocked by the client rate limiter
+// it works only for ClientRateLimitOptions not for IpRateLimitOptions
 app.UseMiddleware<MyCustomClientRateLimitMiddleware>();
 
 
