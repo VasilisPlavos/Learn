@@ -1,16 +1,16 @@
-using Ifo.Hlp.Helpers;
-using Ifo.Hlp.Programs;
+﻿using Ifo.Hlp.Programs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ifo.Hlp.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ImageEditorController : ControllerBase
     {
         [HttpGet]
         public async Task<string> Get()
         {
+            await ImageEditorProgram.TestAsync();
             return "API is running...";
         }
     }
