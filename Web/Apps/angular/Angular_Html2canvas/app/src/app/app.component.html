@@ -1,0 +1,16 @@
+<div>
+  <h1>Hello 👋 </h1>
+  <p>
+    <a href="https://angular-html2canvas-amftdu.stackblitz.io/" target="_blank" rel="noopener noreferrer">stackblitz demo</a>
+    Test of <a href="https://html2canvas.hertzen.com/" target="_blank" rel="noopener noreferrer">html2canvas</a>.
+  </p>
+  <input type="text" placeholder="enter text" [(ngModel)]="value" (keyup)="update()" />
+
+  <h3 *ngIf="value">image bellow</h3>
+  <img *ngIf="value" [src]="imageUrl" class="w-100" />
+
+  <h3 *ngIf="value">html here</h3>
+  <div *ngIf="value" id="capture" style="padding: 10px; background: #f5da55">
+    <h4 style="color: #000; ">{{ value }}</h4>
+  </div>
+</div>
