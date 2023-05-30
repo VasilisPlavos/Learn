@@ -1,40 +1,67 @@
-using System.Net;
+// If an Authorize attribute is placed at class-level,
+// requests to any function within the class
+// must pass the authorization checks
 using HelloWorldCode.Helpers.Attribute;
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.Functions.Worker;
+using System.Net;
 
-namespace HelloWorldCode.Functions
+[Authorize
+(
+    Scopes = new[] { "access_as_user" }, 
+    UserRoles = new[] { "user", "admin" },
+    AppRoles = new[] { "access_all_functions" }
+ )]
+public static class TestFunctions
 {
-    [Authorize(Scopes = new[] { "access_as_user" }, UserRoles = new[] { "user", "admin" })]
-    public static class TestFunctions
+    // This function can be called with both scopes and app roles
+    // We don't need another Authorize attribute since it would just
+    // contain the same values.
+    [Function("ScopesAndAppRoles")]
+    public static HttpResponseData ScopesAndAppRoles(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+        FunctionContext executionContext)
     {
-        //[Function("UsersAndAdmins")]
-        public static HttpResponseData UsersAndAdmins
-        (
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req, 
-            FunctionContext executionContext
-        )
-        {
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+        return CreateOkTextResponse(req, "Can be called with scopes or app roles");
+    }
 
-            response.WriteString("Welcome to UsersAndAdmins Functions!");
-            return response;
-        }
+    // This function can only be called with scopes
+    [Authorize(Scopes = new[] { "access_as_user" }, UserRoles = new[] { "user", "admin" })]
+    [Function("OnlyScopes")]
+    public static HttpResponseData OnlyScopes(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+        FunctionContext executionContext)
+    {
+        return CreateOkTextResponse(req, "Can be called with scopes only");
+    }
 
-        //[Function("OnlyAdmins")]
-        [Authorize(Scopes = new[] { "access_as_user" }, UserRoles = new[] { "admin" })]
-        public static HttpResponseData OnlyAdmins
-        (
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
-            FunctionContext executionContext
-        )
-        {
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+    // This function can only be called with app roles
+    [Authorize(AppRoles = new[] { "access_all_functions" })]
+    [Function("OnlyAppRoles")]
+    public static HttpResponseData OnlyAppRoles(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+        FunctionContext executionContext)
+    {
+        return CreateOkTextResponse(req, "Can be called with app roles only");
+    }
 
-            response.WriteString("Welcome to OnlyAdmins Functions!");
-            return response;
-        }
+    // This function can only be called with scopes + admin role
+    [Authorize(Scopes = new[] { "access_as_user" }, UserRoles = new[] { "admin" })]
+    [Function("OnlyAdmin")]
+    public static HttpResponseData OnlyAdmin(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+        FunctionContext executionContext)
+    {
+        return CreateOkTextResponse(req, "Can be called with scopes and admin user only");
+    }
+
+    private static HttpResponseData CreateOkTextResponse(
+        HttpRequestData request,
+        string text)
+    {
+        var response = request.CreateResponse(HttpStatusCode.OK);
+        response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+        response.WriteString(text);
+        return response;
     }
 }

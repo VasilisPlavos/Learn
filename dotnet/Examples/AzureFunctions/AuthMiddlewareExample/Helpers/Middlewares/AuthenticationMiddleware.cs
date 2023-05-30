@@ -60,7 +60,7 @@ public class AuthenticationMiddleware : IFunctionsWorkerMiddleware
 
             // Set principal + token in Features collection
             // They can be accessed from here later in the call chain
-            //context.Features.Set(new JwtPrincipalFeature(principal, token));
+            context.Features.Set(new JwtPrincipalFeature(principal, token));
 
             await next(context);
         }
