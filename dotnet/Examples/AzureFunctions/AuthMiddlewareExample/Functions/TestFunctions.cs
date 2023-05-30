@@ -1,25 +1,39 @@
 using System.Net;
+using HelloWorldCode.Helpers.Attribute;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace HelloWorldCode.Functions
 {
-    public class TestFunctions
+    [Authorize(Scopes = new[] { "access_as_user" }, UserRoles = new[] { "user", "admin" })]
+    public static class TestFunctions
     {
-        //[Authorize(
-        //    Scopes = new[] { "access_as_user" },
-        //    UserRoles = new[] { "admin" })]
-        public static HttpResponseData OnlyAdmins(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
-            FunctionContext executionContext)
+        //[Function("UsersAndAdmins")]
+        public static HttpResponseData UsersAndAdmins
+        (
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req, 
+            FunctionContext executionContext
+        )
         {
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to test Functions!");
+            response.WriteString("Welcome to UsersAndAdmins Functions!");
+            return response;
+        }
 
+        //[Function("OnlyAdmins")]
+        [Authorize(Scopes = new[] { "access_as_user" }, UserRoles = new[] { "admin" })]
+        public static HttpResponseData OnlyAdmins
+        (
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
+            FunctionContext executionContext
+        )
+        {
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+
+            response.WriteString("Welcome to OnlyAdmins Functions!");
             return response;
         }
     }
