@@ -2,9 +2,9 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Middleware;
 using System.Net;
 
-namespace HelloWorldCode.Helpers;
+namespace HelloWorldCode.Helpers.Middlewares;
 
-public class AuthMiddleware : IFunctionsWorkerMiddleware
+public class AuthenticationMiddleware : IFunctionsWorkerMiddleware
 {
     public async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
     {
