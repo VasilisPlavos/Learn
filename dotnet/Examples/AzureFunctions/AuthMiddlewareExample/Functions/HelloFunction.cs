@@ -3,7 +3,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Function
+namespace HelloWorldCode.Functions
 {
     public class HelloFunction
     {
@@ -17,7 +17,7 @@ namespace Company.Function
         [Function("HelloFunction")]
         public HttpResponseData Run
         (
-            [HttpTrigger(AuthorizationLevel.Admin, "get")] HttpRequestData req, 
+            [HttpTrigger(AuthorizationLevel.Admin, "get")] HttpRequestData req,
             FunctionContext executionContext
         )
         {
