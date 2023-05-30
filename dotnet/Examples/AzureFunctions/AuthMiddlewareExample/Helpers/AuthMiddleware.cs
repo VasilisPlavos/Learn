@@ -3,7 +3,7 @@ using Microsoft.Azure.Functions.Worker.Middleware;
 
 namespace HelloWorldCode.Helpers;
 
-public class AuthMw : IFunctionsWorkerMiddleware
+public class AuthMiddleware : IFunctionsWorkerMiddleware
 {
     public async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
     {
