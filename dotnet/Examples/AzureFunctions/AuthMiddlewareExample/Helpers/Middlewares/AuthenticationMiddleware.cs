@@ -10,7 +10,9 @@ public class AuthenticationMiddleware : IFunctionsWorkerMiddleware
     {
         if (!TokenHelper.TryGetFromHeaders(context, out var token))
         {
+            // Unable to get token from headers
             context.SetHttpResponseStatusCode(HttpStatusCode.Unauthorized);
+            return;
         }
 
         Console.WriteLine("AuthMw: Do stuff before function");
