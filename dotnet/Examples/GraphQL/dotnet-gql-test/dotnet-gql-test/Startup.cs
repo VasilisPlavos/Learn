@@ -60,7 +60,7 @@ namespace dotnet_gql_test
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("go to https://localhost:44302/playground/");
                 });
             });
         }
