@@ -1,5 +1,7 @@
 # Auth with JWT & Access Token
 
+This solution is unfinished but there is the concept and the code!
+
 ### How to run:
 * add-migration db1
 * update-database
