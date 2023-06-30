@@ -24,7 +24,6 @@ namespace PoC.Authentication.API.Controllers
         }
         
         [HttpPost("access")]
-        [Authorize(Policy = "SessionPolicy")]
         public async Task<AccessOrRefreshResponse> AccessAuthenticatedOrAnonymousUser(AccessRequest request)
         {
             return await _authService.AccessAuthenticatedOrAnonymousUserAsync(request);

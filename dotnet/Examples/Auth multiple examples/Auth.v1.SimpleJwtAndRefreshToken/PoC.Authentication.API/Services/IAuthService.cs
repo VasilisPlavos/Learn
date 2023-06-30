@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -51,7 +52,6 @@ public class AuthService : IAuthService
         await MoveOwnershipAsync(sourceUserId, user.Id);
         return await PrepareAccessResponseAsync(user.Id);
     }
-
     public async Task<bool> ClaimOwnershipAsync(HttpRequest request, string sourceJwt)
     {
         var jwtSecurityToken = UtilHelper.GetToken(sourceJwt);

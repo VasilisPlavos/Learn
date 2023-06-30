@@ -1,7 +1,6 @@
 using System.Text;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -10,7 +9,6 @@ using Swashbuckle.AspNetCore.Filters;
 using PoC.Authentication.API.Data;
 using PoC.Authentication.API.Services;
 using PoC.Authentication.API.Contracts;
-using PoC.Authentication.API.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +36,6 @@ var bearerSettings = new BearerSettings();
 builder.Configuration.Bind("JWT", bearerSettings);
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddSingleton<IAuthorizationHandler, SessionHandler>();
 builder.Services.AddSingleton(bearerSettings);
 
 builder.Services.AddHttpContextAccessor();
@@ -63,14 +60,6 @@ builder.Services.AddAuthentication(x =>
             ClockSkew = TimeSpan.FromSeconds(10),
         };
     });
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("SessionPolicy", policy =>
-    {
-        policy.Requirements.Add(new CustomAuthorizationRequirement("X-Session-Id"));
-    });
-});
 
 //builder.Services.AddCors(opts => opts.AddPolicy(name: "NgOrigins", policy =>
 //{

@@ -1,6 +1,4 @@
-# Auth with JWT & Custom policies attributes
-
-The idea here is that we can use policy using [Authorize(Policy = "PolicyName")] and assign this to a custom policy via Program.cs -> check "Program.cs options.AddPolicy("SessionPolicy", policy..."
+# Auth with JWT & Access Token
 
 ### How to run:
 * add-migration db1
