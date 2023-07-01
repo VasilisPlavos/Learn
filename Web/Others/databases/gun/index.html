@@ -1,0 +1,75 @@
+<html>
+
+<body>
+    <h1>On the fly database</h1>
+    <li>Add a connection string to connect/register in/a server. Eg. "#*bm8s#t5GqSMmERxmkWbv#"</li>
+    <li>Add a message to store it</li>
+    <br>
+    
+    <form id="connectionForm">
+        <input id="connectionString" placeholder="Enter connection string here">
+        <input id="connect" type="submit" value="connect">
+        <input id="register" type="submit" value="register">
+    </form>
+
+    <ul></ul>
+
+    <form id="storeForm">
+        <input id="generic_document" placeholder="generic_document input">
+        <input id="store" type="submit" value="store">
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/gun/examples/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/sea.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gun/lib/webrtc.js"></script>
+    <script>
+        var gun = Gun(['http://localhost:8765/gun', 'https://gun-manhattan.herokuapp.com/gun']);
+        var user = gun.user();
+
+        var dbDocument = 'default';
+        document.getElementById('connect').addEventListener('click', function (e) { e.preventDefault(); connect(); });
+        document.getElementById('store').addEventListener('click', (e) => { e.preventDefault(); storeButtonClicked(); });
+        document.getElementById('register').addEventListener('click', (e) => { e.preventDefault(); register(); })
+
+        function register() {
+            var connectionString = document.querySelector("#connectionString").value;
+            var username = connectionString;
+            var password = connectionString;
+            user.create(username, password);
+        }
+
+        function connect() {
+            var connectionString = document.querySelector("#connectionString").value;
+            var username = connectionString;
+            var password = connectionString;
+            user.auth(username, password);
+        }
+
+        gun.on('auth', () => {
+            if (user.is) {
+                document.querySelector("#connectionForm").style.display = 'none';
+                console.log(`Congrats! You are connected to nosql document: ${dbDocument}`);
+                user.get(dbDocument).map().once(UI);
+            }
+            else {
+                document.querySelector("#connectionForm").style.display = '';
+            }
+        });
+
+        function storeButtonClicked() {
+            if (!user.is) return;
+            var input = document.querySelector("#generic_document").value;
+            if (!input) return;
+            user.get(dbDocument).set(input);
+            document.querySelector("#generic_document").value = '';
+        }
+
+        function UI(say, id) {
+            var li = $('#' + id).get(0) || $('<li>').attr('id', id).appendTo('ul');
+            $(li).text(say);
+        };
+    </script>
+</body>
+
+</html>
