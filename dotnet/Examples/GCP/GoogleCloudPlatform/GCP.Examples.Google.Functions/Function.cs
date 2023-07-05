@@ -12,8 +12,11 @@ public class Function : IHttpFunction
     /// </summary>
     /// <param name="context">The HTTP context, containing the request and the response.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
+    // Try: http://localhost:8080/test?name=vasilis
     public async Task HandleAsync(HttpContext context)
     {
-        await context.Response.WriteAsync("Hello, Functions Framework.");
+        var route = context.Request.Path.HasValue ? context.Request.Path.Value : "";
+        context.Request.Query.TryGetValue("name", out var nameParam);
+        await context.Response.WriteAsync($"Hello, {nameParam.ToString()}");
     }
 }
