@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace GCP.Examples.Google.Functions;
 
+// Define a class that implements the IHttpFunction interface
 public class Function : IHttpFunction
 {
     /// <summary>
