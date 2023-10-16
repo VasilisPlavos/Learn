@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Examples._23.ImageSharp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Examples._23.Api.Controllers
@@ -11,9 +7,17 @@ namespace Examples._23.Api.Controllers
     [ApiController]
     public class ImageSharpController : ControllerBase
     {
-        [HttpGet]
-        public string Get()
+        private readonly IImageSharpService _imageSharpService;
+
+        public ImageSharpController(IImageSharpService imageSharpService)
         {
+            _imageSharpService = imageSharpService;
+        }
+
+        [HttpGet]
+        public async Task<string> Get()
+        {
+            await _imageSharpService.RunAsync();
             return "Api is running";
         }
     }
