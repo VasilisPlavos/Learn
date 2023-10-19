@@ -19,7 +19,7 @@ public class InParallelService : IInParallelService
         var tasksList = await ForEachVersionAsync();
         var tasksList2 = await ForEachVersion2Async();
         var parallelList = ParallelVersion();
-        var parallelList2 = ParallelVersionByFiratAsync();
+        var parallelList2 = await ParallelVersionByFiratAsync();
         var parallelList3 = ParallelVersionWithOptions();
         return true;
     }
@@ -60,7 +60,7 @@ public class InParallelService : IInParallelService
         var result = match.Groups[1].Value;
         return result;
     }
-    private IReadOnlyCollection<string> ParallelVersion()
+    private IEnumerable<string> ParallelVersion()
     {
         var list = new ConcurrentBag<string>();
         var tasksList = Enumerable.Range(0, TaskCount)
