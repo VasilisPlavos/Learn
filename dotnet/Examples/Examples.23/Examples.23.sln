@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.23.Api", "Examples.23.Api\Examples.23.Api.csproj", "{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.23.Api", "Examples.23.Api\Examples.23.Api.csproj", "{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.23.ImageSharp", "Examples.23.ImageSharp\Examples.23.ImageSharp.csproj", "{791101CA-6EE4-436E-96A7-03CD9C209CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.23.ImageSharp", "Examples.23.ImageSharp\Examples.23.ImageSharp.csproj", "{791101CA-6EE4-436E-96A7-03CD9C209CB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.23.InParallel", "Examples.23.InParallel\Examples.23.InParallel.csproj", "{76C6EE6C-EBE9-413B-9882-F56A9E61B475}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{791101CA-6EE4-436E-96A7-03CD9C209CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{791101CA-6EE4-436E-96A7-03CD9C209CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{791101CA-6EE4-436E-96A7-03CD9C209CB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76C6EE6C-EBE9-413B-9882-F56A9E61B475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C6EE6C-EBE9-413B-9882-F56A9E61B475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C6EE6C-EBE9-413B-9882-F56A9E61B475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C6EE6C-EBE9-413B-9882-F56A9E61B475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

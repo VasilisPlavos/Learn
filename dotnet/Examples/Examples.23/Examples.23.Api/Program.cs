@@ -1,4 +1,5 @@
 using Examples._23.ImageSharp.Services;
+using Examples._23.InParallel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IInParallelService, InParallelService>();
 builder.Services.AddScoped<IImageSharpService, ImageSharpService>();
 
 var app = builder.Build();
