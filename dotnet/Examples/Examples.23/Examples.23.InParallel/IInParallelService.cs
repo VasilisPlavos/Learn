@@ -55,13 +55,10 @@ public class InParallelService : IInParallelService
         return list;
     }
 
-    private static async Task<List<string>> ForEachVersion2Async()
+    private static async Task<string[]> ForEachVersion2Async()
     {
-        var tasksList = Enumerable.Range(0, TaskCount)
-            .Select(_ => GetJokeAsync(HttpClient));
-
-        var results = await Task.WhenAll(tasksList);
-        return results.ToList();
+        var tasksList = Enumerable.Range(0, TaskCount).Select(_ => GetJokeAsync(HttpClient));
+        return await Task.WhenAll(tasksList);
     }
 
     private static async Task<string> GetJokeAsync(HttpClient httpClient)
