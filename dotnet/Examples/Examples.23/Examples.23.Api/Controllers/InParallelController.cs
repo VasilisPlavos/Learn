@@ -1,5 +1,4 @@
 ﻿using Examples._23.InParallel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Examples._23.Api.Controllers

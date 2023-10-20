@@ -1,5 +1,6 @@
-﻿using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
+﻿using Examples._23.InParallel.Dtos;
+using System.Collections.Concurrent;
+using System.Text.Json;
 
 namespace Examples._23.InParallel;
 
@@ -16,11 +17,11 @@ public class InParallelService : IInParallelService
 
     public async Task<bool> RunAsync()
     {
-        var tasksList = await ForEachVersionAsync();
-        var tasksList2 = await ForEachVersion2Async();
         var parallelList = ParallelVersion();
+        var tasksList2 = await ForEachVersion2Async();
         var parallelList2 = await ParallelVersionByFiratAsync();
         var parallelList3 = ParallelVersionWithOptions();
+        var tasksList = await ForEachVersionAsync();
         return true;
     }
 
@@ -33,6 +34,9 @@ public class InParallelService : IInParallelService
             .ToList();
 
         foreach (var task in tasksList) list.Add(await task());
+        list.Insert(0, $"Started: {DateTime.UtcNow}");
+        list.Add($"Ended: {DateTime.UtcNow}");
+
         return list;
     }
 
@@ -42,7 +46,12 @@ public class InParallelService : IInParallelService
             .Select(_ => GetJokeAsync(HttpClient));
 
         var results = await Task.WhenAll(tasksList);
-        return results.ToList();
+
+        var list = results.ToList();
+        list.Insert(0, $"Started: {DateTime.UtcNow}");
+        list.Add($"Ended: {DateTime.UtcNow}");
+
+        return list;
     }
 
     private static async Task<string> GetJokeAsync(HttpClient httpClient)
@@ -51,29 +60,25 @@ public class InParallelService : IInParallelService
         //return $"{DateTime.UtcNow.Ticks}";
 
         var response = await httpClient.GetStringAsync(new Uri("https://api.chucknorris.io/jokes/random"));
-
-        // Create a Regex object and match the pattern
-        var match = Regex.Match(response, RegExPattern);
-        if (!match.Success) return response;
-
-        // The desired text is in the first capture group
-        var result = match.Groups[1].Value;
-        return result;
+        return JsonSerializer.Deserialize<ChuckNorrisResponse>(response)!.value; ;
     }
     private IEnumerable<string> ParallelVersion()
     {
-        var list = new ConcurrentBag<string>();
+        var list = new ConcurrentBag<string> { $"Started: {DateTime.UtcNow}" };
+
         var tasksList = Enumerable.Range(0, TaskCount)
             .Select(_ => new Func<string>(() => GetJokeAsync(HttpClient).GetAwaiter().GetResult()))
             .ToList();
 
         Parallel.For(0, tasksList.Count, i => list.Add(tasksList[i]()));
+        list.Add($"Ended: {DateTime.UtcNow}");
+
         return list;
     }
 
     private async Task<IReadOnlyCollection<string>> ParallelVersionByFiratAsync()
     {
-        var list = new ConcurrentBag<string>();
+        var list = new ConcurrentBag<string> { $"Started: {DateTime.UtcNow}" };
 
         var tasksList = Enumerable.Range(0, TaskCount)
             .Select(_ => GetJokeAsync(HttpClient))
@@ -85,10 +90,8 @@ public class InParallelService : IInParallelService
             CancellationToken = CancellationToken.None
         };
 
-        await Parallel.ForEachAsync(tasksList, parallelOptions: options, body: async (strTask, _) =>
-        {
-            list.Add(await strTask);
-        });
+        await Parallel.ForEachAsync(tasksList, parallelOptions: options, body: async (strTask, _) => { list.Add(await strTask); });
+        list.Add($"Ended: {DateTime.UtcNow}");
 
         return list;
     }
@@ -97,14 +100,15 @@ public class InParallelService : IInParallelService
     // Important -> Use IReadOnlyCollection and not List 
     private IReadOnlyCollection<string> ParallelVersionWithOptions()
     {
-        var list = new ConcurrentBag<string>();
+        var list = new ConcurrentBag<string> { $"Started: {DateTime.UtcNow}" };
+
         var tasksList = Enumerable.Range(0, TaskCount)
             .Select(_ => new Func<string>(() => GetJokeAsync(HttpClient).GetAwaiter().GetResult()))
             .ToList();
 
-        Parallel.For(0, tasksList.Count,
-            new ParallelOptions { MaxDegreeOfParallelism = 4 },
-            i => list.Add(tasksList[i]()));
+        Parallel.For(0, tasksList.Count, new ParallelOptions { MaxDegreeOfParallelism = 4 }, i => list.Add(tasksList[i]()));
+        list.Add($"Ended: {DateTime.UtcNow}");
+
         return list;
     }
 }
