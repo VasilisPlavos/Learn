@@ -23,6 +23,12 @@ public class ImageSharpService : IImageSharpService
         // get base64string of webp image from jpg image
         var base64String = image.ToBase64String(WebpFormat.Instance);
         
+        // get image file extension from base64String (ex. webp)
+        imageTypeExtension = GetBase64StringImageTypeExt(base64String);
+        
+        // load image from base64String
+        using var image2 = ConvertBase64StringToImage(base64String);
+        
         // load image to MemoryStream in WebP format and return it
         var imageStream = ImageToStream(image);
         
@@ -37,10 +43,24 @@ public class ImageSharpService : IImageSharpService
         // return webpimage from stream
         var webPImage = ImageToWebP(image);
         image.Dispose();
+        image2.Dispose();
         return true;
     }
-    
-    public string GetImageTypeExt(Image image)
+
+    private Image ConvertBase64StringToImage(string base64String)
+    {
+        var finalB64 = base64String.Split(",")[1];
+        var imageContent = Convert.FromBase64String(finalB64);
+        return Image.Load(imageContent);
+    }
+
+    private string GetBase64StringImageTypeExt(string base64String)
+    {
+        var imgExt = base64String.Split(",")[0].Replace("data:image/", "").Replace(";base64","");
+        return imgExt;
+    }
+
+    private string GetImageTypeExt(Image image)
     {
         return image.Metadata.DecodedImageFormat!.FileExtensions.First();
     }
