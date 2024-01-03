@@ -7,3 +7,4 @@
 Sources:
 * https://www.stadt-zuerich.ch/portal/de/index/jobs/anstellungsbedingungen/ferien-urlaub-betriebsferientage/feiertage-betriebsferientage.html
 * https://www.zh.ch/content/dam/zhweb/bilder-dokumente/footer/arbeiten-fuer-den-kanton/personalamt/Feiertage2023.pdf
+* https://www.stadt-zuerich.ch/portal/de/index/jobs/anstellungsbedingungen/ferien-urlaub-betriebsferientage/feiertage-betriebsferientage.html#:~:text=Ganzer%20Tag%20frei-,2024,-Tag
