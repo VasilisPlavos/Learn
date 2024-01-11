@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <PackageReference Include="MassTransit" Version="8.1.3" />
   </ItemGroup>
 
 </Project>
