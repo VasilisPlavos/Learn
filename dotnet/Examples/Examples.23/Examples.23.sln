@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.23.ImageSharp", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.23.InParallel", "Examples.23.InParallel\Examples.23.InParallel.csproj", "{76C6EE6C-EBE9-413B-9882-F56A9E61B475}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.23.MassTransitDemo", "Examples.23.MassTransitDemo\Examples.23.MassTransitDemo.csproj", "{CE28A3AB-2B39-4FD1-8B11-2916EB73BBAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.23.MassTransitDemo", "Examples.23.MassTransitDemo\Examples.23.MassTransitDemo.csproj", "{CE28A3AB-2B39-4FD1-8B11-2916EB73BBAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.NanoIds", "Examples.y24.NanoIds\Examples.y24.NanoIds.csproj", "{0FD9014E-A895-4433-976F-F2A1BB58C8BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CE28A3AB-2B39-4FD1-8B11-2916EB73BBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE28A3AB-2B39-4FD1-8B11-2916EB73BBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE28A3AB-2B39-4FD1-8B11-2916EB73BBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
