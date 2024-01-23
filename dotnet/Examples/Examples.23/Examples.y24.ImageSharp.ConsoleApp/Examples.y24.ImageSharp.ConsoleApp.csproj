@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.23.ImageSharp\Examples.23.ImageSharp.csproj" />
+    <ProjectReference Include="..\Examples.y24.Azure.StorageAccount\Examples.y24.Azure.StorageAccount.csproj" />
   </ItemGroup>
 
 </Project>
