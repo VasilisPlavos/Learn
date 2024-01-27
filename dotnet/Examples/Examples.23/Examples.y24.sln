@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.ImageSharp.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.Azure.StorageAccount", "Examples.y24.Azure.StorageAccount\Examples.y24.Azure.StorageAccount.csproj", "{76A4330C-40C1-407C-B6CA-C1E36491A9F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.HttpClient", "..\Examples.y24\Examples.y24.HttpClient\Examples.y24.HttpClient.csproj", "{ACD0964E-B494-4B53-B7BB-372BC74F9ED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.HttpClientExamples", "Examples.y24.HttpClientExamples\Examples.y24.HttpClientExamples.csproj", "{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{76A4330C-40C1-407C-B6CA-C1E36491A9F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76A4330C-40C1-407C-B6CA-C1E36491A9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76A4330C-40C1-407C-B6CA-C1E36491A9F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACD0964E-B494-4B53-B7BB-372BC74F9ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACD0964E-B494-4B53-B7BB-372BC74F9ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACD0964E-B494-4B53-B7BB-372BC74F9ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACD0964E-B494-4B53-B7BB-372BC74F9ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

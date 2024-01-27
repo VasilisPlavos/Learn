@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Examples.y24.HttpClient": {
+    "Examples.y24.HttpClientExamples": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
