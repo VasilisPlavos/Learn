@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Examples._23.Api</RootNamespace>
+    <RootNamespace>Examples.y23.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Examples.23.ImageSharp\Examples.23.ImageSharp.csproj" />
-    <ProjectReference Include="..\Examples.23.InParallel\Examples.23.InParallel.csproj" />
+    <ProjectReference Include="..\Examples.y23.ImageSharp\Examples.y23.ImageSharp.csproj" />
+    <ProjectReference Include="..\Examples.y23.InParallel\Examples.y23.InParallel.csproj" />
   </ItemGroup>
 
 </Project>

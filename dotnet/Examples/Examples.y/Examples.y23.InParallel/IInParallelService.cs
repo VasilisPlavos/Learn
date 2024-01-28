@@ -1,8 +1,8 @@
-﻿using Examples._23.InParallel.Dtos;
+﻿using Examples.y23.InParallel.Dtos;
 using System.Collections.Concurrent;
 using System.Text.Json;
 
-namespace Examples._23.InParallel;
+namespace Examples.y23.InParallel;
 
 public interface IInParallelService
 {

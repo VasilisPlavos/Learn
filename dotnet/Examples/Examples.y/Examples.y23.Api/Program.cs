@@ -1,5 +1,5 @@
-using Examples._23.ImageSharp.Services;
-using Examples._23.InParallel;
+using Examples.y23.ImageSharp.Services;
+using Examples.y23.InParallel;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-﻿using Examples._23.MassTransitDemo.Services;
+﻿using Examples.y23.MassTransitDemo.Services;
 using MassTransit;
 
 // https://www.youtube.com/watch?v=4FFYefcx4Bg

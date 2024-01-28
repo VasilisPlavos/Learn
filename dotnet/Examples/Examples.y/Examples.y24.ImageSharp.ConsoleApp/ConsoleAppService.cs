@@ -1,4 +1,4 @@
-﻿using Examples._23.ImageSharp.Services;
+﻿using Examples.y23.ImageSharp.Services;
 using Examples.y24.Azure.StorageAccount.Services;
 using Microsoft.Extensions.Hosting;
 

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Examples.23.MassTransitDemo": {
+    "Examples.y23.MassTransitDemo": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

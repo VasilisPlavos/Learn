@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Examples._23.Api": {
+    "Examples.y23.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using SixLabors.ImageSharp.Formats.Webp;
 
-namespace Examples._23.ImageSharp.Services;
+namespace Examples.y23.ImageSharp.Services;
 
 public interface IImageSharpService
 {

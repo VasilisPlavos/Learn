@@ -1,5 +1,5 @@
 ﻿using Azure.Storage.Blobs;
-using Examples._23.ImageSharp.Services;
+using Examples.y23.ImageSharp.Services;
 using Examples.y24.Azure.StorageAccount.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 
-namespace Examples._23.MassTransitDemo.Services;
+namespace Examples.y23.MassTransitDemo.Services;
 
 public class PingConsumer : IConsumer<Ping>
 {

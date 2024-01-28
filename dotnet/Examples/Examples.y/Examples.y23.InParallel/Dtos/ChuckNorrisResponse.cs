@@ -1,3 +1,3 @@
-﻿namespace Examples._23.InParallel.Dtos;
+﻿namespace Examples.y23.InParallel.Dtos;
 
 public record ChuckNorrisResponse(string value);
