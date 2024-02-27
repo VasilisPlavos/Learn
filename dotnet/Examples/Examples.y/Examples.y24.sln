@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.Azure.StorageA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.HttpClientExamples", "Examples.y24.HttpClientExamples\Examples.y24.HttpClientExamples.csproj", "{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.ZipArchive", "Examples.y24.ZipArchive\Examples.y24.ZipArchive.csproj", "{C1A1A41C-3388-4FDA-AA63-1B702631C24B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1A1A41C-3388-4FDA-AA63-1B702631C24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1A1A41C-3388-4FDA-AA63-1B702631C24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1A1A41C-3388-4FDA-AA63-1B702631C24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1A1A41C-3388-4FDA-AA63-1B702631C24B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
