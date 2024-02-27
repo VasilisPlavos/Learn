@@ -6,27 +6,16 @@ namespace Examples.y24.ZipArchive.Helpers
     {
         public static void ZipDirectoryOld(string directoryPath, string zipFilePath)
         {
-            try
+            // Ensure the directory exists
+            if (!Directory.Exists(directoryPath))
             {
-                // Ensure the directory exists
-                if (!Directory.Exists(directoryPath))
-                {
-                    throw new DirectoryNotFoundException($"The directory '{directoryPath}' does not exist.");
-                }
+                throw new DirectoryNotFoundException($"The directory '{directoryPath}' does not exist.");
+            }
 
-                // Create the zip archive
-                using (System.IO.Compression.ZipArchive zipArchive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
-                {
-                    
-                    // Recursively add files and directories to the archive
-                    ZipDirectoryInternal(zipArchive, directoryPath, "");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error creating zip file: {ex.Message}");
-                // Consider logging the error for further analysis
-            }
+            // Create the zip archive
+            using var zipArchive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create);
+            // Recursively add files and directories to the archive
+            ZipDirectoryInternal(zipArchive, directoryPath, "");
         }
 
         private static void ZipDirectoryInternal(System.IO.Compression.ZipArchive zipArchive, string directoryPath, string baseInArchive)
