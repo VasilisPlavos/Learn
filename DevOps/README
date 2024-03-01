@@ -1,0 +1,48 @@
+Run the following command to ensure you have the latest version of Bicep:
+```
+az bicep install && az bicep upgrade
+```
+
+Sign in to Azure
+```
+az login
+```
+
+Set the default subscription for all of the Azure CLI commands that you run in this session.
+```
+az account set --subscription "Concierge Subscription"
+```
+
+Get the Concierge Subscription IDs.
+
+```
+ az account list \
+   --refresh \
+   --query "[?contains(name, 'Concierge Subscription')].id" \
+   --output table
+```
+
+Set selected subscription by id
+```
+az account set --subscription {your subscription ID}
+```
+
+Set the default resource group
+```
+az configure --defaults group={resource group name}
+```
+
+Deploy main.bicep to selected resource group
+```
+az deployment group create --template-file main.bicep
+```
+
+Deploy main.bicep to resource group learn-bcf21bea-4173-4b88-bd22-2b9b724bfb39
+```
+az deployment group create --resource-group learn-bcf21bea-4173-4b88-bd22-2b9b724bfb39 --template-file main.bicep
+```
+
+set parameters environment prod/noprod
+```
+az deployment group create --resource-group 240301biceps  --template-file .\toylaunchmain.bicep --parameters environmentType=nonprod
+```
