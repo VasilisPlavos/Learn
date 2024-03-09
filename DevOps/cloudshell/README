@@ -1,0 +1,18 @@
+Source: https://learn.microsoft.com/en-us/training/modules/publish-manage-apis-with-azure-api-management/3-exercise-create-an-api-gateway
+
+1. Go to portal.azure.com
+2. In the Azure taskbar, select the Cloud Shell icon to open Azure Cloud Shell.
+3. Run the following git command in the Cloud Shell to clone the GitHub repo and download the source code for our app.
+```
+git clone https://github.com/MicrosoftDocs/mslearn-publish-manage-apis-with-azure-api-management.git
+```
+4. After the operation has completed, open your local repo folder and list its contents by running the following commands. One of the files is setup.sh. As its name suggests, it's the script we run to set up our test API.
+```
+cd mslearn-publish-manage-apis-with-azure-api-management
+ls -l
+```
+5. Enter the following command to run this script. It generates a public web app that exposes an OpenAPI interface.
+```
+bash setup.sh
+```
+6. It will print the swagger index
