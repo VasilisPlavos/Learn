@@ -4,12 +4,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace Examples.y24.ImageSharp.ConsoleApp;
 
-public class ConsoleAppService : IHostedService
+public class ConsoleApp6Service : IHostedService
 {
     private readonly IImageSharpService _imageSharpService;
     private readonly IStorageAccountService _storageAccountService;
 
-    public ConsoleAppService(IImageSharpService imageSharpService, IStorageAccountService storageAccountService)
+    public ConsoleApp6Service(IImageSharpService imageSharpService, IStorageAccountService storageAccountService)
     {
         _imageSharpService = imageSharpService;
         _storageAccountService = storageAccountService;
