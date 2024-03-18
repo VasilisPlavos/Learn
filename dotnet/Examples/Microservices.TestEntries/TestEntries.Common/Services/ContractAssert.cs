@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TestEntries.Common.Contracts;
+﻿using TestEntries.Common.Contracts;
 using Xunit;
 
 namespace TestEntries.Common.Services
