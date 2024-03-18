@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace TestEntries.Common.Contracts
+﻿namespace TestEntries.Common.Contracts
 {
     public class ResponseHeader
     {
