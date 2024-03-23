@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Interfaces.Examp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Poly.Vehicles", "HelloWorld.Poly.Vehicles\HelloWorld.Poly.Vehicles.csproj", "{17537BA4-A4B0-467A-8CA0-2630AE940CC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Interfaces.Examples.UnitTests", "HelloWorld.Interfaces.Examples.UnitTests\HelloWorld.Interfaces.Examples.UnitTests.csproj", "{B5A823F9-5BDC-47C8-B9F0-644065452996}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17537BA4-A4B0-467A-8CA0-2630AE940CC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A823F9-5BDC-47C8-B9F0-644065452996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A823F9-5BDC-47C8-B9F0-644065452996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A823F9-5BDC-47C8-B9F0-644065452996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A823F9-5BDC-47C8-B9F0-644065452996}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
