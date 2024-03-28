@@ -3,6 +3,19 @@
 using Examples.y24.NanoIds.Helpers;
 using NanoidDotNet;
 
+
+var url = UriBuildHelper.Build(new Uri("www.example.co.uk:433/blob/article/search?name=vasilis&"), new Dictionary<string, string>
+{
+    {"country", "greece"},
+    {"city", "trikala"}
+}, null);
+
+var url2 = UriBuildHelper.Build(new Uri(url.ToString()), new Dictionary<string, string>
+{
+    {"country", "greece"},
+    {"city", "trikala"}
+}, null);
+
 // Custom
 var convertedyoutubeIdLong = YoutubeConverter.Decode("-NIT9LYnylw");
 var youtubeId = YoutubeConverter.GenerateYoutubeIdFromUnixTimeMilliseconds();
