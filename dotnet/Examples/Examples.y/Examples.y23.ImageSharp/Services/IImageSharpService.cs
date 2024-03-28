@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Examples.y23.ImageSharp.Services;
 

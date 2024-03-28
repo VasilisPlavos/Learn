@@ -21,6 +21,7 @@ public class StorageAccountService : IStorageAccountService
     public async Task RunAsync()
     {
         var blobs = FindBlobsByTags();
+        await Task.CompletedTask;
     }
 
     private List<TaggedBlobItem> FindBlobsByTags()
