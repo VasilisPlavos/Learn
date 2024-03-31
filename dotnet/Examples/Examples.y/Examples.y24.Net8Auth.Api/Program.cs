@@ -1,3 +1,8 @@
+using Examples.y24.Net8Auth.Api;
+using Examples.y24.Net8Auth.Api.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,20 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add and configure Auth
+builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthorizationBuilder();
+
+// Register the DbContext on the service container
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+{
+    options.UseInMemoryDatabase("InMemoryDb");
+});
+
+builder.Services.AddIdentityCore<MyUser>()
+    .AddEntityFrameworkStores<AppIdentityDbContext>()
+    .AddApiEndpoints();
 
 var app = builder.Build();
 
@@ -21,5 +40,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapIdentityApi<MyUser>();
 
 app.Run();
