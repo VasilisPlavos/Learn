@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.HttpClientExam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.ZipArchive", "Examples.y24.ZipArchive\Examples.y24.ZipArchive.csproj", "{C1A1A41C-3388-4FDA-AA63-1B702631C24B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.DataStructure", "Examples.y24.DataStructure\Examples.y24.DataStructure.csproj", "{E7F16B87-5A29-4BF1-A468-994DCFE69C2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.DataStructure", "Examples.y24.DataStructure\Examples.y24.DataStructure.csproj", "{E7F16B87-5A29-4BF1-A468-994DCFE69C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.Net8Auth.Api", "Examples.y24.Net8Auth.Api\Examples.y24.Net8Auth.Api.csproj", "{D3F7F673-BA58-40AA-B845-6AE1D966452B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{E7F16B87-5A29-4BF1-A468-994DCFE69C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7F16B87-5A29-4BF1-A468-994DCFE69C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7F16B87-5A29-4BF1-A468-994DCFE69C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
