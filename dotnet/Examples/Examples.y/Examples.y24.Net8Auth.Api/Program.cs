@@ -15,8 +15,6 @@ builder.Services.AddControllers();
 // https://auth0.com/blog/whats-new-dotnet8-authentication-authorization/
 // https://devblogs.microsoft.com/dotnet/whats-new-with-identity-in-dotnet-8/
 
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
