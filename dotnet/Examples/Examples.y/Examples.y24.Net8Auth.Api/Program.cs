@@ -19,6 +19,7 @@ builder.Services.AddAuthorizationBuilder();
 // Register the DbContext on the service container
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
 {
+    // must use a real database here to store the users
     options.UseInMemoryDatabase("InMemoryDb");
 });
 
