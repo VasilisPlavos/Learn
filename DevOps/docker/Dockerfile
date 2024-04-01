@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y wkhtmltopdf fontconfig
 
 # linux-ubuntu
 # FROM ubuntu:latest
+# FROM ubuntu:jammy-20240227
 # RUN apt-get update && apt-get install -y wkhtmltopdf fontconfig dotnet6
 
 # FROM mcr.microsoft.com/dotnet/aspnet:6.0-nanoserver-ltsc2022
