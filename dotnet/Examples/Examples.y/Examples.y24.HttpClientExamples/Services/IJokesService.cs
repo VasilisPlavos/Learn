@@ -1,4 +1,4 @@
-﻿using Examples.y24.HttpClientExamples.Dtos;
+﻿using Examples.y24.HttpClientExamples.Dtos.Joke;
 
 namespace Examples.y24.HttpClientExamples.Services;
 
