@@ -32,6 +32,15 @@ builder.Services.AddIdentityCore<MyUser>()
     .AddEntityFrameworkStores<AppIdentityDbContext>()
     .AddApiEndpoints();
 
+// const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy(name: myAllowSpecificOrigins, configurePolicy: configurePolicy =>
+//         {
+//             configurePolicy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+//         });
+// });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +53,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// app.UseCors(myAllowSpecificOrigins);
 
 app.MapControllers();
 app.MapIdentityApi<MyUser>();
