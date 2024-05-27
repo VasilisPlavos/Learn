@@ -4,9 +4,10 @@
         <name>ParkyAPI</name>
     </assembly>
     <members>
-        <member name="M:ParkyAPI.Controllers.NationalParksController.GetNationalParksAsync">
+        <member name="M:ParkyAPI.Controllers.NationalParksController.GetNationalParksAsync(System.Int32)">
             <summary>
-            Get list of national parks. With Duration = 10 client cache the response for 10 seconds. With memoryCache server keep the data without requesting from database.
+            Get list of national parks.
+            With Duration = 10 client cache the response for 10 seconds. With memoryCache server keep the data without requesting from database.
             </summary>
             <returns></returns>
         </member>
