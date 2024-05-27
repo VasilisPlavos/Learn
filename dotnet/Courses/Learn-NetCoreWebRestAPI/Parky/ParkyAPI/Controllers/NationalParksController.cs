@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -33,11 +32,11 @@ namespace ParkyAPI.Controllers
 
         /// <summary>
         /// Get list of national parks.
-        /// With Duration = 10 client cache the response for 10 seconds. With memoryCache server keep the data without requesting from database.
+        /// With Duration = 30 client cache the response for 30 seconds. With memoryCache server keep the data without requesting from database.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ResponseCache(Duration = 10)]
+        [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "*" })]
         [ProducesResponseType(200, Type = typeof(List<NationalParkDto>))]
         public async Task<IActionResult> GetNationalParksAsync()
         {
