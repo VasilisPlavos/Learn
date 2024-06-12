@@ -7,7 +7,7 @@ param appServiceAppName string = 'toylaunchapp240301'
   'nonprod'
   'prod'
 ])
-param environmentType string
+param environmentType string = 'nonprod'
 
 module myModule 'modules/mod1.bicep' = {
   name: 'MyModule'
