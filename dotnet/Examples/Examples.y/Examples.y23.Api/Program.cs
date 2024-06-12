@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddResponseCaching();
+
 builder.Services.AddScoped<IInParallelService, InParallelService>();
 builder.Services.AddScoped<IImageSharpService, ImageSharpService>();
 
@@ -21,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseResponseCaching();
 
 app.UseHttpsRedirection();
 

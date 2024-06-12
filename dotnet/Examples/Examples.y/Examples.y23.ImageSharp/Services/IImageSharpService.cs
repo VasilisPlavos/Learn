@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -36,6 +37,10 @@ public class ImageSharpService : IImageSharpService
         
         // get base64string of webp image from ImageStream
         base64String = StreamToBase64String(imageStream);
+
+        // get image file extension from base64String (ex. webp)
+        var format = GetFormat("image/webp");
+        base64String = image.ToBase64String(format ?? WebpFormat.Instance);
         
         // saving image as webp
         await image.SaveAsync($"{_buildPath}/image.webp");
@@ -65,6 +70,15 @@ public class ImageSharpService : IImageSharpService
     private string GetImageTypeExt(Image image)
     {
         return image.Metadata.DecodedImageFormat!.FileExtensions.First();
+    }
+
+    private IImageFormat GetFormat(string? mimeType)
+    {
+        return mimeType switch
+        {
+            "image/webp" => WebpFormat.Instance,
+            _ => WebpFormat.Instance
+        };
     }
     
     private MemoryStream ImageToStream(Image image)
