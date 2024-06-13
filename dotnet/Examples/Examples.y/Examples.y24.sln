@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y23.Api", "Examples.y23.Api\Examples.y23.Api.csproj", "{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y23.ImageSharp", "Examples.y23.ImageSharp\Examples.y23.ImageSharp.csproj", "{791101CA-6EE4-436E-96A7-03CD9C209CB1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y23.InParallel", "Examples.y23.InParallel\Examples.y23.InParallel.csproj", "{76C6EE6C-EBE9-413B-9882-F56A9E61B475}"
@@ -23,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.ZipArchive", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.DataStructure", "Examples.y24.DataStructure\Examples.y24.DataStructure.csproj", "{E7F16B87-5A29-4BF1-A468-994DCFE69C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.Net8Auth.Api", "Examples.y24.Net8Auth.Api\Examples.y24.Net8Auth.Api.csproj", "{D3F7F673-BA58-40AA-B845-6AE1D966452B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.Net8Auth.Api", "Examples.y24.Net8Auth.Api\Examples.y24.Net8Auth.Api.csproj", "{D3F7F673-BA58-40AA-B845-6AE1D966452B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.Api", "Examples.y24.Api\Examples.y24.Api.csproj", "{080D8C89-6D34-45A3-B5B5-7F0EE1888481}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0520971-C0FD-4281-86EA-2BD3CA84D3F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{791101CA-6EE4-436E-96A7-03CD9C209CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{791101CA-6EE4-436E-96A7-03CD9C209CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{791101CA-6EE4-436E-96A7-03CD9C209CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +71,10 @@ Global
 		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F7F673-BA58-40AA-B845-6AE1D966452B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080D8C89-6D34-45A3-B5B5-7F0EE1888481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080D8C89-6D34-45A3-B5B5-7F0EE1888481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080D8C89-6D34-45A3-B5B5-7F0EE1888481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080D8C89-6D34-45A3-B5B5-7F0EE1888481}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
