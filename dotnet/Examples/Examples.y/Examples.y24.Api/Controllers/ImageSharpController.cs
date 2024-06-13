@@ -1,7 +1,7 @@
 using Examples.y23.ImageSharp.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Examples.y23.Api.Controllers
+namespace Examples.y24.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
