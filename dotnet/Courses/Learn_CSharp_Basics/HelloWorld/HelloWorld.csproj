@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Amazon\Amazon.csproj" />
+    <ProjectReference Include="..\HelloWorld.Interfaces.Examples\HelloWorld.Interfaces.Examples.csproj" />
+    <ProjectReference Include="..\HelloWorld.Interfaces.Extensibility\HelloWorld.Interfaces.Extensibility.csproj" />
+    <ProjectReference Include="..\HelloWorld.Poly.Vehicles\HelloWorld.Poly.Vehicles.csproj" />
+  </ItemGroup>
+
+</Project>
