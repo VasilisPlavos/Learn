@@ -1,4 +1,6 @@
 using MagicVilla.VillaAPI.Data;
+using MagicVilla.VillaAPI.Repository;
+using MagicVilla.VillaAPI.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -15,6 +17,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
 	opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+
+builder.Services.AddScoped<IVillaRepository, VillaRepository>();
+
 builder.Services.AddControllers().AddNewtonsoftJson()
 // .AddXmlDataContractSerializerFormatters() // add this for XML format
 ;

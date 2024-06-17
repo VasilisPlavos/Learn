@@ -29,7 +29,7 @@ public class Repository<T> : IRepository<T> where T : class
         return await query.ToListAsync();
     }
 
-    public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
+    public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
     {
         IQueryable<T> query = _dbSet;
         if (!tracked) query = query.AsNoTracking();
@@ -40,7 +40,7 @@ public class Repository<T> : IRepository<T> where T : class
 
         var result = await query.FirstOrDefaultAsync();
 
-        return result!;
+        return result;
     }
 
     public async Task CreateAsync(T entity)
