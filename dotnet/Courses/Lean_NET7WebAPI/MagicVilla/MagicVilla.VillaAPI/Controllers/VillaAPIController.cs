@@ -30,9 +30,10 @@ namespace MagicVilla.VillaAPI.Controllers
 		public async Task<ActionResult<ApiResponseDto>> CreateVilla(VillaDto? villaDto)
         {
 			if (villaDto == null) return BadRequest();
-			if (villaDto.Id != 0) return BadRequest();
+            //if (villaDto.Id != 0) return BadRequest();
 
-            var villaInDb = await _villaRepo.GetAsync(x => x.Name.Equals(villaDto.Name, StringComparison.CurrentCultureIgnoreCase));
+            //var villaInDb = await _villaRepo.GetAsync(x => x.Name.Equals(villaDto.Name, StringComparison.CurrentCultureIgnoreCase));
+            var villaInDb = await _villaRepo.GetAsync(x => x.Name.ToLower() == villaDto.Name.ToLower());
             if (villaInDb != null)
 			{
 				ModelState.AddModelError("CustomerError", $"Villa with name {villaDto.Name} exist");
