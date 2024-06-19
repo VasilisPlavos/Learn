@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<categories>
+  <category id="1" name="Beverages" desc="Soft drinks, coffees, teas, beers, and ales" product_count="12">
+    <products>
+      <node-with-value> value 1</node-with-value>
+      <missing-node> value 1</missing-node>
+      <product id="1" name="Chai" cost="18" stock="39" discontinued="False" productLove="yeah" />
+      <product id="2" name="Chang" cost="19" stock="17" discontinued="False" />
+      <product id="24" name="Guaraná Fantástica" cost="4.5" stock="20" discontinued="True" />
+      <product id="34" name="Sasquatch Ale" cost="14" stock="111" discontinued="False" />
+      <product id="35" name="Steeleye Stout" cost="18" stock="20" discontinued="False" />
+      <product id="38" name="Côte de Blaye" cost="263.5" stock="17" discontinued="False" />
+      <product id="39" name="Chartreuse verte" cost="18" stock="69" discontinued="False" />
+      <product id="43" name="Ipoh Coffee" cost="46" stock="17" discontinued="False" />
+      <product id="67" name="Laughing Lumberjack Lager" cost="14" stock="52" discontinued="False" />
+      <product id="70" name="Outback Lager" cost="15" stock="15" discontinued="False" />
+      <product id="75" name="Rhönbräu Klosterbier" cost="7.75" stock="125" discontinued="False" />
+      <product id="76" name="Lakkalikööri" cost="18" stock="57" discontinued="False" />
+    </products>
+  </category>
+  <category id="2" name="Condiments" desc="Sweet and savory sauces, relishes, spreads, and seasonings" product_count="12">
+    <products>
+      <product id="3" name="Aniseed Syrup" cost="10" stock="13" discontinued="False" />
+      <product id="4" name="Chef Anton's Cajun Seasoning" cost="22" stock="53" discontinued="False" />
+      <product id="5" name="Chef Anton's Gumbo Mix" cost="21.35" stock="0" discontinued="True" />
+      <product id="6" name="Grandma's Boysenberry Spread" cost="25" stock="120" discontinued="False" />
+      <product id="8" name="Northwoods Cranberry Sauce" cost="40" stock="6" discontinued="False" />
+      <product id="15" name="Genen Shouyu" cost="15.5" stock="39" discontinued="False" />
+      <product id="44" name="Gula Malacca" cost="19.45" stock="27" discontinued="False" />
+      <product id="61" name="Sirop d'érable" cost="28.5" stock="113" discontinued="False" />
+      <product id="63" name="Vegie-spread" cost="43.9" stock="24" discontinued="False" />
+      <product id="65" name="Louisiana Fiery Hot Pepper Sauce" cost="21.05" stock="76" discontinued="False" />
+      <product id="66" name="Louisiana Hot Spiced Okra" cost="17" stock="4" discontinued="False" />
+      <product id="77" name="Original Frankfurter grüne Soße" cost="13" stock="32" discontinued="False" />
+    </products>
+  </category>
+  <category id="3" name="Confections" desc="Desserts, candies, and sweet breads" product_count="13">
+    <products>
+      <product id="16" name="Pavlova" cost="17.45" stock="29" discontinued="False" />
+      <product id="19" name="Teatime Chocolate Biscuits" cost="9.2" stock="25" discontinued="False" />
+      <product id="20" name="Sir Rodney's Marmalade" cost="81" stock="40" discontinued="False" />
+      <product id="21" name="Sir Rodney's Scones" cost="10" stock="3" discontinued="False" />
+      <product id="25" name="NuNuCa Nuß-Nougat-Creme" cost="14" stock="76" discontinued="False" />
+      <product id="26" name="Gumbär Gummibärchen" cost="31.23" stock="15" discontinued="False" />
+      <product id="27" name="Schoggi Schokolade" cost="43.9" stock="49" discontinued="False" />
+      <product id="47" name="Zaanse koeken" cost="9.5" stock="36" discontinued="False" />
+      <product id="48" name="Chocolade" cost="12.75" stock="15" discontinued="False" />
+      <product id="49" name="Maxilaku" cost="20" stock="10" discontinued="False" />
+      <product id="50" name="Valkoinen suklaa" cost="16.25" stock="65" discontinued="False" />
+      <product id="62" name="Tarte au sucre" cost="49.3" stock="17" discontinued="False" />
+      <product id="68" name="Scottish Longbreads" cost="12.5" stock="6" discontinued="False" />
+    </products>
+  </category>
+  <category id="4" name="Dairy Products" desc="Cheeses" product_count="10">
+    <products>
+      <product id="11" name="Queso Cabrales" cost="21" stock="22" discontinued="False" />
+      <product id="12" name="Queso Manchego La Pastora" cost="38" stock="86" discontinued="False" />
+      <product id="31" name="Gorgonzola Telino" cost="12.5" stock="0" discontinued="False" />
+      <product id="32" name="Mascarpone Fabioli" cost="32" stock="9" discontinued="False" />
+      <product id="33" name="Geitost" cost="2.5" stock="112" discontinued="False" />
+      <product id="59" name="Raclette Courdavault" cost="55" stock="79" discontinued="False" />
+      <product id="60" name="Camembert Pierrot" cost="34" stock="19" discontinued="False" />
+      <product id="69" name="Gudbrandsdalsost" cost="36" stock="26" discontinued="False" />
+      <product id="71" name="Flotemysost" cost="21.5" stock="26" discontinued="False" />
+      <product id="72" name="Mozzarella di Giovanni" cost="34.8" stock="14" discontinued="False" />
+    </products>
+  </category>
+</categories>
