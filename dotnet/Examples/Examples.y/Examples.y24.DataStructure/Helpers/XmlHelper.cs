@@ -39,15 +39,15 @@ public class XmlHelper
     {
         var xml1 = @"<root><child1>text1</child1><child2 attr1='value1'>text2</child2></root>";
         var xml2 = @"<root><child1>text1</child1><child2 attr2='value2'>text3</child2></root>";
-        var differences = CompareXml(xml1, xml2);
+        var differences = CompareXml(xml1, xml2, true);
     }
 
-    public static List<string> CompareXml(string xml1, string xml2)
+    public static List<string> CompareXml(string xml1, string xml2, bool ignoreNodeValues = false)
     {
         XDocument doc1 = XDocument.Parse(xml1);
         XDocument doc2 = XDocument.Parse(xml2);
 
-        return CompareNodes(doc1.Root, doc2.Root);
+        return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
     }
 
     private static List<string> CompareNodes(XElement node1, XElement node2, bool ignoreNodeValues = false)
