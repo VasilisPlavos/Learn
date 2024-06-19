@@ -50,7 +50,7 @@ public class XmlHelper
         return CompareNodes(doc1.Root, doc2.Root);
     }
 
-    private static List<string> CompareNodes(XElement node1, XElement node2, bool compareNodeValues = true)
+    private static List<string> CompareNodes(XElement node1, XElement node2, bool ignoreNodeValues = false)
     {
         var differences = new List<string>();
         //if (node1 == null && node2 == null) return differences;
@@ -64,7 +64,7 @@ public class XmlHelper
         var childNodes1 = node1.Nodes().ToList();
         var childNodes2 = node2.Nodes().ToList();
 
-        if (compareNodeValues && childNodes1.Count == 1)
+        if (!ignoreNodeValues && childNodes1.Count == 1)
         {
             if (node1.Value.Trim() != node2.Value.Trim())
             {
@@ -107,7 +107,7 @@ public class XmlHelper
                 continue;
             }
 
-            var childNodesDifferences = CompareNodes(xNode1, xNode2);
+            var childNodesDifferences = CompareNodes(xNode1, xNode2, ignoreNodeValues);
             differences.AddRange(childNodesDifferences);
         }
 
