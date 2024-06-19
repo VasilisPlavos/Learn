@@ -7,8 +7,10 @@ public class XmlHelper
 {
     public static async Task ExamplesAsync()
     {
-        Example1();
-        Example2();
+        //Example1();
+        //Example2();
+        //Example3();
+        Example4();
     }
 
     private static void Example1()
@@ -26,12 +28,17 @@ public class XmlHelper
         var xml2 = "<example>\r\n  <person>\r\n    <firstName/>\r\n    <lastName/>\r\n\r\n  </person>\r\n</example>";
         var differences = CompareXml(xml1, xml2);
     }
-
     private static void Example3()
     {
-        string xml1 = @"<root><child1>text1</child1><child2 attr1='value1'>text2</child2></root>";
-        string xml2 = @"<root><child1>text1</child1><child2 attr2='value2'>text3</child2></root>";
+        var xml1 = "<example>\r\n  <person>\r\n    <firstName/>\r\n    <lastName/>\r\n\r\n  </person>\r\n</example>";
+        var xml2 = "<example>\r\n\r\n\r\n\r\n  <person>\r\n\r\n\r\n\r\n \r\n\r\n    <tel/>   <firstName/>\r\n\r\n<lastName/>\r\n\r\n\r\n\r\n  </person>\r\n\r\n\r\n\r\n</example>";
+        var differences = CompareXml(xml1, xml2);
+    }
 
+    private static void Example4()
+    {
+        var xml1 = @"<root><child1>text1</child1><child2 attr1='value1'>text2</child2></root>";
+        var xml2 = @"<root><child1>text1</child1><child2 attr2='value2'>text3</child2></root>";
         var differences = CompareXml(xml1, xml2);
     }
 
@@ -46,7 +53,7 @@ public class XmlHelper
     private static List<string> CompareNodes(XElement node1, XElement node2, bool compareNodeValues = true)
     {
         var differences = new List<string>();
-        if (node1 == null && node2 == null) return differences;
+        //if (node1 == null && node2 == null) return differences;
         
         if (node1.Name != node2.Name)
         {
@@ -54,30 +61,43 @@ public class XmlHelper
             return differences;
         }
 
-        if (compareNodeValues)
+        var childNodes1 = node1.Nodes().ToList();
+        var childNodes2 = node2.Nodes().ToList();
+
+        if (compareNodeValues && childNodes1.Count == 1)
         {
             if (node1.Value.Trim() != node2.Value.Trim())
             {
-                differences.Add($"Texts differ: {node1.Value} vs {node2.Value}");
+                differences.Add($"Texts differ on node {node1.Name}: {node1.Value} vs {node2.Value}");
             }
         }
 
         // Compare attributes
-        var attrs1 = node1.Attributes().ToDictionary(a => a.Name, a => a.Value);
-        var attrs2 = node2.Attributes().ToDictionary(a => a.Name, a => a.Value);
+        var node1Attributes = node1.Attributes().ToDictionary(a => a.Name, a => a.Value);
+        var node2Attributes = node2.Attributes().ToDictionary(a => a.Name, a => a.Value);
 
-        foreach (var attr in attrs1)
+        foreach (var attr1 in node1Attributes)
         {
-            if (!attrs2.ContainsKey(attr.Key) || attrs2[attr.Key] != attr.Value)
+            var attr2 = node2Attributes.FirstOrDefault(x => x.Key == attr1.Key);
+            if (attr2.Key == null)
             {
-                differences.Add($"Attributes differ: {attr.Key} - {attr.Value} vs {attrs2.GetValueOrDefault(attr.Key)}");
+                differences.Add($"Missing attribute on second xml {attr1.Key}");
+                continue;
+            }
+
+            if (attr1.Value != attr2.Value)
+            {
+                differences.Add($"Attributes differ on key {attr1.Key} with values {attr1.Value} vs {attr2.Value}");
             }
         }
 
-        // Compare child nodes recursively
-        var childNodes1 = node1.Nodes().ToList();
-        var childNodes2 = node2.Nodes().ToList();
+        foreach (var attr2 in node2Attributes)
+        {
+            var exist = node1Attributes.Any(x => x.Key == attr2.Key);
+            if (!exist) differences.Add($"Missing attribute on first xml {attr2.Key}");
+        }
 
+        // Compare child nodes recursively
         foreach (var xNode1 in childNodes1.OfType<XElement>())
         {
             var xNode2 = childNodes2.OfType<XElement>().FirstOrDefault(x => x.Name.LocalName == xNode1.Name.LocalName);
