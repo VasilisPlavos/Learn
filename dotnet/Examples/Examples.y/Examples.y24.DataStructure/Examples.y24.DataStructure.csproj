@@ -8,6 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Files\products1.xml" />
+    <None Remove="Files\products2.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Files\products1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\products2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Examples.y24.Common\Examples.y24.Common.csproj" />
   </ItemGroup>
 

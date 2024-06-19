@@ -2,7 +2,9 @@
 <categories>
   <category id="1" name="Beverages" desc="Soft drinks, coffees, teas, beers, and ales" product_count="12">
     <products>
-      <product id="1" name="Chai" cost="18" stock="39" discontinued="False" />
+      <node-with-value> value 1</node-with-value>
+      <missing-node> value 1</missing-node>
+      <product id="1" name="Chai" cost="18" stock="39" discontinued="False" productLove="yeah" />
       <product id="2" name="Chang" cost="19" stock="17" discontinued="False" />
       <product id="24" name="Guaraná Fantástica" cost="4.5" stock="20" discontinued="True" />
       <product id="34" name="Sasquatch Ale" cost="14" stock="111" discontinued="False" />

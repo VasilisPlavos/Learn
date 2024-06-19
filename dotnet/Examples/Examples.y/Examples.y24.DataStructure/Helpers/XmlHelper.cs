@@ -1,4 +1,5 @@
 ﻿using Examples.y24.Common.Dtos.Joke;
+using System.IO;
 using System.Xml.Linq;
 
 namespace Examples.y24.DataStructure.Helpers;
@@ -7,10 +8,11 @@ public class XmlHelper
 {
     public static async Task ExamplesAsync()
     {
-        //Example1();
-        //Example2();
-        //Example3();
+        Example1();
+        Example2();
+        Example3();
         Example4();
+        Example5();
     }
 
     private static void Example1()
@@ -44,16 +46,23 @@ public class XmlHelper
 
     public static List<string> CompareXml(string xml1, string xml2, bool ignoreNodeValues = false)
     {
-        XDocument doc1 = XDocument.Parse(xml1);
-        XDocument doc2 = XDocument.Parse(xml2);
+        var doc1 = XDocument.Parse(xml1);
+        var doc2 = XDocument.Parse(xml2);
 
         return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
+    }
+
+    private static void Example5()
+    {
+        var xml1 = File.ReadAllText($"{Directory.GetCurrentDirectory()}\\Files\\products1.xml");
+        var xml2 = File.ReadAllText($"{Directory.GetCurrentDirectory()}\\Files\\products2.xml");
+
+        var differences = CompareXml(xml1, xml2);
     }
 
     private static List<string> CompareNodes(XElement node1, XElement node2, bool ignoreNodeValues = false)
     {
         var differences = new List<string>();
-        //if (node1 == null && node2 == null) return differences;
         
         if (node1.Name != node2.Name)
         {
@@ -71,7 +80,7 @@ public class XmlHelper
                 differences.Add($"Texts differ on node {node1.Name}: {node1.Value} vs {node2.Value}");
             }
         }
-
+        
         // Compare attributes
         var node1Attributes = node1.Attributes().ToDictionary(a => a.Name, a => a.Value);
         var node2Attributes = node2.Attributes().ToDictionary(a => a.Name, a => a.Value);
@@ -94,7 +103,10 @@ public class XmlHelper
         foreach (var attr2 in node2Attributes)
         {
             var exist = node1Attributes.Any(x => x.Key == attr2.Key);
-            if (!exist) differences.Add($"Missing attribute on first xml {attr2.Key}");
+            if (!exist)
+            {
+                differences.Add($"Missing attribute on first xml {attr2.Key}");
+            }
         }
 
         // Compare child nodes recursively
@@ -114,11 +126,12 @@ public class XmlHelper
         foreach (var xNode2 in childNodes2.OfType<XElement>())
         {
             var exist = childNodes1.OfType<XElement>().Any(x => x.Name.LocalName == xNode2.Name.LocalName);
-            if (!exist) differences.Add($"Missing child node on first xml: {xNode2.Name}");
+            if (!exist)
+            {
+                differences.Add($"Missing child node on first xml: {xNode2.Name}");
+            }
         }
 
         return differences;
     }
-
-
 }

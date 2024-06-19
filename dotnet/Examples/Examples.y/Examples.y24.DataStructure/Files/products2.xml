@@ -2,7 +2,9 @@
 <categories>
   <category id="5" name="Grains/Cereals" desc="Breads, crackers, pasta, and cereal" product_count="7">
     <products>
-      <product id="22" name="Gustaf's Knäckebröd" cost="21" stock="104" discontinued="False" />
+      <node-with-value> value 2</node-with-value>
+      <love />
+      <product id="22" name="Gustaf's Knäckebröd" cost="21" stock="104" discontinued="False" productLove2="yeah2" />
       <product id="23" name="Tunnbröd" cost="9" stock="61" discontinued="False" />
       <product id="42" name="Singaporean Hokkien Fried Mee" cost="14" stock="26" discontinued="True" />
       <product id="52" name="Filo Mix" cost="7" stock="38" discontinued="False" />
