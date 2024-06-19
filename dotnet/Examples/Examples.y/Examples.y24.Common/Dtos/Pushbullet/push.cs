@@ -1,4 +1,4 @@
-﻿namespace Examples.y24.HttpClientExamples.Dtos.Pushbullet;
+﻿namespace Examples.y24.Common.Dtos.Pushbullet;
 
 public class push
 {

@@ -1,4 +1,4 @@
-﻿using Examples.y24.HttpClientExamples.Dtos.Joke;
+﻿using Examples.y24.Common.Dtos.Joke;
 using Examples.y24.HttpClientExamples.Services;
 using Microsoft.AspNetCore.Mvc;
 

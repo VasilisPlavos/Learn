@@ -1,4 +1,4 @@
-﻿namespace Examples.y24.HttpClientExamples.Dtos.Joke;
+﻿namespace Examples.y24.Common.Dtos.Joke;
 
 public class Joke
 {

@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Headers;
-using Examples.y24.HttpClientExamples.Dtos.Pushbullet;
+using Examples.y24.Common.Dtos.Pushbullet;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Examples.y24.HttpClientExamples.Controllers
