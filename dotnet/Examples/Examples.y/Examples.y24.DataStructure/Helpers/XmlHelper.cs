@@ -8,6 +8,7 @@ public class XmlHelper
     public static async Task ExamplesAsync()
     {
         Example1();
+        Example2();
     }
 
     private static void Example1()
@@ -21,8 +22,9 @@ public class XmlHelper
 
     private static void Example2()
     {
-        var doc1 = "<example>\r\n  <person>\r\n    <firstName/>\r\n\r\n    <tel/>\r\n  </person>\r\n</example>";
-        var doc2 = "<example>\r\n  <person>\r\n    <firstName/>\r\n    <lastName/>\r\n\r\n  </person>\r\n</example>";
+        var xml2 = "<example>\r\n\r\n\r\n\r\n  <person>\r\n\r\n\r\n\r\n \r\n\r\n    <tel/>   <firstName/>\r\n\r\n<lastName/>\r\n\r\n\r\n\r\n  </person>\r\n\r\n\r\n\r\n</example>";
+        var xml1 = "<example>\r\n  <person>\r\n    <firstName/>\r\n    <lastName/>\r\n\r\n  </person>\r\n</example>";
+        var differences = CompareXml(xml1, xml2);
     }
 
     private static void Example3()
@@ -41,16 +43,14 @@ public class XmlHelper
         return CompareNodes(doc1.Root, doc2.Root);
     }
 
-    private static List<string> CompareNodes(XElement node1, XElement node2, bool compareNodeNames = true, bool compareNodeValues = true)
+    private static List<string> CompareNodes(XElement? node1, XElement? node2, bool compareNodeValues = true)
     {
         var differences = new List<string>();
-
-        if (compareNodeNames)
+        if (node1 == null && node2 == null) return differences;
+        
+        if (node1.Name != node2.Name)
         {
-            if (node1.Name != node2.Name)
-            {
-                differences.Add($"Tags differ: {node1.Name} vs {node2.Name}");
-            }
+            differences.Add($"Tags differ: {node1.Name} vs {node2.Name}");
         }
 
         if (compareNodeValues)
@@ -73,6 +73,7 @@ public class XmlHelper
             }
         }
 
+        // TODO:
         // Compare child nodes recursively
         var childNodes1 = node1.Nodes();
         var childNodes2 = node2.Nodes();
@@ -86,9 +87,11 @@ public class XmlHelper
                 continue;
             }
 
-            differences.AddRange(CompareNodes(childNodes1.ElementAt(i) as XElement, childNodes2.ElementAt(i) as XElement));
+            var childNodesDifferences = CompareNodes(childNodes1.ElementAt(i) as XElement, childNodes2.ElementAt(i) as XElement);
+            differences.AddRange(childNodesDifferences);
         }
 
+        // TODO:
         // Check for extra nodes in second XML
         for (int i = childNodes2.Count(); i > childNodes1.Count(); i--)
         {
