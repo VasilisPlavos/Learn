@@ -8,10 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Files\products1.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\products2.xml">
+    <Content Include="Files\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
