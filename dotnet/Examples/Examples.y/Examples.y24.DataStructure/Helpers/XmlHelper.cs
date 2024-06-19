@@ -22,8 +22,8 @@ public class XmlHelper
 
     private static void Example2()
     {
-        var xml2 = "<example>\r\n\r\n\r\n\r\n  <person>\r\n\r\n\r\n\r\n \r\n\r\n    <tel/>   <firstName/>\r\n\r\n<lastName/>\r\n\r\n\r\n\r\n  </person>\r\n\r\n\r\n\r\n</example>";
-        var xml1 = "<example>\r\n  <person>\r\n    <firstName/>\r\n    <lastName/>\r\n\r\n  </person>\r\n</example>";
+        var xml1 = "<example>\r\n\r\n\r\n\r\n  <person>\r\n\r\n\r\n\r\n \r\n\r\n    <tel/>   <firstName/>\r\n\r\n<lastName/>\r\n\r\n\r\n\r\n  </person>\r\n\r\n\r\n\r\n</example>";
+        var xml2 = "<example>\r\n  <person>\r\n    <firstName/>\r\n    <lastName/>\r\n\r\n  </person>\r\n</example>";
         var differences = CompareXml(xml1, xml2);
     }
 
@@ -43,7 +43,7 @@ public class XmlHelper
         return CompareNodes(doc1.Root, doc2.Root);
     }
 
-    private static List<string> CompareNodes(XElement? node1, XElement? node2, bool compareNodeValues = true)
+    private static List<string> CompareNodes(XElement node1, XElement node2, bool compareNodeValues = true)
     {
         var differences = new List<string>();
         if (node1 == null && node2 == null) return differences;
@@ -51,6 +51,7 @@ public class XmlHelper
         if (node1.Name != node2.Name)
         {
             differences.Add($"Tags differ: {node1.Name} vs {node2.Name}");
+            return differences;
         }
 
         if (compareNodeValues)
@@ -73,30 +74,27 @@ public class XmlHelper
             }
         }
 
-        // TODO:
         // Compare child nodes recursively
-        var childNodes1 = node1.Nodes();
-        var childNodes2 = node2.Nodes();
+        var childNodes1 = node1.Nodes().ToList();
+        var childNodes2 = node2.Nodes().ToList();
 
-        for (int i = 0; i < childNodes1.Count(); i++)
+        foreach (var xNode1 in childNodes1.OfType<XElement>())
         {
-            if (childNodes2.Count() <= i)
+            var xNode2 = childNodes2.OfType<XElement>().FirstOrDefault(x => x.Name.LocalName == xNode1.Name.LocalName);
+            if (xNode2 == null)
             {
-                //differences.Add($"Missing child node: {childNodes1.ElementAt(i).Name}");
-                differences.Add($"Missing child node: {childNodes1.ElementAt(i)}");
+                differences.Add($"Missing child node on second xml: {xNode1.Name}");
                 continue;
             }
 
-            var childNodesDifferences = CompareNodes(childNodes1.ElementAt(i) as XElement, childNodes2.ElementAt(i) as XElement);
+            var childNodesDifferences = CompareNodes(xNode1, xNode2);
             differences.AddRange(childNodesDifferences);
         }
 
-        // TODO:
-        // Check for extra nodes in second XML
-        for (int i = childNodes2.Count(); i > childNodes1.Count(); i--)
+        foreach (var xNode2 in childNodes2.OfType<XElement>())
         {
-            //differences.Add($"Extra child node in second XML: {childNodes2.ElementAt(i).Name}");
-            differences.Add($"Extra child node in second XML: {childNodes2.ElementAt(i)}");
+            var exist = childNodes1.OfType<XElement>().Any(x => x.Name.LocalName == xNode2.Name.LocalName);
+            if (!exist) differences.Add($"Missing child node on first xml: {xNode2.Name}");
         }
 
         return differences;
