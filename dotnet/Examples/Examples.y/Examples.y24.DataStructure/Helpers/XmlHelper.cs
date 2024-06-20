@@ -112,7 +112,7 @@ public class XmlHelper
         // Compare child nodes recursively
         foreach (var xNode1 in childNodes1.OfType<XElement>())
         {
-            var xNode2 = childNodes2.OfType<XElement>().FirstOrDefault(x => x.Name.LocalName == xNode1.Name.LocalName);
+            var xNode2 = FindNode(childNodes2, xNode1);
             if (xNode2 == null)
             {
                 differences.Add($"Missing child node on second xml: {xNode1.Name}");
@@ -135,4 +135,11 @@ public class XmlHelper
 
         return differences;
     }
+
+    static XElement FindNode(List<XNode> childNodes2, XElement xNode1)
+	{
+		var xElement = childNodes2.OfType<XElement>().FirstOrDefault(x => x.ToString() == xNode1.ToString());
+		xElement ??= childNodes2.OfType<XElement>().FirstOrDefault(x => x.Name.LocalName == xNode1.Name.LocalName);
+		return xElement;
+	}
 }
