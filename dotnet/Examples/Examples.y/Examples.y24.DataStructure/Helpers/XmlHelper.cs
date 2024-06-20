@@ -63,7 +63,7 @@ public class XmlHelper
     private static List<string> CompareNodes(XElement node1, XElement node2, bool ignoreNodeValues = false)
     {
         var differences = new List<string>();
-        
+
         if (node1.Name != node2.Name)
         {
             differences.Add($"Tags differ: {node1.Name} vs {node2.Name}");
@@ -119,6 +119,7 @@ public class XmlHelper
                 continue;
             }
 
+            childNodes2.Remove(xNode2);
             var childNodesDifferences = CompareNodes(xNode1, xNode2, ignoreNodeValues);
             differences.AddRange(childNodesDifferences);
         }
