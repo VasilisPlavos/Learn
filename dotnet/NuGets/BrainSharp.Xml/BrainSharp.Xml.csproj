@@ -1,14 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>A library to handle XML files</Title>
+    <Description>Handle and compare xml file easily</Description>
+    <PackageProjectUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.Xml</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.Xml</RepositoryUrl>
+    <PackageTags>tag1 tag2 tag3</PackageTags>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>BrainSharp.Xml</PackageId>
     <Version>0.0.1</Version>
     <Authors>Vasilis Plavos</Authors>
     <Company>BrainSharp</Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
