@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>A library to handle XML files</Title>
+    <Description>Handle and compare xml file easily</Description>
+    <PackageProjectUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.XmlDiff</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.XmlDiff</RepositoryUrl>
+    <PackageTags>tag1 tag2 tag3</PackageTags>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
+    <PackageId>BrainSharp.XmlDiff</PackageId>
+    <Version>1.0.3</Version>
+    <Authors>Vasilis Plavos</Authors>
+    <Company>BrainSharp</Company>
+  </PropertyGroup>
+
+</Project>
