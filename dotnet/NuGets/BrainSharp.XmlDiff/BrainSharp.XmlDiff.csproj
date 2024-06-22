@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
     <PackageId>BrainSharp.XmlDiff</PackageId>
     <Version>1.0.2</Version>
     <Authors>Vasilis Plavos</Authors>
