@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Xml;
+using System.Xml.Linq;
 
 namespace BrainSharp.Xml;
 
@@ -6,6 +7,20 @@ public class Xml
 {
     public static List<string> ExplainDifference(XDocument doc1, XDocument doc2, bool ignoreNodeValues = false)
     {
+        return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
+    }
+
+    public static List<string> ExplainDifference(string xml1Content, string xml2Content, bool ignoreNodeValues = false)
+    {
+        var doc1 = Parse(xml1Content);
+        var doc2 = Parse(xml2Content);
+        return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
+    }
+
+    public static async Task<List<string>> ExplainDifferenceFromFilesAsync(string file1Path, string file2Path, bool ignoreNodeValues = false)
+    {
+        var doc1 = await ParseFromFileAsync(file1Path);
+        var doc2 = await ParseFromFileAsync(file2Path);
         return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
     }
 
@@ -30,6 +45,12 @@ public class Xml
     public static XDocument ParseFromFile(string path)
     {
         return XDocument.Load(path);
+    }
+
+    public static async Task<XDocument> ParseFromFileAsync(string path, LoadOptions loadOptions = LoadOptions.None, CancellationToken cancellationToken = default)
+    {
+        var stream = XmlReader.Create(path, new XmlReaderSettings { Async = true });
+        return await XDocument.LoadAsync(stream, loadOptions, cancellationToken);
     }
 
     private static List<string> CompareNodes(XElement node1, XElement node2, bool ignoreNodeValues = false)
