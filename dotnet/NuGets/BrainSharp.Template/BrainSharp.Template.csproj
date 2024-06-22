@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>This is the title of the solution</Title>
+    <Description>This is the description</Description>
+    <PackageProjectUrl>https://github.com/vasilisplavos/nugets/template</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/vasilisplavos/nugets/template</RepositoryUrl>
+    <PackageTags>tag1 tag2 tag3</PackageTags>
+    <PackageReleaseNotes>Linux support added</PackageReleaseNotes>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
@@ -9,7 +16,6 @@
     <Version>0.0.1</Version>
     <Authors>Vasilis Plavos</Authors>
     <Company>BrainSharp</Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
