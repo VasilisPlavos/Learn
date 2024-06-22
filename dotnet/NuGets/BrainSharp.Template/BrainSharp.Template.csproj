@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
+    <PackageId>BrainSharp.Template</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Vasilis Plavos</Authors>
+    <Company>BrainSharp</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>
