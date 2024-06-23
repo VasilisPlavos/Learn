@@ -46,6 +46,6 @@ dotnet pack
 
 ## 4. Publish the package
 ```
-dotnet nuget push .\bin\Release\BrainSharp.XmlDiff.1.0.2.nupkg --api-key qz2jga8pl3dvn2akksyquwcs9ygggg4exypy3bhxy6w6x6 --source https://api.nuget.org/v3/index.json
+dotnet nuget push .\bin\Release\BrainSharp.XmlDiff.1.0.2.nupkg --api-key <key-here> --source https://api.nuget.org/v3/index.json
 ```
 
