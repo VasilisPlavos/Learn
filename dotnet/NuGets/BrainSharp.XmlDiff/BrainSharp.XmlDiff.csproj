@@ -13,7 +13,7 @@
     <Nullable>enable</Nullable>
     <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
     <PackageId>BrainSharp.XmlDiff</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Authors>Vasilis Plavos</Authors>
     <Company>BrainSharp</Company>
   </PropertyGroup>
