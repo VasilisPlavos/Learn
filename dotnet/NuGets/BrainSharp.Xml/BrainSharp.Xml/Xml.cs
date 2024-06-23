@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace BrainSharp.Xml;
 
@@ -14,6 +13,13 @@ public class Xml
     {
         var doc1 = Parse(xml1Content);
         var doc2 = Parse(xml2Content);
+        return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
+    }
+
+    public static List<string> ExplainDifferenceFromFiles(string file1Path, string file2Path, bool ignoreNodeValues = false)
+    {
+        var doc1 = ParseFromFile(file1Path);
+        var doc2 = ParseFromFile(file2Path);
         return CompareNodes(doc1.Root, doc2.Root, ignoreNodeValues);
     }
 
@@ -47,10 +53,12 @@ public class Xml
         return XDocument.Load(path);
     }
 
-    public static async Task<XDocument> ParseFromFileAsync(string path, LoadOptions loadOptions = LoadOptions.None, CancellationToken cancellationToken = default)
+    // TODO: Not working as explected - currently override by sync
+    public static async Task<XDocument> ParseFromFileAsync(string path)
     {
-        var stream = XmlReader.Create(path, new XmlReaderSettings { Async = true });
-        return await XDocument.LoadAsync(stream, loadOptions, cancellationToken);
+        return ParseFromFile(path);
+    //    var stream = XmlReader.Create(path, new XmlReaderSettings { Async = true });
+    //    return await XDocument.LoadAsync(stream, loadOptions, cancellationToken);
     }
 
     private static List<string> CompareNodes(XElement node1, XElement node2, bool ignoreNodeValues = false)
@@ -135,4 +143,5 @@ public class Xml
         xElement ??= childNodes2.OfType<XElement>().FirstOrDefault(x => x.Name.LocalName == xNode1.Name.LocalName);
         return xElement;
     }
+
 }
