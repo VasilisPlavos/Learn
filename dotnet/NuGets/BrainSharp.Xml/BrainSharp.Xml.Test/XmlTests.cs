@@ -46,9 +46,12 @@ namespace BrainSharp.Xml.Test
         [Test]
         public void ExplainDifference_XDocuments_155Differences()
         {
+
+            //C:\Users\vplav\Gits\Learn\dotnet\NuGets\BrainSharp.Xml\BrainSharp.Xml.Test\bin\Debug\net8.0\\Files\products1.xml
+            //
             // Arrange
-            var filePath1 = $@"{Directory.GetCurrentDirectory()}\Files\products1.xml";
-            var filePath2 = $@"{Directory.GetCurrentDirectory()}\Files\products2.xml";
+            var filePath1 = $@"{AppContext.BaseDirectory}Files\products1.xml";
+            var filePath2 = $@"{AppContext.BaseDirectory}\Files\products2.xml";
             var xdoc1 = Xml.ParseFromFile(filePath1);
             var xdoc2 = Xml.ParseFromFile(filePath2);
 
@@ -63,8 +66,8 @@ namespace BrainSharp.Xml.Test
         public async Task ExplainDifferenceFromFileAsync_TwoFiles_155Differences()
         {
             // Arrange
-            var filePath1 = $@"{Directory.GetCurrentDirectory()}\Files\products1.xml";
-            var filePath2 = $@"{Directory.GetCurrentDirectory()}\Files\products2.xml";
+            var filePath1 = $@"{AppContext.BaseDirectory}\Files\products1.xml";
+            var filePath2 = $@"{AppContext.BaseDirectory}\Files\products2.xml";
 
             // Act
             var listOfDifferences = await Xml.ExplainDifferenceFromFilesAsync(filePath1, filePath2);
@@ -77,8 +80,8 @@ namespace BrainSharp.Xml.Test
         public void ExplainDifferenceFromFile_TwoFiles_155Differences()
         {
             // Arrange
-            var filePath1 = $@"{Directory.GetCurrentDirectory()}\Files\products1.xml";
-            var filePath2 = $@"{Directory.GetCurrentDirectory()}\Files\products2.xml";
+            var filePath1 = $@"{AppContext.BaseDirectory}\Files\products1.xml";
+            var filePath2 = $@"{AppContext.BaseDirectory}\Files\products2.xml";
 
             // Act
             var listOfDifferences = Xml.ExplainDifferenceFromFiles(filePath1, filePath2);
@@ -95,7 +98,7 @@ namespace BrainSharp.Xml.Test
         //public async Task ExplainDifferenceFromFile_1File_0Differences()
         //{
         //    // Arrange
-        //    var filePath1 = $@"{Directory.GetCurrentDirectory()}\Files\products1.xml";
+        //    var filePath1 = $@"{AppContext.BaseDirectory}\Files\products1.xml";
         //    var doc1 = Xml.ParseFromFile(filePath1);
         //    var doc2 = await Xml.ParseFromFileAsyncReal(filePath1);
 
@@ -110,7 +113,7 @@ namespace BrainSharp.Xml.Test
         public void IsEqual_XDocuments_Succeed()
         {
             // Arrange
-            var xdoc = Xml.ParseFromFile($@"{Directory.GetCurrentDirectory()}\Files\products1.xml");
+            var xdoc = Xml.ParseFromFile($@"{AppContext.BaseDirectory}\Files\products1.xml");
 
             // Act
             var isEqual = Xml.IsEqual(xdoc, xdoc);
@@ -157,7 +160,7 @@ namespace BrainSharp.Xml.Test
         public void ParseFromFile_File_Succeed()
         {
             // Arrange
-            var filePath = $@"{Directory.GetCurrentDirectory()}\Files\products1.xml";
+            var filePath = $@"{AppContext.BaseDirectory}\Files\products1.xml";
 
             // Act
             var xDocument = Xml.ParseFromFile(filePath);
@@ -170,7 +173,7 @@ namespace BrainSharp.Xml.Test
         public async Task ParseFromFileAsync_File_Failed()
         {
             // Arrange
-            var filePath = $@"{Directory.GetCurrentDirectory()}\Files\wrongfilename.xml";
+            var filePath = $@"{AppContext.BaseDirectory}\Files\wrongfilename.xml";
             XDocument? xDocument = null;
 
             // Act
@@ -191,7 +194,7 @@ namespace BrainSharp.Xml.Test
         public async Task ParseFromFileAsync_File_Succeed()
         {
             // Arrange
-            var filePath = $@"{Directory.GetCurrentDirectory()}\Files\products1.xml";
+            var filePath = $@"{AppContext.BaseDirectory}\Files\products1.xml";
 
             // Act
             var xDocument = await Xml.ParseFromFileAsync(filePath);

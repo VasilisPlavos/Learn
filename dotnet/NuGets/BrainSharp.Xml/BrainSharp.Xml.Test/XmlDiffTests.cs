@@ -9,8 +9,8 @@ public class XmlDiffTests
     public void XmlDiff_Compare_IsEqual()
     {
         // Arrange
-        var xml1 = XmlReader.Create($"{Directory.GetCurrentDirectory()}\\Files\\products1.xml");
-        var xml2 = XmlReader.Create($"{Directory.GetCurrentDirectory()}\\Files\\products1.xml");
+        var xml1 = XmlReader.Create($"{AppContext.BaseDirectory}\\Files\\products1.xml");
+        var xml2 = XmlReader.Create($"{AppContext.BaseDirectory}\\Files\\products1.xml");
 
         var diffOpts = XmlDiffOptions.IgnoreNamespaces | XmlDiffOptions.IgnoreComments;
         var diff = new XmlDiff.XmlDiffPatch.XmlDiff(diffOpts);
@@ -26,8 +26,8 @@ public class XmlDiffTests
     public void XmlDiff_Compare_IsNotEqual()
     {
         // Arrange
-        var xml1 = XmlReader.Create($"{Directory.GetCurrentDirectory()}\\Files\\products1.xml");
-        var xml2 = XmlReader.Create($"{Directory.GetCurrentDirectory()}\\Files\\products2.xml");
+        var xml1 = XmlReader.Create($"{AppContext.BaseDirectory}\\Files\\products1.xml");
+        var xml2 = XmlReader.Create($"{AppContext.BaseDirectory}\\Files\\products2.xml");
 
         var diffOpts = XmlDiffOptions.IgnoreNamespaces | XmlDiffOptions.IgnoreComments;
         var diff = new XmlDiff.XmlDiffPatch.XmlDiff(diffOpts);

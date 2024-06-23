@@ -26,7 +26,7 @@ var xDocument = Xml.Parse(xml1);
 ```
 using BrainSharp.Xml;
 
-var filePath = $"{Directory.GetCurrentDirectory()}\\Files\\products1.xml";
+var filePath = $"{AppContext.BaseDirectory}\\Files\\products1.xml";
 var xDocument = await Xml.ParseFromFileAsync(filePath);
 ```
 
@@ -48,8 +48,8 @@ foreach (var difference in listOfDifferences)
 ```
 using BrainSharp.Xml;
 
-var filePath1 = $"{Directory.GetCurrentDirectory()}\\Files\\products1.xml";
-var filePath2 = $"{Directory.GetCurrentDirectory()}\\Files\\products2.xml";
+var filePath1 = $"{AppContext.BaseDirectory}\\Files\\products1.xml";
+var filePath2 = $"{AppContext.BaseDirectory}\\Files\\products2.xml";
 var listOfDifferences = await Xml.ExplainDifferenceFromFilesAsync(filePath1, filePath2);
 foreach (var difference in listOfDifferences)
 {
