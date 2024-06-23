@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<categories>
+  <category id="5" name="Grains/Cereals" desc="Breads, crackers, pasta, and cereal" product_count="7">
+    <products>
+      <node-with-value> value 2</node-with-value>
+      <love />
+      <product id="22" name="Gustaf's Knäckebröd" cost="21" stock="104" discontinued="False" productLove2="yeah2" />
+      <product id="23" name="Tunnbröd" cost="9" stock="61" discontinued="False" />
+      <product id="42" name="Singaporean Hokkien Fried Mee" cost="14" stock="26" discontinued="True" />
+      <product id="52" name="Filo Mix" cost="7" stock="38" discontinued="False" />
+      <product id="56" name="Gnocchi di nonna Alice" cost="38" stock="21" discontinued="False" />
+      <product id="57" name="Ravioli Angelo" cost="19.5" stock="36" discontinued="False" />
+      <product id="64" name="Wimmers gute Semmelknödel" cost="33.25" stock="22" discontinued="False" />
+    </products>
+  </category>
+  <category id="6" name="Meat/Poultry" desc="Prepared meats" product_count="6">
+    <products>
+      <product id="9" name="Mishi Kobe Niku" cost="97" stock="29" discontinued="True" />
+      <product id="17" name="Alice Mutton" cost="39" stock="0" discontinued="True" />
+      <product id="29" name="Thüringer Rostbratwurst" cost="123.79" stock="0" discontinued="True" />
+      <product id="53" name="Perth Pasties" cost="32.8" stock="0" discontinued="True" />
+      <product id="54" name="Tourtière" cost="7.45" stock="21" discontinued="False" />
+      <product id="55" name="Pâté chinois" cost="24" stock="115" discontinued="False" />
+    </products>
+  </category>
+  <category id="7" name="Produce" desc="Dried fruit and bean curd" product_count="5">
+    <products>
+      <product id="7" name="Uncle Bob's Organic Dried Pears" cost="30" stock="15" discontinued="False" />
+      <product id="14" name="Tofu" cost="23.25" stock="35" discontinued="False" />
+      <product id="28" name="Rössle Sauerkraut" cost="45.6" stock="26" discontinued="True" />
+      <product id="51" name="Manjimup Dried Apples" cost="53" stock="20" discontinued="False" />
+      <product id="74" name="Longlife Tofu" cost="10" stock="4" discontinued="False" />
+    </products>
+  </category>
+  <category id="8" name="Seafood" desc="Seaweed and fish" product_count="12">
+    <products>
+      <product id="10" name="Ikura" cost="31" stock="31" discontinued="False" />
+      <product id="13" name="Konbu" cost="6" stock="24" discontinued="False" />
+      <product id="18" name="Carnarvon Tigers" cost="62.5" stock="42" discontinued="False" />
+      <product id="30" name="Nord-Ost Matjeshering" cost="25.89" stock="10" discontinued="False" />
+      <product id="36" name="Inlagd Sill" cost="19" stock="112" discontinued="False" />
+      <product id="37" name="Gravad lax" cost="26" stock="11" discontinued="False" />
+      <product id="40" name="Boston Crab Meat" cost="18.4" stock="123" discontinued="False" />
+      <product id="41" name="Jack's New England Clam Chowder" cost="9.65" stock="85" discontinued="False" />
+      <product id="45" name="Rogede sild" cost="9.5" stock="5" discontinued="False" />
+      <product id="46" name="Spegesild" cost="12" stock="95" discontinued="False" />
+      <product id="58" name="Escargots de Bourgogne" cost="13.25" stock="62" discontinued="False" />
+      <product id="73" name="Röd Kaviar" cost="15" stock="101" discontinued="False" />
+    </products>
+  </category>
+</categories>
