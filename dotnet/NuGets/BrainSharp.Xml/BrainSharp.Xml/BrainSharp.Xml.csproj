@@ -13,19 +13,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>BrainSharp.Xml</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.5</Version>
     <Authors>Vasilis Plavos</Authors>
     <Company>BrainSharp</Company>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 
 
   <ItemGroup>
-    <PackageReference Include="BrainSharp.XmlDiff" Version="1.0.4" />
+    <PackageReference Include="BrainSharp.XmlDiff" Version="1.0.5" />
   </ItemGroup>
 
 </Project>
