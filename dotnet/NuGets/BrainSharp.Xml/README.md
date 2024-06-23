@@ -1,48 +1,74 @@
-[![Build Status](https://travis-ci.org/andrei-m-code/net-core-html-to-image.svg?branch=master)](https://travis-ci.org/andrei-m-code/net-core-html-to-image) [![NuGet](https://img.shields.io/nuget/v/CoreHtmlToImage.svg)](https://www.nuget.org/packages/CoreHtmlToImage/)
+[![NuGet](https://img.shields.io/nuget/v/BrainSharp.Xml.svg)](https://www.nuget.org/packages/BrainSharp.Xml/)
 
-# .NET Core HTML to Image Converter
+# .NET Core library to handle XML files
 
-This is a .NET Core HTML to Image converter. It helps converting HTML strings or URLs to image bytes. Please see the examples:
+Handle and compare xml file easily. Please see the examples:
 
 ## Installation Instructions
-Nuget package available (https://www.nuget.org/packages/CoreHtmlToImage/)
+Nuget package available (https://www.nuget.org/packages/BrainSharp.Xml/)
 ```
-Install-Package CoreHtmlToImage
+Install-Package BrainSharp.Xml
 ```
 dotnet cli:
 ```
-dotnet add package CoreHtmlToImage
+dotnet add package BrainSharp.Xml
 ```
-## Convert HTML string to image bytes
+
+## Parse Xml from String content
 ```
-var converter = new HtmlConverter();
-var html = "<div><strong>Hello</strong> World!</div>";
-var bytes = converter.FromHtmlString(html);
-File.WriteAllBytes("image.jpg", bytes);
+using BrainSharp.Xml;
+
+var xml1 = @"<root><child1>text1</child1><child2 attr1='value1'>text2</child2></root>";
+var xDocument = Xml.Parse(xml1);
 ```
-            
-## Convert URL to image bytes
+
+## Parse Xml from file asynchronously
 ```
-var converter = new HtmlConverter();
-var bytes = converter.FromUrl("http://google.com");
-File.WriteAllBytes("image.jpg", bytes);
+using BrainSharp.Xml;
+
+var filePath = $"{Directory.GetCurrentDirectory()}\\Files\\products1.xml";
+var xDocument = await Xml.ParseFromFileAsync(filePath);
+```
+
+## Find the differences from the XML files
+```
+using BrainSharp.Xml;
+
+string xml1 = @"<root><child1>text1</child1><child2 attr1='value1'>text2</child2></root>";
+string xml2 = @"<root><child1>text1</child1><child2 attr1='value1'>text2</child2></root>";
+
+listOfDifferences = Xml.ExplainDifference(xml1, xml2);
+foreach (var difference in listOfDifferences)
+{
+    Console.WriteLine(difference); // This will not print nothing, since there are no differences
+}  
+```
+
+## Find the differences from XML files, asynchronously using the Filepath
+```
+using BrainSharp.Xml;
+
+var filePath1 = $"{Directory.GetCurrentDirectory()}\\Files\\products1.xml";
+var filePath2 = $"{Directory.GetCurrentDirectory()}\\Files\\products2.xml";
+var listOfDifferences = await Xml.ExplainDifferenceFromFilesAsync(filePath1, filePath2);
+foreach (var difference in listOfDifferences)
+{
+    Console.WriteLine(difference);
+}
 ```
 
 ## Optional parameters
-1. width - output document width. Default is 1024.
-2. format - output image format. Default is Jpg.
-3. quality - output image quality from 1 to 100. Default is 100.
+1. Avoid... [Add context]
 
 ## Roadmap
-* Async methods
-* Non-Windows support
+* Nothing at the moment
 
 ## More about this library
-Because I couldn't find a free implementation of .NET Core HTML to Image library, I've developed my own and hope it will help other people as well. This library wraps very nice wkhtmltoimage tool (https://wkhtmltopdf.org/). I have wkhtmltoimage.exe embedded into my library. This is a very simple implementation. Your contributions are very welcome!
+[Add context]
 
 ## MIT License
 
-Copyright (c) 2020 Andrei M
+Copyright (c) 2024 Vasilis Plavos
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
