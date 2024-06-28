@@ -5,9 +5,7 @@ namespace BrainSharp.Xml.Test
     public class XmlTests
     {
         [SetUp]
-        public void Setup()
-        {
-        }
+        public void Setup(){}
 
         [Test]
         public void ExplainDifference_StringContents_Failed()
@@ -46,9 +44,6 @@ namespace BrainSharp.Xml.Test
         [Test]
         public void ExplainDifference_XDocuments_155Differences()
         {
-
-            //C:\Users\vplav\Gits\Learn\dotnet\NuGets\BrainSharp.Xml\BrainSharp.Xml.Test\bin\Debug\net8.0\\Files\products1.xml
-            //
             // Arrange
             var filePath1 = $@"{AppContext.BaseDirectory}Files\products1.xml";
             var filePath2 = $@"{AppContext.BaseDirectory}\Files\products2.xml";
@@ -77,17 +72,19 @@ namespace BrainSharp.Xml.Test
         }
 
         [Test]
-        public void ExplainDifferenceFromFile_TwoFiles_155Differences()
+        [TestCase("products1.xml", "products2.xml", 155)]
+        [TestCase("products3a.xml", "products3b.xml", 1)] // TODO: This should return 1. Fix it
+        public void ExplainDifferenceFromFile_TwoFiles_XDifferences(string fileName1, string fileName2, int expectedNumberOfDifferences)
         {
             // Arrange
-            var filePath1 = $@"{AppContext.BaseDirectory}\Files\products1.xml";
-            var filePath2 = $@"{AppContext.BaseDirectory}\Files\products2.xml";
+            var filePath1 = $@"{AppContext.BaseDirectory}\Files\{fileName1}";
+            var filePath2 = $@"{AppContext.BaseDirectory}\Files\{fileName2}";
 
             // Act
             var listOfDifferences = Xml.ExplainDifferenceFromFiles(filePath1, filePath2);
 
             // Assert
-            Assert.That(listOfDifferences.Count, Is.EqualTo(155));
+            Assert.That(listOfDifferences.Count, Is.EqualTo(expectedNumberOfDifferences));
         }
 
 
