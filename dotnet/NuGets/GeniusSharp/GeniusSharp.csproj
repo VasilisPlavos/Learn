@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>GeniusSharp: a .NET client for the Genius.com API on steroids</Title>
+    <Description>GeniusSharp provides a simple interface to the song, artist, and lyrics data stored on Genius.com.</Description>
+    <PackageProjectUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/GeniusSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/GeniusSharp</RepositoryUrl>
+    <PackageTags>lyrics-music-library rapgenius rap-genius LyricsAPI GeniusLyrics MusicAPI LyricsFinder CodingMusic MusicLovers DeveloperTools OpenSource MusicTech MusicApp LyricsSearch TechForMusic DotnetProjects MusicLibrary MusicDev LyricsLibrary lyrics genius Genius-Lyrics genius-api download-lyrics genius-lyrics song-lyrics scraping-lyrics</PackageTags>
+    <PackageReleaseNotes>Preview release - under development</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>GeniusSharp</PackageId>
+    <Version>0.0.1-preview</Version>
+    <Authors>Vasilis Plavos</Authors>
+    <Company>BrainSharp</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
