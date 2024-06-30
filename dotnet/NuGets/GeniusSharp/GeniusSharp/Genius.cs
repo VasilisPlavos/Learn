@@ -18,6 +18,7 @@ public class Genius(string accessToken)
     public async Task<List<Song>> SearchSongsByArtistAsync(string artistName, int? maxSongs = null, string sort = "popularity", bool includeFeatures=false)
     {
         var artistId = await SearchArtistIdAsync(artistName);
+      //TODO:  var songs = await GetArtistSongsAsync(artistId);
         throw new NotImplementedException();
     }
 
@@ -28,7 +29,7 @@ public class Genius(string accessToken)
         return artist?.GeniusId;
     }
 
-    private async Task<Artist?> GetArtistAsync(string artistName)
+    public async Task<Artist?> GetArtistAsync(string artistName)
     {
         var artist = await LocalStorageService.GetArtistAsync(artistName);
         if (artist != null) return artist;
@@ -54,6 +55,7 @@ public class Genius(string accessToken)
             return artist;
         }
 
+        if (response.response.hits.Length == 0) return null;
         throw new NotImplementedException();
     }
 

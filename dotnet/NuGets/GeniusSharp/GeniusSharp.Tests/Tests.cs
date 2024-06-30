@@ -17,9 +17,31 @@ namespace GeniusSharp.Tests
         }
 
         [Test]
+        [TestCase("Drake")]
+        [TestCase("Eminem")]
+        public async Task SearchArtist_ShouldReturnArtist(string artistName)
+        {
+            var apiKey = await GetApiKeyAsync();
+            var genius = new Genius(apiKey);
+            var artist = await genius.GetArtistAsync(artistName);
+            Assert.That(artist?.Name, Is.EqualTo(artistName));
+        }
+
+        [Test]
+        [Ignore("To save api requests")]
+        [TestCase("fgdksjgdhjkshfjkdsd")]
+        public async Task SearchArtist_ShouldNotReturnArtist(string artistName)
+        {
+            var apiKey = await GetApiKeyAsync();
+            var genius = new Genius(apiKey);
+            var artist = await genius.GetArtistAsync(artistName);
+            Assert.That(artist, Is.Null);
+        }
+
+        [Test]
         [TestCase("Drake", 130)]
         [TestCase("Eminem", 45)]
-        public async Task SearchArtist_ShouldReturnArtistId(string artistName, int expectedArtistId)
+        public async Task SearchArtistId_ShouldReturnArtistId(string artistName, int expectedArtistId)
         {
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
@@ -29,8 +51,8 @@ namespace GeniusSharp.Tests
 
         [Test]
         [Ignore("To save api requests")]
-        [TestCase("Drake", 130)]
-        public async Task LocalStorage_SavingArtists(string artistName, int expectedArtistId)
+        [TestCase("Drake")]
+        public async Task LocalStorage_SavingArtist(string artistName)
         {
             ClearStorage(true);
             var filePath = Path.Combine(AppContext.BaseDirectory, "storage");
@@ -38,7 +60,7 @@ namespace GeniusSharp.Tests
             var filePathExist = Directory.Exists(filePath);
             Assert.That(filePathExist, Is.False);
 
-            await SearchArtist_ShouldReturnArtistId(artistName, expectedArtistId);
+            await SearchArtist_ShouldReturnArtist(artistName);
 
             filePathExist = Directory.Exists(filePath);
             Assert.That(filePathExist, Is.True);
@@ -51,8 +73,9 @@ namespace GeniusSharp.Tests
         {
             var artistName = "Eminem";
 
-            var Genius = new Genius("");
-            var artist = await Genius.SearchSongsByArtistAsync(artistName);
+            var apiKey = await GetApiKeyAsync();
+            var genius = new Genius(apiKey);
+            var artist = await genius.SearchSongsByArtistAsync(artistName, 3);
         }
 
         private async Task<string> GetApiKeyAsync()
