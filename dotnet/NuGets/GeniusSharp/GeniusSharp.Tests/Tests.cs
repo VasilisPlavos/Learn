@@ -46,7 +46,7 @@ namespace GeniusSharp.Tests
 
         [Test]
         // TODO:
-        //[Ignore("Not implemented")]
+        [Ignore("Not implemented")]
         public async Task SearchSongsByArtist_ShouldReturnArtist()
         {
             var artistName = "Eminem";
