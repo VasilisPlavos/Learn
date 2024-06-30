@@ -46,13 +46,13 @@ namespace GeniusSharp.Tests
 
         [Test]
         // TODO:
-        [Ignore("Not implemented")]
+        //[Ignore("Not implemented")]
         public async Task SearchSongsByArtist_ShouldReturnArtist()
         {
             var artistName = "Eminem";
 
             var Genius = new Genius("");
-            var artist = await Genius.SearchSongsByArtistAsync(artistName, 3, "my name is", true);
+            var artist = await Genius.SearchSongsByArtistAsync(artistName);
         }
 
         private async Task<string> GetApiKeyAsync()
