@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using GeniusSharp.Dtos;
 using GeniusSharp.GeniusApiResponseDtos;
+using GeniusSharp.Services;
 
 namespace GeniusSharp;
 
@@ -23,28 +24,36 @@ public class Genius(string accessToken)
     // https://genius.com/discussions/280987-Whats-the-easiest-way-to-get-an-artist-id
     public async Task<int?> SearchArtistIdAsync(string artistName)
     {
+        var artist = await GetArtistAsync(artistName);
+        return artist?.GeniusId;
+    }
+
+    private async Task<Artist?> GetArtistAsync(string artistName)
+    {
+        var artist = await LocalStorageService.GetArtistAsync(artistName);
+        if (artist != null) return artist;
+
         var response = await SearchAsync(artistName);
         if (response == null) return null;
 
-        var hits = response.response.hits.ToList();
-
-        foreach (var hit in hits.Where(x => x.result.primary_artists.Length == 1))
+        var hits = response.response.hits.Where(x => x.result.primary_artists.Length == 1);
+        foreach (var hit in hits)
         {
             var hitArtist = hit.result.primary_artists.FirstOrDefault();
-            if (hitArtist == null) continue;
-            if (hitArtist.name == artistName)
-            {
-                var artist = new Artist
-                {
-                    GeniusId = hitArtist.id,
-                    IsGeniusVerified = hitArtist.is_verified,
-                    Name = hitArtist.name,
-                    GeniusProfilePicture = hitArtist.image_url
-                };
+            if (hitArtist?.name != artistName) continue;
 
-                return artist.GeniusId;
-            }
+            artist = new Artist
+            {
+                GeniusId = hitArtist.id,
+                IsGeniusVerified = hitArtist.is_verified,
+                Name = hitArtist.name,
+                GeniusProfilePicture = hitArtist.image_url
+            };
+
+            await LocalStorageService.SaveArtistAsync(artist);
+            return artist;
         }
+
         throw new NotImplementedException();
     }
 
