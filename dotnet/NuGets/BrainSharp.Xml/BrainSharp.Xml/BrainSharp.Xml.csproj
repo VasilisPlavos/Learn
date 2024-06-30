@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>A library to handle XML files</Title>
+    <Description>Handle and compare xml file easily</Description>
+    <PackageProjectUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.Xml</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.Xml</RepositoryUrl>
+    <PackageTags>xml xmldiff xmlpatch compare-xml xml-differences</PackageTags>
+    <PackageReleaseNotes>Support XmlDiff and XmlPatch</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>BrainSharp.Xml</PackageId>
+    <Version>1.0.6</Version>
+    <Authors>Vasilis Plavos</Authors>
+    <Company>BrainSharp</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <PackageReference Include="BrainSharp.XmlDiff" Version="1.0.5" />
+  </ItemGroup>
+
+</Project>

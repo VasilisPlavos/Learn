@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<categories>
+  <category id="1" name="Beverages" desc="Soft drinks, coffees, teas, beers, and ales" product_count="12"> </category>
+  <category id="2" name="Condiments" desc="Sweet and savory sauces, relishes, spreads, and seasonings" product_count="12"> </category>
+</categories>

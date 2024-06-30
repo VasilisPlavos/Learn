@@ -1,0 +1,36 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+    - dev
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: deploymentDefaultLocation
+  value: westus3
+
+jobs:
+- job: MyJob1
+  steps:
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    inputs:
+      connectedServiceName: $(ServiceConnectionName)
+      deploymentName: $(Build.BuildNumber)
+      location: $(deploymentDefaultLocation)
+      resourceGroupName: $(ResourceGroupName)
+      csmFile: deploy/main.bicep
+      overrideParameters: >
+        -environmentType $(EnvironmentType)
+        -deployToyManualsStorageAccount $(DeployToyManualsStorageAccount)
+
+  - script: echo Hello, world!
+    displayName: 'Run a one-line script'
+
+  - script: |
+      echo We'll add more steps soon.
+      echo For example, we'll add our Bicep deployment step.
+    displayName: 'Run a multi-line script'

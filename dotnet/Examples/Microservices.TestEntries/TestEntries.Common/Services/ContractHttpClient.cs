@@ -10,10 +10,10 @@ namespace TestEntries.Common.Services
             var jsonPayload = JsonConvert.SerializeObject(payload);
             var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            var requestMessge = new HttpRequestMessage(method, endpointUrl);
-            requestMessge.Content = httpContent;
+            var requestMessage = new HttpRequestMessage(method, endpointUrl);
+            requestMessage.Content = httpContent;
             var client = new HttpClient();
-            var response = await client.SendAsync(requestMessge);
+            var response = await client.SendAsync(requestMessage);
             return response;
         }
     }

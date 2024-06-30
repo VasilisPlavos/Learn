@@ -7,7 +7,7 @@ using TestEntries.Contracts.Contracts.Joke;
 
 namespace TestEntries.Processors.Processors
 {
-    public class GetRandomJokeProcessor
+    public static class GetRandomJokeProcessor
     {
         static readonly ContractHttpClient Client = new();
 
@@ -17,10 +17,10 @@ namespace TestEntries.Processors.Processors
             
             var payload = JObject.FromObject(request.RequestData);
             var response = await Client.SendRequestAsync(HttpMethod.Get, endpointUrl, payload);
-            return await DecerializeResponseAsync(endpointUrl, response);
+            return await DeserializeResponseAsync(response);
         }
 
-        private static async Task<IActionResult> DecerializeResponseAsync(string endpointUrl, HttpResponseMessage response)
+        private static async Task<IActionResult> DeserializeResponseAsync(HttpResponseMessage response)
         {
             var responsePackage = new JokeResponsePackage
             {
@@ -35,7 +35,7 @@ namespace TestEntries.Processors.Processors
 
             if (!response.IsSuccessStatusCode)
             {
-                responsePackage.ResponseHeader.Errors = await PostErrorAsync(endpointUrl, response);
+                responsePackage.ResponseHeader.Errors = await GetErrorAsync(response);
                 return new JsonResult(responsePackage);
             }
 
@@ -46,11 +46,11 @@ namespace TestEntries.Processors.Processors
             return new JsonResult(responsePackage); ;
         }
         
-        private static async Task<List<Error>> PostErrorAsync(string endpointUrl, HttpResponseMessage response)
+        private static async Task<List<Error>> GetErrorAsync(HttpResponseMessage response)
         {
             var responseString = await response.Content.ReadAsStringAsync();
             var error = $"Client.SendRequestAsync: {response.RequestMessage?.Method.Method} {response.RequestMessage?.RequestUri?.AbsoluteUri} return errors. Response:{responseString}";
-            var errors = new List<Error>()
+            var errors = new List<Error>
             {
                 new()
                 {

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>A library to handle XML files</Title>
+    <Description>Generates difference files based on the comparison of two XML documents.  This code is based on a very old .Net 1.0 example project.  I do not own the code, nor do I maintain it.  I am not affiliated with Microsoft in any way.</Description>
+    <PackageProjectUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.XmlDiff</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/BrainSharp.XmlDiff</RepositoryUrl>
+    <PackageTags>tag1 tag2 tag3</PackageTags>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
+    <PackageId>BrainSharp.XmlDiff</PackageId>
+    <Version>1.0.5</Version>
+    <Authors>Vasilis Plavos</Authors>
+    <Company>BrainSharp</Company>
+  </PropertyGroup>
+
+</Project>
