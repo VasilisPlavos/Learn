@@ -2,7 +2,6 @@
 
 public class SearchResponseDto
 {
-
     public class Rootobject
     {
         public Meta meta { get; set; }
@@ -40,7 +39,7 @@ public class SearchResponseDto
         public string lyrics_state { get; set; }
         public string path { get; set; }
         public string primary_artist_names { get; set; }
-        public int pyongs_count { get; set; }
+        public int? pyongs_count { get; set; }
         public string relationships_index_url { get; set; }
         public Release_Date_Components release_date_components { get; set; }
         public string release_date_for_display { get; set; }
@@ -59,14 +58,14 @@ public class SearchResponseDto
     public class Release_Date_Components
     {
         public int year { get; set; }
-        public int month { get; set; }
-        public int day { get; set; }
+        public int? month { get; set; }
+        public int? day { get; set; }
     }
 
     public class Stats
     {
         public int unreviewed_annotations { get; set; }
-        public int concurrents { get; set; }
+        public int? concurrents { get; set; }
         public bool hot { get; set; }
         public int pageviews { get; set; }
     }
@@ -94,7 +93,7 @@ public class SearchResponseDto
         public bool is_verified { get; set; }
         public string name { get; set; }
         public string url { get; set; }
-        public int iq { get; set; }
+        public int? iq { get; set; }
     }
 
     public class Primary_Artists
