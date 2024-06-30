@@ -3,6 +3,19 @@
 2. Translations
 3. Make everything works programmaticly
 
+### Quick-n-dirty 2 hack
+I can just edit the public holidays of argies.gr
+
+1. Go to [argies.gr](https://argies.gr/), login, open console
+1. add this function
+    ```
+    function addOrUpdateHoliday(d, m, title){
+        $.getJSON(`/ajax/add-or-update-holiday?id=f%3A2%3A1&name=${title}&moveable=0&offset=0&day=${d}&month=${m}`)
+    }
+    ```
+1. Add the holidays using the function. example `addOrUpdateHoliday(20, 05, "Pfingstmontag")`
+
+
 ### Quick-n-dirty hack
 With this hack I can use argies.gr for 2024
 
@@ -22,7 +35,7 @@ function addYellow() {
 ```
 
 ### Quick-n-dirty hack for Tampermonkey
-Copy paste the above code to Tampermonkey and then visit (argies.gr)[https://argies.gr/]
+Copy paste the above code to Tampermonkey and then visit [argies.gr](https://argies.gr/)
 
 ```
 // ==UserScript==
