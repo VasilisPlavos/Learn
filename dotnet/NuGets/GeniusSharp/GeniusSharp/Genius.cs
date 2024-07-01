@@ -26,7 +26,11 @@ public class Genius(string accessToken)
 
     public async Task<List<SongsResponseDto.Song>> GetSongsAsync(int artistGeniusId, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
     {
-        var songs = new List<SongsResponseDto.Song>();
+        var songs = await LocalStorageService.GetSongsAsync(artistGeniusId);
+        if (songs != null) return songs;
+
+        songs = new List<SongsResponseDto.Song>();
+
         int? page = 1;
         while (page != null)
         {
@@ -45,8 +49,10 @@ public class Genius(string accessToken)
             page = responseDto.response.next_page;
         }
 
+        await LocalStorageService.SaveSongsAsync(artistGeniusId, songs);
+
         if (includeFeatures) return songs;
-        songs = songs.Where(x => x.primary_artists.Any(x => x.id == artistGeniusId)).ToList();
+        songs = songs.Where(s => s.primary_artists.Any(a => a.id == artistGeniusId)).ToList();
 
         return songs;
     }
