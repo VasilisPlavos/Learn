@@ -1,6 +1,6 @@
 ﻿namespace GeniusSharp.GeniusApiDtos;
 
-public class GeniusArtist
+public record GeniusArtist
 {
     public string api_path { get; set; }
     public string header_image_url { get; set; }
