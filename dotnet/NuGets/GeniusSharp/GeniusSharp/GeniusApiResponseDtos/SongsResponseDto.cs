@@ -44,7 +44,7 @@ public class SongsResponseDto
         public string title { get; set; }
         public string title_with_featured { get; set; }
         public string url { get; set; }
-        public object[] featured_artists { get; set; }
+        public SearchResponseDto.Featured_Artists[] featured_artists { get; set; }
         public Primary_Artist primary_artist { get; set; }
         public Primary_Artists[] primary_artists { get; set; }
     }
