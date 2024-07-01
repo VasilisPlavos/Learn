@@ -37,13 +37,9 @@ public class Genius(string accessToken)
             var responseDto = await response.Content.ReadFromJsonAsync<SongsResponseDto.Rootobject>();
 
             if (responseDto?.meta.status != 200) throw new NotImplementedException();
-            foreach (var responseSong in responseDto.response.songs.ToList())
-            {
-                if (responseSong.primary_artists.Any(x => x.id == artistGeniusId) || responseSong.featured_artists.Any(x => x.id == artistGeniusId))
-                {
-                    songs.Add(responseSong);
-                }
-            }
+
+            var relatedSongs = responseDto.response.songs.Where(s => s.featured_artists.Any(fa => fa.id == artistGeniusId) || s.primary_artists.Any(pr => pr.id == artistGeniusId)).ToList();
+            songs.AddRange(relatedSongs);
 
             page = responseDto.response.next_page;
         }
