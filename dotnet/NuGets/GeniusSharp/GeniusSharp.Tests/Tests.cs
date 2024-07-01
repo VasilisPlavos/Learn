@@ -1,3 +1,5 @@
+using GeniusSharp.Dtos;
+
 namespace GeniusSharp.Tests
 {
     public class Tests
@@ -23,7 +25,7 @@ namespace GeniusSharp.Tests
         {
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
-            var artist = await genius.GetArtistAsync(artistName);
+            var artist = await genius.SearchArtistAsync(artistName);
             Assert.That(artist?.Name, Is.EqualTo(artistName));
         }
 
@@ -34,13 +36,14 @@ namespace GeniusSharp.Tests
         {
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
-            var artist = await genius.GetArtistAsync(artistName);
+            var artist = await genius.SearchArtistAsync(artistName);
             Assert.That(artist, Is.Null);
         }
 
         [Test]
         [TestCase("Drake", 130)]
         [TestCase("Eminem", 45)]
+        [TestCase("Pek", 113643)] // TODO: Not working! I have to scrape the html and find it there
         public async Task SearchArtistId_ShouldReturnArtistId(string artistName, int expectedArtistId)
         {
             var apiKey = await GetApiKeyAsync();
@@ -71,11 +74,11 @@ namespace GeniusSharp.Tests
         [Ignore("Not implemented")]
         public async Task SearchSongsByArtist_ShouldReturnArtist()
         {
-            var artistName = "Eminem";
+            var artistName = "Drake";
 
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
-            var artist = await genius.SearchSongsByArtistAsync(artistName, 3);
+            var artist = await genius.SearchSongsByArtistAsync(artistName);
         }
 
         private async Task<string> GetApiKeyAsync()

@@ -15,21 +15,42 @@ public class Genius(string accessToken)
     });
 
 
-    public async Task<List<Song>> SearchSongsByArtistAsync(string artistName, int? maxSongs = null, string sort = "popularity", bool includeFeatures=false)
+    public async Task<List<SongsResponseDto.Song>> SearchSongsByArtistAsync(string artistName, int maxSongs = 50, string sort = "popularity", bool includeFeatures=false)
     {
-        var artistId = await SearchArtistIdAsync(artistName);
-      //TODO:  var songs = await GetArtistSongsAsync(artistId);
-        throw new NotImplementedException();
+        var artist = await SearchArtistAsync(artistName);
+        if (artist == null) return null;
+        
+        var songs = await GetSongsAsync(artist, maxSongs, sort, includeFeatures);
+        return songs;
+    }
+
+    private async Task<List<SongsResponseDto.Song>> GetSongsAsync(Artist artist, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
+    {
+        var songs = new List<SongsResponseDto.Song>();
+        int? page = 1;
+        while (page != null)
+        {
+            var response = await _client.GetAsync($"http://api.genius.com/artists/{artist.GeniusId}/songs?access_token={accessToken}&per_page={maxSongs}&page={page}&sort={sort}");
+            var responseDto = await response.Content.ReadFromJsonAsync<SongsResponseDto.Rootobject>();
+
+            if (responseDto?.meta.status != 200) throw new NotImplementedException();
+            var artistSongs = responseDto.response.songs.Where(x => x.primary_artists.Length == 1 && x.primary_artists[0].name == artist.Name).ToList();
+            songs.AddRange(artistSongs);
+
+            page = responseDto.response.next_page;
+        }
+
+        return songs;
     }
 
     // https://genius.com/discussions/280987-Whats-the-easiest-way-to-get-an-artist-id
     public async Task<int?> SearchArtistIdAsync(string artistName)
     {
-        var artist = await GetArtistAsync(artistName);
+        var artist = await SearchArtistAsync(artistName);
         return artist?.GeniusId;
     }
 
-    public async Task<Artist?> GetArtistAsync(string artistName)
+    public async Task<Artist?> SearchArtistAsync(string artistName)
     {
         var artist = await LocalStorageService.GetArtistAsync(artistName);
         if (artist != null) return artist;
@@ -37,7 +58,7 @@ public class Genius(string accessToken)
         var response = await SearchAsync(artistName);
         if (response == null) return null;
 
-        var hits = response.response.hits.Where(x => x.result.primary_artists.Length == 1);
+        var hits = response.response.hits.Where(x => x.result.primary_artists.Length == 1).ToList();
         foreach (var hit in hits)
         {
             var hitArtist = hit.result.primary_artists.FirstOrDefault();
@@ -59,11 +80,13 @@ public class Genius(string accessToken)
         throw new NotImplementedException();
     }
 
-    private async Task<SearchResponseDto?> SearchAsync(string artistName)
+    private async Task<SearchResponseDto.Rootobject?> SearchAsync(string artistName)
     {
-        var response = await _client.GetAsync($"http://api.genius.com/search?q={artistName}&access_token={accessToken}");
-        var responseDto = await response.Content.ReadFromJsonAsync<SearchResponseDto>();
-        
+        var response = await _client.GetAsync($"http://api.genius.com/search?q={artistName}&access_token={accessToken}&per_page=50");
+        // var responseString = await response.Content.ReadAsStringAsync();
+        // var responseDto = JsonConvert.DeserializeObject<SearchResponseDto.Rootobject>(responseString);
+        var responseDto = await response.Content.ReadFromJsonAsync<SearchResponseDto.Rootobject>();
+
         if (responseDto?.meta.status != 200) throw new NotImplementedException();
         return responseDto;
     }
