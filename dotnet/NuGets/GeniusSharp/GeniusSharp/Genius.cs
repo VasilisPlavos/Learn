@@ -26,7 +26,11 @@ public class Genius(string accessToken)
     public async Task<List<SongsResponseDto.Song>> GetSongsAsync(int artistGeniusId, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
     {
         var songs = await LocalStorageService.GetSongsAsync(artistGeniusId);
-        if (songs != null) return includeFeatures ? songs : songs.Where(s => s.primary_artists.Any(a => a.id == artistGeniusId)).ToList();
+        if (songs != null)
+        {
+            await LocalStorageService.SaveArtistsAsync(songs);
+            return includeFeatures ? songs : songs.Where(s => s.primary_artists.Any(a => a.id == artistGeniusId)).ToList();
+        }
 
         songs = new List<SongsResponseDto.Song>();
 

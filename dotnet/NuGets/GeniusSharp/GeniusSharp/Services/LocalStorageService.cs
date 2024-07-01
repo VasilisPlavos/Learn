@@ -45,13 +45,42 @@ internal static class LocalStorageService
 
     public static async Task SaveArtistAsync(Artist artist)
     {
-        var directory = Path.Combine(AppContext.BaseDirectory, "storage", "artists", artist.Name);
-        Directory.CreateDirectory(directory);
+        try
+        {
+            var directory = Path.Combine(AppContext.BaseDirectory, "storage", "artists", artist.Name);
+            Directory.CreateDirectory(directory);
+            var filePath = Path.Combine(directory, $"{artist.Name}.json");
+            if (File.Exists(filePath)) return;
 
-        var json = JsonConvert.SerializeObject(artist);
-        var filePath = Path.Combine(directory, $"{artist.Name}.json");
-        await using var sw = new StreamWriter(filePath);
-        await sw.WriteAsync(json);
+            var json = JsonConvert.SerializeObject(artist);
+            await using var sw = new StreamWriter(filePath);
+            await sw.WriteAsync(json);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    public static async Task SaveArtistsAsync(List<SongsResponseDto.Song>? songs)
+    {
+        if (songs == null) return;
+
+        var taskList = new List<Task>();
+        foreach (var song in songs)
+        {
+            foreach (var artist in song.featured_artists)
+            {
+                taskList.Add(SaveArtistAsync(new Artist { Name = artist.name, GeniusId = artist.id, GeniusProfilePicture = artist.image_url, IsGeniusVerified = artist.is_verified }));
+            }
+
+            foreach (var artist in song.primary_artists)
+            {
+                taskList.Add(SaveArtistAsync(new Artist { Name = artist.name, GeniusId = artist.id, GeniusProfilePicture = artist.image_url, IsGeniusVerified = artist.is_verified }));
+            }
+        }
+
+        await Task.WhenAll(taskList);
     }
 
     public static async Task SaveSongsAsync(int artistGeniusId, List<SongsResponseDto.Song> songs)

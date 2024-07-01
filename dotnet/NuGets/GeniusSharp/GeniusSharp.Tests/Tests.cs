@@ -70,8 +70,10 @@ namespace GeniusSharp.Tests
         }
 
         [Test]
-        [TestCase("Drake", true, 1159)]
         [TestCase("Drake", false, 736)]
+        [TestCase("Drake", true, 1159)]
+        [TestCase("Kodak Black", false, 480)]
+        [TestCase("Kodak Black", true, 690)]
         public async Task SearchSongsByArtist_ShouldReturnArtist(string artistName, bool includeFeatures, int expectedSongs)
         {
 
