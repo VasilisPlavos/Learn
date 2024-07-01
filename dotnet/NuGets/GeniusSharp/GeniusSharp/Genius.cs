@@ -20,14 +20,13 @@ public class Genius(string accessToken)
         var artist = await SearchArtistAsync(artistName);
         if (artist == null) throw new NotImplementedException();
 
-        var songs = await GetSongsAsync(artist.GeniusId, maxSongs, sort, includeFeatures);
-        return songs;
+        return await GetSongsAsync(artist.GeniusId, maxSongs, sort, includeFeatures);
     }
 
     public async Task<List<SongsResponseDto.Song>> GetSongsAsync(int artistGeniusId, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
     {
         var songs = await LocalStorageService.GetSongsAsync(artistGeniusId);
-        if (songs != null) return songs;
+        if (songs != null) return includeFeatures ? songs : songs.Where(s => s.primary_artists.Any(a => a.id == artistGeniusId)).ToList();
 
         songs = new List<SongsResponseDto.Song>();
 
@@ -50,11 +49,7 @@ public class Genius(string accessToken)
         }
 
         await LocalStorageService.SaveSongsAsync(artistGeniusId, songs);
-
-        if (includeFeatures) return songs;
-        songs = songs.Where(s => s.primary_artists.Any(a => a.id == artistGeniusId)).ToList();
-
-        return songs;
+        return includeFeatures ? songs : songs.Where(s => s.primary_artists.Any(a => a.id == artistGeniusId)).ToList();
     }
 
     // https://genius.com/discussions/280987-Whats-the-easiest-way-to-get-an-artist-id
