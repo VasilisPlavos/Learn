@@ -26,16 +26,24 @@ public class Genius(string accessToken)
 
     private async Task<List<SongsResponseDto.Song>> GetSongsAsync(Artist artist, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
     {
+        var songs = await GetSongsAsync(artist.GeniusId, maxSongs, sort);
+        if (includeFeatures) return songs;
+        songs = songs.Where(x => x.primary_artists.Length == 1 && x.primary_artists[0].name == artist.Name).ToList();
+        return songs;
+    }
+
+    public async Task<List<SongsResponseDto.Song>> GetSongsAsync(int artistGeniusId, int maxSongs = 50, string sort = "popularity")
+    {
         var songs = new List<SongsResponseDto.Song>();
         int? page = 1;
         while (page != null)
         {
-            var response = await _client.GetAsync($"http://api.genius.com/artists/{artist.GeniusId}/songs?access_token={accessToken}&per_page={maxSongs}&page={page}&sort={sort}");
+            var response = await _client.GetAsync($"http://api.genius.com/artists/{artistGeniusId}/songs?access_token={accessToken}&per_page={maxSongs}&page={page}&sort={sort}");
             var responseDto = await response.Content.ReadFromJsonAsync<SongsResponseDto.Rootobject>();
 
             if (responseDto?.meta.status != 200) throw new NotImplementedException();
-            var artistSongs = responseDto.response.songs.Where(x => x.primary_artists.Length == 1 && x.primary_artists[0].name == artist.Name).ToList();
-            songs.AddRange(artistSongs);
+            //var artistSongs = responseDto.response.songs.Where(x => x.primary_artists.Length == 1 && x.primary_artists[0].name == artist.Name).ToList();
+            songs.AddRange(responseDto.response.songs);
 
             page = responseDto.response.next_page;
         }
