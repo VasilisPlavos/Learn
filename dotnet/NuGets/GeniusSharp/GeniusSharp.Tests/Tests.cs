@@ -70,27 +70,26 @@ namespace GeniusSharp.Tests
         }
 
         [Test]
-        // TODO:
-        [Ignore("Not implemented")]
-        public async Task SearchSongsByArtist_ShouldReturnArtist()
+        [TestCase("Drake", true, 25)]
+        [TestCase("Drake", false, 40)]
+        public async Task SearchSongsByArtist_ShouldReturnArtist(string artistName, bool includeFeatures, int expectedSongs)
         {
-            var artistName = "Drake";
 
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
-            var songs = await genius.SearchSongsByArtistAsync(artistName, includeFeatures:true);
+            var songs = await genius.SearchSongsByArtistAsync(artistName, includeFeatures:includeFeatures);
+            Assert.That(songs.Count, Is.EqualTo(expectedSongs));
         }
 
         [Test]
-        public async Task SearchSongsByArtistId_ShouldReturnArtist()
+        [TestCase(113643, 25)]
+        public async Task SearchSongsByArtistId_ShouldReturnArtist(int artistId, int expectedSongs)
         {
-            var artistId = 113643;
-
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
             var songs = await genius.GetSongsAsync(artistId, includeFeatures:true);
 
-            Assert.That(songs.Count, Is.EqualTo(25));
+            Assert.That(songs.Count, Is.EqualTo(expectedSongs));
         }
 
         private async Task<string> GetApiKeyAsync()
