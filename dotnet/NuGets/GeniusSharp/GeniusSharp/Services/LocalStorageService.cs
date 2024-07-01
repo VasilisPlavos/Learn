@@ -1,5 +1,5 @@
 ﻿using GeniusSharp.Dtos;
-using GeniusSharp.GeniusApiResponseDtos;
+using GeniusSharp.GeniusApiDtos;
 using Newtonsoft.Json;
 
 namespace GeniusSharp.Services;

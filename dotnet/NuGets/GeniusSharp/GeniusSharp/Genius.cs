@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using GeniusSharp.Dtos;
-using GeniusSharp.GeniusApiResponseDtos;
+using GeniusSharp.GeniusApiDtos;
 using GeniusSharp.Services;
 
 namespace GeniusSharp;
