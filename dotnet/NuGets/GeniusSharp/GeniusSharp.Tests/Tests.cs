@@ -78,7 +78,19 @@ namespace GeniusSharp.Tests
 
             var apiKey = await GetApiKeyAsync();
             var genius = new Genius(apiKey);
-            var artist = await genius.SearchSongsByArtistAsync(artistName);
+            var songs = await genius.SearchSongsByArtistAsync(artistName, includeFeatures:true);
+        }
+
+        [Test]
+        public async Task SearchSongsByArtistId_ShouldReturnArtist()
+        {
+            var artistId = 113643;
+
+            var apiKey = await GetApiKeyAsync();
+            var genius = new Genius(apiKey);
+            var songs = await genius.GetSongsAsync(artistId, includeFeatures:true);
+
+            Assert.That(songs.Count, Is.EqualTo(25));
         }
 
         private async Task<string> GetApiKeyAsync()

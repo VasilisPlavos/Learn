@@ -18,21 +18,13 @@ public class Genius(string accessToken)
     public async Task<List<SongsResponseDto.Song>> SearchSongsByArtistAsync(string artistName, int maxSongs = 50, string sort = "popularity", bool includeFeatures=false)
     {
         var artist = await SearchArtistAsync(artistName);
-        if (artist == null) return null;
-        
-        var songs = await GetSongsAsync(artist, maxSongs, sort, includeFeatures);
+        if (artist == null) throw new NotImplementedException();
+
+        var songs = await GetSongsAsync(artist.GeniusId, maxSongs, sort, includeFeatures);
         return songs;
     }
 
-    private async Task<List<SongsResponseDto.Song>> GetSongsAsync(Artist artist, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
-    {
-        var songs = await GetSongsAsync(artist.GeniusId, maxSongs, sort);
-        if (includeFeatures) return songs;
-        songs = songs.Where(x => x.primary_artists.Length == 1 && x.primary_artists[0].name == artist.Name).ToList();
-        return songs;
-    }
-
-    public async Task<List<SongsResponseDto.Song>> GetSongsAsync(int artistGeniusId, int maxSongs = 50, string sort = "popularity")
+    public async Task<List<SongsResponseDto.Song>> GetSongsAsync(int artistGeniusId, int maxSongs = 50, string sort = "popularity", bool includeFeatures = false)
     {
         var songs = new List<SongsResponseDto.Song>();
         int? page = 1;
@@ -42,11 +34,19 @@ public class Genius(string accessToken)
             var responseDto = await response.Content.ReadFromJsonAsync<SongsResponseDto.Rootobject>();
 
             if (responseDto?.meta.status != 200) throw new NotImplementedException();
-            //var artistSongs = responseDto.response.songs.Where(x => x.primary_artists.Length == 1 && x.primary_artists[0].name == artist.Name).ToList();
-            songs.AddRange(responseDto.response.songs);
+            foreach (var responseSong in responseDto.response.songs.ToList())
+            {
+                if (responseSong.primary_artists.Any(x => x.id == artistGeniusId) || responseSong.featured_artists.Any(x => x.id == artistGeniusId))
+                {
+                    songs.Add(responseSong);
+                }
+            }
 
             page = responseDto.response.next_page;
         }
+
+        if (includeFeatures) return songs;
+        songs = songs.Where(x => x.primary_artists.Any(x => x.id == artistGeniusId)).ToList();
 
         return songs;
     }
