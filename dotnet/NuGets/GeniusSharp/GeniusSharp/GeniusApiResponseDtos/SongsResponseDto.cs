@@ -44,9 +44,9 @@ public class SongsResponseDto
         public string title { get; set; }
         public string title_with_featured { get; set; }
         public string url { get; set; }
-        public SearchResponseDto.Featured_Artists[] featured_artists { get; set; }
-        public Primary_Artist primary_artist { get; set; }
-        public Primary_Artists[] primary_artists { get; set; }
+        public GeniusArtist[] featured_artists { get; set; }
+        public GeniusArtist primary_artist { get; set; }
+        public GeniusArtist[] primary_artists { get; set; }
     }
 
     public class Stats
@@ -55,19 +55,7 @@ public class SongsResponseDto
         public bool hot { get; set; }
     }
 
-    public class Primary_Artist
-    {
-        public string api_path { get; set; }
-        public string header_image_url { get; set; }
-        public int id { get; set; }
-        public string image_url { get; set; }
-        public bool is_meme_verified { get; set; }
-        public bool is_verified { get; set; }
-        public string name { get; set; }
-        public string url { get; set; }
-    }
-
-    public class Primary_Artists
+    public class GeniusArtist
     {
         public string api_path { get; set; }
         public string header_image_url { get; set; }
