@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace Examples.y24.ImageSharp.ConsoleApp;
+namespace Examples.y24.BackgroundTasks;
 
 public class ConsoleApp8Service : IHostedLifecycleService
 {
