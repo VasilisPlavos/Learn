@@ -39,7 +39,9 @@ public class TimedHostedService : BackgroundService
         int count = Interlocked.Increment(ref _executionCount);
 
         _logger.LogInformation("Timed Hosted Service: {Count}", count);
-        //await _taskQueue.ExecuteAsync(stoppingToken);
+
+        // TODO: I have to fix this! It does the job but it stops the loop
+        await _taskQueue.ExecuteAsync(stoppingToken);
         return;
 
         //_logger.LogInformation("Timed Hosted Service: after _taskQueue.ExecuteAsync(stoppingToken)");
