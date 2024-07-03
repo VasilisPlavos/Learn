@@ -32,7 +32,6 @@ static class Program
                 services.AddScoped<IStorageAccountService, StorageAccountService>();
                 services.AddSingleton(u => new BlobServiceClient(blobConnectionString));
 
-                services.AddHostedService<ConsoleApp8Service>();
                 services.AddHostedService<ConsoleApp6Service>();
             });
 }

@@ -1,0 +1,25 @@
+{
+  "name": "Watch Later Shortcut Extension for YouTube.com",
+  "version": "0.1",
+  "author": "Vasilis Plavos",
+  "description": "Add and remove current video to the Watch Later list by pressing ALT+L.",
+  "manifest_version": 3,
+  "permissions": ["scripting", "activeTab"],
+  "icons": {
+    "32": "/icons/32.png",
+    "128": "/icons/128.png"
+  },
+  "commands": {
+    "add-remove-watch-later": {
+      "suggested_key": {
+        "default": "Alt+L",
+        "mac": "Alt+L",
+        "chromeos": "Alt+L"
+      },
+      "description": "Add/remove the current video from the Watch Later list."
+    }
+  },
+  "background": {
+      "service_worker": "background.js"
+  }
+}
