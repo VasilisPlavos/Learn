@@ -44,27 +44,18 @@ function executeYouTubeCommand(action) {
 }
 
 function initAction(currentUrl) {
-  if (url === "" || url !== currentUrl) {
-    console.log(1)
-    url = currentUrl;
+  if (lastUrl === "" || lastUrl !== currentUrl) {
+    lastUrl = currentUrl;
     action = "add";
     return;
   }
-  if (action === "add") {
-    console.log(2)
-    url = currentUrl;
-    action = "remove";
-    return;
-  }
 
-  console.log(3)
-  url = currentUrl;
-  action = "add";
+  action = action === "add" ? "remove" : "add";
+  lastUrl = currentUrl;
 }
 
-var action = "remove";
-var url = "";
-
+var action = "";
+var lastUrl = "";
 chrome.commands.onCommand.addListener(async (command) => {
 
   if (command === "add-remove-watch-later") {
@@ -75,19 +66,9 @@ chrome.commands.onCommand.addListener(async (command) => {
       url: 'https://www.youtube.com/*',
     });
 
-    if (!activeYouTubeTab) {
-      return;
-    }
-
-
-
-    console.log(`action before init: ${action}`);
-    console.log(`url: ${activeYouTubeTab.url}`);
+    if (!activeYouTubeTab) return;
 
     initAction(activeYouTubeTab.url);
-
-    console.log(`action after init: ${action}`);
-
     await chrome.scripting.executeScript({
       target: {
         tabId: activeYouTubeTab.id,
