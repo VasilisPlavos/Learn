@@ -4,7 +4,7 @@
   "author": "Vasilis Plavos",
   "description": "Add and remove current video to the Watch Later list by pressing ALT+L.",
   "manifest_version": 3,
-  "permissions": ["scripting", "activeTab"],
+  "permissions": ["activeTab", "scripting"],
   "icons": {
     "32": "/icons/32.png",
     "128": "/icons/128.png"
@@ -19,6 +19,7 @@
       "description": "Add/remove the current video from the Watch Later list."
     }
   },
+
   "background": {
       "service_worker": "service-worker.js"
   }
