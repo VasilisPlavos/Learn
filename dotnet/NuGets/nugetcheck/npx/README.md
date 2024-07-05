@@ -1,3 +1,4 @@
 # nugetcheck
- 
-This is just the boilerplate. To try it use `npx .`
+ A quick way to scan Nuget packages for volnurabilities
+
+This is under construction!
