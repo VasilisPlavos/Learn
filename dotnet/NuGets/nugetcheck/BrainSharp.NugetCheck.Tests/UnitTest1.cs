@@ -13,7 +13,6 @@ namespace BrainSharp.NugetCheck.Tests
         [TestCase("sixlabors.imagesharp", "3.1.3", true)]
         [TestCase("sixlabors.imagesharp", "3.1.4", false)]
         [TestCase("Newtonsoft.Json", "12.0.3", true)]
-        //[TestCase("Newtonsoft.Json", "1.5.1", true)]
         [TestCase("Newtonsoft.Json", "13.0.3", false)]
         // [TestCase("dotnet-tool-outdated", "0.1.0", true)]
         // Methodname_Condition_Expectation
