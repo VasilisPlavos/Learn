@@ -55,6 +55,7 @@ public class AzureSearchQueryResponseDto
 
     public class Deprecation
     {
+        public string? message { get; set; }
         public string[] reasons { get; set; }
     }
 
