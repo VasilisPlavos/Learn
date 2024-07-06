@@ -43,7 +43,7 @@ public class NugetVersionCatalogEntryResponseDto
         public Dependencygroup[] dependencyGroups { get; set; }
         public Packageentry[] packageEntries { get; set; }
         public string[] tags { get; set; }
-        public Vulnerability[] vulnerabilities { get; set; }
+        public VulnerabilityDto[] vulnerabilities { get; set; }
         public Context context { get; set; }
     }
 
@@ -151,14 +151,6 @@ public class NugetVersionCatalogEntryResponseDto
         public string fullName { get; set; }
         public int length { get; set; }
         public string name { get; set; }
-    }
-
-    public class Vulnerability
-    {
-        public string id { get; set; }
-        public string type { get; set; }
-        public string advisoryUrl { get; set; }
-        public string severity { get; set; }
     }
 
 }

@@ -1,5 +1,4 @@
-using NUnit.Framework.Constraints;
-
+// Methodname_Condition_Expectation
 namespace BrainSharp.NugetCheck.Tests
 {
     public class Tests
@@ -14,8 +13,6 @@ namespace BrainSharp.NugetCheck.Tests
         [TestCase("sixlabors.imagesharp", "3.1.4", false)]
         [TestCase("Newtonsoft.Json", "12.0.3", true)]
         [TestCase("Newtonsoft.Json", "13.0.3", false)]
-        // [TestCase("dotnet-tool-outdated", "0.1.0", true)]
-        // Methodname_Condition_Expectation
         public async Task IsVulnerable_StringContents_True(string packageName, string packageVersion, bool expected)
         {
             var nugetCheck = new NugetCheck();
@@ -35,7 +32,7 @@ namespace BrainSharp.NugetCheck.Tests
             var package = await nugetCheck.SearchPackageAsync(packageName);
 
             Assert.That(package, Is.Not.Null);
-            Assert.That(package?.Name.ToLower(), Is.EqualTo(packageName.ToLower()));
+            Assert.That(package?.NugetPackageId.ToLower(), Is.EqualTo(packageName.ToLower()));
         }
 
         [Test]

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
-using BrainSharp.NugetCheck.Dtos;
 using BrainSharp.NugetCheck.Dtos.ResponseDtos;
+using BrainSharp.NugetCheck.Entities;
 
 namespace BrainSharp.NugetCheck;
 
@@ -11,7 +11,7 @@ public class NugetCheck
         PooledConnectionLifetime = TimeSpan.FromMinutes(1) // We are doing this because if DNS will change, out HttpClient will stop working
     });
 
-    public async Task<NugetPackageDto?> SearchPackageAsync(string packageName)
+    public async Task<NugetPackage?> SearchPackageAsync(string packageName)
     {
         var response = await _client.GetAsync($"https://azuresearch-usnc.nuget.org/query?q={packageName}");
         var responseDto = await response.Content.ReadFromJsonAsync<AzureSearchQueryResponseDto.Rootobject>();
@@ -19,17 +19,16 @@ public class NugetCheck
         var unique = responseDto?.data.FirstOrDefault(x => x.PackageId.ToLower() == packageName.ToLower());
         if (unique == null) return null;
 
-
-        var nugetPackage = new NugetPackageDto
+        var nugetPackage = new NugetPackage
         {
             NugetPackageId = unique.PackageId,
-            Name = unique.PackageId,
             Versions =  unique.versions
         };
+        
         return nugetPackage;
     }
 
-    public async Task<NugetPackageVersionInfoDto?> SearchPackageVersionInfoAsync(NugetPackageDto package, string packageVersion)
+    public async Task<NugetPackageVersionInfo?> SearchPackageVersionInfoAsync(NugetPackage package, string packageVersion)
     {
         var versionInfoUrl = package.Versions.Where(x => x.version == packageVersion).Select(x => x.IndexUrl).FirstOrDefault();
         if (versionInfoUrl == null) return null;
@@ -43,12 +42,12 @@ public class NugetCheck
         var versionCatalogEntryResponseDto = await versionCatalogEntryResponse.Content.ReadFromJsonAsync<NugetVersionCatalogEntryResponseDto.Rootobject>();
         if (versionCatalogEntryResponseDto == null) return null;
 
-        var nugetPackageVersionInfo = new NugetPackageVersionInfoDto
+        var nugetPackageVersionInfo = new NugetPackageVersionInfo
         {
-            PackageName = package.Name,
+            NugetPackageId = package.NugetPackageId,
             CatalogEntry = versionIndexResponseDto.catalogEntry,
             Listed = versionIndexResponseDto.listed,
-            DatabaseVersionIndexResponse = versionIndexResponseDto,
+            IndexUrl = versionInfoUrl,
             Vulnerabilities =  versionCatalogEntryResponseDto.vulnerabilities,
             Version =  versionCatalogEntryResponseDto.version
         };

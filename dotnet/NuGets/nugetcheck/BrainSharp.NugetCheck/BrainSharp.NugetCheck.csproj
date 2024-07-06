@@ -23,9 +23,4 @@
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>

@@ -1,10 +1,9 @@
 ﻿using BrainSharp.NugetCheck.Dtos.ResponseDtos;
 
-namespace BrainSharp.NugetCheck.Dtos;
+namespace BrainSharp.NugetCheck.Entities;
 
-public class NugetPackageDto
+public class NugetPackage
 {
     public string NugetPackageId { get; set; }
-    public string Name { get; set; }
     public AzureSearchQueryResponseDto.Version[] Versions { get; set; }
 }
