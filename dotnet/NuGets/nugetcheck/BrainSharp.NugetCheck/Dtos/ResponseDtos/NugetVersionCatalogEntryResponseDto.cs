@@ -44,7 +44,7 @@ public class NugetVersionCatalogEntryResponseDto
         public string title { get; set; }
         public string verbatimVersion { get; set; }
         public string version { get; set; }
-        public Dependencygroup[] dependencyGroups { get; set; }
+        public DependencyGroupDto[] dependencyGroups { get; set; }
         public Packageentry[] packageEntries { get; set; }
         public string[] tags { get; set; }
         public VulnerabilityDto[] vulnerabilities { get; set; }
@@ -137,26 +137,6 @@ public class NugetVersionCatalogEntryResponseDto
     public class Reasons
     {
         public string container { get; set; }
-    }
-
-    public class Dependencygroup
-    {
-        [JsonPropertyName("@id")]
-        public string id { get; set; }
-
-        [JsonPropertyName("@type")]
-        public string type { get; set; }
-
-        public Dependency[]? dependencies { get; set; }
-        public string targetFramework { get; set; }
-    }
-
-    public class Dependency
-    {
-        public string type { get; set; }
-        [JsonPropertyName("id")]
-        public string PackageId { get; set; }
-        public string range { get; set; }
     }
 
     public class Packageentry

@@ -9,6 +9,25 @@ namespace BrainSharp.NugetCheck.Tests
         }
 
         [Test]
+        [TestCase("BrainSharp.Xml", "1.0.6", 0)]
+        [TestCase("BrainSharp.Xml", "1.0.7", 1)]
+        [TestCase("coverlet.collector", "3.1.2", 0)]
+        [TestCase("Microsoft.NET.Test.Sdk", "17.3.2", 0)]
+        [TestCase("MSTest.TestAdapter", "2.2.10", 0)]
+        [TestCase("MSTest.TestFramework", "2.2.10", 0)]
+        public async Task CheckPackageAndTransients_StringContents_ExpectedResult(string packageName, string packageVersion, int expectedWarnings)
+        {
+            var nugetCheck = new NugetCheck();
+            var result = await nugetCheck.CheckPackageAndTransientsAsync(packageName, packageVersion);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.NugetPackageId, Is.EqualTo(packageName));
+            Assert.That(result.NugetPackageVersion, Is.EqualTo(packageVersion));
+            Assert.That(result.Warnings.Count, Is.EqualTo(expectedWarnings));
+            Assert.Pass();
+        }
+
+        [Test]
         [TestCase("sixlabors.imagesharp", "3.1.3", true)]
         [TestCase("sixlabors.imagesharp", "3.1.4", false)]
         [TestCase("Newtonsoft.Json", "12.0.3", true)]
@@ -30,7 +49,7 @@ namespace BrainSharp.NugetCheck.Tests
         public async Task IsDeprecated_StringContents_ExpectedResult(string packageName, string packageVersion, bool expected)
         {
             var nugetCheck = new NugetCheck();
-            var isDeprecated = await nugetCheck.IsDeprecated(packageName, packageVersion);
+            var isDeprecated = await nugetCheck.IsDeprecatedAsync(packageName, packageVersion);
 
             Assert.That(isDeprecated, Is.Not.Null);
             Assert.That(isDeprecated, Is.EqualTo(expected));
@@ -45,7 +64,7 @@ namespace BrainSharp.NugetCheck.Tests
         public async Task IsListed_StringContents_ExpectedResult(string packageName, string packageVersion, bool expected)
         {
             var nugetCheck = new NugetCheck();
-            var isListed = await nugetCheck.IsListed(packageName, packageVersion);
+            var isListed = await nugetCheck.IsListedAsync(packageName, packageVersion);
 
             Assert.That(isListed, Is.Not.Null);
             Assert.That(isListed, Is.EqualTo(expected));
