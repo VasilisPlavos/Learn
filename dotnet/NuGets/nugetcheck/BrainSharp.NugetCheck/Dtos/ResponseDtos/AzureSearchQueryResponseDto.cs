@@ -39,17 +39,23 @@ public class AzureSearchQueryResponseDto
         public string description { get; set; }
         public string summary { get; set; }
         public string title { get; set; }
-        public string iconUrl { get; set; }
+        public string? iconUrl { get; set; }
         public string licenseUrl { get; set; }
         public string projectUrl { get; set; }
         public string[] tags { get; set; }
         public string[] authors { get; set; }
         public string[] owners { get; set; }
-        public int totalDownloads { get; set; }
+        public long totalDownloads { get; set; }
         public bool verified { get; set; }
         public Packagetype[] packageTypes { get; set; }
         public Version[] versions { get; set; }
         public object[] vulnerabilities { get; set; }
+        public Deprecation? deprecation { get; set; }
+    }
+
+    public class Deprecation
+    {
+        public string[] reasons { get; set; }
     }
 
     public class Packagetype
@@ -68,5 +74,4 @@ public class AzureSearchQueryResponseDto
         [JsonPropertyName("@id")]
         public string IndexUrl { get; set; }
     }
-
 }
