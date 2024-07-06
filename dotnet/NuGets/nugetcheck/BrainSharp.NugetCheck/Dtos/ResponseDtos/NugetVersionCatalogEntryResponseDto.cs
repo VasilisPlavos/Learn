@@ -22,8 +22,9 @@ public class NugetVersionCatalogEntryResponseDto
         public string authors { get; set; }
         public string catalogcommitId { get; set; }
         public DateTime catalogcommitTimeStamp { get; set; }
-        public string copyright { get; set; }
+        public string? copyright { get; set; }
         public DateTime created { get; set; }
+        public Deprecation? deprecation { get; set; }
         public string description { get; set; }
         public string iconFile { get; set; }
         public bool isPrerelease { get; set; }
@@ -36,8 +37,11 @@ public class NugetVersionCatalogEntryResponseDto
         public int packageSize { get; set; }
         public string projectUrl { get; set; }
         public DateTime published { get; set; }
+        public string readmeFile { get; set; }
+        public string releaseNotes { get; set; }
         public string repository { get; set; }
         public bool requireLicenseAcceptance { get; set; }
+        public string title { get; set; }
         public string verbatimVersion { get; set; }
         public string version { get; set; }
         public Dependencygroup[] dependencyGroups { get; set; }
@@ -45,6 +49,13 @@ public class NugetVersionCatalogEntryResponseDto
         public string[] tags { get; set; }
         public VulnerabilityDto[] vulnerabilities { get; set; }
         public Context context { get; set; }
+    }
+
+    public class Deprecation
+    {
+        public string id { get; set; }
+        public string message { get; set; }
+        public string[] reasons { get; set; }
     }
 
     public class Context
@@ -140,7 +151,17 @@ public class NugetVersionCatalogEntryResponseDto
 
         [JsonPropertyName("@type")]
         public string type { get; set; }
+
+        public Dependency[]? dependencies { get; set; }
         public string targetFramework { get; set; }
+    }
+
+    public class Dependency
+    {
+        public string type { get; set; }
+        [JsonPropertyName("id")]
+        public string PackageId { get; set; }
+        public string range { get; set; }
     }
 
     public class Packageentry
