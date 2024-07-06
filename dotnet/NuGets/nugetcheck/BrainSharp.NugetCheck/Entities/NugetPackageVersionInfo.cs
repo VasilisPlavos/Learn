@@ -9,5 +9,5 @@ public class NugetPackageVersionInfo
     public bool Listed { get; set; }
     public string Version { get; set; }
     public string IndexUrl { get; set; }
-    public VulnerabilityDto[] Vulnerabilities { get; set; }
+    public VulnerabilityDto[]? Vulnerabilities { get; set; }
 }
