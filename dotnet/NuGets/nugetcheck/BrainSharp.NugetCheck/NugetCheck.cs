@@ -31,7 +31,7 @@ public class NugetCheck
     public async Task<NugetPackageVersionInfo?> SearchPackageVersionInfoAsync(NugetPackage package, string packageVersion)
     {
         var versionInfoUrl = package.Versions.Where(x => x.version == packageVersion).Select(x => x.IndexUrl).FirstOrDefault();
-        if (versionInfoUrl == null) return null;
+        if (versionInfoUrl == null) return null; // this can mean that the package version does not exist or is not listed
 
         var versionIndexResponse = await _client.GetAsync(versionInfoUrl);
         var versionIndexResponseDto = await versionIndexResponse.Content.ReadFromJsonAsync<NugetVersionIndexResponseDto.Rootobject>();
@@ -64,5 +64,16 @@ public class NugetCheck
         if (packageInfo == null) return null;
 
         return packageInfo.Vulnerabilities != null;
+    }
+
+    public async Task<bool?> IsListed(string packageName, string packageVersion)
+    {
+        var package = await SearchPackageAsync(packageName);
+        if (package == null) return null;
+
+        var packageInfo = await SearchPackageVersionInfoAsync(package, packageVersion);
+        if (packageInfo == null) return false;
+
+        return packageInfo.Listed;
     }
 }
