@@ -1,8 +1,8 @@
 ﻿using BrainSharp.NugetCheck.Dtos.ResponseDtos;
 
-namespace BrainSharp.NugetCheck.Dtos.Entities;
+namespace BrainSharp.NugetCheck.Dtos;
 
-public class NugetPackage
+public class NugetPackageDto
 {
     public string NugetPackageId { get; set; }
     public string Name { get; set; }

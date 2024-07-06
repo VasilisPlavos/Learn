@@ -1,8 +1,8 @@
 ﻿using BrainSharp.NugetCheck.Dtos.ResponseDtos;
 
-namespace BrainSharp.NugetCheck.Dtos.Entities;
+namespace BrainSharp.NugetCheck.Dtos;
 
-public class NugetPackageVersionInfo
+public class NugetPackageVersionInfoDto
 {
     public string PackageName { get; set; }
     public string CatalogEntry { get; set; }

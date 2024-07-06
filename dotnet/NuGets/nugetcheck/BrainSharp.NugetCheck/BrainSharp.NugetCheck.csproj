@@ -24,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Entities\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 
 </Project>
