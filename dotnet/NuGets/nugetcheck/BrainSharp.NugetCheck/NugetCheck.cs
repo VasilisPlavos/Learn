@@ -46,6 +46,7 @@ public class NugetCheck
         {
             NugetPackageId = package.NugetPackageId,
             CatalogEntry = versionIndexResponseDto.catalogEntry,
+            Deprecation = versionCatalogEntryResponseDto.deprecation,
             Listed = versionIndexResponseDto.listed,
             IndexUrl = versionInfoUrl,
             Vulnerabilities =  versionCatalogEntryResponseDto.vulnerabilities,
@@ -75,5 +76,16 @@ public class NugetCheck
         if (packageInfo == null) return false;
 
         return packageInfo.Listed;
+    }
+
+    public async Task<bool?> IsDeprecated(string packageName, string packageVersion)
+    {
+        var package = await SearchPackageAsync(packageName);
+        if (package == null) return null;
+
+        var packageInfo = await SearchPackageVersionInfoAsync(package, packageVersion);
+        if (packageInfo == null) return null;
+
+        return packageInfo.Deprecation != null;
     }
 }

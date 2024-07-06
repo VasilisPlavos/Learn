@@ -24,7 +24,7 @@ public class NugetVersionCatalogEntryResponseDto
         public DateTime catalogcommitTimeStamp { get; set; }
         public string? copyright { get; set; }
         public DateTime created { get; set; }
-        public Deprecation? deprecation { get; set; }
+        public DeprecationDto? deprecation { get; set; }
         public string description { get; set; }
         public string iconFile { get; set; }
         public bool isPrerelease { get; set; }
@@ -51,12 +51,7 @@ public class NugetVersionCatalogEntryResponseDto
         public Context context { get; set; }
     }
 
-    public class Deprecation
-    {
-        public string id { get; set; }
-        public string message { get; set; }
-        public string[] reasons { get; set; }
-    }
+
 
     public class Context
     {

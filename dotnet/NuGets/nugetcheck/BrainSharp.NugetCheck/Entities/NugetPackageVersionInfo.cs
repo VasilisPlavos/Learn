@@ -10,4 +10,5 @@ public class NugetPackageVersionInfo
     public string Version { get; set; }
     public string IndexUrl { get; set; }
     public VulnerabilityDto[]? Vulnerabilities { get; set; }
+    public DeprecationDto? Deprecation { get; set; }
 }
