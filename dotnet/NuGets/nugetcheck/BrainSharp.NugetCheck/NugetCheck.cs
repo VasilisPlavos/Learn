@@ -55,7 +55,7 @@ public class NugetCheck
         return nugetPackageVersionInfo;
     }
 
-    public async Task<bool?> IsVulnerable(string packageName, string packageVersion)
+    public async Task<bool?> IsVulnerableAsync(string packageName, string packageVersion)
     {
         var package = await SearchPackageAsync(packageName);
         if (package == null) return null;
