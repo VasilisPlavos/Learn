@@ -7,6 +7,7 @@ namespace BrainSharp.NugetCheck;
 
 public class NugetCheck
 {
+    private readonly List<ScannedPackageDto> _scannedPackages = [];
     private readonly HttpClient _client = new(new SocketsHttpHandler
     {
         PooledConnectionLifetime = TimeSpan.FromMinutes(1) // We are doing this because if DNS will change, out HttpClient will stop working
@@ -56,7 +57,16 @@ public class NugetCheck
 
             foreach (var dependencyDto in dependencyGroupDto.dependencies)
             {
-                var version = dependencyDto.range.Replace(">", "").Replace("[", "").Replace(")", "").Replace(",", "").Trim();
+                var version = GetVersion(dependencyDto.range);
+                var alreadyChecked = _scannedPackages.Any(x => x.NugetPackageId == dependencyDto.PackageId && x.Version == version);
+                if (alreadyChecked) continue;
+
+                _scannedPackages.Add(new ScannedPackageDto
+                {
+                    NugetPackageId = dependencyDto.PackageId,
+                    Version = version
+                });
+
                 var packageToScan = await SearchPackageAsync(dependencyDto.PackageId);
                 if (packageToScan == null)
                 {
@@ -85,6 +95,13 @@ public class NugetCheck
     private static string GetCurrentBreadCrumb(string breadCrumb, string packageId, string packageVersion)
     {
         return $"{breadCrumb} > {packageId} {packageVersion}";
+    }
+
+    private string GetVersion(string dependencyDtoRangeValue)
+    {
+        var value = dependencyDtoRangeValue.Split(",")[0];
+        value = value.Replace(">", "").Replace("[", "").Replace(")", "").Replace(",", "").Trim();
+        return value;
     }
 
     private bool IsDeprecated(NugetPackageVersionInfo packageInfo)
