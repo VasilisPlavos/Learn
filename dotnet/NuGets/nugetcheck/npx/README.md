@@ -9,3 +9,4 @@ There are 3 ways to use it:
 Try these to see the differences:
 - `npx nugetcheck package SixLabors.ImageSharp --version 3.1.4`
 - `npx nugetcheck package SixLabors.ImageSharp --version 3.1.3`
+- `npx nugetcheck package Microsoft.NET.Test.Sdk --version 17.3.2` -> if you want something taugh try this! But it can take more that 30 seconds the first time...
