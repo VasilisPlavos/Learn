@@ -26,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Files\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Files\" />
   </ItemGroup>
 
 </Project>

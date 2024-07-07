@@ -26,6 +26,22 @@ namespace BrainSharp.NugetCheck.Tests
         }
 
         [Test]
+        [TestCase("Test.csproj", 5, 3)]
+        public async Task CheckPackageAndTransientsAsync_GiveCsProjFile_ReturnResults(string fileName, int numberOfPackageReferences, int expectedWarnings)
+        {
+            var directory = Path.Combine(AppContext.BaseDirectory, "Files");
+            var filePath = Path.Combine(directory, "Test.csproj");
+
+            //var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            var nugetCheck = new NugetCheck();
+            var projectResults = await nugetCheck.CheckPackageAndTransientsAsync(filePath);
+
+            Assert.That(projectResults, Is.Not.Null);
+            Assert.That(projectResults.PackageReferences.Count, Is.EqualTo(numberOfPackageReferences));
+            Assert.That(projectResults.TotalWarnings, Is.EqualTo(expectedWarnings));
+        }
+
+        [Test]
         [TestCase("sixlabors.imagesharp", "3.1.3", true)]
         [TestCase("sixlabors.imagesharp", "3.1.4", false)]
         [TestCase("Newtonsoft.Json", "12.0.3", true)]
@@ -89,6 +105,8 @@ namespace BrainSharp.NugetCheck.Tests
         {
             var nugetCheck = new NugetCheck();
             var package = await nugetCheck.SearchPackageAsync(packageName);
+            Assert.That(package, Is.Not.Null);
+
             var packageVersionInfo = await nugetCheck.SearchPackageVersionInfoAsync(package, packageVersion);
 
             Assert.That(packageVersionInfo, Is.Not.Null);

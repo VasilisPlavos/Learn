@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Xml.Linq;
 using BrainSharp.NugetCheck.Dtos;
 using BrainSharp.NugetCheck.Dtos.ResponseDtos;
 using BrainSharp.NugetCheck.Entities;
@@ -8,7 +9,7 @@ namespace BrainSharp.NugetCheck;
 
 public class NugetCheck
 {
-    private readonly List<ScannedPackageDto> _scannedPackages = [];
+    private readonly List<PackageDto> _scannedPackages = [];
     private readonly HttpClient _client = new(new SocketsHttpHandler
     {
         PooledConnectionLifetime = TimeSpan.FromMinutes(1) // We are doing this because if DNS will change, out HttpClient will stop working
@@ -62,7 +63,7 @@ public class NugetCheck
                 var alreadyChecked = _scannedPackages.Any(x => x.NugetPackageId == dependencyDto.PackageId && x.Version == version);
                 if (alreadyChecked) continue;
 
-                _scannedPackages.Add(new ScannedPackageDto
+                _scannedPackages.Add(new PackageDto
                 {
                     NugetPackageId = dependencyDto.PackageId,
                     Version = version
@@ -249,5 +250,51 @@ public class NugetCheck
 
         await LocalStorageService.SaveNugetPackageVersionInfoAsync(nugetPackageVersionInfo);
         return nugetPackageVersionInfo;
+    }
+
+    private static List<PackageDto> GetProjectPackageList(string filePath)
+    {
+        var listOfPackages = new List<PackageDto>();
+
+        var projectXDocument = XDocument.Load(filePath);
+
+        var itemGroups = projectXDocument.Elements().ToList().Elements().ToList().Where(x => x.Name == "ItemGroup").ToList();
+        foreach (var itemGroup in itemGroups)
+        {
+            foreach (var item in itemGroup.Elements().ToList())
+            {
+                if (item.Name != "PackageReference") continue;
+
+                var inc = item.Attributes().ToList();
+                var version = inc.Where(x => x.Name == "Version").Select(x => x.Value).FirstOrDefault();
+                var packageName = inc.Where(x => x.Name == "Include").Select(x => x.Value).FirstOrDefault();
+                listOfPackages.Add(new PackageDto
+                {
+                    Version = version!,
+                    NugetPackageId = packageName!
+                });
+            }
+        }
+
+        return listOfPackages;
+    }
+
+    public async Task<ProjectResults> CheckPackageAndTransientsAsync(string projectFilePath)
+    {
+        var packageReferences = GetProjectPackageList(projectFilePath);
+
+        var packageReferencesResults = new List<NugetPackageResults>();
+        foreach (var package in packageReferences)
+        {
+            var packageResults = await CheckPackageAndTransientsAsync(package.NugetPackageId, package.Version);
+            packageReferencesResults.Add(packageResults);
+        }
+
+        return new ProjectResults
+        {
+            ProjectFilePath = projectFilePath,
+            PackageReferences = packageReferencesResults, 
+            TotalWarnings = packageReferencesResults.Sum(package => package.Warnings.Count)
+        };
     }
 }
