@@ -1,5 +1,5 @@
 # nugetcheck
- A quick way to scan Nuget packages for volnurabilities
+ A quick way to scan Nuget packages for volnurabilities. View the source code on [GitHub](https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets/nugetcheck/).
 
 There are 3 ways to use it:
 1. `npx nugetcheck package SixLabors.ImageSharp --version 3.1.4` -> Checking package SixLabors.ImageSharp with version 3.1.4 and it's transitives
