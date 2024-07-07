@@ -12,4 +12,5 @@ public class NugetPackageVersionInfo
     public VulnerabilityDto[]? Vulnerabilities { get; set; }
     public DeprecationDto? Deprecation { get; set; }
     public DependencyGroupDto[] DependencyGroups { get; set; }
+    public DateTime DateScanned { get; set; }
 }

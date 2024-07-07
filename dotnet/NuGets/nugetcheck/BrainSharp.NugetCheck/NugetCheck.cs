@@ -2,6 +2,7 @@
 using BrainSharp.NugetCheck.Dtos;
 using BrainSharp.NugetCheck.Dtos.ResponseDtos;
 using BrainSharp.NugetCheck.Entities;
+using BrainSharp.NugetCheck.Services;
 
 namespace BrainSharp.NugetCheck;
 
@@ -190,23 +191,37 @@ public class NugetCheck
 
     public async Task<NugetPackage?> SearchPackageAsync(string packageName)
     {
+        var nugetPackage = await LocalStorageService.GetNugetPackageAsync(packageName);
+        if (nugetPackage?.DateScanned > DateTime.UtcNow.AddDays(-1))
+        {
+            return nugetPackage;
+        }
+
         var response = await _client.GetAsync($"https://azuresearch-usnc.nuget.org/query?q={packageName}");
         var responseDto = await response.Content.ReadFromJsonAsync<AzureSearchQueryResponseDto.Rootobject>();
 
         var unique = responseDto?.data.FirstOrDefault(x => x.PackageId.ToLower() == packageName.ToLower());
         if (unique == null) return null;
 
-        var nugetPackage = new NugetPackage
+        nugetPackage = new NugetPackage
         {
             NugetPackageId = unique.PackageId,
-            Versions = unique.versions
+            Versions = unique.versions,
+            DateScanned = DateTime.UtcNow
         };
 
+        await LocalStorageService.SaveNugetPackageAsync(nugetPackage);
         return nugetPackage;
     }
 
     public async Task<NugetPackageVersionInfo?> SearchPackageVersionInfoAsync(NugetPackage package, string packageVersion)
     {
+        var nugetPackageVersionInfo = await LocalStorageService.GetNugetPackageVersionInfoAsync(package.NugetPackageId, packageVersion);
+        if (nugetPackageVersionInfo?.DateScanned > DateTime.UtcNow.AddDays(-1))
+        {
+            return nugetPackageVersionInfo;
+        }
+
         var versionInfoUrl = package.Versions.Where(x => x.version == packageVersion).Select(x => x.IndexUrl).FirstOrDefault();
         if (versionInfoUrl == null) return null; // this can mean that the package version does not exist or is not listed
 
@@ -219,10 +234,11 @@ public class NugetCheck
         var versionCatalogEntryResponseDto = await versionCatalogEntryResponse.Content.ReadFromJsonAsync<NugetVersionCatalogEntryResponseDto.Rootobject>();
         if (versionCatalogEntryResponseDto == null) return null;
 
-        var nugetPackageVersionInfo = new NugetPackageVersionInfo
+        nugetPackageVersionInfo = new NugetPackageVersionInfo
         {
             NugetPackageId = package.NugetPackageId,
             CatalogEntry = versionIndexResponseDto.catalogEntry,
+            DateScanned = DateTime.UtcNow,
             Deprecation = versionCatalogEntryResponseDto.deprecation,
             DependencyGroups = versionCatalogEntryResponseDto.dependencyGroups,
             Listed = versionIndexResponseDto.listed,
@@ -231,6 +247,7 @@ public class NugetCheck
             Version = versionCatalogEntryResponseDto.version
         };
 
+        await LocalStorageService.SaveNugetPackageVersionInfoAsync(nugetPackageVersionInfo);
         return nugetPackageVersionInfo;
     }
 }

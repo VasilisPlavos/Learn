@@ -4,17 +4,15 @@ namespace BrainSharp.NugetCheck.Tests
     public class Tests
     {
         [SetUp]
-        public void Setup()
-        {
-        }
+        public void Setup(){}
 
         [Test]
         [TestCase("BrainSharp.Xml", "1.0.6", 0)]
         [TestCase("BrainSharp.Xml", "1.0.7", 1)]
         [TestCase("coverlet.collector", "3.1.2", 0)]
-       // [TestCase("Microsoft.NET.Test.Sdk", "17.3.2", 21)] // skipped because it has 300+ dependencies
-      //  [TestCase("MSTest.TestAdapter", "2.2.10", 3)]
-      //  [TestCase("MSTest.TestFramework", "2.2.10", 2)]
+        [TestCase("Microsoft.NET.Test.Sdk", "17.3.2", 20)]  // this can take 30+ seconds
+        [TestCase("MSTest.TestAdapter", "2.2.10", 3)]       // this can take 30+ seconds
+        [TestCase("MSTest.TestFramework", "2.2.10", 2)]     // this can take 30+ seconds
         public async Task CheckPackageAndTransients_StringContents_ExpectedResult(string packageName, string packageVersion, int expectedWarnings)
         {
             var nugetCheck = new NugetCheck();
@@ -97,10 +95,5 @@ namespace BrainSharp.NugetCheck.Tests
             Assert.That(packageVersionInfo?.Version, Is.EqualTo(packageVersion));
         }
     }
-
-
-
-
-
 
 }
