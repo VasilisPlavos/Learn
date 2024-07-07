@@ -252,19 +252,15 @@ public class NugetCheck
         return nugetPackageVersionInfo;
     }
 
-    private static List<PackageDto> GetProjectPackageList(string filePath)
+    private static List<PackageDto> GetProjectPackageList(string filePath) => GetProjectPackageList(XDocument.Load(filePath));
+    private static List<PackageDto> GetProjectPackageList(XDocument csProjToXDocument)
     {
         var listOfPackages = new List<PackageDto>();
-
-        var projectXDocument = XDocument.Load(filePath);
-
-        var itemGroups = projectXDocument.Elements().ToList().Elements().ToList().Where(x => x.Name == "ItemGroup").ToList();
+        var itemGroups = csProjToXDocument.Elements().ToList().Elements().ToList().Where(x => x.Name == "ItemGroup").ToList();
         foreach (var itemGroup in itemGroups)
         {
-            foreach (var item in itemGroup.Elements().ToList())
+            foreach (var item in itemGroup.Elements().Where(x => x.Name == "PackageReference").ToList())
             {
-                if (item.Name != "PackageReference") continue;
-
                 var inc = item.Attributes().ToList();
                 var version = inc.Where(x => x.Name == "Version").Select(x => x.Value).FirstOrDefault();
                 var packageName = inc.Where(x => x.Name == "Include").Select(x => x.Value).FirstOrDefault();
