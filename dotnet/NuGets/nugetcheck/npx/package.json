@@ -3,7 +3,7 @@
   "version": "0.0.12",
   "description": "",
   "bin": {
-    "nugetcheck": "./consoleapp/BrainSharp.NugetCheck.ConsoleApp.exe"
+    "nugetcheck": "consoleapp/BrainSharp.NugetCheck.ConsoleApp.exe"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
