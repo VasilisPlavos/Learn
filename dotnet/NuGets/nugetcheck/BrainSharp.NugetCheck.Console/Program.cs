@@ -16,6 +16,12 @@ class Program
             return;
         }
 
+        if (args[0] == "storage")
+        {
+            Console.WriteLine(Path.Combine(AppContext.BaseDirectory, "storage"));
+            return;
+        }
+
         if (args[0].EndsWith(".csproj"))
         {
             var filePath = File.Exists(args[0]) ? args[0] : Path.Combine(Directory.GetCurrentDirectory(), args[0]);
