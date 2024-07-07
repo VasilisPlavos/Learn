@@ -27,10 +27,11 @@ namespace BrainSharp.NugetCheck.Tests
 
         [Test]
         [TestCase("Test.csproj", 5, 3)]
+        [TestCase("Test2.csproj", 5, 2)]
         public async Task CheckPackageAndTransientsAsync_GiveCsProjFile_ReturnResults(string fileName, int numberOfPackageReferences, int expectedWarnings)
         {
             var directory = Path.Combine(AppContext.BaseDirectory, "Files");
-            var filePath = Path.Combine(directory, "Test.csproj");
+            var filePath = Path.Combine(directory, fileName);
 
             //var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             var nugetCheck = new NugetCheck();
