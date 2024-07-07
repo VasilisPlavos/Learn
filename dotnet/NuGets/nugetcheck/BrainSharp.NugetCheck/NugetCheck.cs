@@ -217,6 +217,12 @@ public class NugetCheck
 
     public async Task<NugetPackageVersionInfo?> SearchPackageVersionInfoAsync(NugetPackage package, string packageVersion)
     {
+        
+        Console.WriteLine(new string(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        Console.WriteLine($"Scanning {package.NugetPackageId} {packageVersion}");
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+
         var nugetPackageVersionInfo = await LocalStorageService.GetNugetPackageVersionInfoAsync(package.NugetPackageId, packageVersion);
         if (nugetPackageVersionInfo?.DateScanned > DateTime.UtcNow.AddDays(-1))
         {
