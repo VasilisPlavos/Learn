@@ -1,10 +1,9 @@
 {
   "name": "nugetcheck",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "description": "",
   "bin": {
-    "nugetscheck": "./consoleapp/appp.exe",
-    "nugetcheck": "./consoleapp/under_construction.js"
+    "nugetcheck": "./consoleapp/BrainSharp.NugetCheck.ConsoleApp.exe"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
