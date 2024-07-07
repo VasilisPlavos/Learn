@@ -48,7 +48,7 @@ public class AzureSearchQueryResponseDto
         public long totalDownloads { get; set; }
         public bool verified { get; set; }
         public Packagetype[] packageTypes { get; set; }
-        public Version[] versions { get; set; }
+        public VersionDto[] versions { get; set; }
         public object[] vulnerabilities { get; set; }
         public Deprecation? deprecation { get; set; }
     }
@@ -62,17 +62,5 @@ public class AzureSearchQueryResponseDto
     public class Packagetype
     {
         public string name { get; set; }
-    }
-
-    public class Version
-    {
-        public string version { get; set; }
-        public int downloads { get; set; }
-
-        /// <summary>
-        /// This is the index url of the version (eg. https://api.nuget.org/v3/registration5-semver1/sixlabors.imagesharp/3.1.3.json)
-        /// </summary>
-        [JsonPropertyName("@id")]
-        public string IndexUrl { get; set; }
     }
 }
