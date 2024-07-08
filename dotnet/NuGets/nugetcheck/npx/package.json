@@ -1,6 +1,6 @@
 {
   "name": "nugetcheck",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "bin": {
     "nugetcheck": "consoleapp/BrainSharp.NugetCheck.ConsoleApp.exe"
