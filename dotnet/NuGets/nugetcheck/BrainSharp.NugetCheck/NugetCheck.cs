@@ -27,7 +27,7 @@ public class NugetCheck
         {
             nugetPackageResults.Warnings.Add(new Warning
             {
-                BreadCrumb = $"{mainPackage} {mainPackageVersion}",
+                BreadCrumb = $"{mainPackageName} {mainPackageVersion}",
                 Package = null,
                 Message = "Package not found",
             });
@@ -217,11 +217,18 @@ public class NugetCheck
 
     public async Task<NugetPackageVersionInfo?> SearchPackageVersionInfoAsync(NugetPackage package, string packageVersion)
     {
+        try
+        {
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            Console.WriteLine($"Scanning {package.NugetPackageId} {packageVersion}");
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
         
-        Console.WriteLine(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
-        Console.WriteLine($"Scanning {package.NugetPackageId} {packageVersion}");
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
 
         var nugetPackageVersionInfo = await LocalStorageService.GetNugetPackageVersionInfoAsync(package.NugetPackageId, packageVersion);
         if (nugetPackageVersionInfo?.DateScanned > DateTime.UtcNow.AddDays(-1))
