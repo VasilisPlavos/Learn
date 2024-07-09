@@ -5,4 +5,5 @@ docker run -d -p 5000:5000 -p 5004:80 sha256:47f0468d4739e60be80ecdbe79ce061174d
 docker run -it mcr.microsoft.com/windows/servercore:ltsc2022 cmd.exe
 
 # run new docker without exiting
-docker run --hostname=476db36b3104 --restart=no -t -d mcr.microsoft.com/windows/servercore:ltsc2022
+- `docker run --hostname=476db36b3104 --restart=no -t -d mcr.microsoft.com/windows/servercore:ltsc2022`
+- `docker run --hostname=476db36b3104 --restart=no -t -d ubuntu:jammy-20240227`
