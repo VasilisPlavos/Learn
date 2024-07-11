@@ -15,12 +15,17 @@ services:
     container_name: shoppingclient
     environment:
       - ASPNETCORE_ENVIRONMENT=Development 
+
+      # ShoppingAPIUrl overrides the value of the appsettings
+      # http://shoppingapi comes from the shoppingapi container_name - check above
       - "ShoppingAPIUrl=http://shoppingapi"
     depends_on:
       - shopping.db
       - shopping.api
     ports:
       - "8001:80"
+    # volumes:
+    #   - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
   shopping.db:
     container_name: shoppingdb
