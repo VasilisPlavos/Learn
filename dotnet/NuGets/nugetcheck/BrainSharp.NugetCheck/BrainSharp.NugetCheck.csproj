@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/VasilisPlavos/Learn/tree/main/dotnet/NuGets\nugetcheck\BrainSharp.NugetCheck</RepositoryUrl>
     <PackageTags>nugetscheck</PackageTags>
     <PackageReleaseNotes>Notes here</PackageReleaseNotes>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- <PackageReadmeFile>README.md</PackageReadmeFile> -->
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <!-- This is the name of the NuGet package in the Nuget.org Gallery -->
@@ -19,9 +19,11 @@
     <Company>BrainSharp</Company>
   </PropertyGroup>
 
+<!-- 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
+   -->
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
