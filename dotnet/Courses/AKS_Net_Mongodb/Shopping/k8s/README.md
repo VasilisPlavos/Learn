@@ -1,0 +1,1 @@
+run `kubectl apply -f .\nginx-depl-example.yaml`
