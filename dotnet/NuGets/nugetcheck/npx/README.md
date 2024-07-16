@@ -20,3 +20,5 @@ Try these to see the differences:
 
 ## Roadmap
 * Use more resources from https://api.nuget.org/v3/index.json
+* https://www.google.com/search?q=nuget+credential+provider
+* https://github.com/microsoft/artifacts-credprovider
