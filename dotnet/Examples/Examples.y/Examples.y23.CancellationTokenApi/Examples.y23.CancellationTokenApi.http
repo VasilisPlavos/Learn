@@ -1,0 +1,6 @@
+@Examples.y23.CancellationTokenApi_HostAddress = http://localhost:5081
+
+GET {{Examples.y23.CancellationTokenApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
