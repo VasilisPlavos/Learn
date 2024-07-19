@@ -71,10 +71,7 @@ namespace Examples.y23.CancellationTokenApi.Controllers
         [HttpGet("WithTaskThatNeverStops")]
         public string GetWithTaskThatNeverStops()
         {
-            var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = cancellationTokenSource.Token;
-
-            var task = new Task(() =>
+            new Task(() =>
             {
                 var i = 0;
                 while (true)
@@ -82,16 +79,9 @@ namespace Examples.y23.CancellationTokenApi.Controllers
                     Console.WriteLine(i++);
                     Thread.Sleep(100);
                 }
-            }, cancellationToken);
-
-            task.Start();
+            }).Start();
 
             Thread.Sleep(100);
-
-            cancellationTokenSource.Cancel();
-
-            //task.Wait();
-            cancellationTokenSource.Dispose();
             return "See the Visual Studio debugger";
         }
 
