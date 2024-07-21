@@ -1,10 +1,8 @@
 {
   "name": "nugetscan",
-  "version": "0.0.22",
+  "version": "0.0.24",
   "description": "Command line to check nugets and transitives for vulnerabilites",
-  "bin": {
-    "nugetscan": "dotnet consoleapp/BrainSharp.NugetCheck.ConsoleApp.dll"
-  },
+  "bin": "dotnet ./consoleapp/BrainSharp.NugetCheck.ConsoleApp.dll",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
