@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BrainSharp.Xml" Version="1.0.2" />
+    <PackageReference Include="BrainSharp.Xml" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
