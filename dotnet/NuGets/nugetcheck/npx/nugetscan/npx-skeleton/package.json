@@ -1,6 +1,6 @@
 {
   "name": "nugetscan",
-  "version": "0.0.25",
+  "version": "0.0.28",
   "description": "Command line to check nugets and transitives for vulnerabilites",
   "bin": "./consoleapp/app.js",
   "scripts": {
