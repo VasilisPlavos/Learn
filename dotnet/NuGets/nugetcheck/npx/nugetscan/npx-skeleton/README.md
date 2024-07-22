@@ -20,5 +20,9 @@ Try these to see the differences:
 
 ## Roadmap
 * Use more resources from https://api.nuget.org/v3/index.json
+* https://g.co/gemini/share/c4d836cec23d
+* https://learn.microsoft.com/en-us/nuget/reference/nuget-client-sdk
+* https://www.nuget.org/packages/NuGet.Protocol
+* https://github.com/Azure/azure-cli/issues/24108
 * https://www.google.com/search?q=nuget+credential+provider
 * https://github.com/microsoft/artifacts-credprovider

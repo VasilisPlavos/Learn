@@ -6,7 +6,12 @@ namespace BrainSharp.NugetCheck.Services;
 public class LocalStorageService
 {
     private static readonly string StoragePath = Path.Combine(AppContext.BaseDirectory, "storage");
-    
+
+    public static void DeleteStorage()
+    {
+        if (Directory.Exists(StoragePath)) Directory.Delete(StoragePath, true);
+    }
+
     public static async Task<NugetPackage?> GetNugetPackageAsync(string packageName)
     {
         var filePath = Path.Combine(StoragePath, packageName, "index.json");
@@ -16,24 +21,6 @@ public class LocalStorageService
             var json = await sr.ReadToEndAsync();
             var nugetPackage = JsonConvert.DeserializeObject<NugetPackage>(json);
             return nugetPackage;
-        }
-        catch
-        {
-            // ignored
-        }
-
-        return null;
-    }
-
-    public static async Task<NugetPackageVersionInfo?> GetNugetPackageVersionInfoAsync(string packageName, string packageVersion)
-    {
-        var filePath = Path.Combine(StoragePath, packageName, $"{packageVersion}.json");
-        try
-        {
-            using var sr = new StreamReader(filePath);
-            var json = await sr.ReadToEndAsync();
-            var nugetPackageVersionInfo = JsonConvert.DeserializeObject<NugetPackageVersionInfo>(json);
-            return nugetPackageVersionInfo;
         }
         catch
         {
@@ -61,21 +48,22 @@ public class LocalStorageService
         }
     }
 
-    public static async Task SaveNugetPackageVersionInfoAsync(NugetPackageVersionInfo nugetPackageVersionInfo)
+    // TODO: remove it and the NugetPackage2
+    public static async Task<NugetPackage2.Rootobject?> GetNugetPackageAsync2(string packageName)
     {
+        var filePath = Path.Combine(StoragePath, packageName, "index.json");
         try
         {
-            var directory = Path.Combine(StoragePath, nugetPackageVersionInfo.NugetPackageId);
-            Directory.CreateDirectory(directory);
-
-            var filePath = Path.Combine(directory, $"{nugetPackageVersionInfo.Version}.json");
-            var json = JsonConvert.SerializeObject(nugetPackageVersionInfo);
-            await using var sw = new StreamWriter(filePath);
-            await sw.WriteAsync(json);
+            using var sr = new StreamReader(filePath);
+            var json = await sr.ReadToEndAsync();
+            var nugetPackage = JsonConvert.DeserializeObject<NugetPackage2.Rootobject>(json);
+            return nugetPackage;
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine(e);
+            // ignored
         }
+
+        return null;
     }
 }

@@ -1,26 +1,22 @@
-﻿using System.Net.Http.Json;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using BrainSharp.NugetCheck.Dtos;
-using BrainSharp.NugetCheck.Dtos.ResponseDtos;
 using BrainSharp.NugetCheck.Entities;
 using BrainSharp.NugetCheck.Services;
+using NuGet.Common;
+using NuGet.Configuration;
+using NuGet.Packaging;
+using NuGet.Protocol;
+using NuGet.Protocol.Core.Types;
 
 namespace BrainSharp.NugetCheck;
 
 public class NugetCheck
 {
     private readonly List<PackageDto> _scannedPackages = [];
-    private readonly HttpClient _client = new(new SocketsHttpHandler
-    {
-        PooledConnectionLifetime = TimeSpan.FromMinutes(1) // We are doing this because if DNS will change, out HttpClient will stop working
-    });
 
     public async Task<NugetPackageResults> CheckPackageAndTransientsAsync(string mainPackageName, string mainPackageVersion)
     {
-        var nugetPackageResults = new NugetPackageResults()
-        {
-            Warnings = []
-        };
+        var nugetPackageResults = new NugetPackageResults{ Warnings = [] };
 
         var mainPackage = await SearchPackageAsync(mainPackageName);
         if (mainPackage == null)
@@ -35,61 +31,60 @@ public class NugetCheck
             return nugetPackageResults;
         }
 
+        // TODO: Improve dat thing
         nugetPackageResults.NugetPackageId = mainPackage.NugetPackageId;
+        var mainPackageInfo = SearchPackageVersionInfo(mainPackage, mainPackageVersion);
 
-        var mainPackageInfo = await SearchPackageVersionInfoAsync(mainPackage, mainPackageVersion);
-
-        var mainBreadCrumb = $"{mainPackage.NugetPackageId} {mainPackageInfo?.Version}".Trim();
+        var mainBreadCrumb = $"{mainPackage.NugetPackageId} {mainPackageInfo?.OriginalVersion}".Trim();
         nugetPackageResults.Warnings.AddRange(GetRootPackageWarnings(mainPackageInfo, mainBreadCrumb));
-        nugetPackageResults.NugetPackageVersion = mainPackageInfo?.Version;
+        nugetPackageResults.NugetPackageOriginalVersion = mainPackageInfo?.OriginalVersion;
 
-        if (mainPackageInfo?.DependencyGroups == null) return nugetPackageResults;
+        if (mainPackageInfo?.DependencySets == null) return nugetPackageResults;
 
-        var dependencyGroupsMessages = await GetDependencyGroupsMessagesAsync(mainPackageInfo.DependencyGroups, mainBreadCrumb);
+        var dependencyGroupsMessages = await GetDependencyGroupsMessagesAsync(mainPackageInfo.DependencySets, mainBreadCrumb);
         nugetPackageResults.Warnings.AddRange(dependencyGroupsMessages);
         return nugetPackageResults;
     }
 
-    private async Task<List<Warning>> GetDependencyGroupsMessagesAsync(DependencyGroupDto[] dependencyGroups, string breadCrumb)
+    private async Task<List<Warning>> GetDependencyGroupsMessagesAsync(IEnumerable<PackageDependencyGroup> dependencyGroups, string breadCrumb)
     {
         var warnings = new List<Warning>();
-        foreach (var dependencyGroupDto in dependencyGroups)
+        foreach (var dependencyGroup in dependencyGroups)
         {
-            if (dependencyGroupDto.dependencies == null) continue;
+            if (dependencyGroup.Packages == null) continue;
 
-            foreach (var dependencyDto in dependencyGroupDto.dependencies)
+            foreach (var package in dependencyGroup.Packages)
             {
-                var version = GetVersion(dependencyDto.range);
-                var alreadyChecked = _scannedPackages.Any(x => x.NugetPackageId == dependencyDto.PackageId && x.Version == version);
+                var version = GetVersion(package.VersionRange.ToString());
+                var alreadyChecked = _scannedPackages.Any(x => x.NugetPackageId == package.Id && x.Version == version);
                 if (alreadyChecked) continue;
 
                 _scannedPackages.Add(new PackageDto
                 {
-                    NugetPackageId = dependencyDto.PackageId,
+                    NugetPackageId = package.Id,
                     Version = version
                 });
 
-                var packageToScan = await SearchPackageAsync(dependencyDto.PackageId);
+                var packageToScan = await SearchPackageAsync(package.Id);
                 if (packageToScan == null)
                 {
                     warnings.Add(new Warning
                     {
-                        BreadCrumb = GetCurrentBreadCrumb(breadCrumb, dependencyDto.PackageId, version),
+                        BreadCrumb = GetCurrentBreadCrumb(breadCrumb, package.Id, version),
                         Package = null,
                         Message = "Package not found",
                     });
                     continue;
                 }
 
-                var packageInfoToScan = await SearchPackageVersionInfoAsync(packageToScan, version);
-                warnings.AddRange(GetRootPackageWarnings(packageInfoToScan, GetCurrentBreadCrumb(breadCrumb, dependencyDto.PackageId, version)));
+                var packageInfoToScan = SearchPackageVersionInfo(packageToScan, version);
+                warnings.AddRange(GetRootPackageWarnings(packageInfoToScan, GetCurrentBreadCrumb(breadCrumb, package.Id, version)));
 
-                if (packageInfoToScan?.DependencyGroups == null) continue;
-                var packageInfoToScanWarnings = await GetDependencyGroupsMessagesAsync(packageInfoToScan.DependencyGroups, GetCurrentBreadCrumb(breadCrumb, dependencyDto.PackageId, version));
+                if (packageInfoToScan?.DependencySets == null) continue;
+                var packageInfoToScanWarnings = await GetDependencyGroupsMessagesAsync(packageInfoToScan.DependencySets, GetCurrentBreadCrumb(breadCrumb, package.Id, version));
                 warnings.AddRange(packageInfoToScanWarnings);
             }
         }
-
 
         return warnings;
     }
@@ -106,9 +101,9 @@ public class NugetCheck
         return value;
     }
 
-    private bool IsDeprecated(NugetPackageVersionInfo packageInfo)
+    private bool IsDeprecated(PackageMetadataRegistrationDto packageInfo)
     {
-        return packageInfo.Deprecation != null;
+        return packageInfo.DeprecationMetadata != null;
     }
 
     public async Task<bool?> IsDeprecatedAsync(string packageName, string packageVersion)
@@ -116,15 +111,15 @@ public class NugetCheck
         var package = await SearchPackageAsync(packageName);
         if (package == null) return null;
 
-        var packageInfo = await SearchPackageVersionInfoAsync(package, packageVersion);
+        var packageInfo = SearchPackageVersionInfo(package, packageVersion);
         if (packageInfo == null) return null;
         return IsDeprecated(packageInfo);
     }
 
-    private bool IsListed(NugetPackageVersionInfo? packageInfo)
+    private bool IsListed(PackageMetadataRegistrationDto? packageInfo)
     {
         if (packageInfo == null) return false;
-        return packageInfo.Listed;
+        return packageInfo.IsListed;
     }
 
     public async Task<bool?> IsListedAsync(string packageName, string packageVersion)
@@ -132,11 +127,11 @@ public class NugetCheck
         var package = await SearchPackageAsync(packageName);
         if (package == null) return null;
 
-        var packageInfo = await SearchPackageVersionInfoAsync(package, packageVersion);
+        var packageInfo = SearchPackageVersionInfo(package, packageVersion);
         return IsListed(packageInfo);
     }
 
-    private bool IsVulnerable(NugetPackageVersionInfo packageInfo)
+    private bool IsVulnerable(PackageMetadataRegistrationDto packageInfo)
     {
         return packageInfo.Vulnerabilities != null;
     }
@@ -146,12 +141,12 @@ public class NugetCheck
         var package = await SearchPackageAsync(packageName);
         if (package == null) return null;
 
-        var packageInfo = await SearchPackageVersionInfoAsync(package, packageVersion);
+        var packageInfo = SearchPackageVersionInfo(package, packageVersion);
         if (packageInfo == null) return null;
         return IsVulnerable(packageInfo);
     }
 
-    private List<Warning> GetRootPackageWarnings(NugetPackageVersionInfo? packageInfo, string currentBreadCrumb)
+    private List<Warning> GetRootPackageWarnings(PackageMetadataRegistrationDto? packageInfo, string currentBreadCrumb)
     {
         var warnings = new List<Warning>();
         if (!IsListed(packageInfo))
@@ -197,25 +192,50 @@ public class NugetCheck
         {
             return nugetPackage;
         }
+        
+        // TODO: Jobs to be done! Improve dat thing
+        var source = "https://api.nuget.org/v3/index.json";
+        PackageSourceCredential? credentials = null;
+        var packageSource = new PackageSource(source) { Credentials = credentials };
+        var repository = Repository.Factory.GetCoreV3(packageSource);
+        var resource = await repository.GetResourceAsync<PackageMetadataResource>();
 
-        var response = await _client.GetAsync($"https://azuresearch-usnc.nuget.org/query?q={packageName}");
-        var responseDto = await response.Content.ReadFromJsonAsync<AzureSearchQueryResponseDto.Rootobject>();
+        var packageSearchMetadata = await resource.GetMetadataAsync(packageName, true, true, new SourceCacheContext(), NullLogger.Instance, CancellationToken.None);
+        if (packageSearchMetadata == null) return null;
 
-        var unique = responseDto?.data.FirstOrDefault(x => x.PackageId.ToLower() == packageName.ToLower());
-        if (unique == null) return null;
+        var packageMetadataRegistrations = packageSearchMetadata
+            .Distinct()
+            .Where(x => x.Identity.Id.ToLower() == packageName.ToLower())
+            .Select(x => x as PackageSearchMetadataRegistration)
+            .Select(x => new PackageMetadataRegistrationDto
+            {
+                DependencySets = x!.DependencySets,
+                DeprecationMetadata = x.DeprecationMetadata,
+                Identity = new NugetPackage2.Identity()
+                {
+                    Version = x.Identity.Version.ToString(),
+                    Id = x.Identity.Id
+                },
+                OriginalVersion = x.Version.OriginalVersion!,
+                Vulnerabilities = x.Vulnerabilities,
+                IsListed = x.IsListed
+            })
+            .ToArray();
+
+        if (!packageMetadataRegistrations.Any()) return null;
 
         nugetPackage = new NugetPackage
         {
-            NugetPackageId = unique.PackageId,
-            Versions = unique.versions,
-            DateScanned = DateTime.UtcNow
+            NugetPackageId = packageMetadataRegistrations.FirstOrDefault()!.Identity.Id,
+            DateScanned = DateTime.UtcNow,
+            PackageMetadataRegistrations = packageMetadataRegistrations
         };
 
         await LocalStorageService.SaveNugetPackageAsync(nugetPackage);
         return nugetPackage;
     }
 
-    public async Task<NugetPackageVersionInfo?> SearchPackageVersionInfoAsync(NugetPackage package, string packageVersion)
+    public PackageMetadataRegistrationDto? SearchPackageVersionInfo(NugetPackage package, string packageVersion)
     {
         try
         {
@@ -228,41 +248,8 @@ public class NugetCheck
         {
             Console.WriteLine(e.Message);
         }
-        
 
-        var nugetPackageVersionInfo = await LocalStorageService.GetNugetPackageVersionInfoAsync(package.NugetPackageId, packageVersion);
-        if (nugetPackageVersionInfo?.DateScanned > DateTime.UtcNow.AddDays(-1))
-        {
-            return nugetPackageVersionInfo;
-        }
-
-        var versionInfoUrl = package.Versions.Where(x => x.version == packageVersion).Select(x => x.IndexUrl).FirstOrDefault();
-        if (versionInfoUrl == null) return null; // this can mean that the package version does not exist or is not listed
-
-        var versionIndexResponse = await _client.GetAsync(versionInfoUrl);
-        var versionIndexResponseDto = await versionIndexResponse.Content.ReadFromJsonAsync<NugetVersionIndexResponseDto.Rootobject>();
-        if (versionIndexResponseDto == null) return null;
-
-        var versionCatalogEntryUrl = versionIndexResponseDto.catalogEntry;
-        var versionCatalogEntryResponse = await _client.GetAsync(versionCatalogEntryUrl);
-        var versionCatalogEntryResponseDto = await versionCatalogEntryResponse.Content.ReadFromJsonAsync<NugetVersionCatalogEntryResponseDto.Rootobject>();
-        if (versionCatalogEntryResponseDto == null) return null;
-
-        nugetPackageVersionInfo = new NugetPackageVersionInfo
-        {
-            NugetPackageId = package.NugetPackageId,
-            CatalogEntry = versionIndexResponseDto.catalogEntry,
-            DateScanned = DateTime.UtcNow,
-            Deprecation = versionCatalogEntryResponseDto.deprecation,
-            DependencyGroups = versionCatalogEntryResponseDto.dependencyGroups,
-            Listed = versionIndexResponseDto.listed,
-            IndexUrl = versionInfoUrl,
-            Vulnerabilities = versionCatalogEntryResponseDto.vulnerabilities,
-            Version = versionCatalogEntryResponseDto.version
-        };
-
-        await LocalStorageService.SaveNugetPackageVersionInfoAsync(nugetPackageVersionInfo);
-        return nugetPackageVersionInfo;
+        return package.PackageMetadataRegistrations.FirstOrDefault(x => x.Identity.Version.ToString() == packageVersion);
     }
 
     private static List<PackageDto> GetProjectPackageList(string filePath) => GetProjectPackageList(XDocument.Load(filePath));

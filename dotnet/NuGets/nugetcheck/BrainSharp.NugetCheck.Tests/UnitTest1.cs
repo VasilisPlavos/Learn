@@ -1,10 +1,17 @@
 // Methodname_Condition_Expectation
+
+using BrainSharp.NugetCheck.Services;
+
 namespace BrainSharp.NugetCheck.Tests
 {
     public class Tests
     {
         [SetUp]
-        public void Setup(){}
+        public void Setup()
+        {
+            var deleteLocalStorage = true;
+            if (deleteLocalStorage) LocalStorageService.DeleteStorage();
+        }
 
         [Test]
         [TestCase("BrainSharp.Xml", "1.0.6", 0)]
@@ -20,7 +27,8 @@ namespace BrainSharp.NugetCheck.Tests
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.NugetPackageId, Is.EqualTo(packageName));
-            Assert.That(result.NugetPackageVersion, Is.EqualTo(packageVersion));
+
+            Assert.That(result.NugetPackageOriginalVersion!, Is.EqualTo(packageVersion));
             Assert.That(result.Warnings.Count, Is.EqualTo(expectedWarnings));
             Assert.Pass();
         }
@@ -61,8 +69,8 @@ namespace BrainSharp.NugetCheck.Tests
         }
 
         [Test]
-        [TestCase("BrainSharp.Xml", "1.0.6", false)]
         [TestCase("BrainSharp.Xml", "1.0.2", true)]
+        [TestCase("BrainSharp.Xml", "1.0.6", false)]
         public async Task IsDeprecated_StringContents_ExpectedResult(string packageName, string packageVersion, bool expected)
         {
             var nugetCheck = new NugetCheck();
@@ -90,14 +98,34 @@ namespace BrainSharp.NugetCheck.Tests
         }
 
         [Test]
-        [TestCase("sixlabors.imagesharp")]
-        public async Task SearchPackageAsync_GiveName_Return(string packageName)
+        [TestCase("sixlabors.imagesharp", true)]
+        [TestCase("uiogdfgjkdf", false)]
+        public async Task SearchPackageAsync_GiveName_Return(string packageName, bool exist)
         {
             var nugetCheck = new NugetCheck();
             var package = await nugetCheck.SearchPackageAsync(packageName);
 
+            if (!exist)
+            {
+                Assert.That(package, Is.Null);
+                return;
+            }
+
             Assert.That(package, Is.Not.Null);
             Assert.That(package?.NugetPackageId.ToLower(), Is.EqualTo(packageName.ToLower()));
+        }
+
+        [Test]
+        [TestCase("BrainSharp.Xml")]
+        public async Task TestLocalStorage(string packageName)
+        {
+            var nugetCheck = new NugetCheck();
+            var package = await nugetCheck.SearchPackageAsync(packageName);
+            LocalStorageService.DeleteStorage();
+            await LocalStorageService.SaveNugetPackageAsync(package!);
+            var package2 = await LocalStorageService.GetNugetPackageAsync2(packageName);
+            var package3 = await LocalStorageService.GetNugetPackageAsync(packageName);
+            Assert.That(package3, Is.Not.Null);
         }
 
         [Test]
@@ -108,10 +136,10 @@ namespace BrainSharp.NugetCheck.Tests
             var package = await nugetCheck.SearchPackageAsync(packageName);
             Assert.That(package, Is.Not.Null);
 
-            var packageVersionInfo = await nugetCheck.SearchPackageVersionInfoAsync(package, packageVersion);
+            var packageVersionInfo = nugetCheck.SearchPackageVersionInfo(package, packageVersion);
 
             Assert.That(packageVersionInfo, Is.Not.Null);
-            Assert.That(packageVersionInfo?.Version, Is.EqualTo(packageVersion));
+            Assert.That(packageVersionInfo?.OriginalVersion.ToString(), Is.EqualTo(packageVersion));
         }
     }
 
