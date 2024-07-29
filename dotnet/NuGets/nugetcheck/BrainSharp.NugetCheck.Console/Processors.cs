@@ -6,7 +6,7 @@ public static class Processors
 {
     private static void DoReport(NugetPackageResults nugetPackageResults)
     {
-        Console.WriteLine($"-- {nugetPackageResults.NugetPackageId} {nugetPackageResults.NugetPackageVersion} has {nugetPackageResults.Warnings.Count} warnings.");
+        Console.WriteLine($"-- {nugetPackageResults.NugetPackageId} {nugetPackageResults.NugetPackageOriginalVersion} has {nugetPackageResults.Warnings.Count} warnings.");
         foreach (var warning in nugetPackageResults.Warnings)
         {
             var package = warning.BreadCrumb.Split(">").Last().Trim();
@@ -14,23 +14,23 @@ public static class Processors
             Console.WriteLine($"-- {package}: {warning.Message}");
             Console.WriteLine($"-- Breadcrumb: {warning.BreadCrumb}");
 
-            var vulnerabilities = warning.Package?.Vulnerabilities;
+            var vulnerabilities = warning.Package?.Vulnerabilities?.ToList();
             if (vulnerabilities != null)
             {
                 foreach (var vulnerability in vulnerabilities)
                 {
-                    Console.WriteLine($"-- Severity: {vulnerability.severity} and AdvisoryUrl: {vulnerability.advisoryUrl}");
+                    Console.WriteLine($"-- Severity: {vulnerability.Severity} and AdvisoryUrl: {vulnerability.AdvisoryUrl}");
                 }
             }
 
-            if (warning.Package is { Listed: false }) Console.WriteLine($"------ {package} is not listed!");
+            if (warning.Package is { IsListed: false }) Console.WriteLine($"------ {package} is not listed!");
 
-            var deprecations = warning.Package?.Deprecation;
+            var deprecations = warning.Package?.DeprecationMetadata;
             if (deprecations != null)
             {
                 Console.WriteLine($"-- {package} is deprecated!");
-                Console.WriteLine($"-- reason: {string.Join(",", deprecations.reasons)}");
-                Console.WriteLine($"-- message: {deprecations.message}");
+                Console.WriteLine($"-- reason: {string.Join(",", deprecations.Reasons)}");
+                Console.WriteLine($"-- message: {deprecations.Message}");
             }
         }
     }
