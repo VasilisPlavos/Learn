@@ -41,7 +41,7 @@ kind: Service
 metadata:
   name: shoppingclient-service
 spec:
-  type: NodePort
+  type: NodePort # LoadBalancer
   selector:
     app: shoppingclient
   ports:
