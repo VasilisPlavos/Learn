@@ -41,7 +41,7 @@ kind: Service
 metadata:
   name: shoppingapi-service
 spec:
-  type: NodePort
+  type: NodePort # it's for testing, for prod balancer is needed
   selector:
     app: shoppingapi
   ports:
