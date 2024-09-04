@@ -2,8 +2,15 @@
 
 # first do: pip install PyPDF2
 import PyPDF2
+import os
 
-mergeFile = PyPDF2.PdfFileMerger()
-mergeFile.append(PyPDF2.PdfFileReader('trans.pdf', 'rb'))
-mergeFile.append(PyPDF2.PdfFileReader('trans2.pdf', 'rb'))
-mergeFile.write("NewMergedFile.pdf")
+pdfMerger = PyPDF2.PdfMerger()
+pdfFiles = [f for f in os.listdir('.') if os.path.isfile(f) and f.endswith('.pdf')]
+
+for file in pdfFiles:
+    fileInput = open(file, "rb")
+    pdfMerger.append(file)
+
+# Write to an output PDF document
+output = open("document-output.pdf", "wb")
+pdfMerger.write(output)
