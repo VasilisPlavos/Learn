@@ -12,8 +12,7 @@
             // this window's domain
             let txt = document.querySelector('#txtMsg');
             // event.data contains the message sent
-            txt.value = `Name is ${event.data.pName} Age is  ${event.data.pAge}`;
-
+            txt.value = event.data.pName == undefined ? `Click Send Message on Page1` : `Name is ${event.data.pName} Age is ${event.data.pAge}`;
         });
 
         function closeMe() {
