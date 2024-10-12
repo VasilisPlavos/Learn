@@ -2,7 +2,7 @@
 # use open-webui main image and install ollama from website
 
 # Use open-webui main as the base image
-FROM ghcr.io/open-webui/open-webui:main
+# FROM ghcr.io/open-webui/open-webui:main
 
 
 # Update the package list and install prerequisites
@@ -12,7 +12,7 @@ FROM ghcr.io/open-webui/open-webui:main
 #     && apt-get clean
 
 # Install Ollama (a script hosted on the website)
-RUN curl -fsSL https://ollama.com/install.sh | sh
+# RUN curl -fsSL https://ollama.com/install.sh | sh
 
 ########################################################################
 
@@ -21,12 +21,12 @@ RUN curl -fsSL https://ollama.com/install.sh | sh
 ########################################################################
 #
 # Use open-webui with ollama integrated
-# FROM ghcr.io/open-webui/open-webui:ollama
+FROM ghcr.io/open-webui/open-webui:ollama
 #
 ########################################################################
 
 # Use this environment varriable to serve OLLAMA using the same container
-ENV USE_OLLAMA_DOCKER=true
+# ENV USE_OLLAMA_DOCKER=true
 
 # Use this to dissable AUTH (not recommented!)
 ENV WEBUI_AUTH=false
