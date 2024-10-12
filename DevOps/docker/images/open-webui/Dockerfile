@@ -38,9 +38,12 @@ ENV WEBUI_AUTH=false
 # docker build -t open-webui-ollama:dev .
 # docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models --name open-webui-ollama-dev --restart always open-webui-ollama:dev
 
+# -v open-webui:/app/backend/data
+# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -v open-webui:/app/backend/data --name open-webui-ollama-dev --restart always open-webui-ollama:dev
+
 
 # the AIO commands
-# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -e USE_OLLAMA_DOCKER=true -e WEBUI_AUTH=false --name open-webui-ollama-dev --restart always ghcr.io/open-webui/open-webui:ollama
+# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -e WEBUI_AUTH=false --name open-webui-ollama-dev --restart always ghcr.io/open-webui/open-webui:ollama
 
 
 #########################################################################
