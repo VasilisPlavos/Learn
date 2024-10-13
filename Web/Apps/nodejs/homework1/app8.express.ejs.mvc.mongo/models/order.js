@@ -1,17 +1,25 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../util/database");
+const { ObjectId } = require("mongodb");
+const { getDbAsync } = require("../util/database");
 
-const Order = sequelize.define(
-  "order",
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
-    },
-  },
-  { timestamps: false }
-);
+class Order {
+  static async addOrder(order) {
+    const collection = await getCollectionAsync();
+    var result = await collection.insertOne(order);
+    return result;
+  }
+
+  static async getOrders(userId) {
+    const collection = await getCollectionAsync();
+    var result = await collection
+      .find({ userId: new ObjectId(userId) })
+      .toArray();
+    return result;
+  }
+}
+
+async function getCollectionAsync() {
+  const db = await getDbAsync();
+  return db.collection("orders");
+}
 
 module.exports = Order;

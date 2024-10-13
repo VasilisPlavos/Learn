@@ -1,7 +1,8 @@
+const Order = require("../models/order");
 const Product = require("../models/product");
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("shop/product-list", {
         prods: products,
@@ -13,8 +14,7 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  Product.findOne({ where: { id: req.params.productId } })
-    // Product.findByPk(req.params.productId) // this works also
+  Product.findById(req.params.productId)
     .then((product) => {
       res.render("shop/product-detail", {
         product: product,
@@ -26,7 +26,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("shop/index", {
         prods: products,
@@ -39,67 +39,74 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
-exports.getCart = (req, res, next) => {
-  req.user.getCart().then((cart) => {
-    cart.getProducts().then((products) => {
-      res.render("shop/cart", {
-        path: "/cart",
-        pageTitle: "Your Cart",
-        products: products,
-      });
-    });
+exports.getCart = async (req, res, next) => {
+  var productIds = req.user.cart.items.map((i) => {
+    return i.productId;
+  });
+  var cartProducts = await Product.findAll(productIds);
+  var products = cartProducts.map(p => {
+    return {
+      ...p, quantity: 1
+    }
+  })
+
+  res.render("shop/cart", {
+    path: "/cart",
+    pageTitle: "Your Cart",
+    products: products,
   });
 };
 
 exports.postCart = async (req, res, next) => {
-  var product = await Product.findByPk(req.body.productId);
-  if (!product) return null;
+  const prodId = req.body.productId;
+  var product = await Product.findById(prodId);
+  req.user.addToCart(product);
 
-  var cart = await req.user.getCart();
-  var cartSelectedProducts = await cart.getProducts({
-    where: { id: product.id },
-  });
+  // var product = await Product.findById(req.body.productId);
+  // if (!product) return null;
 
-  var quantity = 0;
-  if (cartSelectedProducts[0]) {
-    quantity = cartSelectedProducts[0].CartItem.quantity;
-  }
+  // var cart = await req.user.getCart();
+  // var cartSelectedProducts = await cart.getProducts({
+  //   where: { id: product._id },
+  // });
 
-  await cart.addProduct(product, { through: { quantity: ++quantity } });
+  // var quantity = 0;
+  // if (cartSelectedProducts[0]) {
+  //   quantity = cartSelectedProducts[0].CartItem.quantity;
+  // }
+
+  // await cart.addProduct(product, { through: { quantity: ++quantity } });
   res.redirect("/cart");
 };
 
 exports.postCartDeleteProduct = async (req, res, next) => {
-  var cart = await req.user.getCart();
-  var cartProductsToDelete = await cart.getProducts({
-    where: { id: req.body.productId },
-  });
-
-  for (const product of cartProductsToDelete) {
-    await product.CartItem.destroy();
-  }
-
+  req.user.DeleteFromCart(req.body.productId);
   res.redirect("/cart");
 };
 
 exports.postOrder = async (req, res, next) => {
-  var cart = await req.user.getCart();
-  var products = await cart.getProducts();
-  var order = await req.user.createOrder();
+  await req.user.addOrder();
 
-  // prepare products
-  var preparedProducts = products.map((x) => {
-    x.orderItem = { quantity: x.CartItem.quantity };
-    return x;
-  });
+  // var cart = await req.user.getCart();
+  // var products = await cart.getProducts();
+  // var order = await req.user.createOrder();
 
-  await order.addProducts(preparedProducts);
-  await cart.setProducts(null); // clear cart
+  // // prepare products
+  // var preparedProducts = products.map((x) => {
+  //   x.orderItem = { quantity: x.CartItem.quantity };
+  //   return x;
+  // });
+
+  // await order.addProducts(preparedProducts);
+  // await cart.setProducts(null); // clear cart
   res.redirect("/orders");
 };
 
 exports.getOrders = async (req, res, next) => {
-  var orders = await req.user.getOrders({ include: ["products"] });
+  var orders = await Order.getOrders(req.user._id);
+  // var
+
+
   res.render("shop/orders", {
     path: "/orders",
     pageTitle: "Your Orders",
