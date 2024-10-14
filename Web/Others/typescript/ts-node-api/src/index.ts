@@ -7,7 +7,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
-import { itemsRouter } from "./items/items.router";
+import { itemsRouter } from "./modules/items/items.router";
 import { errorHandler } from "./middlewares/errorHandler.mw";
 
 dotenv.config();
