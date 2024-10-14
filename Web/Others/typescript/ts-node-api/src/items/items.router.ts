@@ -1,8 +1,9 @@
-import express, { Request, Response } from "express";
-import * as ItemsService from './items.service';
 /**
  * Required External Modules and Interfaces
  */
+import express, { Request, Response, NextFunction } from "express";
+import * as ItemsService from './items.service';
+import { Item } from "./item.model";
 
 /**
  * Router Definition
@@ -14,38 +15,68 @@ export const itemsRouter = express.Router();
  */
 
 // GET items
-itemsRouter.get("/", async (req: Request, res: Response, next: express.NextFunction) => {
-    const items = await ItemsService.findAllAsync();
-    res.status(200).send(items);
+itemsRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const items = await ItemsService.findAllAsync();
+        res.status(200).json(items);
+    } catch (error) { next(error); }
 })
 
 // GET items/:id
-itemsRouter.get("/:id", async (req: Request, res: Response, next: express.NextFunction) => {
-    const item = await ItemsService.findByIdAsync(+req.params.id);
+itemsRouter.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = +req.params.id;
+        if (isNaN(id)) {
+            res.status(400).send("Invalid item id");
+            return;
+        }
 
-    if (!item) res.status(404).send("item not found");
-    res.status(200).send(item);
+        const item = await ItemsService.findByIdAsync(+req.params.id);
+        if (!item) {
+            res.status(404).send("item not found");
+            return;
+        }
+
+        res.status(200).send(item);
+    } catch (error) { next(error); }
 })
 
 
 // POST items
-itemsRouter.post("/", async (req: Request, res: Response, next: express.NextFunction) => {
-    let item = await ItemsService.createAsync(req.body);
-    res.status(201).send(item);
-})
+itemsRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        let item: Item = req.body;
+        if (!item) {
+            res.status(400).send("Request body is missing");
+            return;
+        }
+
+        item = await ItemsService.createAsync(item);
+        res.status(201).json(item);
+    } catch (error) { next(error); }
+});
 
 // PUT items
-itemsRouter.put("/", async (req: Request, res: Response, next: express.NextFunction) => {
+itemsRouter.put("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        let item = await ItemsService.updateAsync(req.body);
-        res.status(200).send(item);
+        let item: Item = req.body;
+        await ItemsService.updateAsync(item);
+        res.status(200).json(item);
     } catch (error) {
-        res.status(500).send(error.message);
+        next(error);
     }
-})
+});
 
 // DELETE items/:id
-itemsRouter.delete("/:id", async (req: Request, res: Response, next: express.NextFunction) => {
-    await ItemsService.removeAsync(+req.params.id);
-    res.sendStatus(204); 
-})
+itemsRouter.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = +req.params.id;
+        if (isNaN(id)) {
+            res.status(400).send("Invalid item id");
+            return;
+        }
+
+        await ItemsService.removeAsync(id);
+        res.sendStatus(204);
+    } catch (error) { next(error); }
+});
