@@ -10,30 +10,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     && apt-get clean
 
-RUN apt-get install -y jupyter
 
 RUN pip install --no-cache-dir --upgrade pip && \
-pip install --no-cache-dir SpeechRecognition[whisper-local] yt-dlp --ignore-installed
+pip install --no-cache-dir SpeechRecognition[whisper-local] yt-dlp fastapi[standard] --ignore-installed
 
 # Set working directory
-WORKDIR /home/user
+WORKDIR /app
+COPY /app /app
 
-# Increase user file descriptor limit (optional for some .NET applications)
-# RUN ulimit -n 65535
-
-
-# Expose Jupyter notebook port (default: 8888)
-EXPOSE 8888
-
-# Run jupyter notebook on container start
-# jupyter notebook --allow-root --port=8888 --ip=0.0.0.0
-CMD ["jupyter", "notebook", "--allow-root", "--port=8888", "--ip=0.0.0.0"]
-
-# docker build -t temp-py .
-# docker run -d -p 3200:8888 -v C:/Users/vplav/Gits/monopoly-personal/examples/AudioVideoConverter:/home/user --name temp-py --restart always temp-py
-
+CMD ["fastapi", "run", "main.py", "--port", "80"]
 
 # docker build -t youtube-to-text:latest .
-# docker run --hostname=476db36b3104 --restart=no -d -v C:/Users/vplav/Gits/monopoly-personal/examples/AudioVideoConverter:/home/user --name youtube-to-text youtube-to-text:latest
-
-# - `docker run --hostname=476db36b3104 --restart=no -t -d ubuntu:jammy-20240227`
+# docker run -d --name youtube-to-text -p 3300:80 youtube-to-text:latest
+# go to http://localhost:3300/yt/swXWUfufu2w
