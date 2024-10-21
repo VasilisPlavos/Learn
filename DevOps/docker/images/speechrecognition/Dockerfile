@@ -10,13 +10,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     && apt-get clean
 
-
-RUN pip install --no-cache-dir --upgrade pip && \
-pip install --no-cache-dir SpeechRecognition[whisper-local] yt-dlp fastapi[standard] --ignore-installed
-
 # Set working directory
 WORKDIR /app
 COPY /app /app
+
+# if this is not working, use the requirements.txt file
+RUN pip install --no-cache-dir --upgrade pip && \
+pip install --no-cache-dir SpeechRecognition[whisper-local] yt-dlp fastapi[standard] --ignore-installed
+
+# RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 CMD ["fastapi", "run", "main.py", "--port", "80"]
 
