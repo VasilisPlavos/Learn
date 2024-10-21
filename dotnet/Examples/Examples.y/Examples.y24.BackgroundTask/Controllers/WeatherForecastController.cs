@@ -6,58 +6,51 @@ namespace Examples.y24.BackgroundTask.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private MyFile MyFile = new() { Dir = Path.Combine(AppContext.BaseDirectory, "storage"), FileName = "file.txt", FilePath = Path.Combine(AppContext.BaseDirectory, "storage", "file.txt") };
+        private readonly MyFile _file = new() { Dir = Path.Combine(AppContext.BaseDirectory, "storage"), FilePath = Path.Combine(AppContext.BaseDirectory, "storage", "file.txt") };
 
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<string> Get()
         {
-            var response = await CheckStatusAsync();
-            if (response == "start")
+            var status = await CheckStatusAsync();
+            if (status == "start")
             {
 
-                // This is the background task
-                Task.Run(async () =>
+                // Start background task
+                _ = Task.Run(async () =>
                 {
-                    await Task.Delay(10000);
+                    await Task.Delay(10000);  // Simulate background work
                     await SaveFileAsync("Generated");
                 });
 
-                response = "work in progress";
-                await SaveFileAsync(response);
+                status = "work in progress";
+                await SaveFileAsync(status);
             }
 
-            return response;
+            return status;
         }
 
         private async Task SaveFileAsync(string context)
         {
-            Directory.CreateDirectory(MyFile.Dir);
-            await using var sw = new StreamWriter(MyFile.FilePath);
-            await sw.WriteAsync(context);
+            Directory.CreateDirectory(_file.Dir!);
+            await System.IO.File.WriteAllTextAsync(_file.FilePath!, context);
         }
 
         private async Task<string> CheckStatusAsync()
         {
-            string context;
-            if (System.IO.File.Exists(MyFile.FilePath))
+            if (System.IO.File.Exists(_file.FilePath))
             {
-                using var sr = new StreamReader(MyFile.FilePath);
-                context = await sr.ReadToEndAsync();
-            }
-            else
-            {
-                context = "start";
-                await SaveFileAsync(context);
+                return await System.IO.File.ReadAllTextAsync(_file.FilePath);
             }
 
-            return context;
+            const string initStatus = "start";
+            await SaveFileAsync(initStatus);
+            return initStatus;
         }
     }
 
     internal class MyFile
     {
-        public string Dir { get; set; }
-        public string FileName { get; set; }
-        public string FilePath { get; set; }
+        public string? Dir { get; set; }
+        public string? FilePath { get; set; }
     }
 }

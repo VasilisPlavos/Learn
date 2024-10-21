@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.BackgroundTask
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y23.CancellationTokenApi", "Examples.y23.CancellationTokenApi\Examples.y23.CancellationTokenApi.csproj", "{73E5E001-DB2B-4639-ABBA-463F6905B548}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.HttpClientExamples.Tests", "Examples.y24.HttpClientExamples.Tests\Examples.y24.HttpClientExamples.Tests.csproj", "{876F6031-28B6-49E0-920B-74E401DD6FFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.HttpClientExamples.Tests", "Examples.y24.HttpClientExamples.Tests\Examples.y24.HttpClientExamples.Tests.csproj", "{876F6031-28B6-49E0-920B-74E401DD6FFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.y24.BackgroundTask", "Examples.y24.BackgroundTask\Examples.y24.BackgroundTask.csproj", "{B63F45D5-F52F-4A17-95D5-5B21F5F0FB7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{876F6031-28B6-49E0-920B-74E401DD6FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{876F6031-28B6-49E0-920B-74E401DD6FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{876F6031-28B6-49E0-920B-74E401DD6FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B63F45D5-F52F-4A17-95D5-5B21F5F0FB7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B63F45D5-F52F-4A17-95D5-5B21F5F0FB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B63F45D5-F52F-4A17-95D5-5B21F5F0FB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B63F45D5-F52F-4A17-95D5-5B21F5F0FB7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
