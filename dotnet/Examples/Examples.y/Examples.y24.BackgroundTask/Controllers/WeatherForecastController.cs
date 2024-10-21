@@ -14,25 +14,22 @@ namespace Examples.y24.BackgroundTask.Controllers
             var status = await CheckStatusAsync();
             if (status == "start")
             {
-
-                // Start background task
-                _ = Task.Run(async () =>
+                // Start background tasks
+                _ = Task.Factory.StartNew(() => RunBackgroundTask("Task 1"), HttpContext.RequestAborted);
+                Task.Factory.StartNew(() => { });
+                Task.Run( async () =>
                 {
                     await Task.Delay(10000);  // Simulate background work
-                    await SaveFileAsync("Generated");
+                    await SaveFileAsync("Task 2");
                 });
+                
+                RunBackgroundEvent("Task 3");
 
                 status = "work in progress";
                 await SaveFileAsync(status);
             }
 
             return status;
-        }
-
-        private async Task SaveFileAsync(string context)
-        {
-            Directory.CreateDirectory(_file.Dir!);
-            await System.IO.File.WriteAllTextAsync(_file.FilePath!, context);
         }
 
         private async Task<string> CheckStatusAsync()
@@ -45,6 +42,25 @@ namespace Examples.y24.BackgroundTask.Controllers
             const string initStatus = "start";
             await SaveFileAsync(initStatus);
             return initStatus;
+        }
+
+        // Start background task
+        private async void RunBackgroundEvent(string text)
+        {
+            await Task.Delay(15000);  // Simulate background work
+            await SaveFileAsync(text);
+        }
+
+        private async Task RunBackgroundTask(string text)
+        {
+            await Task.Delay(5000);  // Simulate background work
+            await SaveFileAsync(text);
+        }
+
+        private async Task SaveFileAsync(string context)
+        {
+            Directory.CreateDirectory(_file.Dir!);
+            await System.IO.File.WriteAllTextAsync(_file.FilePath!, context);
         }
     }
 
