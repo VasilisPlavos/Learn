@@ -1,10 +1,12 @@
+import re
 from fastapi import BackgroundTasks, FastAPI
+from fastapi.responses import RedirectResponse
 import subprocess
 import speech_recognition as sr
 import os
 import json
 
-
+# cmd: fastapi dev
 app = FastAPI()
 
 def save_file(folderPath, fileName, jsonFile):
@@ -62,9 +64,20 @@ def check_status(channel, id):
         save_file(folderPath, fileName, json.dumps(file_context))
     return file_context
 
+def get_youtube_id(url):
+    try:
+        match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11}).*", url)
+        return match.group(1) if match else ""
+    except:
+        return ""
+
 @app.get('/')
-async def read_root():
-    return {"Hello": "World"}
+async def read_root(url: str | None = None):
+    youtubeId = get_youtube_id(url)
+    if (youtubeId != ""):
+        response = RedirectResponse(url=f'/yt/{youtubeId}')
+        return response
+    return "Try something like http://localhost:3300/?url=https://www.youtube.com/watch?v=swXWUfufu2w?version=3&amp;hl=en_US"
 
 @app.get("/yt/{id}")
 async def yt_id(id: str, background_tasks: BackgroundTasks):
