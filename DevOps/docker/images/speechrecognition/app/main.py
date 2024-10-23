@@ -1,4 +1,3 @@
-from typing import Union
 from fastapi import BackgroundTasks, FastAPI
 import subprocess
 import speech_recognition as sr
