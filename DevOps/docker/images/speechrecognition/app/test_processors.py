@@ -1,5 +1,5 @@
 import unittest
-from main import get_youtube_id
+from processors import get_youtube_id
 
 class TestGetYoutubeId(unittest.TestCase):
 
