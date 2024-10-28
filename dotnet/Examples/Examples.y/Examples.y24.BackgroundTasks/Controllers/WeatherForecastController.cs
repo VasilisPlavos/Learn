@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Examples.y24.BackgroundTask.Controllers
+namespace Examples.y24.BackgroundTasks.Controllers
 {
     [ApiController]
     [Route("[controller]")]
