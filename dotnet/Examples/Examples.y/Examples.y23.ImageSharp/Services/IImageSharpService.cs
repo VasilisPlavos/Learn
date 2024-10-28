@@ -34,9 +34,10 @@ public class ImageSharpService : IImageSharpService
         
         // load image to MemoryStream in WebP format and return it
         var imageStream = ImageToStream(image);
-        
+
         // get base64string of webp image from ImageStream
         base64String = StreamToBase64String(imageStream);
+        await imageStream.DisposeAsync();
 
         // get image file extension from base64String (ex. webp)
         var format = GetFormat("image/webp");
@@ -49,8 +50,7 @@ public class ImageSharpService : IImageSharpService
         // save image to webp
         // return webpimage from stream
         var webPImage = ImageToWebP(image);
-        image.Dispose();
-        image2.Dispose();
+        webPImage.Dispose();
         return true;
     }
 
