@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Examples.y24.BackgroundTasks.QueueBackgroundService;
+namespace Examples.y24.BackgroundHostedServices.QueueBackgroundService;
 
 public class TimedHostedService : BackgroundService
 {

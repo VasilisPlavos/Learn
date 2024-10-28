@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Channels;
 
-namespace Examples.y24.BackgroundTasks.QueueBackgroundService
+namespace Examples.y24.BackgroundHostedServices.QueueBackgroundService
 {
     public interface IBackgroundTaskQueue
     {

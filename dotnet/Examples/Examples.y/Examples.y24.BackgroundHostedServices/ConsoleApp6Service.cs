@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace Examples.y24.BackgroundTasks;
+namespace Examples.y24.BackgroundHostedServices;
 
 public class ConsoleApp6Service : IHostedService
 {

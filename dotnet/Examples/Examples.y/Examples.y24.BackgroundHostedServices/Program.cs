@@ -1,12 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
-using Examples.y24.BackgroundTasks.QueueBackgroundService;
+using Examples.y24.BackgroundHostedServices.QueueBackgroundService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Examples.y24.BackgroundTasks;
+namespace Examples.y24.BackgroundHostedServices;
 
 static class Program
 {
