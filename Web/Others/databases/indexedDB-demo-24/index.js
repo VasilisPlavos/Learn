@@ -1,5 +1,5 @@
 let db;
-openDatabase();
+window.onload = openDatabase;
 
 async function openDatabase() {
     const request = indexedDB.open("myDatabase", 1);
