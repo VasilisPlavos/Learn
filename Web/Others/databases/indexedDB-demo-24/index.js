@@ -1,25 +1,26 @@
 let db;
 openDatabase();
 
-function openDatabase() {
+async function openDatabase() {
     const request = indexedDB.open("myDatabase", 1);
 
-    request.onerror = (event) => console.error("Database error: " + event.target.errorCode);
-    
+    request.onerror = (event) => console.error("Database error: " + event.target.error.message);
+
     request.onsuccess = (event) => {
         db = event.target.result;
         document.getElementById("output").textContent = "Database opened successfully";
     };
 
-    request.onupgradeneeded = function (event) {
+    request.onupgradeneeded = async function (event) {
         const db = event.target.result;
-        if (!db.objectStoreNames.contains("myObjectStore")) {
-            db.createObjectStore("myObjectStore", { keyPath: "id" });
+        if (!db.objectStoreNames.contains('myObjectStore')) {
+            await new Promise(resolve => setTimeout(resolve, 100)); // Delay for demonstration purposes
+            db.createObjectStore('myObjectStore', { keyPath: 'id' });
         }
     };
 }
 
-function create() {
+async function create() {
     const transaction = db.transaction(["myObjectStore"], "readwrite");
     const objectStore = transaction.objectStore("myObjectStore");
 
@@ -29,76 +30,82 @@ function create() {
         age: Math.floor(Math.random() * 100),
     });
 
-    request.onsuccess = () => {
-        document.getElementById("output").textContent = "Data created successfully";
-    };
-
-    request.onerror = function (event) {
-        console.error("Error creating data: " + event.target.errorCode);
-    };
+    await new Promise((resolve, reject) => {
+        request.onsuccess = () => {
+            document.getElementById("output").textContent = "Data created successfully";
+            resolve;
+        };
+        request.onerror = event => {
+            console.error("Error creating data: " + event.target.error.message);
+            reject(event.target.error.message);
+        };
+    });
 }
 
-function read() {
+async function read() {
     const transaction = db.transaction(["myObjectStore"], "readonly");
     const objectStore = transaction.objectStore("myObjectStore");
 
     const request = objectStore.get(1);
 
-    request.onsuccess = function (event) {
-        const data = event.target.result;
-        if (data) {
-            document.getElementById(
-                "output"
-            ).textContent = `Data read: ${JSON.stringify(data)}`;
-        } else {
-            document.getElementById("output").textContent = "No data found";
+    await new Promise((resolve, reject) => {
+        request.onsuccess = event => resolve(event.target.result);
+        request.onerror = event => {
+            console.error("Error reading data: " + event.target.error.message);
+            reject(event.target.error.message);
         }
-    };
+    });
 
-    request.onerror = function (event) {
-        console.error("Error reading data: " + event.target.errorCode);
-    };
+    const data = request.result;
+    if (data) {
+        document.getElementById("output").textContent = `Data read: ${JSON.stringify(data)}`;
+    } else {
+        document.getElementById("output").textContent = "No data found";
+    }
 }
 
-function update() {
+async function update() {
     const transaction = db.transaction(["myObjectStore"], "readwrite");
     const objectStore = transaction.objectStore("myObjectStore");
 
     const request = objectStore.get(1);
 
-    request.onsuccess = function (event) {
-        const data = event.target.result;
-        if (data) {
-            data.age = Math.floor(Math.random() * 100); // Update the age
-            const updateRequest = objectStore.put(data);
-            updateRequest.onsuccess = function (event) {
-                document.getElementById("output").textContent =
-                    "Data updated successfully";
-            };
-            updateRequest.onerror = function (event) {
-                console.error("Error updating data: " + event.target.errorCode);
-            };
-        } else {
-            document.getElementById("output").textContent = "No data found to update";
+    await new Promise((resolve, reject) => {
+        request.onsuccess = event => resolve(event.target.result);
+        request.onerror = event => {
+            console.error("Error reading data: " + event.target.error.message);
+            reject(event.target.error.message);
         }
-    };
+    });
 
-    request.onerror = function (event) {
-        console.error("Error reading data for update: " + event.target.errorCode);
-    };
+    const data = request.result;
+    if (data) {
+        data.age = Math.floor(Math.random() * 100); // Update the age
+        const updateRequest = objectStore.put(data);
+
+        await new Promise((resolve, reject) => {
+            updateRequest.onsuccess = resolve;
+            updateRequest.onerror = event => reject(event.target.error.message);
+        });
+
+
+        document.getElementById("output").textContent = `Data updated: ${JSON.stringify(data)}`;
+    } else {
+        document.getElementById("output").textContent = "No data found to update";
+    }
 }
 
-function remove() {
+async function remove() {
     const transaction = db.transaction(["myObjectStore"], "readwrite");
     const objectStore = transaction.objectStore("myObjectStore");
 
     const request = objectStore.delete(1);
 
-    request.onsuccess = function (event) {
-        document.getElementById("output").textContent = "Data removed successfully";
-    };
-
-    request.onerror = function (event) {
-        console.error("Error removing data: " + event.target.errorCode);
-    };
+    await new Promise((resolve, reject) => {
+        request.onsuccess = () => {
+            document.getElementById("output").textContent = "Data removed successfully";
+            resolve;
+        };
+        request.onerror = event => reject(event.target.error.message);
+    });
 }
