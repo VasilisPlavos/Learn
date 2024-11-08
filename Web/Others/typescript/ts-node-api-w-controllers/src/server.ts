@@ -23,7 +23,7 @@ router.use((req, res, next) => {
 router.use("/", tasksRouter);
 
 router.use((req, res, next) => {
-  const error = new Error("not found. try http://localhost:6060/posts");
+  const error = new Error("not found. try http://localhost:6060/tasks");
   res.status(404).json({ message: error.message });
 });
 
