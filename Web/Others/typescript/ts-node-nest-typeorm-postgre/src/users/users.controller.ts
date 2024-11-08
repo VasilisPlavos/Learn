@@ -8,7 +8,7 @@ export class UsersController {
 
     @Post()
     create(@Body() userDto: UserDto) {
-        return this.usersService.create(userDto);
+        return this.usersService.save(userDto);
     }
 
     @Get()
@@ -18,16 +18,16 @@ export class UsersController {
 
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this.usersService.findOne(+id);
+        return this.usersService.findOneById(+id);
     }
 
-    @Patch(':id')
+    @Patch()
     update(@Body() userDto: UserDto) {
         return this.usersService.update(userDto);
     }
 
     @Delete(':id')
     remove(@Param('id') id: string) {
-        return this.usersService.remove(+id);
+        return this.usersService.delete(+id);
     }
 }
