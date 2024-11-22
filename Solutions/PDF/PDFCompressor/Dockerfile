@@ -1,7 +1,10 @@
 FROM ubuntu:jammy-20240227
 
-RUN apt-get update
-RUN apt-get -y install poppler-utils python3 pip ghostscript
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    pip \
+    ghostscript \
+    && apt-get clean
 
 COPY app /app
 WORKDIR /app
