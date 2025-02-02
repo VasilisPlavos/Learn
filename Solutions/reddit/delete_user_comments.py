@@ -2,6 +2,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 # USE THIS SCRIPT TO DELETE ALL OF YOUR COMMENTS USING THE OFFICIAL REDDIT API
+# ADD THE CREDENTIALS BELLOW
 
 def get_access_token(client_id, client_secret, username, password):
     """
@@ -13,7 +14,7 @@ def get_access_token(client_id, client_secret, username, password):
         'username': username,
         'password': password
     }
-    headers = {'User-Agent': 'DeleteRedditComments/0.1 by YOUR_USERNAME'}
+    headers = {'User-Agent': 'DeleteRedditComments/1.0'}
 
     response = requests.post('https://www.reddit.com/api/v1/access_token', 
                              auth=auth, data=data, headers=headers)
@@ -30,7 +31,7 @@ def get_comments(access_token, username, limit = 100):
     """
     headers = {
         'Authorization': f'bearer {access_token}',
-        'User-Agent': 'DeleteRedditComments/0.1 by YOUR_USERNAME'
+        'User-Agent': 'DeleteRedditComments/1.0'
     }
 
     url = f'https://oauth.reddit.com/user/{username}/comments'
@@ -51,7 +52,7 @@ def delete_comment(access_token, comment_id):
     """
     headers = {
         'Authorization': f'bearer {access_token}',
-        'User-Agent': 'DeleteRedditComments/0.1 by YOUR_USERNAME'
+        'User-Agent': 'DeleteRedditComments/1.0'
     }
 
     url = f'https://oauth.reddit.com/api/del?id=t1_{comment_id}'
