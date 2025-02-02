@@ -70,13 +70,10 @@ def delete_all_comments(client_id, client_secret, username, password):
     """
     try:
         access_token = get_access_token(client_id, client_secret, username, password)
-
-        continue_process = True
-        while continue_process:
+        while True:
             comments = get_comments(access_token, username)
-            print(len(comments))
             if len(comments) == 0:
-                continue_process = False
+                break
             for comment in comments:
                 comment_id = comment['data']['id']
                 delete_comment(access_token, comment_id)
