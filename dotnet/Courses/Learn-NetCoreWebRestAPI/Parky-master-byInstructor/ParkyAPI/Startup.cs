@@ -1,23 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using ParkyAPI.Data;
 using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
 using AutoMapper;
 using ParkyAPI.ParkyMapper;
-using System.Reflection;
-using System.IO;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -41,7 +33,10 @@ namespace ParkyAPI
         {
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                (options => options
+                    .UseInMemoryDatabase("InMemoryDb")
+                    //.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                );
 
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
             services.AddScoped<ITrailRepository, TrailRepository>();

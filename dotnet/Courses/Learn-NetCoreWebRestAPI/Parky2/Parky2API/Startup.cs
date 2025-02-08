@@ -31,7 +31,10 @@ namespace Parky2API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options
+                    .UseInMemoryDatabase("InMemoryDb")
+                    //.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                    );
 
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
