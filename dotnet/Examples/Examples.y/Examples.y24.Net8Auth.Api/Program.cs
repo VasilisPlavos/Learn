@@ -1,5 +1,6 @@
 using Examples.y24.Net8Auth.Api;
 using Examples.y24.Net8Auth.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 // Add and configure Auth
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
+builder.Services.AddSingleton<IAuthorizationHandler, AuthorizationHandler>();
 
 // Register the DbContext on the service container
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
