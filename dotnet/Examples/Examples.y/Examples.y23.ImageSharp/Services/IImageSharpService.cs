@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -13,7 +12,7 @@ public interface IImageSharpService
 
 public class ImageSharpService : IImageSharpService
 {
-    private readonly string _buildPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
+    private readonly string _buildPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)!);
 
     public async Task<bool> RunAsync()
     {
