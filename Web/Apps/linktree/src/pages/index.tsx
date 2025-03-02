@@ -3,9 +3,9 @@ import { ExternalLink } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Main container */}
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
+    <div className="mx-auto flex flex-col items-center lg:flex-row lg:items-start lg:justify-center lg:max-w-[1260px]">
+      {/* Left column - flexible on large screens, 380px on small screens */}
+      <div className="w-[380px] lg:flex-1 p-8">
         {/* Profile section */}
         <div className="flex flex-col md:flex-row gap-8 mb-12">
           <div className="flex flex-col items-center md:items-start">
@@ -19,6 +19,11 @@ export default function Home() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Right column - fixed 820px on large screens, 380px on small screens */}
+      <div className="w-[380px] lg:w-[820px] p-8">
+
 
         {/* Text Assistants Section */}
         <div className="mb-12">
