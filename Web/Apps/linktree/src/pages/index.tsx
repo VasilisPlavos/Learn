@@ -1,5 +1,18 @@
 import Image from "next/image"
 import { BendoCard } from "@/components/bendoCard"
+import { Button } from "@/components/ui/button"
+import { HeartHandshake } from "lucide-react";
+import Link from "next/link";
+
+const ButtonGroup = () => (
+  <div className="flex space-x-1 2xl:space-x-2">
+    <Button asChild className="bg-blue-600 hover:bg-blue-700">
+      <Link href="/login"><HeartHandshake /> Let's talk</Link>
+    </Button>
+    <Button variant="secondary">Button</Button>
+    <Button variant="ghost">Button</Button>
+  </div>
+);
 
 export default function Home() {
   return (
@@ -133,6 +146,14 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className="fixed left-16 bottom-[52px] -m-1 items-center space-x-1 rounded-[12px] p-1 right-0 transition-colors hidden xl:flex 2xl:space-x-2 duration-400 delay-500">
+        <ButtonGroup />
+      </div>
+
+      <div className="sticky bottom-0 flex xl:hidden w-full justify-center bg-yellow-50 py-10 z-10">
+        <ButtonGroup />
+      </div>
+
     </>
   )
 }
