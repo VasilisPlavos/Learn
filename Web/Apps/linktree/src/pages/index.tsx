@@ -4,17 +4,27 @@ import { ReactElement } from "react"
 
 export default function Home() {
   return (
-    <div className="mx-auto flex flex-col items-center lg:flex-row lg:items-start lg:justify-center lg:max-w-[1260px]">
+    <div className="
+      mx-auto 
+      flex flex-col 
+      items-center 
+      lg:flex-row lg:items-start lg:justify-center lg:max-w-[1728px]
+      p-6
+      xl:p-16
+      pt-12
+      "
+
+    >
       {/* Left column - flexible on large screens, 380px on small screens */}
-      <div className="w-[380px] lg:flex-1 p-8">
+      <div className="w-[380px] lg:flex-1 p-2">
         {/* Profile section */}
-        <div className="flex flex-col md:flex-row gap-8 mb-12">
-          <div className="flex flex-col items-center md:items-start">
+        <div className="gap-8 mb-12">
+          <div className="items-center md:items-start p-6">
             <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden mb-4">
               <Image src="/profile-image.jpg" alt="Profile" fill className="object-cover" priority />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Vasilis Plavos</h1>
-            <p className="text-gray-700 max-w-md text-center md:text-left">
+            <h1 className="text-[32px] font-bold leading-[120%] tracking-[-1px] xl:text-[44px] xl:tracking-[-2px]">Vasilis Plavos</h1>
+            <p className="text-gray-700 max-w-md mt-3 xl:text-xl">
               I've put together this list of my favorite AI tools that I use every day. These tools make everything
               fast. Explore, try them out, and see how they can help with your projects!
             </p>
@@ -23,13 +33,11 @@ export default function Home() {
       </div>
 
       {/* Right column - fixed 820px on large screens, 380px on small screens */}
-      <div className="w-[380px] lg:w-[820px] p-8">
-
-
+      <div className="w-[380px] lg:w-[820px] p-2">
         {/* Text Assistants Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold mb-4">Text Assistants</h2>
-          <div className="grid grid-cols-1 gap-8 xl:grid-cols-4">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
             <ToolCard
               name="ChatGPT"
               textColor="text-white"
@@ -66,7 +74,7 @@ export default function Home() {
         {/* Image Generators Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold mb-4">Image Generators</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <ToolCard
               name="VisualElectric"
               description="Turn your ideas into cool visuals with this AI image generator!"
@@ -114,7 +122,7 @@ export default function Home() {
         {/* Content Creation Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold mb-4">Content Creation</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <ToolCard
               name="Chatplace"
               description="I use Chatplace to create content faster."
@@ -149,15 +157,15 @@ function ToolCard({
       <div className="relative z-10">
         <div className="flex justify-between items-start">
           <div className="w-10 h-10">
-            {children && children.type === "svg" ? (children) : (<div className="text-2xl mb-2">{icon}</div>)}
+            {children && children.type === "svg" ? (children) : (<div className="lg:text-2xl mb-2">{icon}</div>)}
           </div>
           <button className="bg-white/20 rounded-full p-1.5">
             <ArrowUpRight className={`w-4 h-4 ${textColor}`} />
           </button>
         </div>
 
-        <h2 className="text-2xl font-bold mt-6 mb-2">{name}</h2>
-        <p className={textColor}>{description}</p>
+        <h2 className="lg:text-xl font-bold mt-6 mb-2">{name}</h2>
+        <p className={`text-sm ${textColor}`}>{description}</p>
       </div>
       <div className="absolute top-0 right-0 opacity-10 text-[200px] font-bold leading-none">{name.charAt(0)}</div>
     </div>
