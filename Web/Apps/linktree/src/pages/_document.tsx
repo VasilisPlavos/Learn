@@ -3,7 +3,9 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <link rel="shortcut icon" href="https://plavos.com/wp-content/uploads/2020/08/vp-icon-c.png" />
+      </Head>
       <body className="antialiased">
         <Main />
         <NextScript />
