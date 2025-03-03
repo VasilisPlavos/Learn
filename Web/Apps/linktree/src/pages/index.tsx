@@ -13,7 +13,7 @@ export default function Home() {
             <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden mb-4">
               <Image src="/profile-image.jpg" alt="Profile" fill className="object-cover" priority />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Daniil Filatov</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Vasilis Plavos</h1>
             <p className="text-gray-700 max-w-md text-center md:text-left">
               I've put together this list of my favorite AI tools that I use every day. These tools make everything
               fast. Explore, try them out, and see how they can help with your projects!
