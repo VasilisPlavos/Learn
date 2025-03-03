@@ -19,12 +19,12 @@ export default function Home() {
       <div className="w-[380px] lg:flex-1 p-2">
         {/* Profile section */}
         <div className="gap-8 mb-12">
-          <div className="items-center md:items-start p-6">
+          <div className="items-center md:items-start">
             <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden mb-4">
               <Image src="/profile-image.jpg" alt="Profile" fill className="object-cover" priority />
             </div>
             <h1 className="text-[32px] font-bold leading-[120%] tracking-[-1px] xl:text-[44px] xl:tracking-[-2px]">Vasilis Plavos</h1>
-            <p className="text-gray-700 max-w-md mt-3 xl:text-xl">
+            <p className="text-gray-700 max-w-md mt-3 xl:text-xl pr-10">
               I've put together this list of my favorite AI tools that I use every day. These tools make everything
               fast. Explore, try them out, and see how they can help with your projects!
             </p>
@@ -33,7 +33,7 @@ export default function Home() {
       </div>
 
       {/* Right column - fixed 820px on large screens, 380px on small screens */}
-      <div className="w-[380px] lg:w-[820px] p-2">
+      <div className="w-[380px] lg:w-[820px]">
         {/* Text Assistants Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold mb-4">Text Assistants</h2>
@@ -153,7 +153,7 @@ function ToolCard({
   children // Allow passing SVG as children
 }: ToolCardProps) {
   return (
-    <div className={`${color} ${isWide ? "xl:col-span-2" : ""}  ${textColor} rounded-2xl p-6 relative overflow-hidden`}>
+    <div className={`${color} ${isWide ? "xl:col-span-2" : ""}  ${textColor} rounded-2xl p-4 relative overflow-hidden`}>
       <div className="relative z-10">
         <div className="flex justify-between items-start">
           <div className="w-10 h-10">
@@ -164,7 +164,7 @@ function ToolCard({
           </button>
         </div>
 
-        <h2 className="lg:text-xl font-bold mt-6 mb-2">{name}</h2>
+        <h2 className="text-xl font-bold mt-6 mb-2">{name}</h2>
         <p className={`text-sm ${textColor}`}>{description}</p>
       </div>
       <div className="absolute top-0 right-0 opacity-10 text-[200px] font-bold leading-none">{name.charAt(0)}</div>
