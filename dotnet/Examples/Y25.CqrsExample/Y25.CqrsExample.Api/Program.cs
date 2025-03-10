@@ -1,4 +1,3 @@
-using Y25.CqrsExample.Api;
 using Y25.CqrsExample.Infrastructure;
 using Y25.CqrsExample.Processors;
 
