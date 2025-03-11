@@ -347,4 +347,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-dotnet/Examples/Examples.y/*/Secrets.json
