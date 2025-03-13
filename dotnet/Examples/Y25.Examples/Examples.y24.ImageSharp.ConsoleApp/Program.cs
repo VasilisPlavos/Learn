@@ -1,6 +1,4 @@
-﻿using Azure.Storage.Blobs;
-using Examples.y23.ImageSharp.Services;
-using Examples.y24.Azure.StorageAccount.Services;
+﻿using Examples.y23.ImageSharp.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,13 +23,7 @@ static class Program
             {
                 var connectionStringExample = hostContext.Configuration.GetConnectionString("connection");
                 Console.WriteLine($"{connectionStringExample}");
-                var blobConnectionString = hostContext.Configuration.GetConnectionString("BlobConnection");
-
-
                 services.AddScoped<IImageSharpService, ImageSharpService>();
-                services.AddScoped<IStorageAccountService, StorageAccountService>();
-                services.AddSingleton(u => new BlobServiceClient(blobConnectionString));
-
                 services.AddHostedService<ConsoleApp6Service>();
             });
 }

@@ -1,8 +1,8 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Examples.y24.Azure.StorageAccount.Dtos;
+using Y25.Azure.StorageAccount.Dtos;
 
-namespace Examples.y24.Azure.StorageAccount.Services;
+namespace Y25.Azure.StorageAccount.Services;
 
 public interface IStorageAccountService
 {

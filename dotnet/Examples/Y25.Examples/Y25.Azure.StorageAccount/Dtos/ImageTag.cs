@@ -1,4 +1,4 @@
-﻿namespace Examples.y24.Azure.StorageAccount.Dtos;
+﻿namespace Y25.Azure.StorageAccount.Dtos;
 
 public enum ImageTag
 {
