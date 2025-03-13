@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Y25.Azure.StorageAccount.Services;
+using Y25.Azure.StorageAccount.ConsoleApp.Services;
 
-namespace Y25.Azure.StorageAccount;
+namespace Y25.Azure.StorageAccount.ConsoleApp;
 
 static class Program
 {

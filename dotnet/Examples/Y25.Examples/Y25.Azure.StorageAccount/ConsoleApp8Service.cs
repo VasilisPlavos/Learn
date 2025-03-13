@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Y25.Azure.StorageAccount.Services;
+using Y25.Azure.StorageAccount.ConsoleApp.Services;
 
-namespace Y25.Azure.StorageAccount;
+namespace Y25.Azure.StorageAccount.ConsoleApp;
 
 public class ConsoleApp8Service : IHostedLifecycleService
 {
