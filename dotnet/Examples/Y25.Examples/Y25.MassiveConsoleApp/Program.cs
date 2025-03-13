@@ -9,7 +9,9 @@ static class Program
 {
     static async Task Main(string[] args)
     {
-        await CreateHostBuilder(args).RunConsoleAsync();
+        var builder = CreateHostBuilder(args);
+        var app = builder.Build();
+        await app.RunAsync();
     }
 
     private static IHostBuilder CreateHostBuilder(string[] args) =>
