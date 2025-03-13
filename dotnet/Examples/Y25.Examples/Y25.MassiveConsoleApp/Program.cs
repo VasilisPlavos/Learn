@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Examples.y24.ImageSharp.ConsoleApp;
+namespace Y25.MassiveConsoleApp;
 
 static class Program
 {
@@ -12,18 +12,16 @@ static class Program
         await CreateHostBuilder(args).RunConsoleAsync();
     }
 
-    static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((hostContext, config) =>
+    private static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostContext, config) =>
             {
                 config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                 config.AddEnvironmentVariables();
             })
             .ConfigureServices((hostContext, services) =>
             {
-                var connectionStringExample = hostContext.Configuration.GetConnectionString("connection");
-                Console.WriteLine($"{connectionStringExample}");
+                var connectionString = hostContext.Configuration.GetConnectionString("connection");
                 services.AddScoped<IImageSharpService, ImageSharpService>();
-                services.AddHostedService<ConsoleApp6Service>();
+                services.AddHostedService<ConsoleApp8Service>();
             });
 }

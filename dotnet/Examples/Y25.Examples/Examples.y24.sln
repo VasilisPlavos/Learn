@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y23.MassTransitDem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.NanoIds", "Examples.y24.NanoIds\Examples.y24.NanoIds.csproj", "{0FD9014E-A895-4433-976F-F2A1BB58C8BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.ImageSharp.ConsoleApp", "Examples.y24.ImageSharp.ConsoleApp\Examples.y24.ImageSharp.ConsoleApp.csproj", "{E2B0EEB7-71A8-4FCE-BBC7-94C11768E739}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.HttpClientExamples", "Examples.y24.HttpClientExamples\Examples.y24.HttpClientExamples.csproj", "{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.ZipArchive", "Examples.y24.ZipArchive\Examples.y24.ZipArchive.csproj", "{C1A1A41C-3388-4FDA-AA63-1B702631C24B}"
@@ -34,6 +32,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.BackgroundTasks", "Examples.y24.BackgroundTasks\Examples.y24.BackgroundTasks.csproj", "{78A0F245-7535-48F6-A17C-2A183F9C6572}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.Azure.StorageAccount.ConsoleApp", "Y25.Azure.StorageAccount\Y25.Azure.StorageAccount.ConsoleApp.csproj", "{39F14B42-B0C5-40FC-B668-D56E00091CC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.MassiveConsoleApp", "Y25.MassiveConsoleApp\Y25.MassiveConsoleApp.csproj", "{CB05D9CE-134A-4467-9650-8006988724AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +57,6 @@ Global
 		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FD9014E-A895-4433-976F-F2A1BB58C8BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2B0EEB7-71A8-4FCE-BBC7-94C11768E739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2B0EEB7-71A8-4FCE-BBC7-94C11768E739}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2B0EEB7-71A8-4FCE-BBC7-94C11768E739}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2B0EEB7-71A8-4FCE-BBC7-94C11768E739}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5D2D4AF-A3E8-4F94-BA03-5C50AADDCBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,6 +101,10 @@ Global
 		{39F14B42-B0C5-40FC-B668-D56E00091CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39F14B42-B0C5-40FC-B668-D56E00091CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39F14B42-B0C5-40FC-B668-D56E00091CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB05D9CE-134A-4467-9650-8006988724AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB05D9CE-134A-4467-9650-8006988724AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB05D9CE-134A-4467-9650-8006988724AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB05D9CE-134A-4467-9650-8006988724AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
