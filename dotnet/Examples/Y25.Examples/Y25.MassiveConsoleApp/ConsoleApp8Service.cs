@@ -1,7 +1,7 @@
 ﻿using Examples.y23.ImageSharp.Services;
 using Microsoft.Extensions.Hosting;
 
-namespace Y25.MassiveConsoleApp;
+namespace Y25.ConsoleApp;
 
 public class ConsoleApp8Service : IHostedLifecycleService
 {

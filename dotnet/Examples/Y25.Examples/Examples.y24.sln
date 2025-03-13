@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.y24.BackgroundTask
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.Azure.StorageAccount.ConsoleApp", "Y25.Azure.StorageAccount\Y25.Azure.StorageAccount.ConsoleApp.csproj", "{39F14B42-B0C5-40FC-B668-D56E00091CC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.MassiveConsoleApp", "Y25.MassiveConsoleApp\Y25.MassiveConsoleApp.csproj", "{CB05D9CE-134A-4467-9650-8006988724AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.ConsoleApp", "Y25.MassiveConsoleApp\Y25.ConsoleApp.csproj", "{CB05D9CE-134A-4467-9650-8006988724AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
