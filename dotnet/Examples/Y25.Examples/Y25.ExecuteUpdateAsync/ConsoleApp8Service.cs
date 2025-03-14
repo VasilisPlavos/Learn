@@ -61,6 +61,8 @@ public class ConsoleApp8Service : IHostedLifecycleService
                     .SetProperty(p => p.Name, "Maria"), cancellationToken: cancellationToken);
 
             Console.WriteLine($"{rowsAffected} rows updated.");
+
+            //rowsAffected = await _db.Contacts.ExecuteDeleteAsync(cancellationToken);
             //throw new Exception("nada");
 
             // Commit the transaction
