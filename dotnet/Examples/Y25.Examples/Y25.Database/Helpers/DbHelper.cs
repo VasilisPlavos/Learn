@@ -13,6 +13,7 @@ public class DbHelper()
     }
     public async Task GenerateFakeContactsAsync()
     {
+        if (_db.Contacts.Any()) return;
         var contacts = GenerateFakeContacts(300);
         _db.Contacts.AddRange(contacts);
         await _db.SaveChangesAsync();
