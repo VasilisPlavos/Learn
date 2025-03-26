@@ -3,6 +3,8 @@
 * About .env vars: https://github.com/expo/expo/issues/15888#issuecomment-2336776064
 * https://youtu.be/bCpFbERgj7s
 * https://github.com/bradtraversy/notes-app
+* https://docs.expo.dev/tutorial/add-navigation/
+* https://reactnative.dev/docs/environment-setup
 
 
 
