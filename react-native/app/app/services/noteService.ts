@@ -19,8 +19,8 @@ const noteService = {
             //   Query.equal('user_id', userId),
             // ]);
 
-            const response = new Array<Note>({ id: "1", text: "Note one" },
-                { id: "2", text: "Note two" },
+            const response = new Array<Note>({ id: "2", text: "Note one" },
+                { id: "1", text: "Note two" },
                 { id: "3", text: "Note three" },
                 { id: "4", text: "Note four" },
                 { id: "5", text: "Note five" },
