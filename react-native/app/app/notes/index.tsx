@@ -28,6 +28,11 @@ const NoteScreen = () => {
         //   setNotes([...notes, response.data]);
         // }
 
+        setNotes((prevNotes)=>[
+            ...prevNotes,
+            { id: Math.random().toString(), text: newNote }
+        ])
+
         setNewNote('');
         setModalVisible(false);
     };
