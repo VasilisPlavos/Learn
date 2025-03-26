@@ -1,24 +1,38 @@
-import { useState } from "react";
-import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import NoteList from "../components/NoteList";
 import AddNoteModal from "../components/AddNoteModal";
+import { Note } from '../models/note.interface';
+import noteService from "../services/noteService";
 
 const NoteScreen = () => {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [newNote, setNewNote] = useState('');
 
-    const [notes, setNotes] = useState([
-        { id: "1", text: "Note one" },
-        { id: "2", text: "Note two" },
-        { id: "3", text: "Note three" },
-    ])
+    const [notes, setNotes] = useState(new Array<Note>())
+
+    async function someRandomMethodsAsync() {
+        console.log(process.env.EXPO_PUBLIC_KEY_EXAMPLE);
+        console.log(Platform.OS)
+    }
+
+    useEffect(() => {
+        fetchNotes();
+    }, [])
+
+    const fetchNotes = async () => {
+        const response = await noteService.getNotes();
+        if (response != undefined) setNotes(response);
+    }
 
     // Add New Note
     const addNote = async () => {
+        await someRandomMethodsAsync()
         if (newNote.trim() === '') return;
 
-        Alert.alert('Error', 'Note text cannot be empty');
+
+        console.log(newNote)
 
         // const response = await noteService.addNote(user.$id, newNote);
 
@@ -28,7 +42,7 @@ const NoteScreen = () => {
         //   setNotes([...notes, response.data]);
         // }
 
-        setNotes((prevNotes)=>[
+        setNotes((prevNotes) => [
             ...prevNotes,
             { id: Math.random().toString(), text: newNote }
         ])
