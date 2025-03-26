@@ -54,6 +54,7 @@ const NoteScreen = () => {
 
     // Delete Note
     const deleteNote = async (id: string) => {
+        console.log(id)
         Alert.alert('Delete Note', 'Are you sure you want to delete this note?', [
             {
                 text: 'Cancel',
