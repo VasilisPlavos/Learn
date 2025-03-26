@@ -14,23 +14,23 @@ const NoteScreen = () => {
         { id: "3", text: "Note three" },
     ])
 
-      // Add New Note
-  const addNote = async () => {
-    if (newNote.trim() === '') return;
+    // Add New Note
+    const addNote = async () => {
+        if (newNote.trim() === '') return;
 
-    Alert.alert('Error', 'Note text cannot be empty');
+        Alert.alert('Error', 'Note text cannot be empty');
 
-    // const response = await noteService.addNote(user.$id, newNote);
+        // const response = await noteService.addNote(user.$id, newNote);
 
-    // if (response.error) {
-    //   Alert.alert('Error', response.error);
-    // } else {
-    //   setNotes([...notes, response.data]);
-    // }
+        // if (response.error) {
+        //   Alert.alert('Error', response.error);
+        // } else {
+        //   setNotes([...notes, response.data]);
+        // }
 
-    setNewNote('');
-    setModalVisible(false);
-  };
+        setNewNote('');
+        setModalVisible(false);
+    };
 
 
     // Delete Note
@@ -91,14 +91,14 @@ const NoteScreen = () => {
                 <Text style={styles.addButtonText}>+ Add Note</Text>
             </TouchableOpacity>
 
-                  {/* Modal */}
-      <AddNoteModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        newNote={newNote}
-        setNewNote={setNewNote}
-        addNote={addNote}
-      />
+            {/* Modal */}
+            <AddNoteModal
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+                newNote={newNote}
+                setNewNote={setNewNote}
+                addNote={addNote}
+            />
         </View>
     );
 }
