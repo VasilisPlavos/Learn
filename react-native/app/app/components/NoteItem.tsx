@@ -43,7 +43,7 @@ const NoteItem = ({ note, onDelete, onEdit } : any) => {
                     </TouchableOpacity>
                 )}
 
-                <TouchableOpacity onPress={() => onDelete(note.$id)}>
+                <TouchableOpacity onPress={() => onDelete(note.id)}>
                     <Text style={styles.delete}>❌</Text>
                 </TouchableOpacity>
             </View>
