@@ -10,9 +10,9 @@ export default function App() {
   const print_client_side = () => {
     setClientSidePrinting(true);
     try {
-      var page1 = document.querySelector("#page-1");
-      var page2 = document.querySelector("#page-2");
-      var wnd = window.open('', '_blank');
+      const page1 = document.querySelector("#page-1");
+      const page2 = document.querySelector("#page-2");
+      const wnd = window.open('', '_blank');
 
       var documentContent = `
       <html>
