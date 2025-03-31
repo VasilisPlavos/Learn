@@ -24,8 +24,8 @@ ENV WEBUI_AUTH=false
 # ENV OLLAMA_BASE_URL=http://localhost:11434 OPENAI_API_BASE_URL=
 
 # NOTE: run the above commands to build and run
-# docker build -t open-webui-ollama:dev .
-# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models --name open-webui-ollama-dev --restart always open-webui-ollama:dev
+# docker build -t open-webui-ollama:0.5.20.bil.local .
+# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models --name open-webui-ollama-local --restart always open-webui-ollama:0.5.20.bil.local
 
 
 # with this param you can have a shared volume across the images, sharing the user data
