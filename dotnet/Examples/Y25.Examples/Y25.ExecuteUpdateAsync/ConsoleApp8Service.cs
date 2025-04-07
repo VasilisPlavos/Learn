@@ -1,23 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.Threading;
-using Y25.Database;
+﻿using Microsoft.Extensions.Hosting;
+using Y25.ManyProcessors.Processors;
 
 namespace Y25.ExecuteUpdateAsync;
 
 public class ConsoleApp8Service : IHostedLifecycleService
 {
-    private readonly ApplicationDbContext _db;
+    private readonly ITransactionService _transactionService;
 
-    public ConsoleApp8Service(ApplicationDbContext db)
+    public ConsoleApp8Service(ITransactionService transactionService)
     {
-        _db = db;
+        _transactionService = transactionService;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        Console.WriteLine(nameof(StartAsync));
-        await RunTransactionAsync(cancellationToken);        
+        Console.WriteLine(nameof(StartAsync));    
         await Task.CompletedTask;
     }
 
@@ -36,6 +33,7 @@ public class ConsoleApp8Service : IHostedLifecycleService
     public async Task StartedAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine(nameof(StartedAsync));
+        await _transactionService.RunTransactionAsync(cancellationToken);
         await Task.CompletedTask;
     }
 
@@ -49,30 +47,5 @@ public class ConsoleApp8Service : IHostedLifecycleService
     {
         Console.WriteLine(nameof(StoppedAsync));
         await Task.CompletedTask;
-    }
-    private async Task RunTransactionAsync(CancellationToken cancellationToken)
-    {
-        await using var transaction = await _db.Database.BeginTransactionAsync(cancellationToken);
-        try
-        {
-            // Update products in the specified category
-            var rowsAffected = await _db.Contacts
-                .ExecuteUpdateAsync(setters => setters
-                    .SetProperty(p => p.Name, "Maria"), cancellationToken: cancellationToken);
-
-            Console.WriteLine($"{rowsAffected} rows updated.");
-
-            //rowsAffected = await _db.Contacts.ExecuteDeleteAsync(cancellationToken);
-            //throw new Exception("nada");
-
-            // Commit the transaction
-            await transaction.CommitAsync(cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            // Rollback in case of failure
-            await transaction.RollbackAsync(cancellationToken);
-            Console.WriteLine($"Transaction rolled back due to: {ex.Message}");
-        }
     }
 }

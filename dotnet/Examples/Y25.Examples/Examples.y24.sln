@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.Database", "Y25.Databas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.ExecuteUpdateAsync", "Y25.ExecuteUpdateAsync\Y25.ExecuteUpdateAsync.csproj", "{B01733AC-BA39-403D-AC2E-46DCF741B0E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.ManyProcessors", "Y25.ManyProcessors\Y25.ManyProcessors.csproj", "{266A1D11-D781-496B-BFB8-DA949E2296DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{B01733AC-BA39-403D-AC2E-46DCF741B0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B01733AC-BA39-403D-AC2E-46DCF741B0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B01733AC-BA39-403D-AC2E-46DCF741B0E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{266A1D11-D781-496B-BFB8-DA949E2296DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266A1D11-D781-496B-BFB8-DA949E2296DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266A1D11-D781-496B-BFB8-DA949E2296DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266A1D11-D781-496B-BFB8-DA949E2296DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

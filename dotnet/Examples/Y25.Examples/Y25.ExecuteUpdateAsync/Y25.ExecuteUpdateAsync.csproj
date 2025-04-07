@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Y25.Database\Y25.Database.csproj" />
+    <ProjectReference Include="..\Y25.ManyProcessors\Y25.ManyProcessors.csproj" />
   </ItemGroup>
 
 </Project>

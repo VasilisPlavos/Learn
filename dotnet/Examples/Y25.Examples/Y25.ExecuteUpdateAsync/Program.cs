@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Y25.Database;
 using Y25.ExecuteUpdateAsync;
+using Y25.ManyProcessors;
 
 class Program
 {
@@ -24,6 +24,7 @@ class Program
         .ConfigureServices((hostContext, services) =>
         {
             services.AddDbServices(hostContext.Configuration);
+            services.AddManyProcessorsServices(hostContext.Configuration);
             services.AddHostedService<ConsoleApp8Service>();
         });
     }
