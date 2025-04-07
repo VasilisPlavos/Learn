@@ -1,15 +1,18 @@
 ﻿using Examples.y23.ImageSharp.Services;
 using Microsoft.Extensions.Hosting;
+using Y25.ManyProcessors.Processors;
 
 namespace Y25.ConsoleApp;
 
 public class ConsoleApp8Service : IHostedLifecycleService
 {
     private readonly IImageSharpService _imageSharpService;
+    private readonly ITransactionService _transactionService;
 
-    public ConsoleApp8Service(IImageSharpService imageSharpService)
+    public ConsoleApp8Service(IImageSharpService imageSharpService, ITransactionService transactionService)
     {
         _imageSharpService = imageSharpService;
+        _transactionService = transactionService;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -34,6 +37,7 @@ public class ConsoleApp8Service : IHostedLifecycleService
     public async Task StartedAsync(CancellationToken cancellationToken)
     {
         Console.WriteLine(nameof(StartedAsync));
+        await _transactionService.RunTransactionAsync(cancellationToken);
         await Task.CompletedTask;
     }
 

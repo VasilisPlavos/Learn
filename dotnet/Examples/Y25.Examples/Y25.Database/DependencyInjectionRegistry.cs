@@ -7,8 +7,8 @@ public static class DependencyInjectionRegistry
 {
     public static async void AddDbServices(this IServiceCollection services, IConfiguration builderConfiguration)
     {
-        services.AddDbContext<ApplicationDbContext>(opt =>
-            opt.UseSqlServer(builderConfiguration.GetConnectionString("DbConnection-Testing")));
+        var connectionString = builderConfiguration.GetConnectionString("DbConnection-Testing");
+        services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
 
         services.AddScoped<DbHelper>();
 

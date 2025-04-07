@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Y25.Database;
+using Y25.ManyProcessors;
 
 namespace Y25.ConsoleApp;
 
@@ -24,6 +26,8 @@ static class Program
             {
                 var connectionString = hostContext.Configuration.GetConnectionString("connection");
                 services.AddScoped<IImageSharpService, ImageSharpService>();
+                services.AddDbServices(hostContext.Configuration);
+                services.AddManyProcessorsServices(hostContext.Configuration);
                 services.AddHostedService<ConsoleApp8Service>();
             });
 }

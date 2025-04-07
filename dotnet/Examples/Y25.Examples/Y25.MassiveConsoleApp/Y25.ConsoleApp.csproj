@@ -8,18 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Examples.y23.ImageSharp\Examples.y23.ImageSharp.csproj" />
+    <ProjectReference Include="..\Y25.ManyProcessors\Y25.ManyProcessors.csproj" />
   </ItemGroup>
 
 </Project>
