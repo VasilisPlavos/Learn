@@ -22,14 +22,28 @@ public class FlatfoxTests
     }
 
     [Test]
-    [TestCase("8.625334", "47.473335", "47.281473", "8.447982", 1000, 1000)]
-    [TestCase("8.625334", "47.473335", "47.281473", "8.447982", 10, 10)]
-    public async Task GetPins(string east, string north, string south, string west, int maxCount, int expectedCount)
+    [TestCase(8.625334, 47.473335, 47.281473, 8.447982, 1000, 1000)]
+    [TestCase(8.625334, 47.473335, 47.281473, 8.447982, 10, 10)]
+    public async Task GetPins(double east, double north, double south, double west, int maxCount, int expectedCount)
     {
         var flatFox = new FlatfoxService();
-        var pins = await flatFox.GetPinsAsync(east, north, south, west, maxCount);
 
+        var request = new GetPinsRequestDto
+        {
+            East = east,
+            North = north,
+            South = south,
+            West = west,
+            MaxCount = maxCount
+        };
+
+        var pins = await flatFox.GetPinsAsync(request);
         Assert.That(pins, Is.Not.Null);
         Assert.That(pins.Count, Is.EqualTo(expectedCount));
+
+        var pin = pins.FirstOrDefault();
+        Assert.That(pin, Is.Not.Null);
+        Assert.That(pin.latitude, Is.AtMost(north));
+        Assert.That(pin.longitude, Is.AtMost(east));
     }
 }
