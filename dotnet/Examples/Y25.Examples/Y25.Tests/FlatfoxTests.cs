@@ -46,4 +46,16 @@ public class FlatfoxTests
         Assert.That(pin.latitude, Is.AtMost(north));
         Assert.That(pin.longitude, Is.AtMost(east));
     }
+
+    [Test]
+    [TestCase(1639421, 1639418)]
+    public async Task GetListing(int listingId1, int listingId2)
+    {
+        var flatFox = new FlatfoxService();
+
+        List<int> ids = [listingId1, listingId2];
+        var listings = await flatFox.GetListingsAsync(ids);
+        Assert.That(listings, Is.Not.Null);
+        Assert.That(listings.Count, Is.EqualTo(ids.Count));
+    }
 }
