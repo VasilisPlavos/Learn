@@ -21,10 +21,13 @@ public class FlatfoxService
         throw new Exception($"Error while getting pins from Flatfox API. Status code: {pinsResponse.StatusCode}. Response: {responseString}.");
     }
 
+    // This method is used to get listings by ids. It is used in the FlatfoxService class.
+    // The limit of ids is around 450
     public async Task<List<ListingResponseDto>> GetListingsAsync(List<int> ids)
     {
         var idsString = string.Join("&pk=", ids);
-        var response = await _client.GetAsync($"https://flatfox.ch/api/v1/public-listing/?expand=cover_image&include=is_liked&include=is_disliked&include=is_subscribed&limit=0&pk={idsString}");
+        var url = $"https://flatfox.ch/api/v1/public-listing/?expand=cover_image&include=is_liked&include=is_disliked&include=is_subscribed&limit=0&pk={idsString}";
+        var response = await _client.GetAsync(url);
         try
         {
             var listings = await response.Content.ReadFromJsonAsync<List<ListingResponseDto>>();
