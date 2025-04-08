@@ -17,32 +17,32 @@ public class ListingResponseDto
     public string ref_house { get; set; }
     public string ref_object { get; set; }
     public string alternative_reference { get; set; }
-    public int price_display { get; set; }
+    public int? price_display { get; set; }
     public string price_display_type { get; set; }
     public string price_unit { get; set; }
     public DateTime published { get; set; }
     public object rent_net { get; set; }
     public object rent_charges { get; set; }
-    public int rent_gross { get; set; }
+    public int? rent_gross { get; set; }
     public string short_title { get; set; }
     public string public_title { get; set; }
     public string pitch_title { get; set; }
     public string description_title { get; set; }
     public string description { get; set; }
-    public int surface_living { get; set; }
+    public int? surface_living { get; set; }
     public object surface_property { get; set; }
     public object surface_usable { get; set; }
     public object surface_usable_minimum { get; set; }
     public object volume { get; set; }
-    public int space_display { get; set; }
+    public int? space_display { get; set; }
     public string number_of_rooms { get; set; }
-    public int floor { get; set; }
+    public int? floor { get; set; }
     public Attribute[] attributes { get; set; }
     public bool is_furnished { get; set; }
     public bool is_temporary { get; set; }
     public bool is_selling_furniture { get; set; }
     public object street { get; set; }
-    public int zipcode { get; set; }
+    public int? zipcode { get; set; }
     public string city { get; set; }
     public string public_address { get; set; }
     public float latitude { get; set; }
@@ -67,7 +67,7 @@ public class ListingResponseDto
     public string country { get; set; }
     public string smg_id { get; set; }
     public string rent_title { get; set; }
-    public int livingspace { get; set; }
+    public int? livingspace { get; set; }
 }
 
 public class Cover_Image
@@ -77,9 +77,9 @@ public class Cover_Image
     public string url { get; set; }
     public string url_thumb_m { get; set; }
     public string url_listing_search { get; set; }
-    public int ordering { get; set; }
-    public int width { get; set; }
-    public int height { get; set; }
+    public int? ordering { get; set; }
+    public int? width { get; set; }
+    public int? height { get; set; }
 }
 
 public class Agency

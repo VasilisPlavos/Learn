@@ -48,13 +48,15 @@ public class FlatfoxTests
     }
 
     [Test]
-    [TestCase(1639421, 1639418)]
-    public async Task GetListing(int listingId1, int listingId2)
+    [TestCase(new[] { 1639421, 1639418 })]
+    [TestCase(new[] { 1640119, 1640116, 1640115, 1640114, 1640108, 1640106, 1640087, 1640080, 1640078, 1640073, 1640071, 1640058, 1640016, 1639667, 1639656, 1639648, 1639637, 1639626, 1639621, 1639604, 1639594, 1639568, 1639567, 1639566, 1639563, 1639562, 1639561, 1639558, 1310696, 1639546, 1638011, 1639537, 1639509, 1639499, 1639495, 1639490, 1634782, 1629988, 1639476, 1639466, 1639447, 1639441, 1639431, 1639425, 1639423, 1457037, 1639421, 1639418 })]
+    public async Task GetListing(int[] idArray)
     {
         var flatFox = new FlatfoxService();
+        List<int> ids = idArray.ToList();
 
-        List<int> ids = [listingId1, listingId2];
         var listings = await flatFox.GetListingsAsync(ids);
+
         Assert.That(listings, Is.Not.Null);
         Assert.That(listings.Count, Is.EqualTo(ids.Count));
     }

@@ -25,15 +25,18 @@ public class FlatfoxService
     {
         var idsString = string.Join("&pk=", ids);
         var response = await _client.GetAsync($"https://flatfox.ch/api/v1/public-listing/?expand=cover_image&include=is_liked&include=is_disliked&include=is_subscribed&limit=0&pk={idsString}");
-        if (!response.IsSuccessStatusCode)
+        try
         {
+            var listings = await response.Content.ReadFromJsonAsync<List<ListingResponseDto>>();
+            return listings!;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
             var responseString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(responseString);
             throw new Exception($"Error while getting pins from Flatfox API. Status code: {response.StatusCode}. Response: {responseString}.");
         }
-
-        var listings = await response.Content.ReadFromJsonAsync<List<ListingResponseDto>>();
-        return listings!;
     }
 
 
