@@ -1,3 +1,14 @@
+# Movie app
+
+This app created with the help of Cline+Gemini 2.5 Pro
+
+Steps:
+1. Use the prompt `"Gemini 2.5 Pro builds a React Movie app with Auth in under 8 Mins"`
+2. Let Cline generate the code piece by piece, review the code and making commits through git
+3. Create a new project manually and start moving the needed code to the new project
+
+Based on this post: https://www.linkedin.com/posts/addyosmani_softwareengineering-programming-ai-activity-7313085281719500802-eXlB
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
