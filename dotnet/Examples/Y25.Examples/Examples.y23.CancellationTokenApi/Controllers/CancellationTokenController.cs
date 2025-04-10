@@ -39,12 +39,12 @@ namespace Examples.y23.CancellationTokenApi.Controllers
 
 
         [HttpGet("WithTaskCancellationTokenSource")]
-        public bool GetWitCancellationTokenSource()
+        public async Task<bool> GetWitCancellationTokenSource()
         {
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
-            var task = new Task(() =>
+            var task = Task.Run(async () =>
             {
                 cancellationToken.Register(() => Console.WriteLine("Operation is canceled"));
 
@@ -52,17 +52,23 @@ namespace Examples.y23.CancellationTokenApi.Controllers
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     Console.WriteLine(i++);
-                    Thread.Sleep(1);
+                    await Task.Delay(100, cancellationToken);
                 }
             }, cancellationToken);
 
-            task.Start();
 
-            Thread.Sleep(50);
+            await Task.Delay(5000, cancellationToken);
+            await cancellationTokenSource.CancelAsync();
 
-            cancellationTokenSource.Cancel();
+            try
+            {
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("Task cancelled");
+            }
 
-            task.Wait();
             cancellationTokenSource.Dispose();
             return true;
         }
