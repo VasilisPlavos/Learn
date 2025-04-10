@@ -36,7 +36,7 @@ public static class YoutubeConverter
 
     private static string GenerateYoutubeIdFromLong(long l)
     {
-        Thread.Sleep(1);
+        Task.Delay(1).Wait();
         var characterSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         var charSet = characterSet.ToCharArray();
         var targetBase = charSet.Length;

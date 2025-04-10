@@ -87,7 +87,7 @@ namespace Examples.y23.CancellationTokenApi.Controllers
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(100); // Thread.Sleep is not recommended, but for this example it is ok since the method is not async
             return "See the Visual Studio debugger";
         }
 
