@@ -93,24 +93,22 @@ namespace Examples.y23.CancellationTokenApi.Controllers
 
         private static bool _token = true;
         [HttpGet("WithTaskThatStopsExternal")]
-        public string GetWithTaskThatStopsExternal(bool stop)
+        public async Task<string> GetWithTaskThatStopsExternal(bool stop)
         {
             _token = stop != true;
-
             if (stop) return "Task stop";
 
-            var task = new Task(() =>
+            Task.Run(async () =>
             {
                 var i = 0;
                 while (_token)
                 {
                     Console.WriteLine(i++);
-                    Thread.Sleep(100);
+                    await Task.Delay(100);
                 }
             });
-
-            task.Start();
-            task.Wait(100);
+            
+            await Task.Delay(1000);
             return "See the Visual Studio debugger";
         }
 
