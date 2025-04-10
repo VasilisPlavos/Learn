@@ -77,15 +77,15 @@ namespace Examples.y23.CancellationTokenApi.Controllers
         [HttpGet("WithTaskThatNeverStops")]
         public string GetWithTaskThatNeverStops()
         {
-            new Task(() =>
+            Task.Run(async () =>
             {
                 var i = 0;
                 while (true)
                 {
                     Console.WriteLine(i++);
-                    Thread.Sleep(100);
+                    await Task.Delay(100);
                 }
-            }).Start();
+            });
 
             Thread.Sleep(100);
             return "See the Visual Studio debugger";
