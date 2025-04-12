@@ -3,7 +3,7 @@
 This app created with the help of Cline+Gemini 2.5 Pro
 
 Steps:
-1. Use the prompt `"Gemini 2.5 Pro builds a React Movie app with Auth in under 8 Mins"`
+1. Use the prompt `"Build me a React+Vite TMDB movies app with TMDB authentication so I can favorite movies. My api key is: XXXXXX"`
 2. Let Cline generate the code piece by piece, review the code and making commits through git
 3. Create a new project manually and start moving the needed code to the new project
 
