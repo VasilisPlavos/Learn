@@ -1,6 +1,14 @@
 import { Pool } from 'pg';
 import config from '../config';
 
+// const pool = new Pool({
+//     host: "localhost",
+//     user: "postgres",
+//     password: "postgres",
+//     database: "node-postgres-demo",
+//     port: 5432
+// })
+
 const pool = new Pool({
     user: config.postgres.user,
     host: config.postgres.host,

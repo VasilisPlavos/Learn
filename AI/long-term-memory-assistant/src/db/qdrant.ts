@@ -2,6 +2,10 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 import config from '../config';
 import { getEmbedding } from '../core/embeddings'; // We'll create this soon
 
+// const client = new QdrantClient({
+//     url: 'http://127.0.0.1:6333'
+// })
+
 // Initialize Qdrant client
 const qdrantClient = new QdrantClient({
     url: config.qdrant.url,
