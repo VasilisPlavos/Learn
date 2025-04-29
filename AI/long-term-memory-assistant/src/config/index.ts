@@ -37,7 +37,7 @@ const config: Config = {
     },
     qdrant: {
         url: process.env.QDRANT_URL,
-        apiKey: process.env.QDRANT_API_KEY || undefined, // Handle optional API key
+        apiKey: process.env.QDRANT_API_KEY, // Handle optional API key
         collectionName: process.env.QDRANT_COLLECTION_NAME || 'chat_history',
     },
     gemini: {
