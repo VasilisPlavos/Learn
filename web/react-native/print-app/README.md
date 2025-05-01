@@ -2,6 +2,9 @@
   Vasilis Plavos - React Native Web Test Task - README
 </h1>
 
+## Temp notes
+* Azure Function: "https://25033109pw.azurewebsites.net/api/print?transaction-id=67e96beb-f558-8012-87fe-8d13f681f864"
+
 ## Overview
 This project implements a print functionality for a React Native Web application. The goal is to generate a production-grade PDF document that accurately reflects the web layout without any additional margins, headers, or unwanted artifacts.
 
