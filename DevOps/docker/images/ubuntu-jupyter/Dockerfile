@@ -41,3 +41,7 @@ CMD ["jupyter", "notebook", "--allow-root", "--port=8888", "--ip=0.0.0.0"]
 
 # Optional: Change the default user (security best practice is to not use root)
 # USER vscode
+
+# Run docker container, with a local folder
+# docker build -t ubuntu-jupyter .
+# docker run -d -p 3200:8888 -v C:/Users/vplav/Gits/Learned/Python/jupy:/root/jupy --name ubuntu-jupyter --restart always ubuntu-jupyter
