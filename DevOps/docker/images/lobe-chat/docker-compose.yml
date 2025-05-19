@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  lobe-chat:
+    image: lobehub/lobe-chat
+    container_name: lobe-chat
+    restart: always
+    ports:
+      - '3210:3210'
+    environment:
+      # OPENAI_API_KEY: 'sk-xxxx'  # Replace with your OpenAI API key
+      ACCESS_CODE: 'BhaX1sN09OZI382jH'       # Set a secure access code
