@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: lobechat-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: lobechat
+      POSTGRES_USER: lobechat
+      POSTGRES_PASSWORD: lobechat_pass
+    volumes:
+      - lobechat_pgdata:/var/lib/postgresql/data
+
+  lobe-chat:
+    image: lobehub/lobe-chat-database
+    container_name: lobe-chat
+    depends_on:
+      - postgres
+    restart: always
+    ports:
+      - '3210:3210'
+    environment:
+      DATABASE_URL: postgres://lobechat:lobechat_pass@postgres:5432/lobechat
+      # OPENAI_API_KEY: 'sk-xxxx'  # Replace with your OpenAI API key
+      ACCESS_CODE: 'BhaX1sN09OZI382jH'       # Set a secure access code
+
+volumes:
+  lobechat_pgdata:
