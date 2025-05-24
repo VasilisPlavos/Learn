@@ -14,39 +14,37 @@ function ProductTable({ filterText, inStockOnly, products } : { filterText: stri
 
     // const rows = products.map((x:any) => (
     //     <tr key={x.name}>
-    //         <th>{x.name}</th>
-    //         <th>{x.price}</th>
+    //         <td>{x.name}</td>
+    //         <td>{x.price}</td>
     //     </tr>
     // ));
 
     console.log(filterText);
-    const rows: React.JSX.Element[] = [];
-    products.forEach((product: any) => {
-
+    const filteredProducts = products.filter((product: any) => {
         if (product.name.toLowerCase()
-            .indexOf(filterText.toLowerCase()) === -1) return;
+            .indexOf(filterText.toLowerCase()) === -1) return false;
 
-        if (inStockOnly && !product.stocked) return;
+        if (inStockOnly && !product.stocked) return false;
+        return true;
+    });
 
-        rows.push(
-            <tr key={product.name}>
-                <th>{product.name}</th>
-                <th>{product.price}</th>
-            </tr>
-        )
-    })
-
+    const rows: React.JSX.Element[] = filteredProducts.map((product: any) => (
+        <tr key={product.name}>
+            <td>{product.name}</td>
+            <td>{product.price}</td>
+        </tr>
+    ));
 
     return (
         <table>
             <thead>
-            <tr>
+                <tr>
                 <th>Name</th>
                 <th>Price</th>
-            </tr>
+                </tr>
             </thead>
             <tbody>
-            {rows}
+                {rows}
             </tbody>
         </table>
     )
@@ -64,12 +62,12 @@ function SearchBar(props: {   searchBarProps: SearchBarProps }) {
     return (
         <form>
             <input type="text" value={filterText} placeholder="Search..."
-                   onChange={(e) => setFilterText(e.target.value)}
+                onChange={(e) => setFilterText(e.target.value)}
             />
             <label>
                 <input checked={inStockOnly}
-                       onChange={(e) => setInStockOnly(e.target.checked)}
-                       type="checkbox"/>
+                    onChange={(e) => setInStockOnly(e.target.checked)}
+                    type="checkbox"/>
                 {' '}
                 Only show products in stock
             </label>

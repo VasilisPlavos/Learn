@@ -34,7 +34,7 @@ export default function Play() {
                 <img
                     className={'avatar'}
                     src={user.imageUrl}
-                    alt="{`Photo of ${user.name}`}"
+                    alt={`Photo of ${user.name}`}
                     style={{ width: user.imageSize, height: user.imageSize }}
                 />
                 <CounterButton/>
