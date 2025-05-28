@@ -15,6 +15,6 @@ CMD ["tail", "-f", "/dev/null"]
 
 
 # docker build -t my-python-env .
-# docker run -v $(pwd):/app --name my-python-env
+# docker run -v .\app:/app --name my-python-env my-python-env
 # docker run -d -p 3220:8888 -v $(pwd):/app --name my-python-env --restart always my-python-env 
 
