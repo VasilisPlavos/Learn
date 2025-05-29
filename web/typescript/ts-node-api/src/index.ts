@@ -8,6 +8,7 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import { itemsRouter } from "./modules/items/items.router";
+import { healthRouter } from "./api/health";
 import { errorHandler, notFoundHandler } from "./common/middlewares";
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use("/api/items", itemsRouter);
+app.use("/api/health", healthRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
