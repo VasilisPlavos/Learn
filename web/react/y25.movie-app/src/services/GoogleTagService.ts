@@ -1,3 +1,5 @@
+// https://developers.google.com/tag-platform/gtagjs/reference/events
+
 declare global {
     interface Window {
         gtag: (...args: any[]) => void;
