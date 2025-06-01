@@ -18,6 +18,9 @@ export default function Header() {
                 </Link>
                 <ul className="flex space-x-4 items-center">
                     <li>
+                        <Link to="/tests" className="hover:text-blue-200">Tests</Link>
+                    </li>
+                    <li>
                         <Link to="/" className="hover:text-blue-200">Home</Link>
                     </li>
                     {user?.sessionId ? (

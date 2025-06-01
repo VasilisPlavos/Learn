@@ -6,6 +6,7 @@ import MovieDetailPage from './pages/MovieDetailPage'
 import LoginPage from './pages/LoginPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import FavoritesPage from './pages/FavoritesPage'
+import TestsPage from './pages/TestsPage'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/auth/approved" element={<AuthCallbackPage />} />
+          <Route path='/tests' element={<TestsPage />} />
           <Route path="*" element={<div>404 Not Found</div>} /> {/* Catch-all route */}
         </Routes>
       </div>
