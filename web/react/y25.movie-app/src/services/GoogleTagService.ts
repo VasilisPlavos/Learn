@@ -2,14 +2,17 @@
 
 declare global {
     interface Window {
-        gtag: (...args: any[]) => void;
+        gtag: {
+            // (command: 'config', targetId: string, config?: EventParams): void;
+            (command: 'event', eventName: string, eventParams?: EventParams): void;
+            // (command: string, ...args: any[]): void;
+        };
     }
 }
 
 type EventParams = Record<string, any>;
 export interface GoogleTagEvent {
     eventName: string;
-    urlPathname?: string;
     params?: EventParams;
 }
 
