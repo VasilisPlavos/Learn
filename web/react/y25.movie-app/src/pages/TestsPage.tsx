@@ -1,4 +1,4 @@
-import { GoogleTagEvents } from "../models/googletag";
+import { GoogleTagService } from "../services/GoogleTagService";
 
 export default function TestsPage() {
     return (
@@ -9,19 +9,14 @@ export default function TestsPage() {
                 <div className="text-center">
 
                     <button onClick={() => {
+                        const googleEvent = GoogleTagService.CreateEvent('basket', {
+                            id: 3745092,
+                            item: 'mens grey t-shirt',
+                            description: ['round neck', 'long sleeved'],
+                            size: 'L',
+                        });
 
-                        const googleEvent = GoogleTagEvents.NewsAction(
-                            '1',
-                            'rewrite_pressed',
-                        );
-
-                        window.gtag(
-                            'event',
-                            googleEvent.eventName,
-                            googleEvent.params,
-                        );
-
-
+                        GoogleTagService.LogEvent(googleEvent);
                     }} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">trigger</button>
                 </div>
             </div>
