@@ -12,6 +12,7 @@ RUN apt-get install -y dotnet-sdk-8.0
 RUN apt-get install -y python3 
 RUN apt-get install -y python3-pip 
 RUN apt-get install -y jupyter
+RUN apt-get install -y ffmpeg
 
 # RUN apt-get install -y snapd
 # RUN snap install --classic code
@@ -41,3 +42,7 @@ CMD ["jupyter", "notebook", "--allow-root", "--port=8888", "--ip=0.0.0.0"]
 
 # Optional: Change the default user (security best practice is to not use root)
 # USER vscode
+
+# Run docker container, with a local folder
+# docker build -t ubuntu-jupyter .
+# docker run -d -p 3200:8888 -v C:/Users/vplav/Gits/Learned/Python/jupy:/root/jupy --name ubuntu-jupyter --restart always ubuntu-jupyter
