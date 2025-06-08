@@ -1,17 +1,18 @@
-﻿using System.Text;
-using BrainSharp.Xml;
-using Examples.y24.Common.Helpers;
+﻿using Examples.y24.Common.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using BrainSharp.Xml;
 using Newtonsoft.Json;
 
-namespace Examples.y25.SiteToLlm.Controllers
+namespace Y25.SiteToLlm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ChatbotController : ControllerBase
     {
         private readonly string _openAiApiKey = Secrets.Get("OpenAiApiKey");
-        private readonly HttpClient _client = new(
+
+        private readonly HttpClient _client = new HttpClient(
             new SocketsHttpHandler
             {
                 // We are doing this because if DNS will change, out HttpClient will stop working
@@ -37,6 +38,7 @@ namespace Examples.y25.SiteToLlm.Controllers
                 FineTuneId = fineTuneId
             });
         }
+
 
         private async Task<string> FineTuneModelAsync(List<TrainingExample> trainingData)
         {
@@ -81,8 +83,8 @@ namespace Examples.y25.SiteToLlm.Controllers
             //var dirPath = Path.Combine(AppContext.BaseDirectory, Guid.NewGuid().ToString());
             try
             {
-                
-               // Directory.CreateDirectory(dirPath);
+
+                // Directory.CreateDirectory(dirPath);
                 // var fileName = $"{Guid.NewGuid()}.jsonl";
                 //var filePath = Path.Combine(dirPath, fileName);
 
@@ -109,7 +111,7 @@ namespace Examples.y25.SiteToLlm.Controllers
             }
             finally
             {
-              //  Directory.Delete(dirPath, true);
+                //  Directory.Delete(dirPath, true);
             }
 
             var sss = await result.ReadAsStringAsync();
@@ -120,7 +122,7 @@ namespace Examples.y25.SiteToLlm.Controllers
         {
             var uploadEndpoint = "https://api.openai.com/v1/files";
 
-           // var trainingJson = JsonConvert.SerializeObject(trainingData);
+            // var trainingJson = JsonConvert.SerializeObject(trainingData);
             var jsonl = await JsonlStringifyAsync(trainingData);
             using var requestContent = new MultipartFormDataContent
             {
@@ -135,7 +137,7 @@ namespace Examples.y25.SiteToLlm.Controllers
             };
 
             var response = await _client.SendAsync(request);
-           // response.EnsureSuccessStatusCode();
+            // response.EnsureSuccessStatusCode();
 
             var responseContent = await response.Content.ReadAsStringAsync();
             var responseJson = JsonConvert.DeserializeObject<dynamic>(responseContent);

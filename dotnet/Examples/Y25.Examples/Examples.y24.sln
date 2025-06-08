@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.ManyProcessors", "Y25.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.Tests", "Y25.Tests\Y25.Tests.csproj", "{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.SiteToLlm", "Y25.SiteToLlm\Y25.SiteToLlm.csproj", "{18BE0147-9434-4C2C-953C-500098564197}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18BE0147-9434-4C2C-953C-500098564197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18BE0147-9434-4C2C-953C-500098564197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18BE0147-9434-4C2C-953C-500098564197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18BE0147-9434-4C2C-953C-500098564197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

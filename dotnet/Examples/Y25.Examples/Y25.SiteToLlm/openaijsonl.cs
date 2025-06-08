@@ -1,7 +1,8 @@
-﻿namespace Examples.y25.SiteToLlm;
+﻿namespace Y25.SiteToLlm;
 
 public class openaijsonl
 {
+
     public Message[] messages { get; set; }
 }
 
