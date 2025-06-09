@@ -37,10 +37,10 @@ export default function RootLayout() {
       })}
     >
       <Tabs.Screen name="dashboard" options={{ title: 'Dashboard' }} />
-      {/* <Tabs.Screen name="contacts" options={{ title: 'Contacts' }} />
-      <Tabs.Screen name="deals" options={{ title: 'Deals' }} />
-      <Tabs.Screen name="campaigns" options={{ title: 'Campaigns' }} />
-      <Tabs.Screen name="tasks" options={{ title: 'Tasks' }} /> */}
+      {/* <Tabs.Screen name="contacts" options={{ title: 'Contacts' }} /> */}
+      {/* <Tabs.Screen name="deals" options={{ title: 'Deals' }} /> */}
+      {/* <Tabs.Screen name="campaigns" options={{ title: 'Campaigns' }} /> */}
+      {/* <Tabs.Screen name="tasks" options={{ title: 'Tasks' }} /> */}
     </Tabs>
   );
 }

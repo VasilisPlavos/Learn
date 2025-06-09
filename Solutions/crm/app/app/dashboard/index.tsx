@@ -2,7 +2,7 @@ import { mockDashboardStats, mockTasks } from "@/data/mockData";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-export default function Index() {
+export default function Dashboard() {
   const stats = mockDashboardStats;
   const recentTasks = mockTasks.filter(task => task.status === 'pending').slice(0, 3);
 
