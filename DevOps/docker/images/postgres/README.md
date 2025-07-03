@@ -9,7 +9,7 @@ npm install --save-dev @types/pg
 2. run a postgres server with docker:
 
 ```
-docker run -d --name node-postgres-demo -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=node-postgres-demo -p 5432:5432 postgres
+docker run -d --name node-postgres-demo -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=node-postgres-demo -p 3532:5432 postgres
 ```
 
 3. run pgadmin via docker [[source]](https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea):
