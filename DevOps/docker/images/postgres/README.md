@@ -12,7 +12,15 @@ npm install --save-dev @types/pg
 docker run -d --name node-postgres-demo -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=node-postgres-demo -p 5432:5432 postgres
 ```
 
-3. Connecting database to Node.js server
+3. run pgadmin via docker [[source]](https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea):
+
+```
+docker run --name pgadmin-container -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' -d dpage/pgadmin4
+```
+- Note: Host name/address: `host.docker.internal` (on macOS/Windows) or your host machine's IP address (on Linux; often `172.17.0.1`)
+
+
+4. Connecting database to Node.js server
 ```
 import { Pool } from "pg";
 import { env } from "./env";
