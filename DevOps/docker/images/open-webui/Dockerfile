@@ -25,9 +25,9 @@ ENV WEBUI_AUTH=false
 
 # NOTE: run the above commands to build and run
 # docker build -t open-webui-ollama:0.5.20.bil.local .
-# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models --name open-webui-ollama-local open-webui-ollama:0.5.20.bil.local
+# docker run -d -p 3112:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models --name open-webui-ollama-local open-webui-ollama:0.5.20.bil.local
 
 
 # with this param you can have a shared volume across the images, sharing the user data
 # -v open-webui:/app/backend/data
-# docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -v open-webui-no-auth:/app/backend/data --name open-webui-ollama-dev --restart always open-webui-ollama:dev
+# docker run -d -p 3112:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -v open-webui-no-auth:/app/backend/data --name open-webui-ollama-dev --restart always open-webui-ollama:dev
