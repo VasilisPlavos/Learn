@@ -41,6 +41,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.ManyProcessors", "Y25.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.Tests", "Y25.Tests\Y25.Tests.csproj", "{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.AWS.Lambda.HelloWorld", "Y25.AWS.Lambda.HelloWorld\Y25.AWS.Lambda.HelloWorld.csproj", "{5CE911D8-0E36-1BF1-E243-DFC39A249F0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Y25.AWS.Lambda.HelloWorld.Tests", "Y25.AWS.Lambda.HelloWorld.Tests\Y25.AWS.Lambda.HelloWorld.Tests.csproj", "{B023E5A6-A382-A70C-F234-6387A37E220B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +127,14 @@ Global
 		{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{524FAC06-C4C0-4860-BEE7-B29263AF0B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE911D8-0E36-1BF1-E243-DFC39A249F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE911D8-0E36-1BF1-E243-DFC39A249F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE911D8-0E36-1BF1-E243-DFC39A249F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE911D8-0E36-1BF1-E243-DFC39A249F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B023E5A6-A382-A70C-F234-6387A37E220B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B023E5A6-A382-A70C-F234-6387A37E220B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B023E5A6-A382-A70C-F234-6387A37E220B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B023E5A6-A382-A70C-F234-6387A37E220B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
