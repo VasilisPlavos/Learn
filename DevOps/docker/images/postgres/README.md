@@ -15,9 +15,10 @@ docker run -d --name node-postgres-demo -e POSTGRES_PASSWORD=postgres -e POSTGRE
 3. run pgadmin via docker [[source]](https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea):
 
 ```
-docker run --name pgadmin-container -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' -d dpage/pgadmin4
+docker run --name pgadmin-container -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' --restart always -d dpage/pgadmin4
 ```
 - Note: Host name/address: `host.docker.internal` (on macOS/Windows) or your host machine's IP address (on Linux; often `172.17.0.1`)
+- To Update pgadmin: delete it, then run `docker pull dpage/pgadmin4` and repeat step 3 BUT YOU WILL LOOSE SAVED SERVERS!!!
 
 
 4. Connecting database to Node.js server
