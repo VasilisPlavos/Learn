@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>WebTorrent Video Player</title>
+  <!-- <script src="./webtorrent.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+
+    video {
+      width: 100%;
+      max-height: 80vh;
+      margin-top: 20px;
+      background: black;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>WebTorrent Video Player</h2>
+
+  <div>
+    <input
+      value="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent"
+      type="text" id="magnetInput" placeholder="Paste magnet URL" style="width: 60%;" />
+    <button onclick="loadMagnet()">Load Magnet</button>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <input type="file" id="torrentInput" />
+  </div>
+
+  <div id="torrent-progress" style="font-family: sans-serif; font-size: 16px; margin-top: 1em;">
+    Press "Load Magnet"
+  </div>
+
+  <video id="video" controls style="display: none;"></video>
+
+  <script>
+    const client = new WebTorrent();
+    const videoEl = document.getElementById('video');
+    const progressEl = document.getElementById('torrent-progress');
+
+    function loadMagnet() {
+      const magnet = document.getElementById('magnetInput').value.trim();
+      if (!magnet) return alert("Please enter a magnet URL");
+      loadTorrent(magnet);
+    }
+
+    document.getElementById('torrentInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        loadTorrent(file);
+      }
+    });
+
+    async function loadTorrent(source) {
+      progressEl.textContent = 'Loading torrent...'
+
+      for (const torrent of client.torrents) {
+        await new Promise((resolve) => {
+          client.remove(torrent.infoHash, () => {
+            console.log(`Removed torrent: ${torrent.infoHash}`);
+            resolve();
+          });
+        });
+      }
+
+      client.add(source, torrent => {
+
+        const message = `Torrent metadata loaded: ${torrent.name}`;
+        progressEl.textContent = message;
+        console.log(message);
+
+        let videoFile = torrent.files.find(f => f.name.match(/\.(mp4|mkv|webm)$/i));
+        let subtitleFile = torrent.files.find(f => f.name.match(/\.(vtt|srt)$/i));
+
+        if (!videoFile) {
+          alert("No video file found in torrent.");
+          return;
+        }
+
+        torrent.on('download', (bytes) => {
+          const torrentProgress = (torrent.progress * 100).toFixed(2);
+          const downloaded = (torrent.downloaded / 1024 / 1024).toFixed(2);
+          const total = (torrent.length / 1024 / 1024).toFixed(2);
+          const torrentProgressMessage = `Torrent Progress: ${torrentProgress}% (${downloaded}MB / ${total}MB)`;
+          progressEl.textContent = torrentProgressMessage;
+          console.log(torrentProgressMessage);
+
+          const videoFileProgress = (videoFile.downloaded / videoFile.length * 100).toFixed(2);
+          // console.log(`Video File Progress: ${videoFileProgress}% (${(videoFile.downloaded / 1024 / 1024).toFixed(2)}MB)`);
+        });
+
+        torrent.on('done', () => {
+          console.log("Torrent fully downloaded.");
+
+          // Play the video
+          videoEl.style.display = "";
+          videoFile.getBlobURL((err, url) => {
+            if (err) return console.error(err.message);
+            console.log(url);
+            videoEl.src = url;
+            videoEl.play();
+          });
+
+          // videoFile.renderTo(videoEl, { autoplay: true }, err => {
+          //   if (err) console.error("Video render error", err);
+          // });
+
+          // Load subtitle
+          if (subtitleFile) {
+            subtitleFile.getBlobURL((err, url) => {
+              if (err) return console.error(err);
+              const track = document.createElement("track");
+              track.kind = "subtitles";
+              track.label = "Subtitles";
+              track.srclang = "en";
+              track.src = url;
+              track.default = true;
+              videoEl.appendChild(track);
+            })
+          }
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>
