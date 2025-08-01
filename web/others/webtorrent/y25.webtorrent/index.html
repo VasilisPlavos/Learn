@@ -60,14 +60,17 @@
       }
     });
 
-    function loadTorrent(source) {
+    async function loadTorrent(source) {
       progressEl.textContent = 'Loading torrent...'
 
-      client.torrents.forEach((torrent) => {
-        client.remove(torrent.infoHash, () => {
-          console.log(`Removed torrent: ${torrent.infoHash}`);
+      for (const torrent of client.torrents) {
+        await new Promise((resolve) => {
+          client.remove(torrent.infoHash, () => {
+            console.log(`Removed torrent: ${torrent.infoHash}`);
+            resolve();
+          });
         });
-      });
+      }
 
       client.add(source, torrent => {
 
