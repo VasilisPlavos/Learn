@@ -86,9 +86,7 @@
           return;
         }
 
-        // Log progress
-        const interval = setInterval(() => {
-          if (torrent.destroyed) clearInterval(interval);
+        torrent.on('download', (bytes) => {
           const torrentProgress = (torrent.progress * 100).toFixed(2);
           const downloaded = (torrent.downloaded / 1024 / 1024).toFixed(2);
           const total = (torrent.length / 1024 / 1024).toFixed(2);
@@ -97,42 +95,40 @@
           console.log(torrentProgressMessage);
 
           const videoFileProgress = (videoFile.downloaded / videoFile.length * 100).toFixed(2);
-          console.log(`Video File Progress: ${videoFileProgress}% (${(videoFile.downloaded / 1024 / 1024).toFixed(2)}MB)`);
+          // console.log(`Video File Progress: ${videoFileProgress}% (${(videoFile.downloaded / 1024 / 1024).toFixed(2)}MB)`);
+        });
 
-          if (torrent.done) {
-            console.log("Torrent fully downloaded.");
+        torrent.on('done', () => {
+          console.log("Torrent fully downloaded.");
 
-            // Play the video
-            videoEl.style.display = "";
-            videoFile.getBlobURL((err, url) => {
-              if (err) return console.error(err.message);
-              console.log(url);
-              videoEl.src = url;
-              videoEl.play();
-            });
+          // Play the video
+          videoEl.style.display = "";
+          videoFile.getBlobURL((err, url) => {
+            if (err) return console.error(err.message);
+            console.log(url);
+            videoEl.src = url;
+            videoEl.play();
+          });
 
-            // Load subtitle
-            if (subtitleFile) {
-              subtitleFile.getBlobURL((err, url) => {
-                if (err) return console.error(err);
-                const track = document.createElement("track");
-                track.kind = "subtitles";
-                track.label = "Subtitles";
-                track.srclang = "en";
-                track.src = url;
-                track.default = true;
-                videoEl.appendChild(track);
-              });
-            }
+          // videoFile.renderTo(videoEl, { autoplay: true }, err => {
+          //   if (err) console.error("Video render error", err);
+          // });
 
-            // videoFile.renderTo(videoEl, { autoplay: true }, err => {
-            //   if (err) console.error("Video render error", err);
-            // });
-
-            clearInterval(interval);
+          // Load subtitle
+          if (subtitleFile) {
+            subtitleFile.getBlobURL((err, url) => {
+              if (err) return console.error(err);
+              const track = document.createElement("track");
+              track.kind = "subtitles";
+              track.label = "Subtitles";
+              track.srclang = "en";
+              track.src = url;
+              track.default = true;
+              videoEl.appendChild(track);
+            })
           }
-        }, 3000);
-      });
+        })
+      })
     }
   </script>
 </body>
