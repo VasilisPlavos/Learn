@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>WebTorrent Video Player</title>
+  <script src="https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+
+    video {
+      width: 100%;
+      max-height: 80vh;
+      margin-top: 20px;
+      background: black;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>WebTorrent Video Player</h2>
+
+  <div>
+    <input
+      value="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent"
+      type="text" id="magnetInput" placeholder="Paste magnet URL" style="width: 60%;" />
+    <button onclick="loadMagnet()">Load Magnet</button>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <input type="file" id="torrentInput" />
+  </div>
+
+  <video id="video" controls></video>
+
+  <script>
+    const client = new WebTorrent();
+    const videoEl = document.getElementById('video');
+
+    function loadMagnet() {
+      const magnet = document.getElementById('magnetInput').value.trim();
+      if (!magnet) return alert("Please enter a magnet URL");
+      loadTorrent(magnet);
+    }
+
+    document.getElementById('torrentInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        loadTorrent(file);
+      }
+    });
+
+    function loadTorrent(source) {
+      client.add(source, torrent => {
+        console.log("Torrent ready:", torrent.name);
+
+        let videoFile = torrent.files.find(f => f.name.match(/\.(mp4|mkv|webm)$/i));
+        let subtitleFile = torrent.files.find(f => f.name.match(/\.(vtt|srt)$/i));
+
+        if (!videoFile) {
+          alert("No video file found in torrent.");
+          return;
+        }
+
+        videoFile.renderTo(videoEl, { autoplay: true }, err => {
+          if (err) console.error("Video render error", err);
+        });
+
+        if (subtitleFile) {
+          subtitleFile.getBlobURL((err, url) => {
+            if (err) return console.error(err);
+            const track = document.createElement("track");
+            track.kind = "subtitles";
+            track.label = "Subtitles";
+            track.srclang = "en";
+            track.src = url;
+            track.default = true;
+            videoEl.appendChild(track);
+          });
+        }
+      });
+    }
+
+
+    torrent.on('download', bytes => {
+      console.log(`Just downloaded ${bytes} bytes`)
+    })
+
+    torrent.on('wire', (wire, addr) => {
+      console.log(`Connected to peer: ${addr}`)
+    })
+
+
+
+
+  </script>
+</body>
+
+</html>
