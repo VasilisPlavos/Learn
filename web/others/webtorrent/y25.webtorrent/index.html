@@ -56,7 +56,7 @@
 
     function loadTorrent(source) {
       client.add(source, torrent => {
-        console.log("Torrent ready:", torrent.name);
+        console.log("Torrent metadata loaded:", torrent.name);
 
         let videoFile = torrent.files.find(f => f.name.match(/\.(mp4|mkv|webm)$/i));
         let subtitleFile = torrent.files.find(f => f.name.match(/\.(vtt|srt)$/i));
@@ -66,10 +66,12 @@
           return;
         }
 
+        // Render video
         videoFile.renderTo(videoEl, { autoplay: true }, err => {
           if (err) console.error("Video render error", err);
         });
 
+        // Load subtitle
         if (subtitleFile) {
           subtitleFile.getBlobURL((err, url) => {
             if (err) return console.error(err);
@@ -82,21 +84,24 @@
             videoEl.appendChild(track);
           });
         }
+
+        // Log progress
+        const interval = setInterval(() => {
+          const torrentProgress = (torrent.progress * 100).toFixed(2);
+          const downloaded = (torrent.downloaded / 1024 / 1024).toFixed(2);
+          const total = (torrent.length / 1024 / 1024).toFixed(2);
+          console.log(`Torrent Progress: ${torrentProgress}% (${downloaded}MB / ${total}MB)`);
+
+          const videoFileProgress = (videoFile.downloaded / videoFile.length * 100).toFixed(2);
+          console.log(`Video File Progress: ${videoFileProgress}% (${(videoFile.downloaded / 1024 / 1024).toFixed(2)}MB)`);
+
+          if (torrent.done) {
+            console.log("Torrent fully downloaded.");
+            clearInterval(interval);
+          }
+        }, 3000);
       });
     }
-
-
-    torrent.on('download', bytes => {
-      console.log(`Just downloaded ${bytes} bytes`)
-    })
-
-    torrent.on('wire', (wire, addr) => {
-      console.log(`Connected to peer: ${addr}`)
-    })
-
-
-
-
   </script>
 </body>
 
