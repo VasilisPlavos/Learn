@@ -83,20 +83,6 @@
           return;
         }
 
-        // Load subtitle
-        if (subtitleFile) {
-          subtitleFile.getBlobURL((err, url) => {
-            if (err) return console.error(err);
-            const track = document.createElement("track");
-            track.kind = "subtitles";
-            track.label = "Subtitles";
-            track.srclang = "en";
-            track.src = url;
-            track.default = true;
-            videoEl.appendChild(track);
-          });
-        }
-
         // Log progress
         const interval = setInterval(() => {
           if (torrent.destroyed) clearInterval(interval);
@@ -121,6 +107,20 @@
               videoEl.src = url;
               videoEl.play();
             });
+
+            // Load subtitle
+            if (subtitleFile) {
+              subtitleFile.getBlobURL((err, url) => {
+                if (err) return console.error(err);
+                const track = document.createElement("track");
+                track.kind = "subtitles";
+                track.label = "Subtitles";
+                track.srclang = "en";
+                track.src = url;
+                track.default = true;
+                videoEl.appendChild(track);
+              });
+            }
 
             // videoFile.renderTo(videoEl, { autoplay: true }, err => {
             //   if (err) console.error("Video render error", err);
