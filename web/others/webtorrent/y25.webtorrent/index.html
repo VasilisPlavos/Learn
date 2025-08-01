@@ -66,10 +66,12 @@
           return;
         }
 
-        // Render video
-        videoFile.renderTo(videoEl, { autoplay: false }, err => {
-          if (err) console.error("Video render error", err);
-        });
+        // videoFile.getBlobURL((err, url) => {
+        //   if (err) return send('log', { message: err.message });
+        //   console.log(url);
+        //   videoEl.src = url;
+        //   videoEl.play();
+        // });
 
         // Load subtitle
         if (subtitleFile) {
@@ -94,6 +96,16 @@
 
           const videoFileProgress = (videoFile.downloaded / videoFile.length * 100).toFixed(2);
           console.log(`Video File Progress: ${videoFileProgress}% (${(videoFile.downloaded / 1024 / 1024).toFixed(2)}MB)`);
+
+          if (!videoEl.src) {
+            if (+videoFileProgress > 50) {
+              videoFile.renderTo(videoEl, { autoplay: true }, err => {
+                if (err) console.error("Video render error", err);
+              });
+            }
+          }
+
+
 
           if (torrent.done) {
             console.log("Torrent fully downloaded.");
