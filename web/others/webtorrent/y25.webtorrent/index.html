@@ -67,7 +67,7 @@
         }
 
         // Render video
-        videoFile.renderTo(videoEl, { autoplay: true }, err => {
+        videoFile.renderTo(videoEl, { autoplay: false }, err => {
           if (err) console.error("Video render error", err);
         });
 
