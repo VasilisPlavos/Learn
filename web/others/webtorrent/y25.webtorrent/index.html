@@ -62,8 +62,18 @@
 
     function loadTorrent(source) {
       progressEl.textContent = 'Loading torrent...'
+
+      client.torrents.forEach((torrent) => {
+        client.remove(torrent.infoHash, () => {
+          console.log(`Removed torrent: ${torrent.infoHash}`);
+        });
+      });
+
       client.add(source, torrent => {
-        console.log("Torrent metadata loaded:", torrent.name);
+
+        const message = `Torrent metadata loaded: ${torrent.name}`;
+        progressEl.textContent = message;
+        console.log(message);
 
         let videoFile = torrent.files.find(f => f.name.match(/\.(mp4|mkv|webm)$/i));
         let subtitleFile = torrent.files.find(f => f.name.match(/\.(vtt|srt)$/i));
@@ -89,6 +99,7 @@
 
         // Log progress
         const interval = setInterval(() => {
+          if (torrent.destroyed) clearInterval(interval);
           const torrentProgress = (torrent.progress * 100).toFixed(2);
           const downloaded = (torrent.downloaded / 1024 / 1024).toFixed(2);
           const total = (torrent.length / 1024 / 1024).toFixed(2);
