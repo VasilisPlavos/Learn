@@ -102,7 +102,7 @@
             // Play the video
             videoEl.style.display = "";
             videoFile.getBlobURL((err, url) => {
-              if (err) return send('log', { message: err.message });
+              if (err) return console.error(err.message);
               console.log(url);
               videoEl.src = url;
               videoEl.play();
