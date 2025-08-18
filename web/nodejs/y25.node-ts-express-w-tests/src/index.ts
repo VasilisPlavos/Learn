@@ -24,6 +24,11 @@ app.get('/api/v1/:id', async (req: Request, res: Response) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`server running. Check http://localhost:${PORT}/api/v1/2`);
-});
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`server running. Check http://localhost:${PORT}/api/v1/2`);
+    });
+}
+
+export default app;
