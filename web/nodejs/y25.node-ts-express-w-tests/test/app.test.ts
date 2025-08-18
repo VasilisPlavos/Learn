@@ -1,6 +1,6 @@
 import request from 'supertest';
 import nock from 'nock';
-import app from '../src/app';
+import app from '../src/index';
 
 describe('GET /api/v1/:id', () => {
 
