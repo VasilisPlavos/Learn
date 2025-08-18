@@ -4,7 +4,11 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    // origin: [
+    //     'https://your-frontend-domain.com'
+    // ]
+}));
 
 app.get('/api/v1/:id', async (req: Request, res: Response) => {
 
