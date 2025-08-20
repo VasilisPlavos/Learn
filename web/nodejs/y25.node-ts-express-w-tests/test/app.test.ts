@@ -1,11 +1,11 @@
 import request from 'supertest';
 import nock from 'nock';
-import app from '../src/index';
+import app from '../src/app';
 
-describe('GET /api/v1/:id', () => {
+describe('GET /api/v1/jokes/:id', () => {
 
     it('should return 2 when id is 2', async () => {
-        const res = await request(app).get('/api/v1/2');
+        const res = await request(app).get('/api/v1/jokes/2');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('result', 2);
     });
@@ -19,7 +19,7 @@ describe('GET /api/v1/:id', () => {
             .get('/jokes/random')
             .reply(200, mockJoke);
 
-        const res = await request(app).get('/api/v1/3');
+        const res = await request(app).get('/api/v1/jokes/3');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('value', 'Chuck Norris can divide by zero.');
     });
@@ -30,7 +30,7 @@ describe('GET /api/v1/:id', () => {
       .get('/jokes/random')
       .reply(500);
 
-    const res = await request(app).get('/api/v1/4');
+    const res = await request(app).get('/api/v1/jokes/4');
     expect(res.statusCode).toEqual(500);
     expect(res.body).toHaveProperty('error', 'Error fetching joke from external API');
   });
