@@ -12,14 +12,14 @@ describe('GET /api/v1/jokes/:id', () => {
 
 
 
-    it('should return a Chuck Norris joke when id is not 2', async () => {
+    it('should return a Chuck Norris joke when id is not 2 or 3', async () => {
         // Mock the external API call using nock
         const mockJoke = { value: 'Chuck Norris can divide by zero.' };
         nock('https://api.chucknorris.io')
             .get('/jokes/random')
             .reply(200, mockJoke);
 
-        const res = await request(app).get('/api/v1/jokes/3');
+        const res = await request(app).get('/api/v1/jokes/4');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('value', 'Chuck Norris can divide by zero.');
     });
