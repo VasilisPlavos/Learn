@@ -12,8 +12,7 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
         try {
             throw new Error("eeee");
         } catch (error) {
-            next(error);
-            return res.status(200).json({ error: 'this is an error message' });
+            return next(error);
         }
     }
 
