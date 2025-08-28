@@ -2,17 +2,20 @@ import { Sequelize } from "sequelize";
 import { JokeDef } from "../entities/Jokes";
 
 const envs = ['dev', 'prod'] as const;
-export type Env = typeof envs[number];
+export type Environment = typeof envs[number];
 
-const createDatabase = (env: Env) => {
+const createDatabase = (env: Environment) => {
     const sequelize = new Sequelize('sqlite::memory:');
-    return { Joke: sequelize.define('joke', JokeDef), sequelize: sequelize }
+    return {
+        Joke: sequelize.define('joke', JokeDef),
+        sequelize: sequelize
+    }
 }
 
-const db = { prod: createDatabase('prod'), dev: createDatabase("dev") }
+const db = { prod: createDatabase('prod'), dev: createDatabase("dev") } as const;
 
 const initDatabases = async () => {
-    for (const env of Object.keys(db) as Env[]) {
+    for (const env of Object.keys(db) as Environment[]) {
         try {
             await db[env].sequelize.authenticate();
             console.log(`✅ ${env} database connected successfully.`);
