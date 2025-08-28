@@ -1,10 +1,9 @@
 
 import express from 'express';
 import cors from "cors";
-
-// import routes
+import { createApiRouter } from './routes';
 import { errorHandler } from './middlewares/errors';
-import { BaseRouter, DevRouter, TestRouter } from './routes';
+import { Environment } from './data/databases';
 
 const app = express();
 
@@ -15,9 +14,11 @@ app.use(cors({
     // ]
 }));
 
-app.use('/api/v1', BaseRouter);
-app.use('/api-dev/v1', DevRouter);
-app.use('/api-test/v1', TestRouter);
+const environments: Environment[] = ['dev', 'prod']//, 'test']
+for (const env of environments) {
+    const apiPath = env === 'prod' ? '/api/v1' : `/api-${env}/v1`;
+    app.use(apiPath, createApiRouter(env));
+}
 
 // Error handling
 app.use(errorHandler);
