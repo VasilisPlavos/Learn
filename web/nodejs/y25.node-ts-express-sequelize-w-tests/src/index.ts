@@ -1,4 +1,5 @@
 import app from "./app";
+import { initDatabases } from "./data/databases";
 
 const PORT = process.env.PORT || 3001;
 
@@ -8,4 +9,7 @@ const initServer = () => {
     });
 }
 
-initServer();
+(async () => {
+    await initDatabases();
+    initServer();
+})();
