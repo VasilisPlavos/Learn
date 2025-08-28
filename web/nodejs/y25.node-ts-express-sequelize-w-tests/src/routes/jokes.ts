@@ -34,6 +34,7 @@ export function jokesRouter(env: Environment) {
             const joke = await db[env].Joke.create({ value: response.data.value });
             return res.status(200).json(joke);
         } catch (error) {
+            // return next(new Error('Error fetching joke from external API'));
             return next(error);
         }
     });
