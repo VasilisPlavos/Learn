@@ -16,8 +16,8 @@ app.use(cors({
 
 const environments: Environment[] = ['dev', 'prod']//, 'test']
 for (const env of environments) {
-    if (env === 'prod') app.use("/api/v1", createApiRouter(env));
-    else app.use(`/api-${env}/v1`, createApiRouter(env));
+    const apiPath = env === 'prod' ? '/api/v1' : `/api-${env}/v1`;
+    app.use(apiPath, createApiRouter(env));
 }
 
 // Error handling
