@@ -1,11 +1,11 @@
 import { DataTypes, Model, ModelAttributes } from "sequelize";
 
-export interface JokeAttributes {
+interface JokeAttributes {
     id?: number;
     value: string;
 }
 
-export interface JokeModel extends Model<JokeAttributes>, JokeAttributes {}
+interface JokeModel extends Model<JokeAttributes>, JokeAttributes {}
 
 export const JokeDef: ModelAttributes<JokeModel, JokeAttributes> = {
     id: {

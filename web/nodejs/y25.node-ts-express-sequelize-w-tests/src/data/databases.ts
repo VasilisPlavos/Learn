@@ -1,10 +1,10 @@
-import { Sequelize, ModelStatic } from 'sequelize';
-import { JokeDef, JokeModel } from "../entities/Jokes";
+import { Sequelize } from 'sequelize';
+import { JokeDef } from "../entities/Jokes";
 
 const envs = ['dev', 'prod'] as const;
 export type Environment = typeof envs[number];
 
-const createDatabase = (env: Environment): { Joke: ModelStatic<JokeModel>, sequelize: Sequelize } => {
+const createDatabase = (env: Environment) => {
     const sequelize = new Sequelize('sqlite::memory:');
     return {
         Joke: sequelize.define('joke', JokeDef),
