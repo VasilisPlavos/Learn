@@ -3,8 +3,8 @@ import express from 'express';
 import cors from "cors";
 
 // import routes
-import jokesRouter from './routes/jokes';
 import { errorHandler } from './middlewares/errors';
+import { BaseRouter, DevRouter, TestRouter } from './routes';
 
 const app = express();
 
@@ -15,8 +15,9 @@ app.use(cors({
     // ]
 }));
 
-// Routes
-app.use('/api/v1/jokes', jokesRouter);
+app.use('/api/v1', BaseRouter);
+app.use('/api-dev/v1', DevRouter);
+app.use('/api-test/v1', TestRouter);
 
 // Error handling
 app.use(errorHandler);
