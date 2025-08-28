@@ -1,9 +1,15 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model, ModelAttributes } from "sequelize";
 
-export const JokeDef = {
+export interface JokeAttributes {
+    id?: number;
+    value: string;
+}
+
+export interface JokeModel extends Model<JokeAttributes>, JokeAttributes {}
+
+export const JokeDef: ModelAttributes<JokeModel, JokeAttributes> = {
     id: {
         type: DataTypes.BIGINT.UNSIGNED,
-        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
     },
