@@ -9,6 +9,6 @@
 2. add the entity in databases.ts in `createDatabase()`
 
 run with this:
-option 1: npx nodemon ./main.ts
-option 2: npx tsc main.ts && node main.js
+option 1: npx nodemon ./src/index.ts
+option 2: npx tsc && node ./dist/index.js
 option 3: npm install && npm start
