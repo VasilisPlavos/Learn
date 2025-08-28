@@ -19,8 +19,11 @@ const initDatabases = async () => {
         try {
             await db[env].sequelize.authenticate();
             console.log(`✅ ${env} database connected successfully.`);
-            await db[env].sequelize.sync({ force: true });
-            console.log(`🔄 ${env} database synced successfully.`);
+            
+            if (env === 'prod') continue;
+            // await db[env].sequelize.sync({ force: true });
+            // console.log(`🔄 ${env} database synced successfully.`);
+
         } catch (error) {
             console.error(`❌ An error occurred with the ${env} database:`, error);
         }
