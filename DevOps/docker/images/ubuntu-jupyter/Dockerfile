@@ -48,4 +48,4 @@ CMD ["jupyter", "notebook", "--allow-root", "--port=8888", "--ip=0.0.0.0"]
 # docker run -d -p 3111:8888 -v C:/Users/vplav/Gits/Learned/Python/jupy:/root/jupy --name ubuntu-jupyter ubuntu-jupyter
 
 # FORGET EVERYTHING ABOVE, USE THE FOLLOWING INSTEAD
-# docker run -p 3111:8888 -v C:/Users/vplav/Gits/Learned/Python/jupy:/home/jovyan/jupy --name jupyter jupyter/base-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
+# docker run -p 3111:8888 -v C:/Users/vplav/Gits/Learned/Python/jupy:/home/jovyan/jupy --name jupyter --user root jupyter/base-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
