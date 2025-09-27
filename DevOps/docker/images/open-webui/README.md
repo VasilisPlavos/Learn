@@ -2,7 +2,8 @@
 
 ## Open WebUI with Ollama version - the AIO command
 
-`docker run -d -p 3100:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -e WEBUI_AUTH=false --name open-webui-ollama-dev --restart always ghcr.io/open-webui/open-webui:ollama`
+- `docker run -d -p 3112:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -e WEBUI_AUTH=false --name open-webui-ollama-dev ghcr.io/open-webui/open-webui:ollama`
+- `docker run -d -p 3112:8080 -v ${env:USERPROFILE}/ai/models:/root/.ollama/models -e WEBUI_AUTH=false --name open-webui-ollama-dev --restart always ghcr.io/open-webui/open-webui:ollama`
 
 ### Breakdown the parameters
 
