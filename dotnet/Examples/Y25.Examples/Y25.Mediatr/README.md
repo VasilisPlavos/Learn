@@ -20,5 +20,5 @@ The application has two main features:
 
 You can test the API using a tool like Postman or curl.
 
-*   **Ping:** `GET http://localhost:5000/ping`
-*   **Notify:** `POST http://localhost:5000/ping`
+*   **Ping:** `GET http://localhost:5278/api/ping`
+*   **Notify:** `POST http://localhost:5278/api/ping`
