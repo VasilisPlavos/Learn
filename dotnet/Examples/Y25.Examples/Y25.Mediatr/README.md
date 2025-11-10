@@ -14,7 +14,7 @@ The application has two main features:
 1.  Clone the repository.
 2.  Run `dotnet build` to build the solution.
 3.  Run `dotnet test` to run the tests.
-4.  Run `dotnet run --project src/MediatRExample.API/MediatRExample.API.csproj` to run the API.
+4.  Run `dotnet run --project Y25.Mediatr/Y25.Mediatr.csproj` to run the API.
 
 ## How to test
 
