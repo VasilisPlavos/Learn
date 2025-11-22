@@ -3,7 +3,8 @@
 Source: <https://node-postgres.com/>
 
 1. run:
-```
+
+```console
 npm install pg
 npm install --save-dev @types/pg
 ```
@@ -17,7 +18,7 @@ docker run -d --name node-postgres-demo -e POSTGRES_PASSWORD=postgres -e POSTGRE
 3. run pgadmin via docker [[source]](https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea):
 
 ```console
-docker run --name pgadmin -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' -v pgadmin-data:/var/lib/pgadmin --restart always -d dpage/pgadmin4
+docker run --name pgadmin -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' -v ./pgadmin-storage:/var/lib/pgadmin/storage -v pgadmin-data:/var/lib/pgadmin --restart always -d dpage/pgadmin4
 ```
 
 - Note: Host name/address: `host.docker.internal` (on macOS/Windows) or your host machine's IP address (on Linux; often `172.17.0.1`)
