@@ -2,7 +2,7 @@
 
 ## SageMath with Jupyter
 
-`docker run -p 3115:8888 --name sagemath10.7 sagemath/sagemath:10.7 sage-jupyter`
+`docker run -p 3115:8888 --name sagemath10.7 -v ${env:USERPROFILE}/docker/volumes/sage-data:/home/sage/jupyter/data sagemath/sagemath:10.7 sage-jupyter`
 
 ## How to open
 
