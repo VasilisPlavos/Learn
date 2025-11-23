@@ -14,7 +14,7 @@ CMD ["tail", "-f", "/dev/null"]
 # -v $(pwd):/root mounts the current directory
 
 
-# docker build -t my-python-env .
-# docker run -v .\app:/app --name my-python-env my-python-env
-# docker run -d -p 3220:8888 -v $(pwd):/app --name my-python-env --restart always my-python-env 
+# docker build -t py3app .
+# docker run -d -p 3121:8888 -v .\app:/app --name py3app py3app
+# docker run -d -p 3121:8888 -v .\app:/app --name py3app --restart always py3app 
 
