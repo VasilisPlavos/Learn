@@ -22,7 +22,7 @@ docker run --name pgadmin -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e
 ```
 
 - Note: Host name/address: `host.docker.internal` (on macOS/Windows) or your host machine's IP address (on Linux; often `172.17.0.1`)
-- To Update pgadmin: delete it, then run `docker pull dpage/pgadmin4` and repeat step 3 BUT YOU WILL LOOSE SAVED SERVERS!!!
+- To Update pgadmin: delete it, then run `docker pull dpage/pgadmin4` and repeat step 3
 
 4. Connecting database to Node.js server
 
