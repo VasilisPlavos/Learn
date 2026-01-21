@@ -16,7 +16,7 @@ export function jokesRouter(env: Environment): Router {
 
     router.get('/', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const jokes = await db[env].Joke.findAll({ order: [['created_at', 'DESC']] });
+            const jokes = await db[env].Joke.findAll({ order: [['createdAt', 'DESC']] });
             return res.status(200).json(jokes);
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error';
