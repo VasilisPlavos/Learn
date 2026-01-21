@@ -64,10 +64,10 @@ export function jokesRouter(env: Environment): Router {
 
             value = value.trim();
             const joke = await db[env].Joke.create({ value })
-            res.status(202).json(joke);
+            res.status(201).json(joke);
         } catch (error) {
             if (error instanceof AxiosError) {
-                throw new Error('Error fetching joke from external API');
+                return next(new Error('Error fetching joke from external API'));
             }
             return next(error);
         }
