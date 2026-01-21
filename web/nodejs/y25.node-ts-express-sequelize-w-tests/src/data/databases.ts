@@ -10,7 +10,7 @@ const createDatabase = () => {
     return { sequelize, Joke };
 };
 
-const db = { prod: createDatabase(), dev: createDatabase() }
+const db = { prod: createDatabase(), dev: createDatabase() } as const;
 
 const initDatabases = async (): Promise<void> => {
     for (const env of Object.keys(db) as Environment[]) {
