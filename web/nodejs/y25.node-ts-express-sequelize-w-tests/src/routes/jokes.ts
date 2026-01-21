@@ -74,16 +74,15 @@ export function jokesRouter(env: Environment): Router {
     })
 
     router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-        const id = req.params.id as string;
-        const numericId = parseInt(id, 10);
-
-        if (isNaN(numericId) || numericId < 1) {
-            throw new Error('Invalid joke ID: must be a positive integer');
-        }
-
-        const joke = await db[env].Joke.findByPk(id);
         try {
-            await joke?.destroy();
+            const id = Number(req.params.id);
+            if (isNaN(id) || id < 1) throw new Error('Invalid joke ID: must be a positive integer');
+
+            const joke = await db[env].Joke.findByPk(id);
+            if (!joke) return res.status(404).json({ error: 'Joke not found' });
+
+            await joke.destroy();
+            res.status(204).send();
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error';
             throw new Error(`Failed to delete joke: ${message}`);
