@@ -9,22 +9,23 @@ npm install pg
 npm install --save-dev @types/pg
 ```
 
-2. run a postgres server with docker:
+1. run a postgres server with docker:
 
 ```console
-docker run -d --name pg-server -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -p 5432:5432 -v postgres-data:/var/lib/postgresql --restart always postgres
+
+docker run -d --name pg-server -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" -e POSTGRES_DB=postgres -p 5432:5432 -v postgres-data:/var/lib/postgresql --restart always postgres
 ```
 
-3. run pgadmin via docker [[source]](https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea):
+1. run pgadmin via docker [[source]](https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea):
 
 ```console
-docker run --name pgadmin -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' -v ./pgadmin-storage:/var/lib/pgadmin/storage -v pgadmin-data:/var/lib/pgadmin --restart always -d dpage/pgadmin4
+docker run --name pgadmin -p 3580:80 -e 'PGADMIN_DEFAULT_EMAIL=user@mail.com' -e 'PGADMIN_DEFAULT_PASSWORD=XXXXXXXXXXXX' -v ${env:USERPROFILE}/.../pgadmin-storage:/var/lib/pgadmin/storage -v pgadmin-data:/var/lib/pgadmin --restart always -d dpage/pgadmin4
 ```
 
 - Note: Host name/address: `host.docker.internal` (on macOS/Windows) or your host machine's IP address (on Linux; often `172.17.0.1`)
 - To Update pgadmin: delete it, then run `docker pull dpage/pgadmin4` and repeat step 3
 
-4. Connecting database to Node.js server
+1. Connecting database to Node.js server
 
 ```console
 import { Pool } from "pg";
