@@ -1,0 +1,14 @@
+{
+  "liked": [
+    "After returning from World War 2 unscratched, Bob Dole was congratulated by Chuck Norris with a handshake. The rest is history."
+  ],
+  "disliked": [
+    "Alls well that ends well. But if your life ends with a Chuck Norris roundhouse kick, all is not well."
+  ],
+  "favoriteCategories": ["history"],
+  "stats": {
+    "totalJokes": 2,
+    "likedCount": 1,
+    "dislikedCount": 1
+  }
+}
