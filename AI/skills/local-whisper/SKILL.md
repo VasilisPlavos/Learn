@@ -18,10 +18,10 @@ python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav
 python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --model turbo
 
 # With timestamps
-python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --timestamps --json
+python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --timestamps --output_format json
 
 # With standard SRT subtitles
-python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --model turbo --language English --timestamps --srt
+python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --model turbo --language English --output_format srt
 ```
 
 ## Models
@@ -45,7 +45,6 @@ python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --model turbo 
 | `--word_timestamps` | Add precise timing for every word |
 | `--output_dir/-o` | Directory to save output files |
 | `--timestamps/-t` | Include word timestamps in output |
-| `--json/-j` | Output in JSON format |
 | `--quiet/-q` | Suppress progress output |
 
 ## Setup
