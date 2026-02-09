@@ -36,16 +36,17 @@ python3 /app/skills/local-whisper/scripts/transcribe.py audio.wav --model turbo 
 
 ## Options
 
-- `--model/-m` — Model size (default: base)
-- `--language/-l` — Language code (auto-detect if omitted)
-  --task : Use transcribe (default) or translate (to English).
-  --output_format, -f : Choose format (srt, vtt, txt, json, tsv, all).
---word_timestamps : Boolean; adds precise timing for every word.
---output_dir, -o : Directory to save resulting files.
-
-- `--timestamps/-t` — Include word timestamps
-- `--json/-j` — JSON output
-- `--quiet/-q` — Suppress progress
+| Option | Description |
+|--------|-------------|
+| `--model/-m` | Model size (default: base) |
+| `--language/-l` | Language code (auto-detect if omitted) |
+| `--task` | Task type: `transcribe` (default) or `translate` (to English) |
+| `--output_format/-f` | Output format: `srt`, `vtt`, `txt`, `json`, `tsv`, or `all` |
+| `--word_timestamps` | Add precise timing for every word |
+| `--output_dir/-o` | Directory to save output files |
+| `--timestamps/-t` | Include word timestamps in output |
+| `--json/-j` | Output in JSON format |
+| `--quiet/-q` | Suppress progress output |
 
 ## Setup
 
