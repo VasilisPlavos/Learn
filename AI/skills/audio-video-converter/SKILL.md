@@ -31,6 +31,13 @@ yt-dlp --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" --write-thumbna
 yt-dlp --extract-audio --audio-format mp3 -o "%(playlist_index)s - %(title)s.%(ext)s" --write-thumbnail <PLAYLIST_URL>
 ```
 
+## YouTube Download video with audio
+
+```bash
+yt-dlp -f "bv+ba/b" <VIDEO_URL>
+# e.g. `yt-dlp -f "bv+ba/b" https://www.youtube.com/watch?v=swXWUfufu2w`
+```
+
 ### Output Patterns
 - `-o "%(title)s.%(ext)s"` → `videotitle.mp3`
 - `-o "%(playlist_index)s - %(title)s.%(ext)s"` → `01 - videotitle.mp3`
