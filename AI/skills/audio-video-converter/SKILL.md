@@ -5,13 +5,17 @@ description: Download YouTube videos/playlists and Beatstars tracks as MP3 audio
 
 # YouTube & Beatstars Audio Downloader
 
+## Overview
+
+This skill provides tools to download audio from YouTube videos and playlists, download YouTube videos with audio, and convert Beatstars tracks to MP3 format. It leverages `yt-dlp` for YouTube operations and `curl`, `ffmpeg`, and `jq` for Beatstars conversions.
+
 ## 🛠 Installation & Setup
 
-Before using the scripts, ensure your system has Python, Pip, and FFmpeg installed.
+Before using the scripts, ensure your system has `python3`, `python3-pip`, `ffmpeg`, `curl`, and `jq` installed.
 
 ### 1. Install System Dependencies
 ```bash
-apt update && apt install -y python3 python3-pip ffmpeg
+apt update && apt install -y python3 python3-pip ffmpeg curl jq
 ```
 
 ### 2. Install/update yt-dlp:
@@ -44,6 +48,10 @@ yt-dlp -f "bv+ba/b" -o "%(title)s.%(ext)s" <VIDEO_URL>
 - `--write-thumbnail` → downloads video/playlist thumbnail
 
 ## Beatstars to MP3
+
+### Overview
+
+Converts a Beatstars track to an MP3 file. Required use of User-Agent header to mimic a web browser and `jq` to robustly extract the M3U8 streaming URL from Beatstars' API response. It requires the Beat ID, which can be extracted from the Beatstars URL.  
 
 1. Extract beat ID from URL (e.g., `18476261` from `https://www.beatstars.com/beat/--60-last-days--light--tyga-type-beat-offset-club-banger-18476261`)
 
