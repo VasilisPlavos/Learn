@@ -319,8 +319,58 @@
       els.results.style.display = "block";
     }
 
-    // Temporary stub; replaced by real polling in Task 6.
-    function startPolling() {}
+    function isReddit(m) {
+      const from = (m.from && m.from.address ? m.from.address : "").toLowerCase();
+      const subject = (m.subject || "").toLowerCase();
+      return from.includes("reddit") || subject.includes("reddit");
+    }
+
+    function renderInbox(messages) {
+      els.inboxEmpty.style.display = messages.length ? "none" : "block";
+      els.inbox.innerHTML = "";
+      for (const m of messages) {
+        const li = document.createElement("li");
+        if (isReddit(m)) li.classList.add("reddit");
+        const from = m.from && m.from.address ? m.from.address : "(unknown)";
+        li.innerHTML =
+          `<div class="from">${from}</div><div>${m.subject || "(no subject)"}</div>`;
+        li.addEventListener("click", () => showMessage(m.id));
+        els.inbox.appendChild(li);
+      }
+    }
+
+    async function showMessage(id) {
+      try {
+        const msg = await mailtm.getMessage(state.token, id);
+        const body = msg.text || (msg.html ? msg.html.join("\n") : "") || "(empty)";
+        els.messageView.style.display = "block";
+        els.messageView.textContent = `Subject: ${msg.subject || ""}\n\n${body}`;
+      } catch (e) {
+        setError(`open message: ${e.message}`);
+      }
+    }
+
+    async function pollOnce() {
+      if (!state.token) return;
+      try {
+        const messages = await mailtm.getMessages(state.token);
+        renderInbox(messages);
+      } catch (e) {
+        setError(`inbox: ${e.message}`);
+      }
+    }
+
+    function stopPolling() {
+      if (state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
+      els.stop.style.display = "none";
+    }
+
+    function startPolling() {
+      stopPolling();
+      els.stop.style.display = "inline-block";
+      pollOnce();
+      state.pollTimer = setInterval(pollOnce, 5000);
+    }
 
     async function handleGenerate() {
       setError("");
@@ -348,6 +398,8 @@
     }
 
     els.generate.addEventListener("click", handleGenerate);
+
+    els.stop.addEventListener("click", stopPolling);
 
     // Copy-to-clipboard for any [data-target] button.
     document.querySelectorAll(".copy").forEach(btn => {
