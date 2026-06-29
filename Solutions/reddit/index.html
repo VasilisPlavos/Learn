@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reddit Account Generator</title>
+  <style>
+    :root { --bg:#0f1115; --card:#1a1d24; --accent:#ff4500; --text:#e6e6e6; --muted:#9aa0aa; --ok:#3fb950; --err:#f85149; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    main { max-width:720px; margin:0 auto; }
+    h1 { font-size:1.4rem; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:16px 0; }
+    button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 16px; font-size:0.95rem; cursor:pointer; }
+    button.secondary { background:#2d323c; }
+    button:disabled { opacity:0.5; cursor:not-allowed; }
+    a.btn { display:inline-block; text-decoration:none; background:var(--accent); color:#fff; border-radius:8px; padding:10px 16px; font-size:0.95rem; cursor:pointer; }
+    .card { background:var(--card); border-radius:12px; padding:16px; margin:12px 0; }
+    .card h2 { font-size:1rem; margin:0 0 12px; color:var(--muted); }
+    .field { display:flex; align-items:center; gap:8px; margin:8px 0; }
+    .field label { width:90px; color:var(--muted); font-size:0.85rem; }
+    .field input { flex:1; background:#0f1115; color:var(--text); border:1px solid #2d323c; border-radius:6px; padding:8px; font-family:monospace; }
+    .copy { padding:6px 10px; font-size:0.8rem; background:#2d323c; }
+    #error { background:#3a1d1d; color:var(--err); border-radius:8px; padding:12px; margin:12px 0; display:none; }
+    #inbox { list-style:none; padding:0; margin:0; }
+    #inbox li { background:#0f1115; border:1px solid #2d323c; border-radius:8px; padding:10px; margin:6px 0; cursor:pointer; }
+    #inbox li.reddit { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+    #inbox li .from { color:var(--muted); font-size:0.8rem; }
+    #message-view { background:#0f1115; border:1px solid #2d323c; border-radius:8px; padding:12px; margin-top:8px; white-space:pre-wrap; word-break:break-word; display:none; }
+    #test-results { font-family:monospace; }
+    #test-results .pass { color:var(--ok); }
+    #test-results .fail { color:var(--err); }
+    .muted { color:var(--muted); font-size:0.85rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Reddit Account Generator</h1>
+    <p class="muted">Creates a temporary mail.tm inbox and ready-to-use Reddit credentials.</p>
+
+    <div class="row">
+      <button id="generate">Generate</button>
+      <button id="stop" class="secondary" style="display:none;">Stop inbox polling</button>
+    </div>
+
+    <div id="error"></div>
+
+    <section id="results" style="display:none;">
+      <div class="card">
+        <h2>mail.tm (temporary email)</h2>
+        <div class="field"><label>Email</label><input id="mail-email" readonly /><button class="copy" data-target="mail-email">Copy</button></div>
+        <div class="field"><label>Password</label><input id="mail-password" readonly /><button class="copy" data-target="mail-password">Copy</button></div>
+      </div>
+
+      <div class="card">
+        <h2>Reddit</h2>
+        <div class="field"><label>Username</label><input id="reddit-username" readonly /><button class="copy" data-target="reddit-username">Copy</button></div>
+        <div class="field"><label>Password</label><input id="reddit-password" readonly /><button class="copy" data-target="reddit-password">Copy</button></div>
+        <div class="row">
+          <a id="open-reddit" class="btn" href="https://www.reddit.com/register" target="_blank" rel="noopener">Open Reddit register</a>
+          <button id="download" class="secondary">Download .md</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Inbox</h2>
+        <ul id="inbox"></ul>
+        <p id="inbox-empty" class="muted">Waiting for messages…</p>
+        <div id="message-view"></div>
+      </div>
+    </section>
+
+    <div id="test-results"></div>
+  </main>
+
+  <script>
+    "use strict";
+
+    const state = { token: null, account: null, pollTimer: null, seen: new Set() };
+
+    const els = {
+      generate: document.querySelector("#generate"),
+      stop: document.querySelector("#stop"),
+      error: document.querySelector("#error"),
+      results: document.querySelector("#results"),
+      mailEmail: document.querySelector("#mail-email"),
+      mailPassword: document.querySelector("#mail-password"),
+      redditUsername: document.querySelector("#reddit-username"),
+      redditPassword: document.querySelector("#reddit-password"),
+      openReddit: document.querySelector("#open-reddit"),
+      download: document.querySelector("#download"),
+      inbox: document.querySelector("#inbox"),
+      inboxEmpty: document.querySelector("#inbox-empty"),
+      messageView: document.querySelector("#message-view"),
+      testResults: document.querySelector("#test-results"),
+    };
+
+    function setError(msg) {
+      if (!msg) { els.error.style.display = "none"; els.error.textContent = ""; return; }
+      els.error.style.display = "block";
+      els.error.textContent = msg;
+    }
+
+    function setBusy(busy) {
+      els.generate.disabled = busy;
+      els.generate.textContent = busy ? "Working…" : "Generate";
+    }
+
+    // === Self-test harness (open index.html#test) ===
+    function renderTestResults(results) {
+      const passed = results.filter(r => r.pass).length;
+      const lines = results.map(r =>
+        `<div class="${r.pass ? "pass" : "fail"}">${r.pass ? "PASS" : "FAIL"} — ${r.name}${r.error ? " :: " + r.error : ""}</div>`
+      ).join("");
+      els.testResults.innerHTML =
+        `<h2>Self-tests: ${passed}/${results.length} passed</h2>` + lines;
+    }
+
+    function runSelfTests() {
+      const results = [];
+      const test = (name, fn) => {
+        try { fn(); results.push({ name, pass: true }); }
+        catch (e) { results.push({ name, pass: false, error: e.message }); }
+      };
+      const assert = (cond, msg) => { if (!cond) throw new Error(msg || "assertion failed"); };
+
+      // creds tests added in Task 2
+      // markdown tests added in Task 3
+
+      renderTestResults(results);
+      // eslint-disable-next-line no-console
+      console.table(results);
+    }
+
+    if (location.hash === "#test") runSelfTests();
+  </script>
+</body>
+</html>
