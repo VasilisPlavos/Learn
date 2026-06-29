@@ -76,7 +76,7 @@
   <script>
     "use strict";
 
-    const state = { token: null, account: null, pollTimer: null, seen: new Set() };
+    const state = { token: null, account: null, pollTimer: null, pollErrors: 0 };
 
     const creds = (() => {
       const LOWER = "abcdefghijklmnopqrstuvwxyz";
@@ -192,6 +192,7 @@
           const text = await res.text();
           throw new Error(`createAccount failed: ${res.status} ${text}`);
         }
+        // unreachable: the loop always returns, throws, or continues — defensive guard
         throw new Error("createAccount failed after retry");
       }
 
@@ -235,7 +236,6 @@
       mailPassword: document.querySelector("#mail-password"),
       redditUsername: document.querySelector("#reddit-username"),
       redditPassword: document.querySelector("#reddit-password"),
-      openReddit: document.querySelector("#open-reddit"),
       download: document.querySelector("#download"),
       inbox: document.querySelector("#inbox"),
       inboxEmpty: document.querySelector("#inbox-empty"),
@@ -251,7 +251,7 @@
 
     function setBusy(busy) {
       els.generate.disabled = busy;
-      els.generate.textContent = busy ? "Working…" : "Generate";
+      els.generate.textContent = busy ? "Working…" : (state.account ? "Regenerate" : "Generate");
     }
 
     // === Self-test harness (open index.html#test) ===
@@ -331,9 +331,13 @@
       for (const m of messages) {
         const li = document.createElement("li");
         if (isReddit(m)) li.classList.add("reddit");
-        const from = m.from && m.from.address ? m.from.address : "(unknown)";
-        li.innerHTML =
-          `<div class="from">${from}</div><div>${m.subject || "(no subject)"}</div>`;
+        const fromDiv = document.createElement("div");
+        fromDiv.className = "from";
+        fromDiv.textContent = m.from && m.from.address ? m.from.address : "(unknown)";
+        const subjDiv = document.createElement("div");
+        subjDiv.textContent = m.subject || "(no subject)";
+        li.appendChild(fromDiv);
+        li.appendChild(subjDiv);
         li.addEventListener("click", () => showMessage(m.id));
         els.inbox.appendChild(li);
       }
@@ -355,8 +359,16 @@
       try {
         const messages = await mailtm.getMessages(state.token);
         renderInbox(messages);
+        state.pollErrors = 0;
+        setError("");
       } catch (e) {
-        setError(`inbox: ${e.message}`);
+        state.pollErrors = (state.pollErrors || 0) + 1;
+        if (state.pollErrors >= 3) {
+          stopPolling();
+          setError(`inbox polling stopped after ${state.pollErrors} consecutive errors: ${e.message}`);
+        } else {
+          setError(`inbox: ${e.message}`);
+        }
       }
     }
 
@@ -387,7 +399,7 @@
           email: address, mailPassword, username, redditPassword,
           createdAt: new Date().toISOString(),
         };
-        state.seen = new Set();
+        state.pollErrors = 0;
         renderCredentials(state.account);
         startPolling();
       } catch (e) {
