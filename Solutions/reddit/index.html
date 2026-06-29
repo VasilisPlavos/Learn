@@ -311,6 +311,60 @@
       console.table(results);
     }
 
+    function renderCredentials(acc) {
+      els.mailEmail.value = acc.email;
+      els.mailPassword.value = acc.mailPassword;
+      els.redditUsername.value = acc.username;
+      els.redditPassword.value = acc.redditPassword;
+      els.results.style.display = "block";
+    }
+
+    // Temporary stub; replaced by real polling in Task 6.
+    function startPolling() {}
+
+    async function handleGenerate() {
+      setError("");
+      setBusy(true);
+      try {
+        const domain = await mailtm.getDomain();
+        const mailPassword = creds.strongPassword(16);
+        const { address } = await mailtm.createAccount(domain, mailPassword);
+        const token = await mailtm.login(address, mailPassword);
+        const username = creds.redditUsername();
+        const redditPassword = creds.strongPassword(16);
+        state.token = token;
+        state.account = {
+          email: address, mailPassword, username, redditPassword,
+          createdAt: new Date().toISOString(),
+        };
+        state.seen = new Set();
+        renderCredentials(state.account);
+        startPolling();
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    els.generate.addEventListener("click", handleGenerate);
+
+    // Copy-to-clipboard for any [data-target] button.
+    document.querySelectorAll(".copy").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const el = document.getElementById(btn.dataset.target);
+        try {
+          await navigator.clipboard.writeText(el.value);
+          const old = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(() => { btn.textContent = old; }, 1200);
+        } catch {
+          el.select();
+          setError("Clipboard blocked — value selected, copy manually.");
+        }
+      });
+    });
+
     els.download.addEventListener("click", () => {
       if (!state.account) { setError("Generate an account first."); return; }
       download.downloadMarkdown(state.account);
