@@ -8,10 +8,11 @@
 
 For some reason that I cannot explain, in order to open it for first time, open the docer container and click in the link with the ip address. It will open in your browser, there, change the port from 8888 to 3115, hit enter and go!
 
-## PDF pandoc install
+## PDF install
 
 ```bash
-sudo apt-get install pandoc
+sudo apt-get update
+sudo apt-get install texlive-xetex texlive-fonts-recommended texlive-plain-generic
 ```
 
 ### Sources
