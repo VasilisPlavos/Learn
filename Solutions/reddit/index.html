@@ -164,6 +164,68 @@
       return { buildMarkdown, downloadMarkdown };
     })();
 
+    const mailtm = (() => {
+      const BASE = "https://api.mail.tm";
+      const LOCAL_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+      async function getDomain() {
+        const res = await fetch(`${BASE}/domains?page=1`);
+        if (!res.ok) throw new Error(`getDomain failed: ${res.status}`);
+        const data = await res.json();
+        const members = data["hydra:member"] || [];
+        const active = members.find(d => d.isActive) || members[0];
+        if (!active) throw new Error("no mail.tm domain available");
+        return active.domain;
+      }
+
+      async function createAccount(domain, password) {
+        // Retry once on 422 (address taken / domain busy) with a fresh address.
+        for (let attempt = 0; attempt < 2; attempt++) {
+          const address = `${creds.randomString(16, LOCAL_ALPHABET)}@${domain}`;
+          const res = await fetch(`${BASE}/accounts`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ address, password }),
+          });
+          if (res.status === 201) return { address };
+          if (res.status === 422 && attempt === 0) continue;
+          const text = await res.text();
+          throw new Error(`createAccount failed: ${res.status} ${text}`);
+        }
+        throw new Error("createAccount failed after retry");
+      }
+
+      async function login(address, password) {
+        const res = await fetch(`${BASE}/token`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ address, password }),
+        });
+        if (!res.ok) throw new Error(`login failed: ${res.status}`);
+        const data = await res.json();
+        return data.token;
+      }
+
+      async function getMessages(token) {
+        const res = await fetch(`${BASE}/messages?page=1`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error(`getMessages failed: ${res.status}`);
+        const data = await res.json();
+        return data["hydra:member"] || [];
+      }
+
+      async function getMessage(token, id) {
+        const res = await fetch(`${BASE}/messages/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error(`getMessage failed: ${res.status}`);
+        return res.json();
+      }
+
+      return { getDomain, createAccount, login, getMessages, getMessage };
+    })();
+
     const els = {
       generate: document.querySelector("#generate"),
       stop: document.querySelector("#stop"),
