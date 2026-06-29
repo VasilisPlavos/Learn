@@ -78,6 +78,58 @@
 
     const state = { token: null, account: null, pollTimer: null, seen: new Set() };
 
+    const creds = (() => {
+      const LOWER = "abcdefghijklmnopqrstuvwxyz";
+      const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const DIGITS = "0123456789";
+      const SYMBOLS = "!@#$%^&*-_=+";
+      const ALL = LOWER + UPPER + DIGITS + SYMBOLS;
+
+      // Unbiased random integer in [0, max) using rejection sampling.
+      function randInt(max) {
+        const arr = new Uint32Array(1);
+        const limit = Math.floor(0x100000000 / max) * max;
+        let x;
+        do { crypto.getRandomValues(arr); x = arr[0]; } while (x >= limit);
+        return x % max;
+      }
+
+      function pick(chars) { return chars[randInt(chars.length)]; }
+
+      function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = randInt(i + 1);
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function randomString(len, alphabet) {
+        let s = "";
+        for (let i = 0; i < len; i++) s += alphabet[randInt(alphabet.length)];
+        return s;
+      }
+
+      function strongPassword(len = 16) {
+        if (len < 4) throw new Error("password length must be >= 4");
+        const chars = [pick(LOWER), pick(UPPER), pick(DIGITS), pick(SYMBOLS)];
+        while (chars.length < len) chars.push(pick(ALL));
+        return shuffle(chars).join("");
+      }
+
+      const ADJ = ["Swift","Brave","Quiet","Lucky","Cosmic","Silent","Golden","Rapid","Mighty","Clever","Frosty","Sunny","Wild","Noble","Vivid"];
+      const NOUN = ["Panda","Falcon","Otter","Tiger","Comet","Maple","Raven","Wolf","Lynx","Heron","Bison","Koala","Cobra","Ember","Drift"];
+
+      function redditUsername() {
+        const a = ADJ[randInt(ADJ.length)];
+        const n = NOUN[randInt(NOUN.length)];
+        const num = String(randInt(900) + 100); // 100..999
+        return `${a}${n}${num}`;
+      }
+
+      return { strongPassword, redditUsername, randomString };
+    })();
+
     const els = {
       generate: document.querySelector("#generate"),
       stop: document.querySelector("#stop"),
@@ -124,7 +176,25 @@
       };
       const assert = (cond, msg) => { if (!cond) throw new Error(msg || "assertion failed"); };
 
-      // creds tests added in Task 2
+      test("strongPassword length is 16", () => {
+        assert(creds.strongPassword(16).length === 16, "wrong length");
+      });
+      test("strongPassword has all char classes", () => {
+        const p = creds.strongPassword(16);
+        assert(/[a-z]/.test(p), "no lowercase");
+        assert(/[A-Z]/.test(p), "no uppercase");
+        assert(/[0-9]/.test(p), "no digit");
+        assert(/[!@#$%^&*\-_=+]/.test(p), "no symbol");
+      });
+      test("redditUsername matches Reddit constraints", () => {
+        const u = creds.redditUsername();
+        assert(/^[A-Za-z0-9_-]{3,20}$/.test(u), "invalid username: " + u);
+      });
+      test("randomString length and alphabet", () => {
+        const s = creds.randomString(12, "abc");
+        assert(s.length === 12, "wrong length");
+        assert(/^[abc]{12}$/.test(s), "out-of-alphabet chars: " + s);
+      });
       // markdown tests added in Task 3
 
       renderTestResults(results);
