@@ -130,6 +130,40 @@
       return { strongPassword, redditUsername, randomString };
     })();
 
+    const download = (() => {
+      function buildMarkdown(data) {
+        return [
+          `# Reddit Account — ${data.username}`,
+          ``,
+          `Created: ${data.createdAt}`,
+          ``,
+          `## mail.tm (temporary email)`,
+          `- Email: ${data.email}`,
+          `- Password: ${data.mailPassword}`,
+          ``,
+          `## Reddit`,
+          `- Username: ${data.username}`,
+          `- Password: ${data.redditPassword}`,
+          `- Register: https://www.reddit.com/register`,
+          ``,
+        ].join("\n");
+      }
+
+      function downloadMarkdown(data) {
+        const blob = new Blob([buildMarkdown(data)], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${data.username}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      return { buildMarkdown, downloadMarkdown };
+    })();
+
     const els = {
       generate: document.querySelector("#generate"),
       stop: document.querySelector("#stop"),
@@ -195,12 +229,30 @@
         assert(s.length === 12, "wrong length");
         assert(/^[abc]{12}$/.test(s), "out-of-alphabet chars: " + s);
       });
-      // markdown tests added in Task 3
+      test("buildMarkdown contains all fields", () => {
+        const md = download.buildMarkdown({
+          username: "SwiftPanda742", email: "abc@mail.tm",
+          mailPassword: "Mp1!aaaa", redditPassword: "Rp2@bbbb",
+          createdAt: "2026-06-29T00:00:00.000Z",
+        });
+        assert(md.includes("# Reddit Account — SwiftPanda742"), "missing heading");
+        assert(md.includes("- Email: abc@mail.tm"), "missing email");
+        assert(md.includes("- Password: Mp1!aaaa"), "missing mail password");
+        assert(md.includes("- Username: SwiftPanda742"), "missing username");
+        assert(md.includes("- Password: Rp2@bbbb"), "missing reddit password");
+        assert(md.includes("https://www.reddit.com/register"), "missing register link");
+        assert(md.includes("Created: 2026-06-29T00:00:00.000Z"), "missing timestamp");
+      });
 
       renderTestResults(results);
       // eslint-disable-next-line no-console
       console.table(results);
     }
+
+    els.download.addEventListener("click", () => {
+      if (!state.account) { setError("Generate an account first."); return; }
+      download.downloadMarkdown(state.account);
+    });
 
     if (location.hash === "#test") runSelfTests();
   </script>
