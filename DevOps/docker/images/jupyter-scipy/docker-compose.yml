@@ -1,0 +1,13 @@
+# docker compose up -d
+
+services:
+  jupyter:
+    image: quay.io/jupyter/scipy-notebook:2026-09-28
+    container_name: jupyter
+    ports:
+      - "3111:8888"
+    volumes:
+      - ${USERPROFILE}/docker/volumes/jupyter-data/notebooks:/home/jovyan/work
+    environment:
+      JUPYTER_TOKEN: my-secret-token
+    restart: unless-stopped
